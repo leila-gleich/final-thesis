@@ -1,0 +1,10 @@
+Airport_Code,Airport_Name,Observations_N,Mean_Throughput_pax,Std_Dev_pax,Min_pax,Median_pax,Max_pax,Screening_Terminal_Complex
+BOS,Boston Logan,28400,2243.7,1298.9,0.0,2314.0,7341.0,Terminals A & B
+DFW,Dallas/Fort Worth,28266,3201.0,1750.2,0.0,3597.0,7963.0,Terminal D Screening Complex
+DTW,Detroit Metro,32023,1443.7,1012.1,0.0,1629.0,4394.0,McNamara Terminal Complex
+EWR,Newark Liberty,32034,2738.8,1774.6,0.0,3094.0,6959.0,Terminal C Screening Complex
+IAH,Houston Bush,28185,2342.1,1312.2,0.0,2666.0,6029.0,Terminal C Screening Complex
+LAX,Los Angeles World,30984,4165.7,2127.4,0.0,4450.0,9569.0,Terminals 2 3 & 7
+LGA,New York LaGuardia,31438,1687.0,1367.5,0.0,1759.0,5496.0,Terminal C Screening Complex
+ORD,Chicago O'Hare,32036,1985.2,1653.8,4.0,1944.0,9380.0,Terminals 1 & 3
+PHL,Philadelphia Intl,27094,1492.2,906.7,1.0,1560.0,6157.0,Terminals B & C Complexes

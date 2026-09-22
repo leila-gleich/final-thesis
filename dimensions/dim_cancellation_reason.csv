@@ -1,0 +1,6 @@
+cancellationId,cancellationCode,description
+0,,Not Cancelled
+1,A,Carrier / Airline Operation
+2,B,Weather
+3,C,National Airspace System (NAS)
+4,D,Security

@@ -1,0 +1,8 @@
+day_of_week_number,day_of_week_name,sample_size_airport_days,mean_scheduled_flights,cv_scheduled_flights,mean_cancel_rate_pct,mean_depdel15_rate_pct,mean_dep_delay_minutes,std_dev_dep_delay_minutes,mean_taxi_out_minutes,mean_arr_delay_minutes,plain_language_operational_character
+0,Sunday,9125,423.83,0.50670000000000004,2.35,20.55,12.73,14.23,18.72,6.51,Leisure return inflow; highest weekly average departure delay and highest DepDel15 percentage
+1,Monday,9125,432.75,0.50580000000000003,2.25,19.34,11.65,14.01,18.71,5.27,Corporate business outbound peak; high scheduled flight density and morning bank congestion
+2,Tuesday,9150,403.57,0.5151,2.0299999999999998,16.09,8.3000000000000007,12.56,18.37,1.38,Midweek operational reset; lowest departure delays and arrival delays of the entire week
+3,Wednesday,9150,408.32,0.51549999999999996,2.1800000000000002,16.55,8.7899999999999991,12.37,18.739999999999998,2.42,Steady midweek baseline; predictable turnaround and moderate delay metrics
+4,Thursday,9125,429.64,0.51129999999999998,2.39,19.37,11.62,14.18,19.23,6.01,Corporate return and long-weekend departures; longest taxi-out duration of the week
+5,Friday,9125,432.59,0.50719999999999998,2.2799999999999998,20.239999999999998,12.15,13.85,19.079999999999998,6.29,Combined business return and weekend getaway surge; high delay rate and evening bank congestion
+6,Saturday,9125,373.53,0.51290000000000002,2.11,18.18,10.46,13.11,18.07,3.25,Operational trough; lowest volume of the week (-13.7% vs Monday/Friday) for airline fleet balancing

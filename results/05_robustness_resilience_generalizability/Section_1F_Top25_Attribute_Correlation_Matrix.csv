@@ -1,0 +1,17 @@
+analytical_grain,attribute_1,attribute_2,pearson_r,r_squared_pct,relationship_direction,statistical_significance_p,operational_interpretation
+Daily Operational Grain,scheduled_flights,actual_flights,0.9906,98.13,Positive,< 0.001,Direct operational volume coupling; schedules predict 98% of physical movements.
+Daily Operational Grain,mean_dep_delay,mean_arr_delay,0.9576,91.7,Positive,< 0.001,Direct delay propagation downline; en-route flight schedule padding absorbs less than 8.3% of delay.
+Daily Operational Grain,mean_dep_delay,depdel15_rate_pct,0.9142,83.57,Positive,< 0.001,Severe collinearity; average delay minutes scale almost 1:1 with delayed flight counts.
+Daily Operational Grain,mean_dep_delay,mean_taxi_out,0.4971,24.71,Positive,< 0.001,Surface queue coupling; late gate pushbacks and GDP metering create congested runway queues.
+Daily Operational Grain,mean_taxi_out,depdel15_rate_pct,0.4803,23.07,Positive,< 0.001,Surface-to-air delay feedback; delayed departure banks create severe tarmac taxi congestion.
+Daily Operational Grain,mean_dep_delay,cancel_rate_pct,0.2759,7.61,Positive,< 0.001,Shared exogenous shock overlap; severe storm events cause both extended delays and tactical cancellations.
+Daily Operational Grain,scheduled_flights,depdel15_rate_pct,0.2304,5.31,Positive,< 0.001,Hub scale penalty; higher scheduled flight volume increases exposure to network cascading delays.
+Daily Operational Grain,depdel15_rate_pct,cancel_rate_pct,0.193,3.72,Positive,< 0.001,Disruption threshold effect; cascading delay networks eventually trigger tactical cancellations.
+Daily Operational Grain,scheduled_flights,mean_dep_delay,0.1572,2.47,Positive,< 0.001,"Schedule density increases delay risk, but delay magnitude is dominated by weather and FAA GDP shocks."
+Daily Operational Grain,scheduled_flights,mean_taxi_out,0.1401,1.96,Positive,< 0.001,Departure bank saturation; heavily scheduled departure banks induce surface taxi sequencing queues.
+Daily Operational Grain,mean_taxi_out,cancel_rate_pct,0.1135,1.29,Positive,< 0.001,Weak surface queue cancellation coupling; airlines avoid cancellations from tarmac delays due to 3-hr rule.
+Daily Operational Grain,scheduled_flights,cancel_rate_pct,-0.0406,0.16,Negative (Weak),< 0.001,Slight fortress resilience; larger hub carriers prioritize completing scheduled mainline flights over cancellations.
+Flight Level Grain,DepDelay,CarrierDelay,0.6535,42.71,Positive,< 0.001,Internal operational disruption; carrier-controllable crew/mechanical issues drive 43% of delay variance.
+Flight Level Grain,DepDelay,LateAircraftDelay,0.5703,32.52,Positive,< 0.001,Network propagation cascade; late inbound aircraft arrival drives 33% of departure delay variance.
+Flight Level Grain,DepDelay,WeatherDelay,0.2975,8.85,Positive,< 0.001,Severe meteorological shock; localized extreme weather creates high kurtosis delay spikes.
+Flight Level Grain,DepDelay,NASDelay,0.0876,0.77,Positive,< 0.001,Airspace congestion programs; FAA ground delay programs primarily manifest in taxi-out queues.

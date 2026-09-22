@@ -1,0 +1,9 @@
+operational_regime,regime_classification_method,mathematical_definition_and_thresholds,sample_size_N_days,share_of_sample_pct,mean_scheduled_flights,std_dev_scheduled_flights,mean_cancel_rate_pct,mean_depdel15_rate_pct,mean_dep_delay_minutes,std_dev_dep_delay_minutes,mean_taxi_out_minutes,mean_arr_delay_minutes
+Off-Peak,Airport-Normalized Quartile Scaling,ScheduledFlights < Q1(Origin) (Bottom quartile of airport-specific volume),13990,21.89,292.95999999999998,174.33,0.56999999999999995,10.49,3.19,6.51,16.32,-2.81
+Mid-Peak,Airport-Normalized Quartile Scaling,ScheduledFlights >= Q3(Origin) (Top quartile of airport-specific volume),28262,44.21,429.62,192.62,0.69,17.88,9.2799999999999994,6.81,18.53,3.28
+Peak,Airport-Normalized Quartile Scaling,ScheduledFlights >= Q3(Origin) (Top quartile of airport-specific volume),14049,21.98,511.31,225.66,0.7,19.66,10.59,6.96,19.48,4.59
+Event / Severe Shock,Airport-Normalized Quartile Scaling,CancelRate >= 5.0% OR MeanDepDelay >= 30.0 min (Acute Exogenous Disruption),7624,11.93,406.28,218.57,13.75,34.36,30.96,26.24,22.28,30.34
+Off-Peak (System Lull),Systemwide Fixed Thresholds,ScheduledFlights < 240 flt/day (Bottom 16th percentile lull),10304,16.12,167.2,49.09,0.67,11.8,4.58,7.59,15.79,-1.42
+Mid-Peak (Nominal Baseline),Systemwide Fixed Thresholds,ScheduledFlights >= 550 flt/day (Top 18th percentile saturation),34726,54.32,377.98,82.38,0.66,17.010000000000002,8.52,7.09,18.829999999999998,2.52
+Event / Severe Shock,Systemwide Fixed Thresholds,CancelRate >= 5.0% OR MeanDepDelay >= 30.0 min (Acute Exogenous Disruption),7624,11.93,406.28,218.57,13.75,34.36,30.96,26.24,22.28,30.34
+Peak (System Saturation),Systemwide Fixed Thresholds,ScheduledFlights >= 550 flt/day (Top 18th percentile saturation),11271,17.63,760.85,147.38,0.67,19.16,9.99,6.89,18.559999999999999,3.99

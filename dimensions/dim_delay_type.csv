@@ -1,0 +1,8 @@
+delayTypeId,delayTypeName,description
+0,No Delay,"On-time, early, or no delay breakdown"
+1,Carrier Delay,Carrier / Airline operational delay
+2,Weather Delay,Extreme or hazardous weather delay
+3,NAS Delay,National Airspace System / ATC delay
+4,Security Delay,Security clearance or breach delay
+5,Late Aircraft Delay,Late arrival of previous aircraft
+6,Multiple / Tied,Equal tie for maximum delay minutes
