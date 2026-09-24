@@ -1,7 +1,0 @@
-Feature_Horizon_Representation,Lead_Time_Pre_Departure,Pearson_Correlation_r,Linear_R2_Variance_Explained,Empirical_Regression_Slope_pax_per_flt,Relative_Explanatory_Gain_pct
-Contemporaneous Departures (t),0 hours (Takeoff Hour),0.4459,0.1988,38.42,Baseline (Status Quo)
-Lead Horizon t+1,1 hour pre-departure,0.6102,0.3723,62.15,+87.3% vs Baseline
-Lead Horizon t+2 (Peak Window),2 hours pre-departure,0.6367,0.4054,74.98,+103.9% vs Baseline (Global Peak)
-Lead Horizon t+3,3 hours pre-departure,0.5744,0.3299,51.20,+65.9% vs Baseline
-Continuous Convolved Lead Demand,Distributed across t+1 to t+3,0.6985,0.4878,74.98,+145.4% vs Baseline
-Convolved Demand * T-100 Load Factor,Continuous with Carrier Load Factor,0.7061,0.4985,90.56,+150.8% vs Baseline

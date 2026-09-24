@@ -1,5 +1,0 @@
-Tier_Level,Filter_Name,Candidate_Universe,Retained_Count,Filtering_Criteria,Theoretical_Methodological_Justification
-Tier 1,Macro Filter (Heavy-Traffic Scale),All US Commercial Airfields,Top 25 Airfields,Captures 67.2% of national domestic departures,Queue intensity rho -> 1.0 during peak banks; avoids trivial unconstrained queues of small regional airports
-Tier 2,Meso Filter (Symmetry & Invariance),Top 25 Airfields,14 Airfields,Concurrent American Delta United operations; Southwest (WN) excluded,Cancels FAA airspace ground delay confounders; eliminates WN bimodal arrival mixture from open-seating
-Tier 3,Micro Filter (Checkpoint Exclusivity),14 Candidate Airfields,9 Airfields,Strict single-carrier dedicated terminal checkpoints,Collapses carrier collinearity (r>=0.88; kappa>10^4) to orthogonal Wiener-Hopf deconvolution (P(j*|k)=1.0)
-Tier 4,Factorial Grid Cohort,9 Selected Airfields,9 Airfields (12 Checkpoint Complexes),Exactly 4 dedicated complexes per legacy carrier across 4 clusters,Orthogonal factorial balance across carrier networks and operational archetypes

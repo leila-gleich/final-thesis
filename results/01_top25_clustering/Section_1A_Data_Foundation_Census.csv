@@ -1,6 +1,0 @@
-Feed_Name,Entity_Grain,Raw_Ingested_Rows,Post_ETL_Cleaned_Rows,Time_Period,Network_Coverage,Conformance_Status,Key_Observations
-TSA FOIA Checkpoint Logs,Checkpoint-Lane-Hour,19500286,6434732,2019-01-01 to 2025-12-31,25 Airfields 955 Lanes,100% Non-Null Zero Orphans,2.70 Billion passengers screened across individual checkpoint lanes
-BTS On-Time Performance (OTP),Flight Departure,45777091,13153654,2019-01-01 to 2025-12-31,25 Airfields 17 Carriers,100% Non-Null Dimensions,13.15 Million domestic commercial departures tracking delays and cancels
-BTS Form 41 Schedule T-100,Carrier-Route-Month,1945451,422096,2019-01-01 to 2025-12-31,25 Airfields 18 Carriers,100% Non-Null Dimensions,2.09 Billion departing seats and 1.70 Billion transported passengers
-BTS DB1B / DB1C Ticket Survey,Ticket Coupon Itinerary,12910384,22051557,2022-01-01 to 2025-12-31,Closed 25-Airport City Pairs,100% Non-Null Dimensions,22.05 Million coupon records representing 62.16 Million ticketed travelers
-Combined Multi-Source Repository,Multi-Source Operational Fact,67222828,42062039,2019-01-01 to 2025-12-31,Full Candidate Commercial Network,Conformed Relational Warehouse,Comprehensive post-ETL cleaned analytical repository before purposive filtering
