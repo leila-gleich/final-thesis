@@ -20,11 +20,12 @@ thesis/
 │   ├── Gleich_700B_Proposal.docx       (Graduate Thesis Proposal Document)
 │   └── Master_References_APA7.docx     (Master APA 7th Edition Reference Suite)
 │
-└── notes_and_recommendations/          <-- Outlines, Guides & Recommendations
-    ├── Master_Results_and_Discussion_Comprehensive_Draft.md (Unified Chapter IV & V Master Text)
+└── notes_and_recommendations/          <-- Outlines, Guides & Frameworks
+    ├── DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt (ETL, Cleaning & Metrics Engineering Framework)
     ├── Recommendations_Results_and_Discussion.md            (Academic, Operational & Defense Guide)
     ├── Top25_Clustering_and_4Tier_Filtering_Guide.md        (Top 25 PCA/K-Means & 4-Tier Funnel Guide)
-    └── Chapter_4_Chapter_5_Outline_Roadmap.md               (Five-Section Structural Roadmap)
+    ├── Chapter_4_Chapter_5_Outline_Roadmap.md               (Five-Section Structural Roadmap)
+    └── VERSION_CONTROL_AND_PROVENANCE.md                    (Data Provenance & SemVer-Data Spec)
 ```
 
 ---
