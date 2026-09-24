@@ -1,0 +1,13 @@
+month_name,seasonal_classification,mean_daily_pax,pct_total_volume,mean_sched_flights,mean_cancel_rate_pct,mean_depdel15_pct,mean_dep_delay_min,mean_taxi_out_min,mean_arr_delay_min
+January,Winter Trough (Off-Peak),1104414.65,6.0,399.16,2.65,17.93,10.24,19.39,4.24
+February,Winter Trough (Off-Peak),1156949.98,5.74,407.5,2.32,17.7,9.9,19.45,3.9
+March,Spring Shoulder (Ramp-Up),1282109.34,6.96,433.71,3.56,17.56,9.33,18.47,3.33
+April,Spring Shoulder (Ramp-Up),1287086.09,6.76,401.98,6.47,16.94,9.05,17.89,3.05
+May,Spring Shoulder (Ramp-Up),1267976.03,9.18,393.97,1.55,18.42,10.74,18.12,4.74
+June,Summer Peak (System Peak),1392185.56,9.76,413.55,1.85,23.38,15.7,18.75,9.7
+July,Summer Peak (System Peak),1393058.66,10.09,429.28,2.22,24.66,17.58,19.08,11.58
+August,Summer Peak (System Peak),1325850.73,9.6,429.62,1.86,20.97,13.24,18.88,7.24
+September,Autumn / Holiday Surge (High Volatility),1255021.2,8.79,415.52,1.1,14.73,7.13,18.37,1.13
+October,Autumn / Holiday Surge (High Volatility),1277074.6,9.25,423.59,0.76,15.05,7.03,18.32,1.03
+November,Autumn / Holiday Surge (High Volatility),1215625.15,8.52,418.36,0.8,14.7,6.83,18.53,0.83
+December,Autumn / Holiday Surge (High Volatility),1290259.51,9.34,411.39,1.59,21.08,12.76,19.23,6.76

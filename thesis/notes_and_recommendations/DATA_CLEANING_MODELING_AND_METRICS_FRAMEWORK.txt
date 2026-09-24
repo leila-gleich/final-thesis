@@ -1,0 +1,292 @@
+================================================================================
+THESIS RESEARCH FRAMEWORK: DATA CLEANING, FEATURE ENGINEERING, 
+UPFRONT ETL VS. MODELING PIPELINES, AND UNIFIED EVALUATION METRICS
+================================================================================
+Author: Leila Gleich
+Project: Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow
+Institution: Embry-Riddle Aeronautical University
+Scope: TSA Checkpoint Throughput Forecasting & Airside-Landside Queue Dynamics
+================================================================================
+
+
+================================================================================
+SECTION 1: DATA CLEANING, TRANSFORMING & SELECTION RECOMMENDATIONS
+================================================================================
+
+To optimize data integrity, eliminate lookahead leakage, and ensure statistical 
+validity when modeling TSA passenger throughput across the 67.22M fact records:
+
+1. DATA CLEANING RECOMMENDATIONS (Anomaly Remediation & De-biasing)
+------------------------------------------------------------------
+* Filter Unresolved Airport Metadata (Ghost Airports):
+  - Upstream FOIA TSA records contain 35,809 rows with blank airport codes 
+    (7,489 recovered via checkpoint fingerprinting; 22,190 mapped to surrogate 
+    key airportId = 0 / airportMissing = 1).
+  - Rule: All training, aggregation, and ranking queries must strictly enforce:
+    WHERE airportMissing = 0 AND airportId > 0
+  - Impact: Prevents an artificial composite "mega-airport" (~9.71 million 
+    passengers) from corrupting nationwide models.
+
+* Preserve Structural Zeros vs. Missing Data:
+  - Exactly 450,973 records (2.31% of the dataset) report throughput = 0 during 
+    overnight non-operational windows (00:00 - 03:59).
+  - Rule: Do NOT impute zeros with moving averages or discard them. Treat them 
+    as true physical lane shutdowns using Two-Stage Hurdle or Tweedie loss models.
+
+* Late 2025 / Early 2026 Column Shift Remediation:
+  - 154 records in late 2025 / early 2026 exhibited checkpoint acronyms in the 
+    airport code column due to upstream FOIA template changes.
+  - Rule: Isolate raw column shifts through conformed dimension surrogate keys.
+
+* Differentiate Advance vs. Tactical Flight Cancellations:
+  - BTS OTP data tracks 988,155 cancelled flights (2.16%); over 99.4% of 
+    unassigned tail numbers (aircraftId = 0) occur on cancelled flights.
+  - Rule: If a cancellation occurs >24 hours in advance, exclude it from scheduled 
+    departing seats. If a flight is cancelled tactically (<2 hours pre-departure), 
+    retain the passengers in the demand curve because they have already arrived 
+    at the airport and cleared TSA security.
+
+
+2. DATA TRANSFORMING RECOMMENDATIONS (Feature Engineering & Representation)
+---------------------------------------------------------------------------
+* Schedule-to-Checkpoint Lead-Time Lagged Demand Convolution:
+  - Lookahead Leakage Threat: Passengers arrive at security 1.5 to 3 hours BEFORE 
+    their scheduled departure (crsDepTime). Using actual flight departure outcomes 
+    (depTime, depDel15) contemporaneously introduces severe lookahead bias and 
+    decouples arrivals from departures.
+  - Transform: Convolve scheduled flight departure seats into future lead-time 
+    buckets using an empirical passenger arrival probability density function:
+    Demand(i, t) = SUM [ Seats_k * LF_route * gamma_OD * Integral_{t}^{t+1} f_arr(tau - SchedDep_k) d_tau ]
+  - Parameterize f_arr as a Lognormal or Gamma distribution peaking 90-120 min 
+    pre-departure for domestic flights and 150-180 min for international flights.
+  - Feature Lagging: Provide the model with scheduled future flight demand at 
+    horizons (t+1, t+2, t+3), while restricting actual delay metrics strictly to 
+    prior hours (t-1) as an indicator of airside terminal congestion.
+
+* Origin & Destination (O&D) Landside De-biasing:
+  - At fortress hubs (e.g., ATL, CLT, DFW), 40% to 65% of departing passengers 
+    are connecting airside and NEVER pass through landside TSA checkpoints.
+  - Transform: Multiply scheduled seat capacity by airport-specific O&D scaling 
+    factors (gamma_OD in [0.35, 0.95]) derived from BTS DB1B passenger survey data 
+    to avoid overestimating landside checkpoint demand.
+
+* High-Cardinality Dimensionality Reduction:
+  - One-hot encoding 7,617 unique aircraft tail numbers and 7,371 checkpoint 
+    lanes creates extreme sparsity and causes tree/neural network overfitting.
+  - Transform: Collapse tail numbers into the 40 conformed BTS aircraft equipment 
+    types (aircraftTypeId) and 3 seating tiers (Regional <76, Narrowbody 77-200, 
+    Widebody >200). Group checkpoint lanes into terminal-level screening complexes.
+
+* Non-Negative Count Target Transformation:
+  - Hourly throughput is strictly non-negative and right-skewed (skewness = 2.72).
+  - Transform: Train models using Tweedie deviance loss (variance power p = 1.3), 
+    Poisson regression, or a log(1 + y_t) target transformation to prevent 
+    impossible negative passenger forecasts during night hours.
+
+
+3. DATA SELECTION RECOMMENDATIONS (Sampling & Validation Integrity)
+-------------------------------------------------------------------
+* Purged Walk-Forward Time-Series Cross-Validation:
+  - Threat: Standard random k-fold cross-validation leaks temporal autocorrelation 
+    between adjacent days, producing deceptively high R^2 values (>0.98) that fail.
+  - Selection Rule: Implement expanding-window walk-forward time-series splits with 
+    a strict 7-day purge embargo buffer between training and testing folds.
+
+* Post-COVID Regime Stratification (Concept Drift Isolation):
+  - Do not treat 2019-2026 as a single homogeneous time series.
+  - Regime 1 (Pre-Pandemic Baseline): 2019.
+  - Regime 2 (Disruption / Shock Testing): 2020-2021 (used for resilience validation).
+  - Regime 3 (Modern Operating Environment): Mid-2022 through 2026 (primary training).
+
+* Stratified Archetype Sampling:
+  - Ensure validation across all 4 structural airport archetypes:
+    1. Decentralized Airline-Dedicated Terminals (e.g., LAX T1 vs. T4 vs. T7).
+    2. Fortress Monoculture Hubs (e.g., CLT, DTW).
+    3. Centralized Linear Megahubs (e.g., ATL, DEN).
+    4. High-O&D Point-to-Point Spokes (e.g., DCA T1, LGA, BOS).
+
+
+================================================================================
+SECTION 2: UPFRONT DATA CLEANING (ETL) VS. IN-PIPELINE MODELING
+================================================================================
+
+A critical architectural distinction must be maintained between tasks performed 
+once upfront during data engineering versus tasks performed dynamically during 
+machine learning model training.
+
+--------------------------------------------------------------------------------
+A. UPFRONT DATA CLEANING & PREPARATION (Do Once in SQL / ETL Pipeline)
+--------------------------------------------------------------------------------
+These tasks clean the raw warehouse data and generate the finalized modeling table 
+(e.g., saved to `tsa_hourly_modeling_master.parquet`):
+
+1. Filter Missing Metadata:
+   - Permanently exclude unresolvable rows (WHERE airportMissing = 0 AND airportId > 0).
+2. Collapse Aircraft Cardinality:
+   - Join dim_aircraft -> L_AIRCRAFT_TYPE to map 7.6k tail numbers into 40 BTS 
+     equipment codes and 3 seating tiers.
+3. Synthesize Departing Passenger Demand:
+   - Calculate Demand = Available Seats * Route Load Factor * gamma_OD for each flight.
+4. Pre-Compute Lead-Time Demand Lags:
+   - Aggregate scheduled departing seats into future hourly bins (t+1, t+2, t+3) 
+     and prior congestion into (t-1).
+5. Preserve Operational Zeros with Structural Flags:
+   - Retain the 450.9k zero-throughput rows; add a binary flag `is_night_closure = 1` 
+     for hours 00:00-03:59.
+6. Pre-Compute Naive Seasonal Lags for MASE:
+   - Create columns for 24-hour diurnal lag (y_{t-24}) and 168-hour weekly lag (y_{t-168}).
+7. Calendar & Clock Standardization:
+   - Standardize all timestamps to local airport operational time.
+   - Extract cyclical features: day_of_week, hour_of_day, month, is_weekend, holiday.
+
+--------------------------------------------------------------------------------
+B. DURING THE MODELING PROCESS (Do Dynamically in Python / ML Training Loop)
+--------------------------------------------------------------------------------
+These tasks MUST NOT be executed globally upfront on the whole dataset to prevent 
+severe data leakage:
+
+1. Purged Walk-Forward Train/Test Splitting:
+   - Dynamically generate expanding train folds with a 7-day purge embargo buffer 
+     before each test fold.
+2. Feature Scaling & Normalization:
+   - Fit StandardScaler() or MinMaxScaler() STRICTLY on the training fold; call 
+     .transform() on the validation/test fold.
+3. Out-of-Fold (OOF) Target Encoding:
+   - Compute categorical target encodings strictly within the training cross-validation 
+     splits to avoid overfitting.
+4. Loss Function Optimization:
+   - Configure Tweedie Loss (variance power p = 1.3), Poisson Loss, or a Two-Stage 
+     Hurdle model (Classifier for zero/active -> Regressor for volume).
+5. Post-COVID Exponential Sample Decay:
+   - Compute sample weights W_i = exp(-lambda * (T_max - t_i)) dynamically during 
+     model fitting (e.g., model.fit(X_train, y_train, sample_weight=W)).
+6. Evaluation of Conditioned Performance Metrics:
+   - Dynamically compute conditioned RMSE and MASE across operational subsets:
+     * Robustness on routine non-disrupted subsets.
+     * Resilience on disruption shock windows.
+     * Generalizability across zero-shot out-of-sample terminal archetypes.
+
+
+================================================================================
+SECTION 3: UNIFIED RMSE & MASE MATHEMATICAL EVALUATION FRAMEWORK
+================================================================================
+
+Rather than introducing fragmented, ad-hoc metrics, the research employs a unified 
+mathematical core—Root Mean Squared Error (RMSE) and Mean Absolute Scaled Error (MASE)—
+conditioned across operational states, temporal horizons, and spatial domains.
+
+CORE BASE DEFINITIONS:
+----------------------
+* Root Mean Squared Error (RMSE):
+  Penalizes large peak forecast errors quadratically (vital for queue overflow risk):
+  RMSE = sqrt( (1 / N) * SUM_{t=1}^{N} (y_t - y_hat_t)^2 )
+
+* Mean Absolute Scaled Error (MASE):
+  Normalizes error against a 24-hour diurnal seasonal naive benchmark (m = 24):
+  MASE = [ (1 / N) * SUM_{t=1}^{N} |y_t - y_hat_t| ] / Q_naive
+  where Q_naive = (1 / (N - 24)) * SUM_{t=25}^{N} |y_t - y_{t-24}|
+  (MASE < 1.0 indicates performance superior to historical persistence).
+
+
+--------------------------------------------------------------------------------
+1. ROBUSTNESS (Continuous Static Stability under Routine Conditions)
+--------------------------------------------------------------------------------
+* Operational Context:
+  Evaluates baseline accuracy and variance under routine operating hours (T_routine), 
+  defined as hours where flight delays are <15 minutes and no ground stops exist.
+
+* Mathematical Equations:
+  RMSE_routine = sqrt( (1 / |T_routine|) * SUM_{t in T_routine} (y_t - y_hat_t)^2 )
+  MASE_routine = [ (1 / |T_routine|) * SUM_{t in T_routine} |y_t - y_hat_t| ] / Q_naive
+
+* Optimization Objective:
+  MINIMIZE RMSE_routine and MINIMIZE MASE_routine (target: MASE < 0.70).
+
+* Practical Interpretation:
+  Confirms the model accurately tracks everyday morning/evening rush peaks without 
+  overfitting to minor operational jitter.
+
+
+--------------------------------------------------------------------------------
+2. RESILIENCE (System Shock Absorption & Recovery Dynamics)
+--------------------------------------------------------------------------------
+* Operational Context:
+  Evaluates how effectively the model absorbs acute disruption windows (T_shock)—such 
+  as severe weather ground stops, flight delays >45 min, and holiday surges—and how 
+  rapidly forecast accuracy recovers post-shock.
+
+* Mathematical Equations:
+  a. Shock-Window Errors:
+     RMSE_shock = sqrt( (1 / |T_shock|) * SUM_{t in T_shock} (y_t - y_hat_t)^2 )
+     MASE_shock = [ (1 / |T_shock|) * SUM_{t in T_shock} |y_t - y_hat_t| ] / Q_naive
+
+  b. Resilience Error Multipliers (Relative Degradation Ratio):
+     R_RMSE = RMSE_shock / RMSE_routine
+     R_MASE = MASE_shock / MASE_routine
+     (A fragile model exhibits R >= 3.0; a resilient model maintains R approx 1.0 - 1.3).
+
+  c. Time-Decayed Recovery MASE:
+     MASE_rec = [ SUM_{k=1}^{K} exp(-lambda * k) * |y_{t0 + k} - y_hat_{t0 + k}| ] / Q_naive
+     (Heavily penalizes models that take multiple hours to recover nominal accuracy).
+
+  d. Time-to-Recovery (TTR):
+     TTR = inf { Delta_t > 0 | |(y_{t_shock + Delta_t} - y_hat_{t_shock + Delta_t}) / y_{t_shock + Delta_t}| <= epsilon }
+
+* Optimization Objective:
+  MINIMIZE RMSE_shock, MINIMIZE R_MASE -> 1.0, MINIMIZE MASE_rec, and MINIMIZE TTR.
+
+* Practical Interpretation:
+  Ensures that when flights are delayed, the model does not falsely predict empty 
+  checkpoints, preventing security queue blowouts.
+
+
+--------------------------------------------------------------------------------
+3. GENERALIZABILITY (Cross-Terminal Spatial Transferability)
+--------------------------------------------------------------------------------
+* Operational Context:
+  Evaluates whether a model trained on Source Terminal/Airport S (e.g., LAX decentralized 
+  terminals) can predict throughput zero-shot on Target Terminal/Airport T (e.g., CLT 
+  fortress hub) without retraining.
+
+* Mathematical Equations:
+  a. Cross-Domain Zero-Shot Transfer RMSE:
+     RMSE_{S -> T} = sqrt( (1 / N_T) * SUM_{t=1}^{N_T} (y_t^(T) - y_hat_t^(S -> T))^2 )
+
+  b. Transfer Degradation Delta MASE:
+     Delta_MASE_transfer = [ MASE(T; theta_S) - MASE(T; theta_T) ] / MASE(T; theta_T)
+
+  c. Relative Transfer Ratio (RTR):
+     RTR_RMSE = RMSE_{S -> T} / RMSE_{T -> T}
+     (RTR approx 1.0 indicates near-perfect generalizability; RTR >> 2.0 indicates spatial overfitting).
+
+* Optimization Objective:
+  MINIMIZE RMSE_{S -> T}, MINIMIZE Delta_MASE_transfer -> 0, and MINIMIZE RTR_RMSE -> 1.0.
+
+* Practical Interpretation:
+  Proves that decoupling terminal topology features (O&D fraction, carrier concentration, 
+  gate configurations) enables zero-shot portability across diverse airport layouts.
+
+
+================================================================================
+SECTION 4: MASTER SYNTHESIS & STATISTICAL VERIFICATION MATRIX
+================================================================================
+
++----------------------+---------------------------------+------------------------------------------+
+| Performance Measure  | Primary Mathematical Metrics    | Academic Significance Test               |
++----------------------+---------------------------------+------------------------------------------+
+| 1. Robustness        | • RMSE_routine                  | • Diebold-Mariano Test vs. Baselines     |
+| (Steady-State Fit)   | • MASE_routine                  | • Paired Wilcoxon Signed-Rank Test       |
+|                      | • Prediction Interval Coverage  | • Target: MASE < 0.70 (p < 0.001)        |
++----------------------+---------------------------------+------------------------------------------+
+| 2. Resilience        | • RMSE_shock / MASE_shock       | • Two-Way Repeated Measures ANOVA        |
+| (Disruption Shocks)  | • Resilience Multiplier R_MASE  | • Kaplan-Meier TTR Survival Curves       |
+|                      | • Time-Decayed MASE_rec / TTR   | • Target: R_MASE < 1.30 (p < 0.01)       |
++----------------------+---------------------------------+------------------------------------------+
+| 3. Generalizability  | • RMSE_{S -> T}                 | • Kruskal-Wallis Test across Archetypes  |
+| (Spatial Transfer)   | • Delta_MASE_transfer           | • Mixed-Effects Random Intercept Model   |
+|                      | • Relative Transfer Ratio RTR   | • Target: Delta_MASE <= 10% (p < 0.01)   |
++----------------------+---------------------------------+------------------------------------------+
+
+================================================================================
+END OF FRAMEWORK DOCUMENT
+================================================================================

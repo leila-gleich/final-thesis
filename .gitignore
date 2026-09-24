@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data files & local DuckDB databases
+*.duckdb
+*.duckdb.wal
+*.parquet
+*.csv.gz
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Microsoft Office temporary lock files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Packaging, distribution & builds
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Testing & code coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Environment secrets
+*.log
+.env
+.env.*
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/

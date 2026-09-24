@@ -1,0 +1,12 @@
+Metric_Category,Variable_Name,Sample_Size_N,Mean,Median,Std_Dev,IQR,Min,Max,Percentile_5th,Percentile_95th,Skewness,Kurtosis
+TSA Throughput,Hourly Checkpoint-Lane Throughput (pax/hr),6434732,420.17,293.00,444.84,447.00,0.00,5336.00,10.00,1316.00,2.176,6.350
+Flight Delays,Departure Delay (Minutes),13153654,12.70,-2.00,52.75,14.00,-105.00,3695.00,-10.00,83.00,10.348,203.954
+Flight Delays,Significant Delay Rate (depDel15 >= 15m),13153654,0.2012,0.00,0.4009,0.00,0.00,1.00,0.00,1.00,1.491,3.223
+Flight Operations,Flight Cancellation Rate,13153654,0.0203,0.00,0.1409,0.00,0.00,1.00,0.00,0.00,6.812,47.408
+Flight Operations,Runway Taxi-Out Queue Time (Minutes),13153654,18.84,16.00,10.03,9.00,1.00,180.00,8.00,39.00,2.174,9.920
+Flight Operations,Airborne Flight Duration (Minutes),13153654,141.50,126.00,75.40,92.00,15.00,720.00,42.00,295.00,1.082,3.840
+Flight Operations,Scheduled Flight Distance (Miles),13153654,1052.12,867.00,624.80,820.00,67.00,5095.00,280.00,2475.00,1.014,3.580
+Route Capacity,Seats per Route-Month,422096,4962.40,2512.00,7019.66,5480.00,1.00,145200.00,120.00,19200.00,3.480,18.420
+Route Capacity,Transported Passengers per Route-Month,422096,4030.05,1927.00,5938.42,4380.00,0.00,128500.00,85.00,15800.00,3.520,18.910
+Route Capacity,Overall Route Load Factor (Percent),422096,81.21,83.40,11.80,12.50,0.00,100.00,58.40,94.20,-1.420,5.840
+Passenger Surveys,Connecting Passenger Fraction (Hub Share),22051557,51.39,50.73,11.74,16.20,33.58,76.04,35.69,70.09,0.180,2.410

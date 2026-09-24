@@ -1,0 +1,7 @@
+Model_ID,Model_Paradigm,Model_Specification,Mean_Predicted_pax,Std_Dev_Predicted_pax,Forecast_Bias_pax,Test_MAE_pax,Test_RMSE_pax,Test_MASE,Test_R2
+M0,Deterministic Baseline,Diurnal Seasonal Naive (y_{t-24}),1748.2,1420.1,-0.7,939.8,1377.3,1.000,0.4508
+M1,Deterministic Baseline,Contemporaneous Sched SARIMAX,1421.5,1180.4,-327.4,1042.6,1393.8,1.109,0.4375
+M2,Probabilistic / ML,Convolved Lead Flights Only,1452.8,1395.2,-296.8,856.2,1195.5,0.911,0.5862
+M3,Probabilistic / ML,Convolved Lead + OTP Delays/Cancels,1454.3,1398.7,-295.3,855.1,1192.9,0.910,0.5880
+M4,Probabilistic / ML,Full Tri-Modal Pipeline (LF Int),1318.8,1412.0,-430.8,856.3,1208.6,0.911,0.5771
+M5,Dynamic Hybrid Model,Sequential SARIMA-Tree Hybrid,1346.7,1489.3,-402.9,795.0,1135.0,0.846,0.6270

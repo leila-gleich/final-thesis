@@ -1,0 +1,11 @@
+rank,date,day_name,system_total_pax,z_score,operational_classification,underlying_cause
+1,2025-11-08,Saturday,389670.0,-4.61,Acute Off-Peak Trough (-2 Sigma),Early November Saturday Post-Halloween Lull
+2,2025-11-04,Tuesday,410115.0,-4.5,Acute Off-Peak Trough (-2 Sigma),Early November Mid-Week Pre-Holiday Valley
+3,2022-05-07,Saturday,413602.0,-4.49,Acute Off-Peak Trough (-2 Sigma),Early Post-Mask Mandate Baseline Saturday
+4,2022-05-03,Tuesday,423613.0,-4.43,Acute Off-Peak Trough (-2 Sigma),Early Post-Mask Mandate Mid-Week Contraction
+5,2025-11-05,Wednesday,428602.0,-4.41,Acute Off-Peak Trough (-2 Sigma),November Mid-Week Trough Pre-Thanksgiving
+6,2022-05-04,Wednesday,444401.0,-4.33,Acute Off-Peak Trough (-2 Sigma),Routine Mid-Week Spring Contraction
+7,2022-07-03,Sunday,445202.0,-4.32,Acute Off-Peak Trough (-2 Sigma),Holiday Eve Phenomenon (July 4 Eve)
+8,2022-05-02,Monday,456928.0,-4.26,Acute Off-Peak Trough (-2 Sigma),Early Post-Mandate Monday Baseline
+9,2025-11-07,Friday,461842.0,-4.24,Acute Off-Peak Trough (-2 Sigma),Early November Friday Shoulder Lull
+10,2025-11-06,Thursday,471143.0,-4.19,Acute Off-Peak Trough (-2 Sigma),Early November Thursday Shoulder Lull

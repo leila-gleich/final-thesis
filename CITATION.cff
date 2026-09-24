@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you utilize this research, models, or empirical findings, please cite this thesis as below."
+title: "Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow: TSA Checkpoint Throughput Forecasting & Airside-Landside Queue Dynamics"
+authors:
+  - family-names: "Gleich"
+    given-names: "Leila"
+    affiliation: "Embry-Riddle Aeronautical University"
+    email: "gleichl@my.erau.edu"
+version: 3.0.0
+date-released: 2026-09-24
+repository-code: "https://github.com/leila-gleich/final-thesis"
+license: "MIT"
+type: "thesis"
+institution:
+  name: "Embry-Riddle Aeronautical University"
+  department: "Department of Graduate Studies / College of Aviation"
+keywords:
+  - "aviation data analytics"
+  - "TSA checkpoint throughput"
+  - "airport queue dynamics"
+  - "stochastic passenger arrival"
+  - "SARIMA-Tree hybrid"
+  - "Bureau of Transportation Statistics"
+  - "airside-landside deconvolution"

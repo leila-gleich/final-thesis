@@ -1,0 +1,19 @@
+rank,flight_date,airports_affected_count,network_scheduled_flights,cancelled_flights,network_cancel_rate_pct,network_mean_dep_delay_minutes,network_depdel15_rate_pct,historical_event_classification
+1,43920,25,11885,6437,54.16,-3.52,5.48,COVID-19 Initial Nationwide Grounding & Capacity Cut
+2,43921,25,11144,5881,52.77,-3.19,5.84,COVID-19 Pandemic Stay-at-Home Mandates
+3,43917,25,12158,6389,52.55,-4.22,4.92,COVID-19 Capacity Consolidation Purge
+4,43923,25,9255,4731,51.12,-1.56,7.58,COVID-19 Airspace Network Shock
+5,43916,25,12225,6097,49.87,-3.19,5.52,COVID-19 Pandemic Travel Collapse
+6,43922,25,9605,4723,49.17,-0.49,8.14,COVID-19 Schedule Grounding Peak
+7,43919,25,11701,5748,49.12,-3.53,5.36,COVID-19 Network Passenger Lull
+8,43924,25,9174,4388,47.83,-2.0499999999999998,6.8,COVID-19 Airline Route Rationalization
+9,43927,25,8484,4029,47.49,0.65,10.83,COVID-19 TSA Screening Trough
+10,43918,25,10423,4927,47.27,-2.2200000000000002,6.36,COVID-19 Fleet Grounding and Parking
+11,43928,25,7301,3450,47.25,-3.92,4.95,COVID-19 Airline Capacity Downsizing
+12,43915,25,12126,5643,46.54,-2.87,6.47,COVID-19 Emergency Travel Restrictions
+13,43925,25,7658,3523,46,-4.67,4.1900000000000004,COVID-19 Flight Suspension Window
+14,43926,25,8525,3846,45.11,-5.39,3.55,COVID-19 Minimum Schedule Maintenance
+15,43914,25,12243,5155,42.11,-2.27,6.95,COVID-19 Fleet Transition Day
+16,44918,25,12410,3892,31.36,37.840000000000003,44.92,Winter Storm Elliott (Arctic Freeze & Holiday Network Meltdown)
+17,45492,25,14215,3118,21.93,31.45,39.81,CrowdStrike Global IT Airline Software Outage
+18,44242,25,10950,2754,25.15,22.18,28.94,Texas Winter Storm Uri (DFW/IAH Deep Freeze)

@@ -1,0 +1,17 @@
+# Auto-detect text files and normalize line endings to LF on commit
+* text=auto eol=lf
+
+# Explicitly declare binary files to prevent line-ending modification and diff corruption
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.parquet binary
+*.duckdb binary
+*.zip binary
+*.tar.gz binary
