@@ -37,10 +37,11 @@ final-thesis/
 │   │   ├── Gleich_700B_Proposal.docx
 │   │   └── Master_References_APA7.docx
 │   └── notes_and_recommendations/      <-- Outlines & Recommendations Guides
-│       ├── Master_Results_and_Discussion_Comprehensive_Draft.md
+│       ├── DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt
 │       ├── Recommendations_Results_and_Discussion.md
 │       ├── Top25_Clustering_and_4Tier_Filtering_Guide.md
-│       └── Chapter_4_Chapter_5_Outline_Roadmap.md
+│       ├── Chapter_4_Chapter_5_Outline_Roadmap.md
+│       └── VERSION_CONTROL_AND_PROVENANCE.md
 │
 ├── src/                                <-- Modular Python Source Code Infrastructure
 │   ├── etl/                            <-- Ingestion, Top 25 Clustering & 4-Tier Filtering
@@ -123,6 +124,8 @@ python run_pipeline.py
 ```
 
 ### 3. Explore Manuscripts & Recommendations
-* Master Results & Discussion Draft: [`thesis/notes_and_recommendations/Master_Results_and_Discussion_Comprehensive_Draft.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis/notes_and_recommendations/Master_Results_and_Discussion_Comprehensive_Draft.md)
-* Academic & Operational Recommendations: [`thesis/notes_and_recommendations/Recommendations_Results_and_Discussion.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis/notes_and_recommendations/Recommendations_Results_and_Discussion.md)
-* Clustering & 4-Tier Filtering Guide: [`thesis/notes_and_recommendations/Top25_Clustering_and_4Tier_Filtering_Guide.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis/notes_and_recommendations/Top25_Clustering_and_4Tier_Filtering_Guide.md)
+* Chapter IV Empirical Results: [`thesis/manuscripts/Chapter_4_Results_Empirical_Findings.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis-1/thesis/manuscripts/Chapter_4_Results_Empirical_Findings.md)
+* Chapter V Analysis & Discussion: [`thesis/manuscripts/Chapter_5_Analysis_and_Discussion.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis-1/thesis/manuscripts/Chapter_5_Analysis_and_Discussion.md)
+* Academic & Operational Recommendations: [`thesis/notes_and_recommendations/Recommendations_Results_and_Discussion.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis-1/thesis/notes_and_recommendations/Recommendations_Results_and_Discussion.md)
+* Clustering & 4-Tier Filtering Guide: [`thesis/notes_and_recommendations/Top25_Clustering_and_4Tier_Filtering_Guide.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis-1/thesis/notes_and_recommendations/Top25_Clustering_and_4Tier_Filtering_Guide.md)
+* Research Framework & Data Cleaning: [`thesis/notes_and_recommendations/DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis-1/thesis/notes_and_recommendations/DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt)
