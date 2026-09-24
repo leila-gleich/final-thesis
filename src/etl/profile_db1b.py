@@ -3,7 +3,9 @@ import csv
 import random
 import zipfile
 
-DEST_DIR = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Initial Repo/700b-data-warehouse/data/raw/db1b"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SSOT_DIR = os.getenv("SSOT_DIR", os.path.join(os.path.dirname(REPO_ROOT), "SSOT"))
+DEST_DIR = os.getenv("SSOT_DB1B_DIR", os.path.join(SSOT_DIR, "db1b"))
 
 def profile_and_sample():
     # Look for any csv in DEST_DIR or unzip test_2019_1.zip if needed

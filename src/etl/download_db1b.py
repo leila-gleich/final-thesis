@@ -6,7 +6,9 @@ import random
 import time
 import sys
 
-DEST_DIR = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Initial Repo/700b-data-warehouse/data/raw/db1b"
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SSOT_DIR = os.getenv("SSOT_DIR", os.path.join(os.path.dirname(REPO_ROOT), "SSOT"))
+DEST_DIR = os.getenv("SSOT_DB1B_DIR", os.path.join(SSOT_DIR, "db1b"))
 os.makedirs(DEST_DIR, exist_ok=True)
 
 # 28 Quarters from 2019 Q1 to 2025 Q4

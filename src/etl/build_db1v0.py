@@ -12,10 +12,12 @@ import sys
 import time
 import duckdb
 
-BASE_DIR = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Initial Repo/700b-data-warehouse"
-RAW_DIR = os.path.join(BASE_DIR, "data", "raw", "db1b")
-PROCESSED_DIR = os.path.join(BASE_DIR, "data", "processed")
-DIM_DIR = os.path.join(BASE_DIR, "dimensions")
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SSOT_DIR = os.getenv("SSOT_DIR", os.path.join(os.path.dirname(REPO_ROOT), "SSOT"))
+RAW_DIR = os.path.join(SSOT_DIR, "db1b")
+PROCESSED_DIR = os.path.join(REPO_ROOT, "data", "processed")
+DIM_DIR = os.path.join(REPO_ROOT, "dimensions")
+os.makedirs(PROCESSED_DIR, exist_ok=True)
 
 MKT_PATH = os.path.join(RAW_DIR, "DB1BMarket_22-25.csv")
 DIM_AIRPORT = os.path.join(DIM_DIR, "dim_airport.csv")
