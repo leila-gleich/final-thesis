@@ -1,6 +1,11 @@
+import os
+import sys
 import unittest
 import pandas as pd
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from etl.perform_top25_clustering import run_top25_clustering
+
 
 class TestTop25Clustering(unittest.TestCase):
     def test_top25_clustering_output_shape(self):

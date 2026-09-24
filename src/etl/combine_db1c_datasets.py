@@ -6,11 +6,9 @@ import csv
 import io
 import duckdb
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-_DEFAULT_LOCAL_DIR = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/d1b1 OD/DB1C folders"
-DB1C_DIR = os.getenv(
-    "DB1C_DIR",
-    _DEFAULT_LOCAL_DIR if os.path.exists(_DEFAULT_LOCAL_DIR) else os.path.join(REPO_ROOT, "data", "raw", "db1c")
-)
+DEFAULT_DB1C_DIR = os.path.join(REPO_ROOT, "data", "raw", "db1c")
+DB1C_DIR = os.getenv("DB1C_DIR", DEFAULT_DB1C_DIR)
+
 
 def combine_db1c_coupon():
     """

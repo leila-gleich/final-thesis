@@ -1,6 +1,11 @@
+import os
+import sys
 import unittest
 import pandas as pd
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from etl.apply_4tier_filtering import apply_four_tier_filtering
+
 
 class TestFourTierFiltering(unittest.TestCase):
     def test_four_tier_filtering_cohort(self):

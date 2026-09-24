@@ -4,12 +4,17 @@ import random
 import zipfile
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SSOT_DIR = os.getenv("SSOT_DIR", os.path.join(os.path.dirname(REPO_ROOT), "SSOT"))
-DEST_DIR = os.getenv("SSOT_DB1B_DIR", os.path.join(SSOT_DIR, "db1b"))
+DEFAULT_DEST_DIR = os.path.join(REPO_ROOT, "data", "raw", "db1b")
+DEST_DIR = os.getenv("RAW_DB1B_DIR", os.getenv("SSOT_DB1B_DIR", DEFAULT_DEST_DIR))
 
 def profile_and_sample():
-    # Look for any csv in DEST_DIR or unzip test_2019_1.zip if needed
-    csv_files = [os.path.join(DEST_DIR, f) for f in os.listdir(DEST_DIR) if f.endswith('.csv')]
+    # Look for any csv in DEST_DIR or fall back to data/sample
+    csv_files = [os.path.join(DEST_DIR, f) for f in os.listdir(DEST_DIR) if f.endswith('.csv')] if os.path.exists(DEST_DIR) else []
+    if not csv_files:
+        sample_dir = os.path.join(REPO_ROOT, "data", "sample")
+        if os.path.exists(sample_dir):
+            csv_files = [os.path.join(sample_dir, f) for f in os.listdir(sample_dir) if "db1" in f.lower() and f.endswith('.csv')]
+
     
     if not csv_files:
         zip_files = [os.path.join(DEST_DIR, f) for f in os.listdir(DEST_DIR) if f.endswith('.zip')]

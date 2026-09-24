@@ -53,3 +53,6 @@ def convolve_scheduled_demand(flights_df, seats_col="seats", load_factor_col="lo
     df["convolved_total_demand"] = net_originating_pax
     
     return df
+
+continuous_passenger_arrival_kernel = compute_arrival_weights
+

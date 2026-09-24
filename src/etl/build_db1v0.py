@@ -13,15 +13,22 @@ import time
 import duckdb
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SSOT_DIR = os.getenv("SSOT_DIR", os.path.join(os.path.dirname(REPO_ROOT), "SSOT"))
-RAW_DIR = os.path.join(SSOT_DIR, "db1b")
+DEFAULT_RAW_DIR = os.path.join(REPO_ROOT, "data", "raw", "db1b")
+RAW_DIR = os.getenv("RAW_DB1B_DIR", os.getenv("SSOT_DB1B_DIR", DEFAULT_RAW_DIR))
 PROCESSED_DIR = os.path.join(REPO_ROOT, "data", "processed")
 DIM_DIR = os.path.join(REPO_ROOT, "dimensions")
 os.makedirs(PROCESSED_DIR, exist_ok=True)
 
-MKT_PATH = os.path.join(RAW_DIR, "DB1BMarket_22-25.csv")
+# Prefer full raw dataset if present, otherwise fall back to local sample dataset
+candidates = [
+    os.path.join(RAW_DIR, "DB1BMarket_22-25.csv"),
+    os.path.join(RAW_DIR, "sample_db1b.csv"),
+    os.path.join(REPO_ROOT, "data", "sample", "sample_db1b_market.csv")
+]
+MKT_PATH = next((p for p in candidates if os.path.exists(p)), candidates[0])
 DIM_AIRPORT = os.path.join(DIM_DIR, "dim_airport.csv")
 DIM_AIRLINE = os.path.join(DIM_DIR, "dim_airline.csv")
+
 
 OUT_CSV = os.path.join(PROCESSED_DIR, "db1v0.csv")
 OUT_PARQUET = os.path.join(PROCESSED_DIR, "db1v0.parquet")

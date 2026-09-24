@@ -13,3 +13,6 @@ def add_rolling_features(con, table_name="vw_tsa_active_throughput"):
     GROUP BY dateId, airportId
     """
     return con.execute(query).df()
+
+extract_temporal_features = add_rolling_features
+

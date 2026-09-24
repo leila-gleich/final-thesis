@@ -58,7 +58,11 @@ final-thesis/
 │   └── utils/                          <-- DB Connection & Logging Utilities
 │       ├── db_connection.py
 │       └── logger.py
-│
+├── data/                               <-- Data Directory (Curated aggregates, samples, raw staging)
+│   ├── curated/                        # Coupled hourly & daily TSA/flight aggregates (2019–2025)
+│   ├── sample/                         # Representative sample fixtures for pipeline validation
+│   ├── raw/                            # Federal source files & staging (git-ignored)
+│   └── processed/                      # Conformed intermediate tables (git-ignored)
 ├── dimensions/                         <-- Conformed dimension lookup tables (airports, dates, etc.)
 ├── results/                            <-- Publication-grade results tables & CSV censuses
 │   ├── 01_top25_clustering/            # Top 25 spatial census & PCA/K-Means cluster outputs
@@ -68,6 +72,7 @@ final-thesis/
 │   └── 05_robustness_resilience_generalizability/ # Deep-dive evaluation tables
 └── figures/                            # High-resolution diagrams, network maps, and PCA biplots
 ```
+
 
 ---
 
@@ -123,7 +128,14 @@ Run the master execution entrypoint:
 python run_pipeline.py
 ```
 
-### 3. Explore Manuscripts & Recommendations
+### 3. Run Test Suite
+Execute the self-contained test suite across all stages:
+```bash
+python3 -m unittest discover tests
+```
+
+### 4. Explore Manuscripts & Recommendations
+
 * Chapter IV Empirical Results: [Chapter_4_Results_Empirical_Findings.md](thesis/manuscripts/Chapter_4_Results_Empirical_Findings.md)
 * Chapter V Analysis & Discussion: [Chapter_5_Analysis_and_Discussion.md](thesis/manuscripts/Chapter_5_Analysis_and_Discussion.md)
 * Academic & Operational Recommendations: [Recommendations_Results_and_Discussion.md](thesis/notes_and_recommendations/Recommendations_Results_and_Discussion.md)

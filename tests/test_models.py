@@ -1,7 +1,12 @@
+import os
+import sys
 import unittest
 import numpy as np
 import pandas as pd
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from models.baselines import DiurnalSeasonalNaive, DeterministicFixedLeadBaseline
+
 
 class TestBaselineModels(unittest.TestCase):
     def test_diurnal_seasonal_naive(self):

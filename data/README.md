@@ -1,6 +1,6 @@
 # Data Provenance & Ingestion Directory
 
-This directory stores the primary federal aviation datasets and intermediate processed artifacts utilized in the graduate thesis *Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow*.
+This directory stores the primary federal aviation datasets, curated aggregates, representative sample fixtures, and intermediate processed artifacts utilized in the graduate thesis *Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow*.
 
 ---
 
@@ -8,15 +8,27 @@ This directory stores the primary federal aviation datasets and intermediate pro
 
 ```
 data/
-├── raw/            <-- Unprocessed federal source files (excluded from Git tracking)
-│   ├── tsa/        # TSA FOIA passenger checkpoint hourly logs (2019–2025)
-│   ├── otp/        # BTS On-Time Performance flight movement records
-│   ├── t100/       # BTS T-100 Segment aircraft capacity & seats
-│   └── db1b/       # BTS DB1B / DB1C 10% ticket survey itinerary & coupon files
+├── curated/            <-- Version-controlled multi-year aggregated operational datasets
+│   ├── hourly_aggregated_data.csv   # Coupled hourly TSA throughput & flight departures (2019–2025)
+│   └── daily_aggregated_data.csv    # Daily consolidated throughput & flight counts
 │
-└── processed/      <-- Intermediate sanitized datasets & parquet databases
-    ├── archive/    # Archived baseline partitions (e.g. v0)
-    └── warehouse/  # DuckDB local analytics instances
+├── sample/             <-- Lightweight representative sample fixtures for CI/CD & local testing
+│   ├── sample_otp_raw.csv           # 10,000-row BTS OTP flight movements sample
+│   ├── sample_db1b_market.csv       # 10,000-row BTS DB1B Origin-Destination Market sample
+│   ├── sample_db1c.csv              # 5,000-row BTS DB1C monthly coupon itinerary sample
+│   ├── sample_t100.csv              # 5,000-row BTS T-100 carrier segment seats sample
+│   └── sample_tsa_hourly.csv        # 5,000-row hourly checkpoint throughput sample
+│
+├── raw/                <-- Full federal source files & local staging (excluded from Git tracking)
+│   ├── otp/            # BTS On-Time Performance flight movement records
+│   ├── db1b/           # BTS DB1B Market 10% ticket survey archives
+│   ├── db1c/           # BTS DB1C monthly coupon parquet/csv files
+│   ├── t100/           # BTS T-100 Segment aircraft capacity & seats
+│   └── tsa/            # TSA FOIA passenger checkpoint hourly logs
+│
+└── processed/          <-- Intermediate sanitized datasets & parquet databases (git-ignored)
+    ├── archive/        # Archived baseline partitions (e.g. v0)
+    └── warehouse/      # DuckDB local analytics instances
 ```
 
 ---
@@ -44,8 +56,15 @@ data/
 
 ---
 
-## Replication Note
+## Self-Contained Execution & Replication
 
-Due to file sizes exceeding GitHub limits (67.22 million raw records totaling >35 GB uncompressed), raw data files in `data/raw/` and processed tables in `data/processed/` are excluded via `.gitignore`. 
+To ensure the repository is completely self-contained and reproducible without requiring users to download the full 85+ GB multi-year federal census:
+- **Curated Multi-Year Aggregates:** Pre-aggregated hourly and daily coupled tables are provided directly in `data/curated/` (`hourly_aggregated_data.csv` and `daily_aggregated_data.csv`).
+- **Representative Sample Data:** Micro-fixtures are provided in `data/sample/` to test and validate every stage of the ETL pipeline (`build_db1v0.py`, `profile_db1b.py`, etc.).
+- **Dimensions:** Complete star schema lookup tables are version-controlled in `dimensions/`.
+- **Benchmark Findings:** Publication-grade empirical results are version-controlled in `results/`.
 
-All conformed lookup dimensions necessary for pipeline orchestration are version-controlled in the top-level `dimensions/` directory. All final empirical benchmark outputs are version-controlled in `results/`.
+### External Storage & Environment Overrides
+If working with the full uncompressed 85+ GB census files, scripts support environment variable overrides:
+- `RAW_DB1B_DIR` or `SSOT_DB1B_DIR`: Path to external DB1B market/coupon folder (defaults to `data/raw/db1b`).
+- `DB1C_DIR`: Path to external DB1C monthly parquet folder (defaults to `data/raw/db1c`).

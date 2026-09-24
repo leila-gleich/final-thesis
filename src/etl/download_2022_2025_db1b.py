@@ -5,9 +5,10 @@ import sys
 import time
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SSOT_DIR = os.getenv("SSOT_DIR", os.path.join(os.path.dirname(REPO_ROOT), "SSOT"))
-DEST_DIR = os.getenv("SSOT_DB1B_DIR", os.path.join(SSOT_DIR, "db1b"))
+DEFAULT_DEST_DIR = os.path.join(REPO_ROOT, "data", "raw", "db1b")
+DEST_DIR = os.getenv("RAW_DB1B_DIR", os.getenv("SSOT_DB1B_DIR", DEFAULT_DEST_DIR))
 os.makedirs(DEST_DIR, exist_ok=True)
+
 
 # Target periods: 2022 Q1-Q4, 2023 Q1-Q4, 2024 Q1-Q4, 2025 Q1-Q2 (Excluding 2025 Q3 and Q4)
 TARGET_PERIODS = [
