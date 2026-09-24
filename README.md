@@ -13,6 +13,8 @@
 
 This repository (`final-thesis`) is the complete, self-contained, publication-grade master codebase, empirical data products, visual assets, and manuscript chapters for the graduate thesis *Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow*. The research synthesizes four major federal aviation datasets (**TSA FOIA Checkpoint Logs**, **BTS On-Time Performance**, **BTS T-100 Segment Capacity**, and **BTS DB1B Ticket Coupon Surveys**) covering 67.22 million raw fact records across 2019–2025.
 
+The purpose of this repository is to address the research question "How do deterministic baseline models, supervised machine learning architectures, and dynamic hybrid models compare across steady-state accuracy (Robustness), disruption shock absorption (Resilience), and cross-terminal spatial transferability (Generalizability)?"
+
 ---
 
 ## Master Repository Architecture (`final-thesis`)
