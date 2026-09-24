@@ -2,9 +2,10 @@ import os
 import duckdb
 
 try:
-    from src.utils.logger import setup_logger
-except ModuleNotFoundError:
     from utils.logger import setup_logger
+except ImportError:
+    from ..utils.logger import setup_logger
+
 
 logger = setup_logger("airport_selector")
 
