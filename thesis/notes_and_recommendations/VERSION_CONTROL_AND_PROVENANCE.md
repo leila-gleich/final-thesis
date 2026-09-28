@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: Results_and_Analysis/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v3.0 (Unified Publication-Grade Results Architecture)
-DATE: September 2026
+RELEASE VERSION: v3.1 (Methodological Harmonization & Two-Chapter Finalization)
+DATE: September 28, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -34,6 +34,13 @@ auditability, reproducibility, and referential integrity across all empirical fi
 | v3.0    | 2026-09-17 | Unified Results Architecture Release: Consolidates all four federal feeds, |
 |         |            | the Executive Summary Suite, the 25-airport master census, coupled cross-  |
 |         |            | dataset dynamics, and domain-organized results into Results_and_Analysis/. |
+| v3.1    | 2026-09-28 | Methodological Harmonization & Two-Chapter Finalization:                   |
+|         |            | - Formalized balanced 4x4 factorial design across 9 hubs.                  |
+|         |            | - Verified OTP departing flights scope (unrestricted destinations).        |
+|         |            | - Econometrically confirmed Type I vs. Type II layout invariance           |
+|         |            |   via two-sample Kolmogorov-Smirnov test (D = 0.032, p = 0.28).            |
+|         |            | - Rebuilt M1 deterministic static 2-hr lead baseline (R^2 = 0.5293).       |
+|         |            | - Structured formal Chapter IV (Findings) and Chapter V (Analysis) split.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
