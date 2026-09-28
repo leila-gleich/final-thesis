@@ -203,19 +203,19 @@ Rather than enforcing arbitrary, consecutive time blocks, the 24 hours of each d
 | :--- | :--- | :--- |
 | **Start Date** | January 1, 2023 | **May 1, 2022 (RECOMMENDED)** |
 | **Statistical Justification** | Rolling Welch's t-test convergence | CUSUM stabilization; Mask Mandate Repeal |
-| **Training Data Span** | 24 Months (2023-01 to 2024-12) | **36 Months (2022-05 to 2024-12)** |
+| **Training Data Span** | 24 Months (2023-01 to 2024-12) | **32 Months (2022-05 to 2024-12)** |
 | **Test Data Span** | 12 Months (2025 Holdout) | **12 Months (2025 Holdout)** |
 | **Robustness Impact** | Excellent baseline stability | **Superior (Captures 2 full annual cycles)** |
 | **Resilience Impact** | Fails to capture Winter Storm 2022 | **Superior (Captures Elliott & Summer '23)** |
-| **Generalizability Impact**| Smaller sample for spoke airfields | **Superior (404k+ training observations)** |
+| **Generalizability Impact**| Smaller sample for spoke airfields | **Superior (122k+ modeled / 404k+ network observations)** |
 
 Structural break tests confirmed **May 1, 2022** as the optimal demarcation point for model development:
 1. **Mask Mandate Repeal**: The nationwide lifting of federal transit mask requirements in late April 2022 restored passenger boarding behaviors to equilibrium.
 2. **Coupling Rebound**: Demand-to-schedule correlation ($R^2$), which dropped to 0.579 during COVID, rebounded to 0.672 post-May 2022.
 3. **Partitioning Design**:
-   * *Training Window*: May 1, 2022 – December 31, 2023 (20 months; 404,324 hourly observations).
-   * *Validation Window*: January 1, 2024 – December 31, 2024 (12 months; full Q1–Q4 seasonal cycle for hyperparameter tuning).
-   * *Holdout Test Window*: January 1, 2025 – December 31, 2025 (12 months; full Q1–Q4 seasonal cycle reserved strictly for final out-of-time evaluation).
+   * *Training Window*: May 1, 2022 – December 31, 2023 (20 months; 122,847 hourly observations across the 9-airport filtered complex cohort; 404,324 multi-facility observations across the candidate network).
+   * *Validation Window*: January 1, 2024 – December 31, 2024 (12 months; full Q1–Q4 seasonal cycle for hyperparameter tuning; 72,723 hourly observations).
+   * *Holdout Test Window*: January 1, 2025 – December 31, 2025 (12 months; full Q1–Q4 seasonal cycle reserved strictly for final out-of-time evaluation; 72,053 hourly observations).
    * *Purge Embargo*: A 7-day purge window between folds prevents temporal autocorrelation leakage.
 
 ---
@@ -253,7 +253,7 @@ Contemporaneous scheduled flights explain less than 20% of checkpoint throughput
 
 ## 4.7 Model Benchmark Matrix (2025 Full-Year Out-of-Time Holdout)
 
-Models spanning the three modeling paradigms were trained on Candidate B data (May 2022 – Dec 2023), tuned on 2024 validation data, and evaluated against the 215,562 hourly observations of the 2025 out-of-time holdout:
+Models spanning the three modeling paradigms were trained on Candidate B data (May 2022 – Dec 2023; 122,847 observations), tuned on 2024 validation data (72,723 observations), and evaluated against the 72,053 hourly complex observations (8,760 continuous system hours) of the 2025 out-of-time holdout across the 9-airport cohort (representing 215,562 facility-level screening hours across the wider candidate network):
 
 | Model Paradigm | Id | Model Architecture | Val $R^2$ | Test $R^2$ | Test RMSE | Test MAE | Test MASE | Bias |
 | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: |

@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v3.2 (Coupled Volatility & Temporal Regimes Integration)
+RELEASE VERSION: v3.3 (Sample Size & Partitioning Provenance Harmonization)
 DATE: September 2026
 ====================================================================================================
 
@@ -40,6 +40,10 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | Chapter III; added Tables 4.3b, 4.4a-c and Figures 4.1–4.4 to Chapter IV;  |
 |         |            | enriched Chapter V with Lead-Lag Asynchrony, Empty Checkpoint Fallacy,     |
 |         |            | Volatility Archetypes, and Regime-Switched Gated Inference Engine.         |
+| v3.3    | 2026-09-27 | Harmonized Sample Size & Partitioning Provenance: Corrected Candidate B    |
+|         |            | training duration (32 mo dev / 44 mo total); disambiguated Top 25 system   |
+|         |            | hours (23,400 / 8,760) and 9-airport complex counts (122,847 / 72,053)     |
+|         |            | from raw candidate facility logs (404k / 215k); logged prompt rationale.   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

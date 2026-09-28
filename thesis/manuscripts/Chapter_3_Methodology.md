@@ -175,9 +175,9 @@ The three constituent axes comprise:
 To prevent small-sample estimator degradation and ensure statistical degrees of freedom across all 84 cells, sample sizes were audited across the experimental dataset.
 
 ### 3.8.1 Dataset Partitioning (Candidate B Window)
-* **Training Partition**: May 1, 2022 to December 31, 2024 ($975$ calendar days = $23,400$ hourly observations).
-* **Holdout Testing Partition**: January 1, 2025 to December 31, 2025 ($365$ calendar days = $8,760$ hourly observations).
-* **Purge Window**: A strict 7-day embargo between training and test sets to eliminate serial autocorrelation leakage.
+* **Model Development Partition (32 Months)**: May 1, 2022 to December 31, 2024 ($975$ calendar days = $23,400$ system hourly time-steps; comprising $122,847$ training observations across the 20-month training fold and $72,723$ validation observations across the 12-month tuning fold for the 9-airport filtered complex cohort).
+* **Holdout Testing Partition (12 Months)**: January 1, 2025 to December 31, 2025 ($365$ calendar days = $8,760$ system hourly time-steps; $72,053$ complex observations across the 9-airport cohort, representing $215,562$ facility-level screening hours across the wider candidate network).
+* **Purge Embargo**: A strict 7-day buffer ($2,837$ complex observations) between folds to eliminate serial autocorrelation leakage, completing the $270,460$ total modeled dataset.
 
 ### 3.8.2 Degrees-of-Freedom Compliance
 * **Training Viability ($N_{\text{train}} \ge 50$)**: Exactly **83 of 84 cells (98.8%)** meet or exceed the minimum training threshold, with a median training depth of **215 observations per cell**. The single cell with $N = 48$ is Holiday Off-Peak Overnight ($00:00\text{--}03:00$).
