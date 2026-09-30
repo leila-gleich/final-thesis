@@ -5,7 +5,7 @@
 **Institution**: Embry-Riddle Aeronautical University (ERAU)  
 **Degree Program**: Master of Science in Aeronautics / Aviation Data Analytics  
 **Course Milestone**: MSAA / Gleich 700B Graduate Thesis  
-**Repository Version**: v3.0 (Publication-Grade GitHub Release — `final-thesis`)  
+**Repository Version**: v3.2 (Publication-Grade Consolidated Release — `final-thesis`)  
 
 ---
 
@@ -32,18 +32,26 @@ final-thesis/
 │   ├── manuscripts/                    <-- Production manuscript chapters (.docx & .md)
 │   │   ├── Chapter_1_Introduction.docx
 │   │   ├── Chapter_2_Literature_Review.docx
-│   │   ├── Chapter_3_Methodology.docx
-│   │   ├── Chapter_4_Results_Empirical_Findings.md
-│   │   ├── Chapter_4_Results_Empirical_Findings.docx
+│   │   ├── Chapter_3_Methodology.docx & .md
+│   │   ├── Chapter_4_Results_Empirical_Findings.docx & .md
 │   │   ├── Chapter_5_Analysis_and_Discussion.md
 │   │   ├── Gleich_700B_Proposal.docx
 │   │   └── Master_References_APA7.docx
 │   └── notes_and_recommendations/      <-- Outlines & Recommendations Guides
+│       ├── section_documents/          # 4-tier filtering criteria, non-tenant proofs, assumptions
+│       ├── reports_and_walkthroughs/   # Section-by-section empirical narrative walkthroughs
+│       ├── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
 │       ├── DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt
 │       ├── Recommendations_Results_and_Discussion.md
 │       ├── Top25_Clustering_and_4Tier_Filtering_Guide.md
 │       ├── Chapter_4_Chapter_5_Outline_Roadmap.md
 │       └── VERSION_CONTROL_AND_PROVENANCE.md
+│
+├── season-analysis/                    <-- Seasonal Volatility & Diurnal Regime Module
+│   ├── season_analysis_volatility_runner.py # Reproducible seasonal analysis runner
+│   ├── season-analysis.xlsx            # Multi-tab seasonal regimes & sufficiency workbook
+│   ├── diurnal_hourly_by_dow.csv       # Hourly diurnal profiles by day of week
+│   └── seasonal_regimes_summary.csv    # Seasonal regime metrics and sample sizes
 │
 ├── src/                                <-- Modular Python Source Code Infrastructure
 │   ├── etl/                            <-- Ingestion, Top 25 Clustering & 4-Tier Filtering
@@ -71,8 +79,11 @@ final-thesis/
 │   ├── 02_4tier_filtering/             # 4-tier filtering funnel & 9-airport experimental grid
 │   ├── 03_lead_lag_deconvolution/      # Lead-lag arrival deconvolution gradients
 │   ├── 04_model_execution_2025_holdout/# 2025 out-of-time holdout benchmark matrix
-│   └── 05_robustness_resilience_generalizability/ # Deep-dive evaluation tables
+│   ├── 05_robustness_resilience_generalizability/ # Deep-dive evaluation tables
+│   └── master_metrics_archive/         # Preliminary drafting workbooks (Gleich_Thesis_Hypotheses.xlsx, etc.)
 └── figures/                            # High-resolution diagrams, network maps, and PCA biplots
+    ├── defense_presentation/           # Slide deck presentation (Results.pptx)
+    └── diagrams/                       # Pipeline lifecycle, architecture, and threat schematics
 ```
 
 
