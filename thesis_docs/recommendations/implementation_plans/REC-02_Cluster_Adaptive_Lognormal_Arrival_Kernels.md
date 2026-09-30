@@ -1,11 +1,11 @@
-# STATUS: NOT IMPLEMENTED
+# STATUS: IMPLEMENTED
 
 # Recommendation REC-02: Cluster-Adaptive Lognormal Arrival Deconvolution Kernels
 
 **Recommendation ID**: REC-02  
-**Target Module**: `src/features/cluster_adaptive_features.py` (or `src/features/cluster_adapt.py`)  
-**Warehouse Status**: PROTOTYPED  
-**final-thesis Status**: NOT IMPLEMENTED  
+**Target Module**: `src/features/cluster_adapt.py`  
+**Warehouse Status**: IMPLEMENTED  
+**final-thesis Status**: IMPLEMENTED  
 **Date**: September 30, 2026  
 
 ---

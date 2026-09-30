@@ -1,11 +1,11 @@
-# STATUS: NOT IMPLEMENTED
+# STATUS: IMPLEMENTED
 
 # Recommendation REC-01: High-Precision Minute-of-Day & Diurnal Cyclical Features
 
 **Recommendation ID**: REC-01  
-**Target Module**: `src/features/time_features.py` (or `src/etl/ingest_curated_data.py`)  
-**Warehouse Status**: IMPLEMENTED (v1.4 in `700b-data-warehouse`)  
-**final-thesis Status**: NOT IMPLEMENTED  
+**Target Module**: `src/features/time_features.py`  
+**Warehouse Status**: IMPLEMENTED  
+**final-thesis Status**: IMPLEMENTED  
 **Date**: September 30, 2026  
 
 ---
