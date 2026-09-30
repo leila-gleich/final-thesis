@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: Results_and_Analysis/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v3.1 (Methodological Harmonization & Two-Chapter Finalization)
-DATE: September 28, 2026
+RELEASE VERSION: v3.2 (Self-Contained Repository Consolidation & Hypothesis Harmonization)
+DATE: September 30, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -41,6 +41,12 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   via two-sample Kolmogorov-Smirnov test (D = 0.032, p = 0.28).            |
 |         |            | - Rebuilt M1 deterministic static 2-hr lead baseline (R^2 = 0.5293).       |
 |         |            | - Structured formal Chapter IV (Findings) and Chapter V (Analysis) split.  |
+| v3.2    | 2026-09-30 | Self-Contained Repository Consolidation & Hypothesis Harmonization:        |
+|         |            | - Migrated 71 supplementary assets from legacy Gleich-Thesis.              |
+|         |            | - Integrated reproducible seasonal analysis runner and data tables.        |
+|         |            | - Harmonized Chapter 5 to evaluate single overarching Hypothesis 1 across   |
+|         |            |   three operational dimensions (Robustness, Resilience, Generalizability). |
+|         |            | - Integrated master OTP factor weighting & TSA volatility plan (v3.2).     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
