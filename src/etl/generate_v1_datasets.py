@@ -26,7 +26,7 @@ import duckdb
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, "data", "processed")
 ARCHIVE_V0_DIR = os.path.join(DATA_DIR, "archive", "v0")
-DIM_DIR = os.path.join(BASE_DIR, "dimensions")
+DIM_DIR = os.path.join(BASE_DIR, "data", "dimensions")
 
 # Input v0 paths (from archive/v0)
 OTP_V0 = os.path.join(ARCHIVE_V0_DIR, "otpv0.csv")

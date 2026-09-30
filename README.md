@@ -68,21 +68,22 @@ final-thesis/
 │   └── utils/                          <-- DB Connection & Logging Utilities
 │       ├── db_connection.py
 │       └── logger.py
-├── data/                               <-- Data Directory (Curated aggregates, samples, raw staging)
+├── data/                               <-- Data Directory (Curated aggregates, samples, dimensions, raw staging)
 │   ├── curated/                        # Coupled hourly & daily TSA/flight aggregates (2019–2025)
 │   ├── sample/                         # Representative sample fixtures for pipeline validation
+│   ├── dimensions/                     # Conformed star schema lookup tables (airports, dates, etc.)
 │   ├── raw/                            # Federal source files & staging (git-ignored)
 │   └── processed/                      # Conformed intermediate tables (git-ignored)
-├── dimensions/                         <-- Conformed dimension lookup tables (airports, dates, etc.)
 ├── results/                            <-- Publication-grade results tables & CSV censuses
+│   ├── 00_VERSION_CONTROL_AND_PROVENANCE.md
 │   ├── 01_top25_clustering/            # Top 25 spatial census & PCA/K-Means cluster outputs
 │   ├── 02_4tier_filtering/             # 4-tier filtering funnel & 9-airport experimental grid
 │   ├── 03_lead_lag_deconvolution/      # Lead-lag arrival deconvolution gradients
 │   ├── 04_model_execution_2025_holdout/# 2025 out-of-time holdout benchmark matrix
 │   ├── 05_robustness_resilience_generalizability/ # Deep-dive evaluation tables
+│   ├── tables/                         # Master evaluation summary tables & metrics targets
 │   └── master_metrics_archive/         # Preliminary drafting workbooks (Gleich_Thesis_Hypotheses.xlsx, etc.)
 └── figures/                            # High-resolution diagrams, network maps, and PCA biplots
-    ├── defense_presentation/           # Slide deck presentation (Results.pptx)
     └── diagrams/                       # Pipeline lifecycle, architecture, and threat schematics
 ```
 

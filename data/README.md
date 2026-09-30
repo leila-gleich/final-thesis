@@ -61,7 +61,7 @@ data/
 To ensure the repository is completely self-contained and reproducible without requiring users to download the full 85+ GB multi-year federal census:
 - **Curated Multi-Year Aggregates:** Pre-aggregated hourly and daily coupled tables are provided directly in `data/curated/` (`hourly_aggregated_data.csv` and `daily_aggregated_data.csv`).
 - **Representative Sample Data:** Micro-fixtures are provided in `data/sample/` to test and validate every stage of the ETL pipeline (`build_db1v0.py`, `profile_db1b.py`, etc.).
-- **Dimensions:** Complete star schema lookup tables are version-controlled in `dimensions/`.
+- **Dimensions:** Complete star schema lookup tables are version-controlled in `data/dimensions/`.
 - **Benchmark Findings:** Publication-grade empirical results are version-controlled in `results/`.
 
 ### External Storage & Environment Overrides

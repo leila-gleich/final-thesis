@@ -16,7 +16,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 DEFAULT_RAW_DIR = os.path.join(REPO_ROOT, "data", "raw", "db1b")
 RAW_DIR = os.getenv("RAW_DB1B_DIR", os.getenv("SSOT_DB1B_DIR", DEFAULT_RAW_DIR))
 PROCESSED_DIR = os.path.join(REPO_ROOT, "data", "processed")
-DIM_DIR = os.path.join(REPO_ROOT, "dimensions")
+DIM_DIR = os.path.join(REPO_ROOT, "data", "dimensions")
 os.makedirs(PROCESSED_DIR, exist_ok=True)
 
 # Prefer full raw dataset if present, otherwise fall back to local sample dataset

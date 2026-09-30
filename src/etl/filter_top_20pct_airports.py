@@ -15,7 +15,7 @@ from collections import defaultdict
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATA_DIR = os.path.join(BASE_DIR, "data", "processed")
-DIM_DIR = os.path.join(BASE_DIR, "dimensions")
+DIM_DIR = os.path.join(BASE_DIR, "data", "dimensions")
 
 OTP_PATH = os.path.join(DATA_DIR, "otpv0.csv")
 TSA_PATH = os.path.join(DATA_DIR, "tsav0.csv")

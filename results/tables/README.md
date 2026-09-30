@@ -9,7 +9,7 @@ This directory contains the comprehensive empirical evaluation benchmark table c
 
 ## File Index
 
-* **CSV Spreadsheet**: [`master_model_evaluation_metrics_and_targets.csv`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/results-tables/master_model_evaluation_metrics_and_targets.csv)
+* **CSV Spreadsheet**: [`master_model_evaluation_metrics_and_targets.csv`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/results/tables/master_model_evaluation_metrics_and_targets.csv)
   * Raw tabular CSV containing 16 performance metrics, formulas, targets, empirical scores for M1, M3, and M5, plain-English meanings, and operational significance.
 
 ---

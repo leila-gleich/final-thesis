@@ -68,7 +68,7 @@ def get_faa_hub_and_coords():
     }
     return hubs
 
-def enrich_airport_dimension(filepath="dimensions/dim_airport.csv"):
+def enrich_airport_dimension(filepath="data/dimensions/dim_airport.csv"):
     """Enriches dim_airport.csv with lat, lon, faaHubCategory, and timeZone."""
     df = pd.read_csv(filepath)
     hubs = get_faa_hub_and_coords()
@@ -133,7 +133,7 @@ def get_us_holidays(years=range(2019, 2027)):
         
     return holidays
 
-def enrich_date_dimension(filepath="dimensions/dim_date.csv"):
+def enrich_date_dimension(filepath="data/dimensions/dim_date.csv"):
     """Enriches dim_date.csv with isWeekend, isHoliday, and holidayName."""
     df = pd.read_csv(filepath)
     holidays = get_us_holidays()
