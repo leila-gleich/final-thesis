@@ -28,15 +28,15 @@ Each recommendation is housed in a standalone Markdown document in `thesis_docs/
 | **REC-03** | Mandatory DB1B/DB1C Connecting Ratio Capacity Deflation | `NOT IMPLEMENTED` | `src/features/demand_deflat.py` | [`REC-03_Mandatory_DB1B_Connecting_Ratio_Deflation.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-03_Mandatory_DB1B_Connecting_Ratio_Deflation.md) |
 | **REC-04** | High-Cardinality Airframe Gauge Tiering | `NOT IMPLEMENTED` | `src/features/fleet_tiers.py` | [`REC-04_High_Cardinality_Airframe_Gauge_Tiering.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-04_High_Cardinality_Airframe_Gauge_Tiering.md) |
 | **REC-05** | Dual-Track Model Selection Framework | `NOT IMPLEMENTED` | `src/models/dual_track_eval.py` | [`REC-05_Dual_Track_Model_Selection_Framework.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-05_Dual_Track_Model_Selection_Framework.md) |
-| **REC-06** | Strict Standardization on Candidate B (May 1, 2022) | `NOT IMPLEMENTED` | `src/data/split_regimes.py` | [`REC-06_Candidate_B_Demarcation_and_Purge_Embargo.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-06_Candidate_B_Demarcation_and_Purge_Embargo.md) |
+| **REC-06** | Strict Standardization on Candidate B (May 1, 2022) | `IMPLEMENTED` | `src/data/split_regimes.py` | [`REC-06_Candidate_B_Demarcation_and_Purge_Embargo.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-06_Candidate_B_Demarcation_and_Purge_Embargo.md) |
 | **REC-07** | Airside Surface Taxi-Out & GDP Interaction | `NOT IMPLEMENTED` | `src/features/airside_flow.py` | [`REC-07_Airside_Surface_Taxi_Out_and_GDP_Interaction.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-07_Airside_Surface_Taxi_Out_and_GDP_Interaction.md) |
-| **REC-08** | 100% Self-Contained Curated Data Architecture | `NOT IMPLEMENTED` | `data/curated/` & `run_pipe.py` | [`REC-08_Self_Contained_Curated_Data_Architecture.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-08_Self_Contained_Curated_Data_Architecture.md) |
+| **REC-08** | 100% Self-Contained Curated Data Architecture | `IMPLEMENTED` | `data/curated/` & `src/utils/paths.py` | [`REC-08_Self_Contained_Curated_Data_Architecture.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-08_Self_Contained_Curated_Data_Architecture.md) |
 | **REC-09** | Thesis Manuscript & Provenance Synchronization | `NOT IMPLEMENTED` | `thesis/manuscripts/Ch 3-5` | [`REC-09_Thesis_Manuscript_and_Provenance_Synchronization.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-09_Thesis_Manuscript_and_Provenance_Synchronization.md) |
 | **REC-10** | PCA Dimensionality Reduction & Loadings Synthesis | `NOT IMPLEMENTED` | `thesis/manuscripts/Ch 3 & 4` | [`REC-10_PCA_Dimensionality_Reduction_and_Loadings.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-10_PCA_Dimensionality_Reduction_and_Loadings.md) |
 | **REC-11** | Multi-Pillar Quantitative Evaluation Framework | `NOT IMPLEMENTED` | `src/models/eval_pillars.py` | [`REC-11_Multi_Pillar_Quantitative_Evaluation_Framework.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-11_Multi_Pillar_Quantitative_Evaluation_Framework.md) |
 | **REC-12** | Forecasting Paradigm Deployment Strategy | `NOT IMPLEMENTED` | `src/models/paradigms.py` | [`REC-12_Forecasting_Paradigm_Deployment_Strategy.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-12_Forecasting_Paradigm_Deployment_Strategy.md) |
 | **REC-13** | Airline-Checkpoint Spatial-Temporal Engine | `NOT IMPLEMENTED` | `src/features/checkpoint_map.py` | [`REC-13_Airline_Checkpoint_Spatial_Temporal_Engine.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-13_Airline_Checkpoint_Spatial_Temporal_Engine.md) |
-| **REC-14** | Standardized 3-Phase ETL & Integrity Audit Suite | `NOT IMPLEMENTED` | `src/etl/pipeline_audit.py` | [`REC-14_Standardized_3Phase_ETL_and_Integrity_Audit.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-14_Standardized_3Phase_ETL_and_Integrity_Audit.md) |
+| **REC-14** | Standardized 3-Phase ETL & Integrity Audit Suite | `IMPLEMENTED` | `src/etl/pipeline_audit.py` | [`REC-14_Standardized_3Phase_ETL_and_Integrity_Audit.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/REC-14_Standardized_3Phase_ETL_and_Integrity_Audit.md) |
 
 ---
 
@@ -61,13 +61,17 @@ thesis_docs/recommendations/
 │   ├── REC-13_Airline_Checkpoint_Spatial_Temporal_Engine.md <-- Individual REC-13 Plan
 │   ├── REC-14_Standardized_3Phase_ETL_and_Integrity_Audit.md <-- Individual REC-14 Plan
 │   ├── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
-│   ├── EXECUTION_PLAN_NOTES_AND_RECOMMENDATIONS_UPDATES.md
 │   ├── Recommendations_Results_and_Discussion.md
 │   └── Updated_Thesis_Project_and_Structure_Recommendation.md
-└── chapter_updates/
-    ├── 00_README_AND_ROADMAP.md                              <-- Master Manuscript Update Index
-    ├── 01_CHAPTER_3_METHODOLOGY_GUIDE.md                     <-- Chapter III Methodological Guide
-    ├── 02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md               <-- Chapter IV Results Text & Tables
-    ├── 03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md         <-- Chapter V Discussion & Analysis
-    └── 04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md         <-- Defense Slide Deck & Committee Q&A
+├── chapter_updates/
+│   └── 04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md         <-- Defense Slide Deck & Committee Q&A
+└── archive/                                                  <-- Completed Guides & Historical Plans
+    ├── README.md
+    ├── EXECUTION_PLAN_NOTES_AND_RECOMMENDATIONS_UPDATES.md   <-- Completed Historical Plan
+    └── completed_chapter_updates/                            <-- Completed Chapter 3-5 Update Guides
+        ├── 00_README_AND_ROADMAP.md
+        ├── 01_CHAPTER_3_METHODOLOGY_GUIDE.md
+        ├── 02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md
+        └── 03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md
 ```
+

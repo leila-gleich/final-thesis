@@ -22,14 +22,15 @@ thesis_docs/recommendations/
 ├── README.md                                       <-- Master Index (This File)
 ├── EXECUTION_WORKFLOW_AND_MAINTENANCE_GUIDE.md     <-- Uniform Implementation Protocol & Workflow
 ├── implementation_plans/   <-- Modular, task-by-task code implementation plans (REC-01 to REC-14)
-└── chapter_updates/        <-- Step-by-step manuscript chapter update guides (Chapters 3, 4, 5 & Defense)
+├── chapter_updates/        <-- Active presentation & defense guides
+└── archive/                <-- Archived completed chapter update guides and historical plans
 ```
 
 ---
 
 ## 1. Technical Implementation Plans (`implementation_plans/`)
 
-Each recommendation is housed in an individual Markdown file in [`implementation_plans/`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/). Every file contains a tracking header (`# STATUS: NOT IMPLEMENTED`) that should be updated to `# STATUS: IMPLEMENTED` once complete.
+Each recommendation is housed in an individual Markdown file in [`implementation_plans/`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/). Every file contains a tracking header (`# STATUS: NOT IMPLEMENTED`) that is updated through the implementation lifecycle.
 
 | Recommendation ID | Focus & Target Module | Modular File Path |
 | :---: | :--- | :--- |
@@ -50,14 +51,12 @@ Each recommendation is housed in an individual Markdown file in [`implementation
 
 ---
 
-## 2. Manuscript Chapter Update Guides (`chapter_updates/`)
-
-The [`chapter_updates/`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/) subdirectory provides turn-key text, mathematical equations, markdown tables, and slide deck guides for editing the manuscript:
+## 2. Manuscript Chapter & Defense Guides (`chapter_updates/`)
 
 | Guide File | Target Chapter / Purpose | Key Focus |
 | :--- | :--- | :--- |
-| **[`00_README_AND_ROADMAP.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/00_README_AND_ROADMAP.md)** | Master Roadmap & Index | Overall manuscript update sequence & checklist. |
-| **[`01_CHAPTER_3_METHODOLOGY_GUIDE.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/01_CHAPTER_3_METHODOLOGY_GUIDE.md)** | Chapter III: Methodology | PCA derivation, lognormal kernel equations, Candidate B split. |
-| **[`02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md)** | Chapter IV: Empirical Findings | Tables 4.1–4.10, PCA factor loadings, 2025 holdout benchmark matrix. |
-| **[`03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md)** | Chapter V: Discussion & Analysis | Dual-track policy, lead-lag asynchrony, security-airside delay coupling. |
 | **[`04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md)** | Defense Deck & Committee Defense | 20–25 slide deck outline, talking points, anticipated committee Q&A. |
+
+> [!NOTE]
+> The text, equations, and tables from chapter update guides 00–03 have been fully incorporated into the active manuscripts in [`thesis_docs/manuscripts/`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/) and archived in [`thesis_docs/recommendations/archive/completed_chapter_updates/`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/archive/completed_chapter_updates/).
+

@@ -1,11 +1,11 @@
-# STATUS: NOT IMPLEMENTED
+# STATUS: IMPLEMENTED
 
 # Recommendation REC-06: Candidate B Demarcation & 7-Day Purge Embargo
 
 **Recommendation ID**: REC-06  
-**Target Module**: `src/data/split_regimes.py` (or `src/etl/generate_v1_datasets.py`)  
-**Warehouse Status**: JUSTIFIED (May 22)  
-**final-thesis Status**: NOT IMPLEMENTED  
+**Target Module**: `src/data/split_regimes.py`  
+**Warehouse Status**: IMPLEMENTED  
+**final-thesis Status**: IMPLEMENTED  
 **Date**: September 30, 2026  
 
 ---
