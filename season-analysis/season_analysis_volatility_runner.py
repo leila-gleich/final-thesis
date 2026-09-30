@@ -41,12 +41,12 @@ from openpyxl.utils import get_column_letter
 
 # Paths configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis"
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 
 OUTPUT_DIRS = [
-    os.path.join(PROJECT_ROOT, "season-analysis"),
-    os.path.join(PROJECT_ROOT, "results", "foundational_analysis", "season_analysis")
+    SCRIPT_DIR
 ]
+FIGURES_DIR = os.path.join(PROJECT_ROOT, "thesis_docs", "manuscripts", "figures")
 
 DATA_DIR = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Archive/700b-data-warehouse/data/processed"
 DIM_DATE_PATH = os.path.join(PROJECT_ROOT, "archive", "superseded_code_snapshot", "dimensions", "dim_date.csv")
@@ -88,7 +88,7 @@ TOP25_ID_STR = ",".join(map(str, TOP25_AIRPORT_IDS))
 def ensure_directories():
     for d in OUTPUT_DIRS:
         os.makedirs(d, exist_ok=True)
-        os.makedirs(os.path.join(d, "figures"), exist_ok=True)
+    os.makedirs(FIGURES_DIR, exist_ok=True)
 
 def run_volatility_analysis():
     print("=" * 80)
@@ -695,10 +695,8 @@ def run_volatility_analysis():
     ax2_twin.grid(False)
     
     fig.tight_layout()
-    for d in OUTPUT_DIRS:
-        fig.savefig(os.path.join(d, "figures", "01_annual_volatility_tsa_otp_clustering.png"), dpi=300)
-        # Also save with legacy filename for seamless drop-in compatibility
-        fig.savefig(os.path.join(d, "figures", "01_annual_seasonality_tsa_otp_clustering.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "01_annual_volatility_tsa_otp_clustering.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "01_annual_seasonality_tsa_otp_clustering.png"), dpi=300)
     plt.close()
     print("Saved Figure 1: 01_annual_volatility_tsa_otp_clustering.png")
 
@@ -731,9 +729,8 @@ def run_volatility_analysis():
     ax2_twin.grid(False)
     
     fig.tight_layout()
-    for d in OUTPUT_DIRS:
-        fig.savefig(os.path.join(d, "figures", "02_day_of_week_volatility_dynamics.png"), dpi=300)
-        fig.savefig(os.path.join(d, "figures", "02_day_of_week_dynamics.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "02_day_of_week_volatility_dynamics.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "02_day_of_week_dynamics.png"), dpi=300)
     plt.close()
     print("Saved Figure 2: 02_day_of_week_volatility_dynamics.png")
 
@@ -771,9 +768,8 @@ def run_volatility_analysis():
     ], fontweight='bold', fontsize=11)
     
     fig.tight_layout()
-    for d in OUTPUT_DIRS:
-        fig.savefig(os.path.join(d, "figures", "03_diurnal_hourly_volatility_clusters_by_dow.png"), dpi=300)
-        fig.savefig(os.path.join(d, "figures", "03_diurnal_hourly_clusters_by_dow.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "03_diurnal_hourly_volatility_clusters_by_dow.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "03_diurnal_hourly_clusters_by_dow.png"), dpi=300)
     plt.close()
     print("Saved Figure 3: 03_diurnal_hourly_volatility_clusters_by_dow.png")
 
@@ -798,8 +794,7 @@ def run_volatility_analysis():
     ax.set_xticklabels(['Off-Peak (Winter/Fall)', 'Mid-Peak (Spring/Shoulder)', 'Peak (Summer Surge)', 'Holiday (Corridors)'], rotation=15, ha='right')
     
     fig.tight_layout()
-    for d in OUTPUT_DIRS:
-        fig.savefig(os.path.join(d, "figures", "04_sample_sufficiency_distribution.png"), dpi=300)
+    fig.savefig(os.path.join(FIGURES_DIR, "04_sample_sufficiency_distribution.png"), dpi=300)
     plt.close()
     print("Saved Figure 4: 04_sample_sufficiency_distribution.png")
 
