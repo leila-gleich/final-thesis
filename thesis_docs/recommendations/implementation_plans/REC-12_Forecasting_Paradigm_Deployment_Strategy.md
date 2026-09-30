@@ -1,11 +1,11 @@
-# STATUS: NOT IMPLEMENTED
+# STATUS: IMPLEMENTED
 
 # Recommendation REC-12: Forecasting Paradigm Deployment Strategy
 
 **Recommendation ID**: REC-12  
-**Target Module**: `src/models/paradigms.py` (or `src/models/baselines.py`)  
-**Warehouse Status**: FORMULATED  
-**final-thesis Status**: NOT IMPLEMENTED  
+**Target Module**: `src/models/hybrid_sarima_tree.py`, `src/models/machine_learning.py`, `src/models/baselines.py`  
+**Warehouse Status**: IMPLEMENTED  
+**final-thesis Status**: IMPLEMENTED  
 **Date**: September 30, 2026  
 
 ---
@@ -28,6 +28,6 @@ Choosing a single model class (pure deterministic point estimators or pure proba
 
 ## 3. Verification & Acceptance Criteria
 
-- [ ] Deterministic, Probabilistic, and Hybrid paradigms evaluated on holdout dataset.
-- [ ] Quantile upper bounds ($\hat{q}_{0.85}$) calculated for off-peak intervals.
-- [ ] Performance tradeoffs documented in Chapter 5.
+- [x] Deterministic (M1), Probabilistic / Tweedie ML (M3), and Hybrid (M5) paradigms evaluated on holdout dataset (`run_pipeline.py`).
+- [x] Quantile upper bounds ($\hat{q}_{0.85}$) calculated for off-peak intervals (`predict_quantiles` in M5).
+- [x] Performance tradeoffs documented in Chapter 5.

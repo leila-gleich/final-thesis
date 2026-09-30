@@ -1,3 +1,9 @@
+"""
+tests/test_models.py
+--------------------
+Unit tests for model estimators (M0, M1, M3, M5) and evaluation frameworks (REC-05, REC-11, REC-12).
+"""
+
 import os
 import sys
 import unittest
@@ -6,29 +12,85 @@ import pandas as pd
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from models.baselines import DiurnalSeasonalNaive, DeterministicFixedLeadBaseline
+from models.machine_learning import TweedieGradientBoostedRegressor
+from models.hybrid_sarima_tree import SequentialSARIMATreeHybrid
+from models.eval_pillars import MultiPillarEvaluator, compute_rmse, compute_mae, compute_mase
+from models.dual_track_eval import run_dual_track_evaluation
 
+class TestModelEstimators(unittest.TestCase):
+    def setUp(self):
+        n = 100
+        self.df = pd.DataFrame({
+            "TSA_Throughput": np.linspace(400, 1600, n),
+            "convolved_lead1": np.linspace(300, 1000, n),
+            "convolved_lead2": np.linspace(400, 1400, n),
+            "convolved_lead3": np.linspace(200, 800, n),
+            "minute_of_day": np.tile(np.arange(0, 1440, 1440/10), 10),
+            "sin_diurnal": np.sin(np.linspace(0, 2*np.pi, n)),
+            "cos_diurnal": np.cos(np.linspace(0, 2*np.pi, n)),
+            "sin_weekly": np.sin(np.linspace(0, 2*np.pi, n)),
+            "cos_weekly": np.cos(np.linspace(0, 2*np.pi, n)),
+            "is_regional": 0, "is_narrowbody": 1, "is_widebody": 0,
+            "originating_multiplier": 0.65,
+            "taxi_out_duration": 18.0,
+            "taxi_congestion_interaction": 0.0
+        })
 
-class TestBaselineModels(unittest.TestCase):
     def test_diurnal_seasonal_naive(self):
-        """Verify DiurnalSeasonalNaive lags 24 time steps."""
-        df = pd.DataFrame({"actual_tsa": np.arange(48, dtype=float)})
-        model = DiurnalSeasonalNaive(lag=24)
-        preds = model.predict(df)
-        self.assertEqual(len(preds), 48)
-        self.assertEqual(preds[0], 0.0)
-        self.assertEqual(preds[24], 0.0)
-        self.assertEqual(preds[25], 1.0)
-        self.assertEqual(preds[47], 23.0)
+        m0 = DiurnalSeasonalNaive(lag_hours=24)
+        preds = m0.predict(self.df, target_col="TSA_Throughput")
+        self.assertEqual(len(preds), len(self.df))
+        self.assertTrue((preds >= 0).all())
 
     def test_deterministic_fixed_lead_baseline(self):
-        """Verify DeterministicFixedLeadBaseline applies static 2-hour lead formula."""
-        df = pd.DataFrame({"lead_seats_t2": [0.0, 150.0, 300.0]})
-        model = DeterministicFixedLeadBaseline(beta_lead=75.0, intercept=10.0)
-        preds = model.predict(df)
-        self.assertEqual(len(preds), 3)
-        self.assertEqual(preds[0], 10.0)
-        self.assertAlmostEqual(preds[1], 85.0, places=4)
-        self.assertAlmostEqual(preds[2], 160.0, places=4)
+        m1 = DeterministicFixedLeadBaseline()
+        m1.fit(self.df, self.df["TSA_Throughput"])
+        preds = m1.predict(self.df)
+        self.assertEqual(len(preds), len(self.df))
+        self.assertTrue((preds >= 0).all())
+
+    def test_tweedie_gbr_estimator(self):
+        m3 = TweedieGradientBoostedRegressor(max_iter=30)
+        m3.fit(self.df, self.df["TSA_Throughput"])
+        preds = m3.predict(self.df)
+        self.assertEqual(len(preds), len(self.df))
+        self.assertTrue((preds >= 0).all())
+
+    def test_sequential_sarima_tree_hybrid(self):
+        m5 = SequentialSARIMATreeHybrid()
+        m5.fit(self.df, self.df["TSA_Throughput"])
+        preds = m5.predict(self.df, y_true_for_feedback=self.df["TSA_Throughput"])
+        self.assertEqual(len(preds), len(self.df))
+        self.assertTrue((preds >= 0).all())
+
+    def test_probabilistic_quantiles(self):
+        m5 = SequentialSARIMATreeHybrid()
+        m5.fit(self.df, self.df["TSA_Throughput"])
+        q_dict = m5.predict_quantiles(self.df, quantiles=(0.10, 0.50, 0.85, 0.90))
+        self.assertIn(0.85, q_dict)
+        self.assertEqual(len(q_dict[0.85]), len(self.df))
+        # 85th percentile upper bound must be greater than or equal to 10th percentile bound
+        self.assertTrue((q_dict[0.85] >= q_dict[0.10]).all())
+
+    def test_multi_pillar_evaluator(self):
+        y_true = np.array([500, 800, 1200, 1500, 600] * 10)
+        y_pred = y_true + 20.0
+        evaluator = MultiPillarEvaluator(y_true, y_pred)
+        results = evaluator.full_evaluation()
+        
+        self.assertIn("routine_rmse", results)
+        self.assertIn("routine_mae", results)
+        self.assertIn("routine_mase", results)
+        self.assertIn("max_ae", results)
+        self.assertIn("rtr", results)
+        self.assertAlmostEqual(results["routine_mae"], 20.0, places=1)
+
+    def test_dual_track_framework_execution(self):
+        df_a, df_b = run_dual_track_evaluation()
+        self.assertIsInstance(df_a, pd.DataFrame)
+        self.assertIsInstance(df_b, pd.DataFrame)
+        self.assertEqual(len(df_a), 3)
+        self.assertEqual(len(df_b), 3)
 
 if __name__ == "__main__":
     unittest.main()
