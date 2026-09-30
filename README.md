@@ -81,10 +81,17 @@ final-thesis/
 │   ├── 03_lead_lag_deconvolution/      # Lead-lag arrival deconvolution gradients
 │   ├── 04_model_execution_2025_holdout/# 2025 out-of-time holdout benchmark matrix
 │   ├── 05_robustness_resilience_generalizability/ # Deep-dive evaluation tables
-│   ├── tables/                         # Master evaluation summary tables & metrics targets
-│   └── master_metrics_archive/         # Preliminary drafting workbooks (Gleich_Thesis_Hypotheses.xlsx, etc.)
-└── figures/                            # High-resolution diagrams, network maps, and PCA biplots
-    └── diagrams/                       # Pipeline lifecycle, architecture, and threat schematics
+│   └── tables/                         # Master evaluation summary tables & metrics targets
+├── figures/                            <-- Conceptual diagrams, network maps, and threat matrices
+│   ├── 01_Sample_and_Airport_Selection/
+│   ├── 02_Data_Pipelines_and_Threats/
+│   ├── 03_Modeling_and_Evaluation/
+│   └── 04_Appendix_and_Reference/
+└── archive/                            <-- Historical precursors, early diagram drafts & parquet tables
+    ├── README.md                       # Archive catalog & manifest
+    ├── precursor_workbooks/            # Historical drafting workbooks (superseded by results/01-05)
+    ├── early_diagram_drafts/           # Preliminary diagram sketches & unmerged flowcharts
+    └── legacy_parquet/                 # 49 conformed legacy data tables compressed to Parquet
 ```
 
 
