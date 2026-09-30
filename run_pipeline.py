@@ -50,7 +50,7 @@ def main():
     print("-" * 85)
     
     print("\nPipeline execution completed successfully.")
-    print("All empirical tables and manuscripts available in results/ and thesis/")
+    print("All empirical tables and manuscripts available in results/ and thesis_docs/")
 
 if __name__ == "__main__":
     main()

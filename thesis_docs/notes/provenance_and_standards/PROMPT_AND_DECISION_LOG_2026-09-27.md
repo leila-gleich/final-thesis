@@ -5,7 +5,7 @@ AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 TOPIC: Coupled Volatility Seasonality, Post-Pandemic Demarcation Metrics, and Sample Size Harmonization
 DATE: September 27, 2026
 RELEASE: v3.3
-LOCATION: thesis/notes_and_recommendations/PROMPT_AND_DECISION_LOG_2026-09-27.md
+LOCATION: thesis_docs/notes/provenance_and_standards/PROMPT_AND_DECISION_LOG_2026-09-27.md
 ====================================================================================================
 
 ## 1. PURPOSE & MULTI-DEVICE RESEARCH RECORD

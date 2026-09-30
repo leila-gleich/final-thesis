@@ -2,7 +2,7 @@ STATUS: NOT IMPLEMENTED (Master Blueprint for Future Execution)
 
 # Master Blueprint: Comprehensive Recommendations & Implementation Plan
 **Document**: `recs-to-implement.md`  
-**Location**: `thesis/notes_and_recommendations/recs-to-implement.md`  
+**Location**: `thesis_docs/recommendations/implementation_plans/recs-to-implement.md`  
 **Author**: Leila Gleich | **Institution**: Embry-Riddle Aeronautical University (ERAU)  
 **Degree Program**: Master of Science in Aeronautics / Aviation Data Analytics  
 **Course Milestone**: MSAA / Gleich 700B Graduate Thesis  

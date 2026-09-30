@@ -27,25 +27,25 @@ final-thesis/
 ├── requirements.txt                    <-- Python dependency specifications
 ├── run_pipeline.py                     <-- Master execution entrypoint script
 │
-├── thesis/                             <-- Master Thesis Manuscripts & Recommendations Directory
-│   ├── README.md                       <-- Guide & sitemap to thesis manuscripts & notes
-│   ├── manuscripts/                    <-- Production manuscript chapters (.docx & .md)
+├── thesis_docs/                        <-- Master Thesis Manuscripts, Recommendations & Notes
+│   ├── README.md                       <-- Guide & sitemap to manuscripts, recs & notes
+│   ├── manuscripts/                    <-- Production manuscript chapters (.docx & .md) + Figures
 │   │   ├── Chapter_1_Introduction.docx
 │   │   ├── Chapter_2_Literature_Review.docx
 │   │   ├── Chapter_3_Methodology.docx & .md
 │   │   ├── Chapter_4_Results_Empirical_Findings.docx & .md
 │   │   ├── Chapter_5_Analysis_and_Discussion.md
+│   │   ├── Master_Results_and_Discussion_Comprehensive_Draft.md
 │   │   ├── Gleich_700B_Proposal.docx
-│   │   └── Master_References_APA7.docx
-│   └── notes_and_recommendations/      <-- Outlines & Recommendations Guides
-│       ├── section_documents/          # 4-tier filtering criteria, non-tenant proofs, assumptions
-│       ├── reports_and_walkthroughs/   # Section-by-section empirical narrative walkthroughs
-│       ├── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
-│       ├── DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt
-│       ├── Recommendations_Results_and_Discussion.md
-│       ├── Top25_Clustering_and_4Tier_Filtering_Guide.md
-│       ├── Chapter_4_Chapter_5_Outline_Roadmap.md
-│       └── VERSION_CONTROL_AND_PROVENANCE.md
+│   │   ├── Master_References_APA7.docx
+│   │   └── figures/                    # Publication Figures 01–04
+│   ├── recommendations/                <-- Consolidated Actionable Guidance & Plans
+│   │   ├── chapter_updates/            # 00-04 Chapter revision guides & defense Q&A
+│   │   └── implementation_plans/       # recs-to-implement.md & technical blueprints
+│   └── notes/                          <-- Working Research Notes & Provenance
+│       ├── methodology_memos/          # Justifications, 4-tier filtering, section documents
+│       ├── empirical_walkthroughs/     # Step-by-step validation reports & descriptive statistics
+│       └── provenance_and_standards/   # Provenance specification, decision logs, style guides
 │
 ├── season-analysis/                    <-- Seasonal Volatility & Diurnal Regime Module
 │   ├── season_analysis_volatility_runner.py # Reproducible seasonal analysis runner
@@ -149,8 +149,11 @@ python3 -m unittest discover tests
 
 ### 4. Explore Manuscripts & Recommendations
 
-* Chapter IV Empirical Results: [Chapter_4_Results_Empirical_Findings.md](thesis/manuscripts/Chapter_4_Results_Empirical_Findings.md)
-* Chapter V Analysis & Discussion: [Chapter_5_Analysis_and_Discussion.md](thesis/manuscripts/Chapter_5_Analysis_and_Discussion.md)
-* Academic & Operational Recommendations: [Recommendations_Results_and_Discussion.md](thesis/notes_and_recommendations/Recommendations_Results_and_Discussion.md)
-* Clustering & 4-Tier Filtering Guide: [Top25_Clustering_and_4Tier_Filtering_Guide.md](thesis/notes_and_recommendations/Top25_Clustering_and_4Tier_Filtering_Guide.md)
-* Research Framework & Data Cleaning: [DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt](thesis/notes_and_recommendations/DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt)
+* Chapter IV Empirical Results: [Chapter_4_Results_Empirical_Findings.md](thesis_docs/manuscripts/Chapter_4_Results_Empirical_Findings.md)
+* Chapter V Analysis & Discussion: [Chapter_5_Analysis_and_Discussion.md](thesis_docs/manuscripts/Chapter_5_Analysis_and_Discussion.md)
+* Comprehensive Master Draft: [Master_Results_and_Discussion_Comprehensive_Draft.md](thesis_docs/manuscripts/Master_Results_and_Discussion_Comprehensive_Draft.md)
+* Chapter Update Guides: [00_README_AND_ROADMAP.md](thesis_docs/recommendations/chapter_updates/00_README_AND_ROADMAP.md)
+* Master Recommendations Blueprint: [recs-to-implement.md](thesis_docs/recommendations/implementation_plans/recs-to-implement.md)
+* Academic & Operational Recommendations: [Recommendations_Results_and_Discussion.md](thesis_docs/recommendations/implementation_plans/Recommendations_Results_and_Discussion.md)
+* Clustering & 4-Tier Filtering Guide: [Top25_Clustering_and_4Tier_Filtering_Guide.md](thesis_docs/notes/methodology_memos/Top25_Clustering_and_4Tier_Filtering_Guide.md)
+* Research Framework & Data Cleaning: [DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt](thesis_docs/notes/methodology_memos/DATA_CLEANING_MODELING_AND_METRICS_FRAMEWORK.txt)

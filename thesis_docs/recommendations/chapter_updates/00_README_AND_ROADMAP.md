@@ -13,11 +13,11 @@ These recommendations document the methodological and empirical transition from 
 
 | Document | Primary Focus & Target Chapters | Description |
 | :--- | :--- | :--- |
-| **[`00_README_AND_ROADMAP.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/thesis/thesis_update_recommendations/00_README_AND_ROADMAP.md)** | Master Overview & Execution Checklist | Comprehensive executive summary, directory index, and step-by-step update checklist. |
-| **[`01_CHAPTER_3_METHODOLOGY_GUIDE.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/thesis/thesis_update_recommendations/01_CHAPTER_3_METHODOLOGY_GUIDE.md)** | Chapter III: Methodology | Mathematical definitions, Coupled Volatility Index, Operational Turbulence Shock Index, 3-tier hierarchical clustering equations, and sample size power proofs. |
-| **[`02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/thesis/thesis_update_recommendations/02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md)** | Chapter IV: Empirical Results | Drop-in text paragraphs, Markdown/LaTeX tables (Tables 4.3b, 4.4a, 4.4b, 4.4c), and figure captions/callouts for Figures 1–4. |
-| **[`03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/thesis/thesis_update_recommendations/03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md)** | Chapter V: Analysis & In-Depth Discussion | Deep-dive interpretations of Lead-Lag Asynchrony, Model Robustness across 84 cells, Disruption Resilience in Summer Peaks, and the Regime-Switched Gated Inference architecture. |
-| **[`04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/thesis/thesis_update_recommendations/04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md)** | Defense Slide Deck & Committee Defense | 20–25 slide structure, anticipated defense questions, and rigorous defense talking points. |
+| **[`00_README_AND_ROADMAP.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/00_README_AND_ROADMAP.md)** | Master Overview & Execution Checklist | Comprehensive executive summary, directory index, and step-by-step update checklist. |
+| **[`01_CHAPTER_3_METHODOLOGY_GUIDE.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/01_CHAPTER_3_METHODOLOGY_GUIDE.md)** | Chapter III: Methodology | Mathematical definitions, Coupled Volatility Index, Operational Turbulence Shock Index, 3-tier hierarchical clustering equations, and sample size power proofs. |
+| **[`02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md)** | Chapter IV: Empirical Results | Drop-in text paragraphs, Markdown/LaTeX tables (Tables 4.3b, 4.4a, 4.4b, 4.4c), and figure captions/callouts for Figures 1–4. |
+| **[`03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md)** | Chapter V: Analysis & In-Depth Discussion | Deep-dive interpretations of Lead-Lag Asynchrony, Model Robustness across 84 cells, Disruption Resilience in Summer Peaks, and the Regime-Switched Gated Inference architecture. |
+| **[`04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md)** | Defense Slide Deck & Committee Defense | 20–25 slide structure, anticipated defense questions, and rigorous defense talking points. |
 
 ---
 
@@ -51,7 +51,7 @@ In a future session, execute the edits following this structured sequence:
 
 - [x] **Step 4: Update Proposal / Slide Deck & Version Control**:
   - Incorporate Slide 8 (Coupled Volatility Phase Space) and Slide 14 (Diurnal Heatmap showing dual peaks).
-  - Review anticipated committee questions in [`04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/thesis/thesis_update_recommendations/04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md).
+  - Review anticipated committee questions in [`04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/chapter_updates/04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md).
   - Synchronize and update all version control specifications (`VERSION_CONTROL_AND_PROVENANCE.md`, `README.md`).
 
 ---
@@ -59,7 +59,7 @@ In a future session, execute the edits following this structured sequence:
 ## Underlying Source Deliverables Reference
 
 All underlying empirical tables and figures are located in:
-* Excel Workbook: [`season-analysis/season-analysis.xlsx`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/season-analysis/season-analysis.xlsx)
-* CSV Tables: [`season-analysis/*.csv`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/season-analysis/)
-* Publication Figures: [`season-analysis/figures/*.png`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/season-analysis/figures/)
-* Python Runner Script: [`season-analysis/season_analysis_volatility_runner.py`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Gleich-Thesis/season-analysis/season_analysis_volatility_runner.py)
+* Excel Workbook: [`season-analysis/season-analysis.xlsx`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/season-analysis/season-analysis.xlsx)
+* CSV Tables: [`season-analysis/*.csv`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/season-analysis/)
+* Publication Figures: [`thesis_docs/manuscripts/figures/*.png`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/figures/)
+* Python Runner Script: [`season-analysis/season_analysis_volatility_runner.py`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/season-analysis/season_analysis_volatility_runner.py)
