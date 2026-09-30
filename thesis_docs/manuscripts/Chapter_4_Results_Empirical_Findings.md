@@ -38,12 +38,12 @@ Table 4.2 presents the master post-ETL descriptive summary statistics for all pr
 Upstream TSA FOIA records exhibited 35,809 records with missing or malformed airport identifiers. Rather than silently dropping or naively imputing these rows, an automated checkpoint fingerprinting algorithm successfully recovered 7,489 records by matching historical checkpoint naming signatures (`dim_checkpoint`). The remaining 22,190 unresolvable records were mapped to a conformed surrogate key (`airportId = 0`, flagged with `airportMissing = 1`). In the absence of this remediation, these unmapped rows aggregate into unidentified airport records representing ~9.71 million passengers, which would severely distort national baseline models. All subsequent modeling queries strictly enforce `WHERE airportMissing = 0 AND airportId > 0`.
 
 ### 4.1.2 Nighttime Checkpoint Closures versus Missing Data
-A critical distributional property of checkpoint operations is the occurrence of zero-throughput intervals. Exactly 450,973 records (2.31% of the warehouse volume) report zero passengers. Cross-referencing these intervals against airport operational schedules confirmed that 98.6% of zero values occur during the early morning non-operational window (00:00 to 03:59 local time). Rather than applying moving-average imputation—which would introduce artificial passenger flow during physical lane closures—these intervals are preserved as true structural zeros, modeled using zero-bounded count regression (Tweedie deviance loss, $p = 1.3$) or two-stage hurdle structures.
+A critical distributional property of checkpoint operations is the occurrence of zero-throughput intervals. Exactly 450,973 records (2.31% of the warehouse volume) report zero passengers. Cross-referencing these intervals against airport operational schedules confirmed that 98.6% of zero values occur during the early morning non-operational window (00:00 to 03:59 local time). Rather than applying moving-average imputation—which would introduce artificial passenger flow during scheduled overnight checkpoint closures—these intervals are preserved as true operational zeros, modeled using zero-bounded count regression (Tweedie distribution, $p = 1.3$) or two-stage hurdle structures.
 
 ### 4.1.3 Flight Delays and Advance vs. Tactical Cancellations
-Across the 13,153,654 domestic departures originating across the candidate airfields, the mean departure delay was 12.70 minutes, with 20.12% of flights experiencing departure delays $\ge$ 15 minutes (`depDel15`). Taxi-out time averaged 18.84 minutes. Flight cancellations accounted for 2.03% of scheduled operations (267,019 flights). Crucially, 99.4% of unassigned aircraft tail numbers (`aircraftId = 0`) occurred on cancelled flights. To maintain strict information causality and prevent lookahead leakage in passenger demand modeling:
+Across the 13,153,654 domestic departures originating across the candidate airfields, the mean departure delay was 12.70 minutes, with 20.12% of flights experiencing departure delays $\ge$ 15 minutes (`depDel15`). Taxi-out time averaged 18.84 minutes. Flight cancellations accounted for 2.03% of scheduled operations (267,019 flights). Crucially, 99.4% of unassigned aircraft tail numbers (`aircraftId = 0`) occurred on cancelled flights. To maintain strict operational timeline causality and prevent lookahead bias in passenger demand modeling:
 1. Advance cancellations (>24 hours pre-departure) were purged from departing seat capacity.
-2. Tactical cancellations (<2 hours pre-departure) were retained in the passenger demand curve, reflecting the physical reality that affected travelers had already crossed landside security checkpoints prior to the carrier issuing the cancellation.
+2. Tactical cancellations (<2 hours pre-departure) were retained in the passenger demand curve, reflecting the operational reality that affected travelers had already crossed landside security checkpoints prior to the carrier issuing the cancellation.
 
 ---
 
@@ -60,7 +60,7 @@ By requiring concurrent mainline operations by American, Delta, and United, cros
 ### 4.2.3 Micro Filter: Carrier Checkpoint Isolation
 In shared terminals (e.g., Salt Lake City or Phoenix), multiple airlines feed shared screening lanes. Because hub carriers synchronize departure banks, carrier flight schedules are highly collinear ($\text{Corr}(S_j, S_{j'}) \ge 0.88$), creating severe collinearity where individual airline demand contributions cannot be mathematically separated. Restricting analysis to carrier-exclusive checkpoints isolates single-carrier operations:
 $$P(\text{Carrier} = j^* \mid \text{Checkpoint } k) = 1.0$$
-This Carrier Checkpoint Isolation eliminates multi-carrier schedule overlap ($\kappa < 25$), directly mapping carrier flight banks to physical checkpoint throughput.
+This Carrier Checkpoint Isolation eliminates multi-carrier schedule overlap ($\kappa < 25$), directly mapping carrier flight banks to landside checkpoint throughput.
 
 ### 4.2.4 Experimental Factorial Grid and Candidate Justifications
 The filtering pipeline yielded the **9-Airport Experimental Cohort** (**BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL**), achieving complete factorial balance:
@@ -214,9 +214,9 @@ Structural break tests confirmed **May 1, 2022** as the optimal demarcation poin
 2. **Coupling Rebound**: Demand-to-schedule correlation ($R^2$), which dropped to 0.579 during COVID, rebounded to 0.672 post-May 2022.
 3. **Partitioning Design**:
    * *Training Window*: May 1, 2022 – December 31, 2023 (20 months; 122,847 hourly observations across the 9-airport filtered complex cohort; 404,324 multi-facility observations across the candidate network).
-   * *Validation Window*: January 1, 2024 – December 31, 2024 (12 months; full Q1–Q4 seasonal cycle for hyperparameter tuning; 72,723 hourly observations).
+   * *Validation Window*: January 1, 2024 – December 31, 2024 (12 months; full Q1–Q4 seasonal cycle for model calibration and parameter selection; 72,723 hourly observations).
    * *Holdout Test Window*: January 1, 2025 – December 31, 2025 (12 months; full Q1–Q4 seasonal cycle reserved strictly for final out-of-time evaluation; 72,053 hourly observations).
-   * *Purge Embargo*: A 7-day purge window between folds prevents temporal autocorrelation leakage.
+   * *Operational Separation Buffer*: A 7-day buffer between evaluation periods ensures that multi-day delay cascades and weather recovery periods do not distort test accuracy.
 
 ---
 
@@ -228,9 +228,9 @@ To empirically validate the methodological requirement of restricting analysis t
 | :--- | :--- | :--- |
 | **1. Volume Conservation** | $\rho = \text{TSA}_{\text{actual}} / \text{Est}_{\text{Originating}}$ | **$\rho = 1.00 \pm 0.04$ ($p < 0.001$)**; Terminal TSA volume matches carrier originating pax. |
 | **2. Zero-Flight Intercept** | $Y_{kt} = \beta_0 + \beta_1 \cdot \text{Seats}_t$ | **$\beta_0 = 12.4$ pax/hr ($t = 0.84, p = 0.40$)**; Zero flights statistically equal zero queue demand. |
-| **3. Cross-Carrier Orthogonality** | $Y_{kt} = b_1 S_{\text{carrier}} + b_2 S_{\text{other}}$ | **$\beta_{\text{other}} = 0.002$ ($p = 0.62$, partial $R^2 < 0.001$)**; Other carriers add zero demand. |
+| **3. Cross-Carrier Checkpoint Independence** | $Y_{kt} = b_1 S_{\text{carrier}} + b_2 S_{\text{other}}$ | **$\beta_{\text{other}} = 0.002$ ($p = 0.62$, partial $R^2 < 0.001$)**; Other carriers add zero demand. |
 
-Furthermore, predicting dedicated terminal checkpoint throughput using carrier-filtered flights achieved $R^2 = 0.708$ to $0.774$, whereas predicting using total pooled airport departures collapsed explanatory power to $R^2 < 0.420$ ($F$-statistic test for parameter exclusion: $p < 0.0001$). A two-sample Kolmogorov-Smirnov test of forecasting residuals between physically separate terminal buildings (BOS, DTW, LGA, ORD, EWR) and walkway-connected terminals (LAX, DFW, IAH, PHL) revealed no significant divergence ($D = 0.032, p = 0.28$), confirming that post-security terminal cross-over in connected layouts is statistically negligible ($\epsilon_k < 0.05$).
+Furthermore, predicting dedicated terminal checkpoint throughput using carrier-filtered flights achieved $R^2 = 0.708$ to $0.774$, whereas predicting using total pooled airport departures collapsed explanatory power to $R^2 < 0.420$ ($F$-statistic test for parameter exclusion: $p < 0.0001$). A two-sample statistical distribution test of forecasting residuals between physically separate terminal buildings (BOS, DTW, LGA, ORD, EWR) and walkway-connected terminals (LAX, DFW, IAH, PHL) revealed no significant divergence ($D = 0.032, p = 0.28$), confirming that post-security terminal cross-over in connected layouts is statistically negligible ($\epsilon_k < 0.05$).
 
 ---
 
@@ -267,7 +267,7 @@ Models spanning the three modeling paradigms were trained on Candidate B data (M
 ### 4.7.1 Model Performance Stratification Across Volatility Regimes
 
 Evaluating model architectures across the stratified volatility regimes reveals striking performance divergences:
-* **In Low-Volatility Regimes (`1_OFF_PEAK`)**: The Gradient Boosted Tweedie Regressor ($M_3$) and Sequential Hybrid ($M_5$) achieve near-identical accuracy ($\text{MASE} \approx 0.60\text{--}0.62$). In stable flow environments, complex Kalman state corrections offer marginal incremental benefit over gradient boosted decision trees.
+* **In Low-Volatility Regimes (`1_OFF_PEAK`)**: The Gradient Boosted Count Regressor ($M_3$) and Sequential Hybrid ($M_5$) achieve near-identical accuracy ($\text{MASE} \approx 0.60\text{--}0.62$). In stable flow environments, complex Kalman state corrections offer marginal incremental benefit over gradient boosted decision trees.
 * **In High-Volatility Regimes (`3_PEAK` Summer Severe Weather)**: The performance gap between $M_3$ and $M_5$ widens dramatically. Because extreme convective storms cause flight delays exceeding 3–5 hours, $M_3$ suffers from the "empty checkpoint fallacy," degrading to $\text{MASE} = 1.025$. In contrast, the Two-Stage Hybrid ($M_5$) dynamically incorporates prior-hour terminal congestion feedback ($t-1$), maintaining robust error bounds ($\text{MASE} = 0.737, \text{RMSE} = 1,023.2$).
 
 ---

@@ -38,12 +38,12 @@ Table 4.2 presents the master post-ETL descriptive summary statistics for all pr
 Upstream TSA FOIA records exhibited 35,809 records with missing or malformed airport identifiers. Rather than silently dropping or naively imputing these rows, an automated checkpoint fingerprinting algorithm successfully recovered 7,489 records by matching historical checkpoint naming signatures (`dim_checkpoint`). The remaining 22,190 unresolvable records were mapped to a conformed surrogate key (`airportId = 0`, flagged with `airportMissing = 1`). In the absence of this remediation, these unmapped rows aggregate into unidentified airport records representing ~9.71 million passengers, which would severely distort national baseline models. All subsequent modeling queries strictly enforce `WHERE airportMissing = 0 AND airportId > 0`.
 
 ### 4.1.2 Nighttime Checkpoint Closures versus Missing Data
-A critical distributional property of checkpoint operations is the occurrence of zero-throughput intervals. Exactly 450,973 records (2.31% of the warehouse volume) report zero passengers. Cross-referencing these intervals against airport operational schedules confirmed that 98.6% of zero values occur during the early morning non-operational window (00:00 to 03:59 local time). Rather than applying moving-average imputation—which would introduce artificial passenger flow during physical lane closures—these intervals are preserved as true structural zeros, modeled using zero-bounded count regression (Tweedie deviance loss, $p = 1.3$) or two-stage hurdle structures.
+A critical distributional property of checkpoint operations is the occurrence of zero-throughput intervals. Exactly 450,973 records (2.31% of the warehouse volume) report zero passengers. Cross-referencing these intervals against airport operational schedules confirmed that 98.6% of zero values occur during the early morning non-operational window (00:00 to 03:59 local time). Rather than applying moving-average imputation—which would introduce artificial passenger flow during scheduled overnight checkpoint closures—these intervals are preserved as true operational zeros, modeled using zero-bounded count regression (Tweedie distribution, $p = 1.3$) or two-stage hurdle structures.
 
 ### 4.1.3 Flight Delays and Advance vs. Tactical Cancellations
-Across the 13,153,654 domestic departures originating across the candidate airfields, the mean departure delay was 12.70 minutes, with 20.12% of flights experiencing departure delays $\ge$ 15 minutes (`depDel15`). Taxi-out time averaged 18.84 minutes. Flight cancellations accounted for 2.03% of scheduled operations (267,019 flights). Crucially, 99.4% of unassigned aircraft tail numbers (`aircraftId = 0`) occurred on cancelled flights. To maintain strict information causality and prevent lookahead leakage in passenger demand modeling:
+Across the 13,153,654 domestic departures originating across the candidate airfields, the mean departure delay was 12.70 minutes, with 20.12% of flights experiencing departure delays $\ge$ 15 minutes (`depDel15`). Taxi-out time averaged 18.84 minutes. Flight cancellations accounted for 2.03% of scheduled operations (267,019 flights). Crucially, 99.4% of unassigned aircraft tail numbers (`aircraftId = 0`) occurred on cancelled flights. To maintain strict operational timeline causality and prevent lookahead bias in passenger demand modeling:
 1. Advance cancellations (>24 hours pre-departure) were purged from departing seat capacity.
-2. Tactical cancellations (<2 hours pre-departure) were retained in the passenger demand curve, reflecting the physical reality that affected travelers had already crossed landside security checkpoints prior to the carrier issuing the cancellation.
+2. Tactical cancellations (<2 hours pre-departure) were retained in the passenger demand curve, reflecting the operational reality that affected travelers had already crossed landside security checkpoints prior to the carrier issuing the cancellation.
 
 ---
 
@@ -60,7 +60,7 @@ By requiring concurrent mainline operations by American, Delta, and United, cros
 ### 4.2.3 Micro Filter: Carrier Checkpoint Isolation
 In shared terminals (e.g., Salt Lake City or Phoenix), multiple airlines feed shared screening lanes. Because hub carriers synchronize departure banks, carrier flight schedules are highly collinear ($\text{Corr}(S_j, S_{j'}) \ge 0.88$), creating severe collinearity where individual airline demand contributions cannot be mathematically separated. Restricting analysis to carrier-exclusive checkpoints isolates single-carrier operations:
 $$P(\text{Carrier} = j^* \mid \text{Checkpoint } k) = 1.0$$
-This Carrier Checkpoint Isolation eliminates multi-carrier schedule overlap ($\kappa < 25$), directly mapping carrier flight banks to physical checkpoint throughput.
+This Carrier Checkpoint Isolation eliminates multi-carrier schedule overlap ($\kappa < 25$), directly mapping carrier flight banks to landside checkpoint throughput.
 
 ### 4.2.4 Experimental Factorial Grid and Candidate Justifications
 The filtering pipeline yielded the **9-Airport Experimental Cohort** (**BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL**), achieving complete factorial balance:
@@ -120,9 +120,9 @@ Structural break tests confirmed **May 1, 2022** as the optimal demarcation poin
 2. **Coupling Rebound**: Demand-to-schedule correlation ($R^2$), which dropped to 0.579 during COVID, rebounded to 0.672 post-May 2022.
 3. **Partitioning Design**:
    * *Training Window*: May 1, 2022 – December 31, 2023 (20 months; 404,324 hourly observations).
-   * *Validation Window*: January 1, 2024 – December 31, 2024 (12 months; full Q1–Q4 seasonal cycle for hyperparameter tuning).
+   * *Validation Window*: January 1, 2024 – December 31, 2024 (12 months; full Q1–Q4 seasonal cycle for model calibration and parameter selection).
    * *Holdout Test Window*: January 1, 2025 – December 31, 2025 (12 months; full Q1–Q4 seasonal cycle reserved strictly for final out-of-time evaluation).
-   * *Purge Embargo*: A 7-day purge window between folds prevents temporal autocorrelation leakage.
+   * *Operational Separation Buffer*: A 7-day buffer between evaluation periods ensures that multi-day delay cascades and weather recovery periods do not distort test accuracy.
 
 ---
 
@@ -134,9 +134,9 @@ To empirically validate the methodological requirement of restricting analysis t
 | :--- | :--- | :--- |
 | **1. Volume Conservation** | $\rho = \text{TSA}_{\text{actual}} / \text{Est}_{\text{Originating}}$ | **$\rho = 1.00 \pm 0.04$ ($p < 0.001$)**; Terminal TSA volume matches carrier originating pax. |
 | **2. Zero-Flight Intercept** | $Y_{kt} = \beta_0 + \beta_1 \cdot \text{Seats}_t$ | **$\beta_0 = 12.4$ pax/hr ($t = 0.84, p = 0.40$)**; Zero flights statistically equal zero queue demand. |
-| **3. Cross-Carrier Orthogonality** | $Y_{kt} = b_1 S_{\text{carrier}} + b_2 S_{\text{other}}$ | **$\beta_{\text{other}} = 0.002$ ($p = 0.62$, partial $R^2 < 0.001$)**; Other carriers add zero demand. |
+| **3. Cross-Carrier Checkpoint Independence** | $Y_{kt} = b_1 S_{\text{carrier}} + b_2 S_{\text{other}}$ | **$\beta_{\text{other}} = 0.002$ ($p = 0.62$, partial $R^2 < 0.001$)**; Other carriers add zero demand. |
 
-Furthermore, predicting dedicated terminal checkpoint throughput using carrier-filtered flights achieved $R^2 = 0.708$ to $0.774$, whereas predicting using total pooled airport departures collapsed explanatory power to $R^2 < 0.420$ ($F$-statistic test for parameter exclusion: $p < 0.0001$). A two-sample Kolmogorov-Smirnov test of forecasting residuals between physically separate terminal buildings (BOS, DTW, LGA, ORD, EWR) and walkway-connected terminals (LAX, DFW, IAH, PHL) revealed no significant divergence ($D = 0.032, p = 0.28$), confirming that post-security terminal cross-over in connected layouts is statistically negligible ($\epsilon_k < 0.05$).
+Furthermore, predicting dedicated terminal checkpoint throughput using carrier-filtered flights achieved $R^2 = 0.708$ to $0.774$, whereas predicting using total pooled airport departures collapsed explanatory power to $R^2 < 0.420$ ($F$-statistic test for parameter exclusion: $p < 0.0001$). A two-sample statistical distribution test of forecasting residuals between physically separate terminal buildings (BOS, DTW, LGA, ORD, EWR) and walkway-connected terminals (LAX, DFW, IAH, PHL) revealed no significant divergence ($D = 0.032, p = 0.28$), confirming that post-security terminal cross-over in connected layouts is statistically negligible ($\epsilon_k < 0.05$).
 
 ---
 
@@ -176,7 +176,7 @@ Models spanning the three modeling paradigms were trained on Candidate B data (M
 
 ---
 
-## 5.1 Physical and Behavioral Checkpoint Mechanics
+## 5.1 Spatial Architecture and Passenger Behavioral Dynamics
 
 The empirical results confirm that modeling airport checkpoint operations requires decoupling landside originating passenger flow from total airport enplanements. In traditional airport planning literature, passenger demand has frequently been treated as a uniform scaling of scheduled airline departures. This research demonstrates that such assumptions introduce structural biases that render models operationally unusable at large hub airfields:
 
@@ -188,7 +188,7 @@ The empirical results confirm that modeling airport checkpoint operations requir
 
 ## 5.2 Initial Training and Passenger Show-Up Dynamics
 
-The striking performance gap between contemporaneous flight schedules ($R^2 = 0.5293$) and lead-lag passenger show-up schedules ($R^2 = 0.7081$) resolves the physical lead-lag asynchrony inherent in air travel:
+The striking performance gap between contemporaneous flight schedules ($R^2 = 0.5293$) and lead-lag passenger show-up schedules ($R^2 = 0.7081$) resolves the operational lead-lag time offset inherent in air travel (ACRP Report 40):
 * Passengers do not arrive at security when their flight departs; they arrive 1.5 to 3 hours prior (standard ACRP Report 40 passenger show-up distribution).
 * Incorporating lead horizons ($t+1, t+2, t+3$) enables the model to anticipate incoming passenger surges well before gate departure times.
 * Furthermore, flight delays must be handled asymmetrically: including contemporaneous actual flight delays introduces severe lookahead bias, whereas incorporating prior-hour delays ($t-1$) provides an effective proxy for airside apron congestion and terminal dwell times while preserving strict information causality.
@@ -205,8 +205,8 @@ The striking performance gap between contemporaneous flight schedules ($R^2 = 0.
 
 ### Hypothesis Confirmation
 The thesis hypothesis posited that **Probabilistic and Machine Learning models would excel at capturing continuous baseline variance and routine operational noise**. 
-* The findings strongly confirm this hypothesis. Under nominal conditions (departure delays < 15 min), the Gradient Boosted Tweedie Regressor (M3) and Sequential Two-Stage Hybrid Model (M5) achieved $\text{MASE}_{\text{routine}} \sim 0.60$ to $0.61$, easily surpassing the target threshold of $\text{MASE} < 0.70$.
-* Non-parametric Wilcoxon signed-rank tests confirmed that error reductions were statistically significant ($p < 0.001$) across all nine airfields. Machine learning architectures effectively mapped non-linear interactions between aircraft gauge, day-of-week seasonality, and empirical passenger show-up peaks.
+* The findings strongly confirm this hypothesis. Under nominal conditions (departure delays < 15 min), the Gradient Boosted Count Regressor (M3) and Sequential Two-Stage Hybrid Model (M5) achieved $\text{MASE}_{\text{routine}} \sim 0.60$ to $0.61$, easily surpassing the target threshold of $\text{MASE} < 0.70$.
+* Non-parametric Wilcoxon signed-rank tests confirmed that error reductions were statistically significant ($p < 0.001$) across all nine airfields. The decision-tree architectures effectively mapped non-linear interactions between aircraft seat capacity, day-of-week seasonality, and empirical passenger show-up curves.
 
 ---
 
@@ -228,17 +228,17 @@ The thesis hypothesis asserted that **the Two-Stage Hybrid Framework would prove
 
 ## 5.5 Deep-Dive: Evaluation Dimension 3 – Generalizability (Cross-Airport Transferability)
 
-| Model Family | Model Architecture | In-Sample RMSE | Zero-Shot RMSE | Delta Transfer Degradation | Transfer Error Penalty (RTR) |
+| Model Family | Model Architecture | In-Sample RMSE | Transfer RMSE (Direct Deployment) | Delta Transfer Degradation | Transfer Error Penalty (RTR) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
 | **Deterministic Baseline** | M1 (Sched Baseline) | 1312.0 | 1370.3 | **+4.4%** | **1.04** |
 | **Probabilistic / ML** | M3 (Show-Up Curve / Operational) | 1077.5 | 1162.8 | **+7.9%** | **1.08** |
 | **Two-Stage Hybrid** | M5 (Sequential Tree Hybrid) | 1042.7 | 1237.4 | +18.7% | 1.19 |
 
 ### Hypothesis Confirmation
-The thesis hypothesis posited that **Deterministic Baselines and structured Hybrid models would generalize better across terminal layouts than over-fitted Deep Learning networks**.
-* Evaluating zero-shot transfer within Cluster 3 (holding macro New York airspace congestion constant while transferring from United at EWR Terminal C to Delta at LGA Terminal C) empirically validated this hypothesis.
-* Deep neural networks overfitted to terminal-specific gate topologies and local carrier flight timings, suffering a 48.2% error surge upon zero-shot transfer.
-* Conversely, the Two-Stage Hybrid Framework and Deterministic Baseline experienced transfer degradations of only 11.4% and 8.4%, maintaining Transfer Error Penalties $\text{RTR} \sim 1.10$. Empirical passenger show-up curves decouple terminal layout specifics from macro schedule dynamics, enabling zero-shot portability across airfields.
+The thesis hypothesis posited that **Deterministic Baselines and structured Hybrid models would generalize better across terminal layouts than over-parameterized neural networks**.
+* Evaluating direct cross-airport deployment (without local facility retraining) within Cluster 3 (holding macro New York airspace congestion constant while transferring from United at EWR Terminal C to Delta at LGA Terminal C) empirically validated this hypothesis.
+* Deep neural networks overfitted to terminal-specific gate topologies and local carrier flight timings, suffering a 48.2% error surge when deployed to an unfamiliar airport without local retraining.
+* Conversely, the Two-Stage Hybrid Framework and Deterministic Baseline experienced transfer degradations of only 11.4% and 8.4%, maintaining Transfer Error Penalties $\text{RTR} \sim 1.10$. Empirical passenger show-up curves decouple terminal layout specifics from macro schedule dynamics, enabling direct cross-airport portability.
 
 ---
 
@@ -253,7 +253,7 @@ The thesis hypothesis posited that **Deterministic Baselines and structured Hybr
 ### Strategic Implications for TSA and Airport Authorities
 1. **Dynamic Checkpoint Allocation**: Checkpoint staffing models should replace static time-of-day tables with empirical 2-hour lead passenger show-up schedules based on flight bank timing.
 2. **Connecting Ratio Integration**: Centralized security operations must dynamically scale demand using airline O&D survey ratios to avoid over-allocating screening lanes at connecting hubs.
-3. **Deployment of Two-Stage Hybrid Estimators**: Airport operations centers should adopt two-stage hybrid models that utilize machine learning for routine staffing while incorporating physical queue feedback during severe convective ground stop disruptions.
+3. **Deployment of Two-Stage Hybrid Estimators**: Airport operations centers should adopt two-stage hybrid models that utilize interpretable decision-tree models for routine staffing while incorporating live checkpoint throughput feedback ($t-1$) during severe convective ground stop disruptions.
 
 ---
 
@@ -265,10 +265,10 @@ By implementing the research methodology across three distinct computational par
    * *Project 1 Supervised ML*: The Sequential SARIMA-Tree Hybrid achieved the highest out-of-time accuracy on the 2025 holdout dataset ($R^2 = 0.6270, \text{MASE} = 0.846$), proving that non-linear gradient-boosted trees excel at capturing complex diurnal patterns.
    * *Project 2 Queueing Simulation*: Proved that when active screening lanes match incoming passenger banks (DTW McNamara Terminal), steady-state waiting times remain exceptionally low ($\mu_{\text{wait}} = 0.9$ min, $P_{95} \le 7.7$ min).
 
-2. **Resilience Validation (Disruption Dynamics)**:
+2. **Resilience Validation Under Severe Disruption**:
    * *Project 2 Queue Simulation*: Directly exposed the operational hazard of static lane allocation. Under an acute 50% lane outage combined with a flight surge, static lane allocation saturated, with wait times capping at 60 minutes and accumulating 27,763 passenger-hours of delay. In contrast, the **Dynamic Hybrid Allocation Model** reduced total passenger delay by **80.1%** (slashing backlog to 5,514 passenger-hours and keeping 95th-percentile wait times at 11.5 minutes) by dynamically mobilizing reserve screening capacity.
    * *Project 3 State-Space Tracking*: Demonstrated that recursive Kalman innovation updates immediately recognize delayed flight holds, avoiding the false empty-checkpoint predictions of pure machine learning.
 
-3. **Generalizability Validation (Zero-Shot Spatial Transfer)**:
-   * *Project 3 State-Space Transfer*: When transferring zero-shot across matched airport pairs sharing identical airspace (EWR $\to$ LGA in the New York TRACON), the Moving Horizon Baseline suffered an 86.7% error surge ($\text{RTR} = 1.86$) and the Probabilistic Sequence Model degraded by 43.8% ($\text{RTR} = 1.44$).
-   * In stark contrast, the **Extended Kalman Filter State-Space Hybrid achieved remarkable transfer stability ($\Delta = 0.0\%, \text{RTR} = 1.00$ on EWR $\to$ LGA; $\text{RTR} = 0.86$ on DTW $\to$ PHL)**. Because state-space models continuously calibrate latent queue states using live innovation residuals, they achieve seamless zero-shot transfer without overfitting to airport-specific features.
+3. **Generalizability Validation (Cross-Airport Portability)**:
+   * *Project 3 State-Space Transfer*: When deploying directly without local retraining across matched airport pairs sharing identical airspace (EWR $\to$ LGA in the New York TRACON), the Moving Horizon Baseline suffered an 86.7% error surge ($\text{RTR} = 1.86$) and the Probabilistic Sequence Model degraded by 43.8% ($\text{RTR} = 1.44$).
+   * In stark contrast, the **Extended Kalman Filter State-Space Hybrid achieved remarkable transfer stability ($\Delta = 0.0\%, \text{RTR} = 1.00$ on EWR $\to$ LGA; $\text{RTR} = 0.86$ on DTW $\to$ PHL)**. Because state-space models continuously calibrate queue state using live throughput residuals ($t-1$), they achieve seamless cross-airport portability without facility-specific over-specialization.

@@ -8,32 +8,32 @@ This chapter details the methodological architecture and empirical framework dev
 
 The primary objective of this research is to evaluate the comparative predictive accuracy and operational utility of three distinct forecasting paradigms:
 1. **Deterministic Baselines ($M_0, M_1$)**: Classical reference benchmarks relying on diurnal seasonal persistence ($y_{t-24}$) and contemporaneous scheduled flight departures.
-2. **Probabilistic and Machine Learning Architectures ($M_2, M_3, M_4$)**: Data-driven, non-linear formulations—including empirical passenger show-up arrival distributions, Gradient Boosted Tweedie Regressors (LightGBM), and multi-source operational feature pipelines incorporating flight delays and cancellations.
-3. **Sequential Two-Stage Hybrid Frameworks ($M_5$)**: Integrated architectures combining queueing dynamics and time-series error correction with non-linear machine learning to dynamically correct for latent queue states during severe operational disruptions.
+2. **Probabilistic and Machine Learning Architectures ($M_2, M_3, M_4$)**: Data-driven, non-linear formulations—including empirical passenger show-up arrival distributions (ACRP Report 40), Gradient Boosted Count Regressors (LightGBM), and multi-source operational feature pipelines incorporating flight delays and cancellations.
+3. **Sequential Two-Stage Hybrid Frameworks ($M_5$)**: Integrated architectures combining queueing dynamics and time-series error correction with non-linear decision trees to dynamically correct for queue backlogs during severe operational disruptions.
 
 ### 3.1.1 Core Research Hypotheses
-The investigation evaluates model performance across three orthogonal operational dimensions:
+The investigation evaluates model performance across three independent operational dimensions:
 * **Dimension 1: Robustness (Routine Operational Accuracy)**: Consistency and precision under nominal flow conditions ($\text{DepDelay} < 15\text{ min}$).
 * **Dimension 2: Resilience (Disruption Recovery)**: Stability, error bounded-ness, and speed of recovery during severe exogenous shocks (convective summer storm ground stops, winter freeze events, and gate holds).
-* **Dimension 3: Generalizability (Spatial Cross-Airport Transferability)**: Portability of trained model structures across divergent airport geometries and carrier hub topologies under zero-shot transfer.
+* **Dimension 3: Generalizability (Spatial Cross-Airport Transferability)**: Portability of trained model structures across divergent airport geometries and carrier hub topologies under direct multi-airport deployment without local retraining.
 
 **Core Research Hypothesis ($H_1$)**: Across the three forecasting paradigms (deterministic, probabilistic/ML, and two-stage hybrid), no individual architecture will prove uniformly superior across all three evaluation dimensions. Rather:
 * Probabilistic and Machine Learning models will demonstrate superior accuracy during routine operations ($\text{MASE}_{\text{routine}} < 0.70$) by learning complex non-linear calendar and show-up interactions.
 * Two-Stage Hybrid frameworks will demonstrate superior resilience during systemic disruptions ($R_{\text{MASE}} \le 1.30$, time-to-recovery $\text{TTR} \le 4.0\text{ hours}$) due to closed-loop queue innovation corrections.
-* Structurally parameterized baselines and standardized volatility archetypes will exhibit superior spatial generalizability ($\text{Transfer Degradation} \le 15\%$) by abstracting away airport-specific gate and concourse over-fitting.
+* Structurally parameterized baselines and standardized volatility archetypes will exhibit superior spatial generalizability ($\text{Transfer Degradation} \le 15\%$) by abstracting away airport-specific facility over-specialization.
 
 ### 3.1.2 Methodological Execution Phases
 The implementation follows four sequential, interconnected phases:
-* **Phase 1: Multi-Source Conformed ETL Warehouse Development**: Automated extraction, spatial entity resolution, structural zero preservation, and conformed relational synthesis across four federal aviation data feeds spanning 2019 to 2025.
-* **Phase 2: Purposive Four-Tiered Filtering & Experimental Cohort Isolation**: Implementation of Macro congestion, Meso continuity/carrier homogeneity, Micro checkpoint exclusivity, and orthogonal factorial balance to isolate unconfounded carrier-checkpoint pairs.
+* **Phase 1: Multi-Source Conformed ETL Warehouse Development**: Automated extraction, spatial entity resolution, overnight closure preservation, and conformed relational synthesis across four federal aviation data feeds spanning 2019 to 2025.
+* **Phase 2: Purposive Four-Tiered Filtering & Experimental Cohort Isolation**: Implementation of Macro congestion, Meso continuity/carrier homogeneity, Micro checkpoint exclusivity, and balanced factorial design to isolate unconfounded carrier-checkpoint pairs.
 * **Phase 3: Coupled Volatility Clustering & Hierarchical Stratification**: Mathematical formulation of within-day TSA arrival variation, flight delay dispersion, the Coupled Volatility Index, and the Diurnal Operational Turbulence Shock Index, establishing the 84-cell cross-classification tensor.
-* **Phase 4: Empirical Model Training, Tuning, and Out-of-Time Holdout Evaluation**: Walk-forward calibration across Candidate B partitions, hyperparameter optimization, and rigorous statistical benchmarking against the full 12-month 2025 holdout dataset.
+* **Phase 4: Empirical Model Training, Tuning, and Out-of-Time Holdout Evaluation**: Walk-forward calibration across Candidate B partitions, model parameter calibration, and rigorous statistical benchmarking against the full 12-month 2025 holdout dataset.
 
 ---
 
 ## 3.2 Four-Tiered Purposive Filtering and Experimental Design
 
-To isolate the physical relationship connecting airside flight schedules to landside security checkpoint demand, candidate airfields were filtered through a four-tiered purposive funnel designed to eliminate confounding from multi-carrier passenger mixing, unconstrained regional flow, and airline-specific boarding anomalies.
+To isolate the direct operational link connecting airside flight schedules to landside security checkpoint demand, candidate airfields were filtered through a four-tiered purposive funnel designed to eliminate confounding from multi-carrier passenger mixing, unconstrained regional flow, and airline-specific boarding anomalies.
 
 ### 3.2.1 Macro Filter: Scale and Congestion Regimes
 Commercial aviation passenger volumes follow a heavy-tailed power-law distribution ($P(X > x) \sim x^{-\alpha}, \alpha \approx 1.15$). Restricting the initial sampling universe to the Top 25 U.S. commercial airfields captures 67.2% of nationwide domestic flight departures. In airport queueing dynamics, an arrival rate $\lambda(t)$ passing through $c(t)$ screening lanes with service rate $\mu$ yields traffic intensity:
@@ -52,9 +52,9 @@ where $\mu_1 \approx 135\text{ minutes}$ for boarding position maximizers and $\
 ### 3.2.3 Micro Filter: Carrier Checkpoint Isolation
 In shared terminal complexes (e.g., Salt Lake City International or Phoenix Sky Harbor), multiple airlines feed shared screening lanes. Because hub carriers synchronize departure banks, flight departure schedules are collinear ($\text{Corr}(S_j, S_{j'}) \ge 0.88$), creating an indeterminate collinear system where individual airline demand contributions cannot be mathematically decoupled. Restricting analysis to carrier-exclusive screening environments enforces:
 $$P(\text{Carrier} = j^* \mid \text{Checkpoint } k) = 1.0$$
-This eliminates inter-carrier schedule crosstalk ($\kappa < 25$), directly mapping carrier flight banks to physical checkpoint throughput.
+This eliminates inter-carrier schedule crosstalk ($\kappa < 25$), directly mapping carrier flight banks to landside checkpoint throughput.
 
-### 3.2.4 Orthogonal Factorial Cohort (The 9-Airport Experimental Cohort)
+### 3.2.4 Balanced Factorial Cohort (The 9-Airport Experimental Cohort)
 Applying the four-tiered funnel across the Top 25 airfields yielded the **9-Airport Balanced Experimental Cohort**:
 * **American Airlines (AA)**: Dallas/Fort Worth (DFW), Philadelphia (PHL), Chicago O'Hare (ORD)
 * **Delta Air Lines (DL)**: Detroit Metropolitan (DTW), New York LaGuardia (LGA), Boston Logan (BOS)
@@ -89,15 +89,15 @@ In hub-and-spoke operations, up to 76% of passengers deplane from inbound flight
 $$\text{Demand}_{\text{originating}, t} = \sum_{f \in \mathcal{F}_t} \text{Seats}_f \cdot \text{LoadFactor}_f \cdot (1 - \text{ConnectingRatio}_{\text{airport}})$$
 
 ### 3.4.2 Checkpoint Heterogeneity and Administrative Staffing Shifts
-Evaluating individual screening lanes introduces administrative variance resulting from Transportation Security Officer (TSO) shift rotations and dynamic lane reassignments between TSA PreCheck and standard screening. To achieve physical stability, hourly throughput is aggregated across all lanes within a dedicated terminal complex:
+Evaluating individual screening lanes introduces administrative variance resulting from Transportation Security Officer (TSO) shift rotations and dynamic lane reassignments between TSA PreCheck and standard screening. To achieve operational stability, hourly throughput is aggregated across all lanes within a dedicated terminal complex:
 $$Y_{kt} = \sum_{l \in \mathcal{L}_k} y_{k,l,t}$$
 Summing across lane complexes transforms noisy lane-level counts into a robust aggregate demand signal that maps to outbound flight banks.
 
-### 3.4.3 Structural Zeros vs. Missing Data
-Across the warehouse, 450,973 records report zero throughput. Cross-referencing against flight schedules revealed that 98.6% of zero intervals occur during overnight checkpoint closures (00:00–03:59). Rather than applying naive moving-average imputation—which would introduce artificial passenger traffic during physical closures—these intervals are preserved as true structural zeros and modeled using Tweedie deviance ($p = 1.3$) or zero-inflated hurdle structures.
+### 3.4.3 Overnight Checkpoint Closures vs. Missing Data
+Across the warehouse, 450,973 records report zero throughput. Cross-referencing against flight schedules revealed that 98.6% of zero intervals occur during overnight checkpoint closures (00:00–03:59). Rather than applying naive moving-average imputation—which would introduce artificial passenger traffic during scheduled overnight closures—these intervals are preserved as true operational zeros and modeled using zero-bounded count regression (Tweedie distribution, $p = 1.3$) or zero-inflated hurdle structures.
 
 ### 3.4.4 Tactical vs. Advance Cancellations
-A critical source of lookahead leakage in predictive models is the handling of cancelled flights. Flight cancellations are treated asymmetrically based on information causality:
+A critical requirement for predictive models is the prevention of lookahead bias in handling cancelled flights. Flight cancellations are treated asymmetrically based on operational timeline causality:
 * **Advance Cancellations (>24 hours pre-departure)**: Purged from departing seat capacity.
 * **Tactical Cancellations (<2 hours pre-departure)**: Retained in the passenger arrival curve, because affected passengers have already arrived at the terminal and crossed security checkpoints prior to the carrier issuing the cancellation notice.
 
@@ -177,12 +177,12 @@ To prevent small-sample estimator degradation and ensure statistical degrees of 
 ### 3.8.1 Dataset Partitioning (Candidate B Window)
 * **Model Development Partition (32 Months)**: May 1, 2022 to December 31, 2024 ($975$ calendar days = $23,400$ system hourly time-steps; comprising $122,847$ training observations across the 20-month training fold and $72,723$ validation observations across the 12-month tuning fold for the 9-airport filtered complex cohort).
 * **Holdout Testing Partition (12 Months)**: January 1, 2025 to December 31, 2025 ($365$ calendar days = $8,760$ system hourly time-steps; $72,053$ complex observations across the 9-airport cohort, representing $215,562$ facility-level screening hours across the wider candidate network).
-* **Purge Embargo**: A strict 7-day buffer ($2,837$ complex observations) between folds to eliminate serial autocorrelation leakage, completing the $270,460$ total modeled dataset.
+* **Operational Separation Buffer**: A strict 7-day buffer ($2,837$ complex observations) between folds eliminates serial delay autocorrelation spillover, completing the $270,460$ total modeled dataset.
 
 ### 3.8.2 Degrees-of-Freedom Compliance
 * **Training Viability ($N_{\text{train}} \ge 50$)**: Exactly **83 of 84 cells (98.8%)** meet or exceed the minimum training threshold, with a median training depth of **215 observations per cell**. The single cell with $N = 48$ is Holiday Off-Peak Overnight ($00:00\text{--}03:00$).
-* **Well-Powered Non-Linear Tree Splits ($N_{\text{train}} \ge 100$)**: **65 of 84 cells (77.4%)** exceed 100 training observations, ensuring sufficient sample depth for gradient boosted decision trees.
-* **Asymptotic Holdout Validity ($N_{\text{test}} \ge 30$)**: **70 of 84 cells (83.3%)** meet Central Limit Theorem asymptotic holdout thresholds (Median $N_{\text{test}} = 76$). Remaining cells have 18 to 24 observations, fully satisfying non-parametric Wilcoxon and Diebold-Mariano test requirements.
+* **Well-Powered Decision-Tree Splits ($N_{\text{train}} \ge 100$)**: **65 of 84 cells (77.4%)** exceed 100 training observations, ensuring sufficient sample depth for gradient boosted decision trees.
+* **Statistical Sample Size Sufficiency ($N_{\text{test}} \ge 30$)**: **70 of 84 cells (83.3%)** meet Central Limit Theorem sample size thresholds (Median $N_{\text{test}} = 76$). Remaining cells have 18 to 24 observations, fully satisfying non-parametric Wilcoxon and Diebold-Mariano test requirements.
 
 ---
 
@@ -191,10 +191,10 @@ To prevent small-sample estimator degradation and ensure statistical degrees of 
 ### 3.9.1 Model Benchmark Suite ($M_0$ through $M_5$)
 * **$M_0$ (Diurnal Seasonal Naive)**: Baseline persistence forecasting $y_t = y_{t-24}$.
 * **$M_1$ (Contemporaneous SARIMAX)**: Seasonal autoregressive integrated moving average with contemporaneous scheduled departures.
-* **$M_2$ (Empirical Show-Up Curve Regressor)**: Linear model driven by distributed lag passenger arrival curves ($\tau \in [t+1, t+3]$).
-* **$M_3$ (Operational LightGBM Regressor)**: Gradient boosted decision tree under Tweedie deviance ($p = 1.3$) combining passenger show-up curves with BTS OTP delay and cancellation features.
+* **$M_2$ (Empirical Show-Up Curve Regressor)**: Linear model driven by distributed lag passenger arrival curves ($\tau \in [t+1, t+3]$) adhering to ACRP Report 40 distributions.
+* **$M_3$ (Operational Count Regressor)**: Gradient boosted decision tree under zero-bounded count regression (Tweedie distribution, $p = 1.3$) combining passenger show-up curves with BTS OTP delay and cancellation features.
 * **$M_4$ (Full Tri-Modal Pipeline)**: Gradient boosted regressor interacting show-up curves with T-100 route load factors and carrier gauge.
-* **$M_5$ (Sequential Two-Stage SARIMA-Tree Hybrid)**: First-stage SARIMA capturing linear cyclical trends, cascaded into a secondary LightGBM tree predicting residual errors, equipped with recursive Kalman state innovation feedback ($e_t = y_t - C \hat{x}_{t|t-1}$).
+* **$M_5$ (Sequential Two-Stage SARIMA-Tree Hybrid)**: First-stage SARIMA capturing linear cyclical trends, cascaded into a secondary decision tree predicting residual errors, equipped with recursive Kalman state innovation feedback ($e_t = y_t - C \hat{x}_{t|t-1}$).
 
 ### 3.9.2 Evaluation Metrics
 * **Root Mean Squared Error (RMSE)**: Penalizes large peak-hour forecast errors.
@@ -207,5 +207,5 @@ To prevent small-sample estimator degradation and ensure statistical degrees of 
   evaluating performance stability under convective disruptions ($R_{\text{MASE}} \le 1.30$ denoting resilience).
 * **Transfer Error Penalty (Relative Transfer Ratio, RTR)**:
   $$\text{RTR} = \frac{\text{RMSE}_{\text{transfer}}}{\text{RMSE}_{\text{in-sample}}}$$
-  evaluating spatial portability under zero-shot transfer across terminal complexes.
+  evaluating spatial portability under direct cross-airport deployment across terminal complexes without site-specific retraining.
 * **Diebold-Mariano Hypothesis Testing**: Assesses the pairwise statistical significance of forecast error differentials between competing architectures.
