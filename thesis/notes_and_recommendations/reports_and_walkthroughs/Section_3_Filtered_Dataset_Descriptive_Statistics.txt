@@ -1,0 +1,151 @@
+====================================================================================================
+SECTION 3: DESCRIPTIVE STATISTICS OF THE FILTERED EXPERIMENTAL DATASET
+Chapter IV: Findings / Empirical Results (Before Analysis)
+Author: Leila Gleich | Institution: Embry-Riddle Aeronautical University
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+3.1 SECTION PURPOSE & METHODOLOGICAL ROLE
+----------------------------------------------------------------------------------------------------
+This section provides the comprehensive descriptive statistics for the conformed and filtered 
+experimental dataset produced by the 4-tiered purposive filtering pipeline (Section 2) and 
+engineered according to the feature deconvolution framework (Section 2).
+
+Unlike Section 1—which documented the macro-level census of the raw upstream feeds across 2019–2025—
+this section characterizes the exact modeling cohort used for training, hyperparameter validation, 
+and out-of-time holdout testing:
+- Temporal Scope: Candidate B Post-Mask Mandate Regime (May 1, 2022 to December 31, 2025; 44 continuous months).
+- Spatial Scope: 9 Purposively Selected Airfields (BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL).
+- Total Analytical Sample: Exactly 270,460 conformed hourly observations.
+
+Documenting these descriptive statistics *prior* to reporting model execution outputs (Section 5) 
+is essential for establishing the baseline operational conditions, variance structures, and 
+distributional properties across the temporal partitions.
+
+----------------------------------------------------------------------------------------------------
+3.2 MASTER DESCRIPTIVE STATISTICS TABLE (TOTAL FILTERED DATASET: 2022–2025)
+----------------------------------------------------------------------------------------------------
+Total Filtered Sample Size: N = 270,460 hourly observations across 9 commercial airfields.
+
++-----------------------------+----------+---------+---------+---------+---------+---------+----------+
+| Feature Variable            | Mean     | Std Dev | Min     | 25%     | Median  | 75%     | Max      |
++-----------------------------+----------+---------+---------+---------+---------+---------+----------+
+| Checkpoint Throughput (pax) | 2,367.49 | 1,738.70| 0.00    | 838.00  | 2,280.00| 3,494.00| 9,569.00 |
+| Contemporaneous Sched Flight| 20.92    | 18.29   | 0.00    | 5.00    | 20.00   | 30.00   | 100.00   |
+| Convolved Sched Flights     | 20.88    | 16.20   | 0.00    | 8.35    | 19.75   | 28.15   | 85.70    |
+| Carrier Route Load Factor   | 0.83     | 0.04    | 0.66    | 0.81    | 0.83    | 0.85    | 0.93     |
+| Prior-Hour Avg Dep Delay (m)| 12.08    | 26.65   | -29.00  | 0.00    | 4.11    | 15.00   | 1,319.50 |
+| Prior-Hour DepDel15 Rate    | 0.17     | 0.19    | 0.00    | 0.00    | 0.13    | 0.25    | 1.00     |
+| Prior-Hour Cancelled Flights| 0.38     | 1.81    | 0.00    | 0.00    | 0.00    | 0.00    | 72.00    |
++-----------------------------+----------+---------+---------+---------+---------+---------+----------+
+
+Key Distributional Insights:
+1. Variance Smoothing in Convolved Demand:
+   While mean flight volume is identical (~20.9 flights/hr), the standard deviation of convolved 
+   flights is significantly tighter (16.20 vs. 18.29), and the interquartile range is more continuous. 
+   The lognormal arrival kernel smooths discrete flight pushbacks into realistic passenger flow.
+2. Positive Skewness in Congestion Signals:
+   Prior-hour flight delays exhibit high positive skewness (Mean = 12.08 min vs. Median = 4.11 min), 
+   with severe right-tail extremes (Max = 1,319.50 min) reflecting major convective weather ground stops.
+3. Checkpoint Passenger Volume Scale:
+   The 75th percentile of hourly checkpoint demand reaches 3,494 passengers/hr, with peak holiday surges 
+   reaching 9,569 passengers/hr across dedicated terminal screening complexes.
+
+----------------------------------------------------------------------------------------------------
+3.3 DESCRIPTIVE STATISTICS BY TEMPORAL PARTITION (TRAIN, VAL, TEST)
+----------------------------------------------------------------------------------------------------
+To prevent data snooping and evaluate true out-of-time generalizability, the 270,460 records are 
+partitioned chronologically with a 7-day purge buffer:
+
++-----------------------------+-----------------------+-----------------------+-----------------------+
+| Metric                      | Training Fold         | Validation Fold       | Out-of-Time Test Hold.|
+|                             | (2022-05 to 2023-12)  | (2024 Full Year)      | (2025 Full Year)      |
++-----------------------------+-----------------------+-----------------------+-----------------------+
+| Temporal Span               | 20 months             | 12 months (Q1–Q4)     | 12 months (Q1–Q4)     |
+| Hourly Observations (N)     | 122,847 rows (45.4%)  | 72,723 rows (26.9%)   | 72,053 rows (26.6%)   |
+| Mean Checkpoint Throughput  | 2,230.47 pax/hr       | 2,407.09 pax/hr       | 2,565.68 pax/hr       |
+| Std Dev Throughput          | 1,651.61 pax/hr       | 1,739.66 pax/hr       | 1,858.48 pax/hr       |
+| Median Throughput           | 2,137.00 pax/hr       | 2,346.00 pax/hr       | 2,502.00 pax/hr       |
+| IQR Throughput (25% - 75%)  | 780.5 - 3,285.0 pax   | 896.0 - 3,521.0 pax   | 886.0 - 3,827.0 pax   |
+| Max Hourly Throughput       | 9,031.0 pax/hr        | 9,569.0 pax/hr        | 9,380.0 pax/hr        |
+| Mean Convolved Sched Flights| 19.82 flights/hr      | 21.34 flights/hr      | 22.21 flights/hr      |
+| Mean Carrier Load Factor    | 0.828                 | 0.835                 | 0.839                 |
+| Mean Prior-Hour Delay       | 12.14 minutes         | 11.85 minutes         | 12.22 minutes         |
+| Mean DepDel15 Rate          | 17.2%                 | 16.8%                 | 17.4%                 |
+| Mean Cancelled Flights / hr | 0.39 flights/hr       | 0.35 flights/hr       | 0.41 flights/hr       |
++-----------------------------+-----------------------+-----------------------+-----------------------+
+
+Key Temporal Trends:
+1. Post-Pandemic Secular Volume Expansion:
+   Mean hourly checkpoint throughput expands steadily from 2,230.5 pax/hr (2022–2023) to 2,407.1 pax/hr 
+   (2024) and 2,565.7 pax/hr (2025), reflecting a +15.0% cumulative post-pandemic demand recovery.
+2. Stationarity of Operational Shock Frequency:
+   In contrast to volume growth, disruption indicators remain remarkably stationary across all three folds:
+   - DepDel15 rate: 17.2% (Train) -> 16.8% (Val) -> 17.4% (Test).
+   - Mean delay: 12.14 min (Train) -> 11.85 min (Val) -> 12.22 min (Test).
+   This confirms that testing models on the 2025 holdout evaluates performance under real, unattenuated 
+   operational shock dynamics.
+
+----------------------------------------------------------------------------------------------------
+3.4 DESCRIPTIVE STATISTICS ACROSS THE NINE COMMERCIAL AIRFIELDS
+----------------------------------------------------------------------------------------------------
+Detailed operational throughput distributions across the 9 purposively selected terminal complexes:
+
++--------------+----------+-----------+-----------+----------+-----------+-----------+--------------------+
+| Airport Code | Obs (N)  | Mean Pax  | Std Dev   | Min Pax  | Median    | Max Pax   | Screening Complex  |
++--------------+----------+-----------+-----------+----------+-----------+-----------+--------------------+
+| BOS          | 28,400   | 2,243.7   | 1,298.9   | 0.0      | 2,314.0   | 7,341.0   | Terminals A & B    |
+| DFW          | 28,266   | 3,201.0   | 1,750.2   | 0.0      | 3,597.0   | 7,963.0   | Terminal D Complex |
+| DTW          | 32,023   | 1,443.7   | 1,012.1   | 0.0      | 1,629.0   | 4,394.0   | McNamara Complex   |
+| EWR          | 32,034   | 2,738.8   | 1,774.6   | 0.0      | 3,094.0   | 6,959.0   | Terminal C Complex |
+| IAH          | 28,185   | 2,342.1   | 1,312.2   | 0.0      | 2,666.0   | 6,029.0   | Terminal C Complex |
+| LAX          | 30,984   | 4,165.7   | 2,127.4   | 0.0      | 4,450.0   | 9,569.0   | Terminals 2/3/7    |
+| LGA          | 31,438   | 1,687.0   | 1,367.5   | 0.0      | 1,759.0   | 5,496.0   | Terminal C Complex |
+| ORD          | 32,036   | 1,985.2   | 1,653.8   | 4.0      | 1,944.0   | 9,380.0   | Terminals 1 & 3    |
+| PHL          | 27,094   | 1,492.2   | 906.7     | 1.0      | 1,560.0   | 6,157.0   | Terminals B & C    |
++--------------+----------+-----------+-----------+----------+-----------+-----------+--------------------+
+
+Spatial Heterogeneity Observations:
+1. High-Volume Mega-Terminals:
+   LAX (Mean = 4,165.7 pax/hr, Max = 9,569.0 pax/hr) and DFW (Mean = 3,201.0 pax/hr, Max = 7,963.0 pax/hr) 
+   process the largest sustained passenger volumes.
+2. Fluid Fortress Hubs:
+   DTW (Mean = 1,443.7 pax/hr, Std = 1,012.1 pax/hr) and PHL (Mean = 1,492.2 pax/hr, Std = 906.7 pax/hr) 
+   demonstrate lower landside screening variance due to large connecting passenger shielding (~54% connecting).
+3. Congested Originators:
+   EWR Terminal C (Mean = 2,738.8 pax/hr, Std = 1,774.6 pax/hr) exhibits acute variance driven by strict 
+   airspace slot controls and high local origin-and-destination demand.
+
+----------------------------------------------------------------------------------------------------
+3.5 CONDITIONED DATA CENSUS (ROUTINE VS. DISRUPTION SUBSETS)
+----------------------------------------------------------------------------------------------------
+To prepare for empirical model execution and evaluation in Section 5, the filtered dataset is 
+categorized into conditioned subsets:
+
+1. Routine Operational Windows (Nominal Hours):
+   - Definition: PriorHourAvgDepDel < 15.0 minutes AND PriorHourCancelledFlights = 0.
+   - Total Observations: 211,248 hours (78.1% of total sample).
+   - 2025 Test Holdout Subset: 56,128 hours.
+   - Mean Checkpoint Throughput: 2,412.3 pax/hr (Std = 1,682.4 pax/hr).
+
+2. Acute Disruption Windows (Operational Shocks):
+   - Definition: PriorHourAvgDepDel >= 45.0 minutes OR PriorHourCancelledFlights >= 5.
+   - Total Observations: 18,492 hours (6.8% of total sample).
+   - 2025 Test Holdout Subset: 4,928 hours.
+   - Mean Checkpoint Throughput: 2,748.9 pax/hr (Std = 2,014.2 pax/hr).
+   - Insight: Disruption windows exhibit a +13.9% higher mean throughput, reflecting delayed passenger 
+     queue accumulation from held flights.
+
+----------------------------------------------------------------------------------------------------
+3.6 CHECKLIST OF TABLES, FIGURES, AND EXHIBITS FOR SECTION 4
+----------------------------------------------------------------------------------------------------
+[x] Table 3.1: Master Descriptive Statistics of the 270,460 Filtered Hourly Records.
+[x] Table 3.2: Partitioned Descriptive Statistics: Training (2022-23), Validation (2024), Test (2025).
+[x] Table 3.3: Cross-Airport Throughput Distribution Summary Table (BOS through PHL).
+[x] Table 3.4: Conditioned Operational Regime Census (Routine vs. Acute Shock Windows).
+[x] Figure 3.1: Boxplots of Checkpoint Throughput Across the 9 Airfields.
+[x] Figure 3.2: Density Plots Comparing Raw Flight Departure Gauge vs. Convolved Passenger Demand.
+[x] Figure 3.3: Temporal Timeline Chart of Monthly Mean Throughput Showing Post-Pandemic Growth.
+====================================================================================================
+End of Section 3 Outline
+====================================================================================================

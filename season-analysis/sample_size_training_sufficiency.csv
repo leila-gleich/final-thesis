@@ -1,0 +1,13 @@
+season_name,time_of_day_name,cell_count,min_train_obs,median_train_obs,mean_train_obs,total_train_obs,min_test_obs,median_test_obs,mean_test_obs,total_test_obs,all_train_sufficient,all_test_sufficient
+Holiday (National Holiday Travel Corridors),Mid-Peak (Operational Plateau & Transition),7,68,132.0,142.71428571428572,999,24,48.0,51.857142857142854,363,True,False
+Holiday (National Holiday Travel Corridors),Off-Peak (Overnight & Curfew Valley),7,48,66.0,61.42857142857143,430,18,24.0,22.571428571428573,158,False,False
+Holiday (National Holiday Travel Corridors),Peak (Bank Surges & Delay Dispersion),7,156,286.0,275.42857142857144,1928,65,104.0,100.42857142857143,703,True,True
+Mid-Peak (Spring Ramps & Late-Summer Shoulder),Mid-Peak (Operational Plateau & Transition),7,168,328.0,298.42857142857144,2089,72,136.0,125.14285714285714,876,True,True
+Mid-Peak (Spring Ramps & Late-Summer Shoulder),Off-Peak (Overnight & Curfew Valley),7,123,126.0,135.57142857142858,949,51,54.0,56.857142857142854,398,True,True
+Mid-Peak (Spring Ramps & Late-Summer Shoulder),Peak (Bank Surges & Delay Dispersion),7,369,615.0,594.5714285714286,4162,153,260.0,250.0,1750,True,True
+Off-Peak (Winter Lull & Mid-Autumn Shoulder),Mid-Peak (Operational Plateau & Transition),7,208,378.0,366.7142857142857,2567,71,140.0,131.85714285714286,923,True,True
+Off-Peak (Winter Lull & Mid-Autumn Shoulder),Off-Peak (Overnight & Curfew Valley),7,156,156.0,165.42857142857142,1158,53,56.0,58.57142857142857,410,True,True
+Off-Peak (Winter Lull & Mid-Autumn Shoulder),Peak (Bank Surges & Delay Dispersion),7,468,702.0,727.8571428571429,5095,171,260.0,261.14285714285717,1828,True,True
+Peak (Summer Severe Weather & High Volume Surge),Mid-Peak (Operational Plateau & Transition),7,95,168.0,167.85714285714286,1175,32,56.0,56.0,392,True,True
+Peak (Summer Severe Weather & High Volume Surge),Off-Peak (Overnight & Curfew Valley),7,71,72.0,75.14285714285714,526,24,24.0,25.142857142857142,176,True,False
+Peak (Summer Severe Weather & High Volume Surge),Peak (Bank Surges & Delay Dispersion),7,216,312.0,332.57142857142856,2328,72,104.0,110.85714285714286,776,True,True

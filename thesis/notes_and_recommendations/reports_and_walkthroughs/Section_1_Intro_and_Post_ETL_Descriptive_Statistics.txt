@@ -1,0 +1,137 @@
+====================================================================================================
+SECTION 1: INTRODUCTION & POST-ETL MASTER DESCRIPTIVE STATISTICS
+Chapter IV: Findings / Empirical Results (Before Analysis)
+Author: Leila Gleich | Institution: Embry-Riddle Aeronautical University
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1.1 SECTION PURPOSE & METHODOLOGICAL SCOPE
+----------------------------------------------------------------------------------------------------
+This section establishes the empirical baseline of the entire research warehouse immediately 
+following raw data ingestion, automated cleaning, surrogate key transformation, and relational joining.
+
+CRITICAL SCOPE DISTINCTION:
+- Section 1 documents EVERY SINGLE DATA POINT post-ETL across the complete, nationwide commercial 
+  aviation network (covering 25 candidate commercial airfields and 955 individual physical checkpoint lanes 
+  over the continuous 7-year period from January 1, 2019 to December 31, 2025).
+- Total Post-ETL Cleaned Warehouse Volume: Exactly 42,062,039 conformed records (3.5 GB DuckDB warehouse), 
+  synthesized from 67,222,828 raw upstream government records (7.12 GB).
+- The subsequent narrowing to the 9-airport experimental cohort occurs in Section 2 (The Filtering Pipeline), 
+  and the descriptive statistics for that specific filtered modeling dataset are reported in Section 4.
+
+----------------------------------------------------------------------------------------------------
+1.2 DATA FOUNDATION CENSUS: RAW INGESTION VS. POST-ETL CLEANED WAREHOUSE
+----------------------------------------------------------------------------------------------------
+The multi-source analytical warehouse integrates four primary federal feeds across 2019–2025:
+
++-----------------------------+---------------------+--------------------+--------------------+-------------------------------------+
+| Primary Operational Feed    | Entity Grain        | Raw Ingested Rows  | Post-ETL Clean Rows| Network Coverage & Conformance      |
++-----------------------------+---------------------+--------------------+--------------------+-------------------------------------+
+| TSA FOIA Checkpoint Logs    | Checkpoint-Lane-Hour| 19,500,286 rows    | 6,434,732 rows     | 25 Airfields; 955 Physical Lanes    |
+| BTS On-Time Performance     | Flight Departure    | 45,777,091 rows    | 13,153,654 rows    | 25 Airfields; 17 Reporting Carriers |
+| BTS Form 41 Schedule T-100  | Carrier-Route-Month | 1,945,451 rows     | 422,096 rows       | 25 Airfields; 2.09 Billion Seats    |
+| BTS DB1B/DB1C Ticket Survey | Ticket Itinerary    | 12,910,384 rows    | 22,051,557 rows    | Closed 25-Airport Network Pairs     |
++-----------------------------+---------------------+--------------------+--------------------+-------------------------------------+
+| TOTAL COMBINED REPOSITORY   | Multi-Source Fact   | 67,222,828 rows    | 42,062,039 rows    | 100% Non-Null Dimensions; 0 Orphans |
++-----------------------------+---------------------+--------------------+--------------------+-------------------------------------+
+
+Key Post-ETL Conformance Accomplishments:
+1. Universal Surrogate Keying: Relational schema links all fact tables via conformed surrogate keys: 
+   dim_date, dim_time_block, dim_airport, dim_airline, dim_aircraft, and dim_checkpoint.
+2. Temporal Coverage: Continuous 7-year timeline from January 1, 2019 to December 31, 2025, capturing 
+   pre-pandemic baselines, pandemic collapse, and full secular recovery.
+3. Total Volume Represented:
+   - TSA Checkpoint Throughput: 2,703,694,229 total passengers screened (2.70 Billion passengers).
+   - Commercial Flight Movements: 13,153,654 domestic flight departures.
+   - Mainline Seat Capacity: 2,094,610,715 total departing seats; 1,701,068,172 passengers transported.
+   - Passenger Tickets Sampled: 22,051,557 ticket coupons representing 62,158,071 passengers.
+
+----------------------------------------------------------------------------------------------------
+1.3 POST-ETL MASTER DESCRIPTIVE STATISTICS (EVERY DATA POINT IN CLEANED WAREHOUSE)
+----------------------------------------------------------------------------------------------------
+The following parametric and non-parametric statistics characterize EVERY data point post-ETL across 
+the complete nationwide network:
+
+A. TSA Checkpoint Hourly Throughput (N = 6,434,732 checkpoint-lane-hours across 955 lanes):
+   - Mean Throughput: 420.17 passengers per checkpoint-hour
+   - Median Throughput: 293.00 passengers per checkpoint-hour
+   - Standard Deviation: 444.84 passengers per checkpoint-hour
+   - Minimum: 0 passengers per hour (structural overnight closures)
+   - 5th Percentile: 10.00 passengers per hour
+   - 25th Percentile (Q1): 115.00 passengers per hour
+   - 75th Percentile (Q3): 562.00 passengers per hour
+   - 95th Percentile: 1,316.00 passengers per hour
+   - Maximum: 5,336.00 passengers per hour (extreme super-peak holiday surges)
+   - Skewness: +2.176 (heavy right-skew driven by morning and afternoon flight bank surges)
+   - Kurtosis: 6.350 (leptokurtic with elongated tail of high-volume congestion events)
+   - Structural Zeros: 64,743 intervals (1.01% of total post-ETL observations)
+
+B. Domestic Flight Operational Characteristics (N = 13,153,654 domestic flight departures):
+   - Mean Scheduled Departure Delay: 12.70 minutes across all scheduled operations
+   - Median Departure Delay: -2.00 minutes (50% of flights push back 2+ minutes ahead of schedule)
+   - Standard Deviation of Delay: 52.75 minutes
+   - Minimum Delay: -105.00 minutes (early departure)
+   - 25th Percentile: -5.00 minutes
+   - 75th Percentile: 9.00 minutes
+   - 95th Percentile: 83.00 minutes
+   - Maximum Delay: 3,695.00 minutes (extreme multi-day rolling ground stops)
+   - Delay Skewness: +10.348 | Delay Kurtosis: 203.954 (extreme right-tail operational disruptions)
+   - Significant Delay Rate (depDel15 >= 15 min): 20.12% (2,646,515 flights)
+   - Flight Cancellation Rate: 2.03% (266,717 cancelled flights)
+   - Flight Diversion Rate: 0.24% (31,568 diverted flights)
+   - Mean Runway Taxi-Out Time: 18.84 minutes (Median: 16.00, Std: 10.03, Max: 180.00)
+   - Mean Airborne Flight Time: 141.50 minutes (~2.36 hours)
+   - Mean Stage Length (Distance): 1,052.12 miles
+
+C. BTS Form 41 Schedule T-100 Route Capacity (N = 422,096 carrier-segment-months):
+   - Total Mainline Departing Seats: 2,094,610,715 seats
+   - Total Transported Passengers: 1,701,068,172 passengers
+   - Overall Network Load Factor: 81.21% across all reporting carriers
+   - Mean Seats per Route-Month: 4,962.40 seats (Median: 2,512.00, Std: 7,019.66)
+   - Mean Passengers per Route-Month: 4,030.05 passengers (Median: 1,927.00, Std: 5,938.42)
+
+D. BTS DB1B Ticket Itinerary Survey (N = 22,051,557 coupon records):
+   - Total Sampled Passenger Tickets: 62,158,071 passenger journeys
+   - Mean Passengers per Ticket Record: 2.82 passengers
+   - Nationwide Hub Connecting Ratio Average: 51.39% (Median: 50.73%, Std: 11.74%)
+   - Connecting Ratio Extremes: Low = 33.58% (EWR), High = 76.04% (CLT)
+   - Nationwide Originating Share: 48.61% (passengers walking into landside TSA checkpoints)
+
+----------------------------------------------------------------------------------------------------
+1.4 DATA HYGIENE, ANOMALY REMEDIATION & MISSINGNESS RESOLUTION
+----------------------------------------------------------------------------------------------------
+1. Structural Zeros versus Sensor Dropouts:
+   - Exactly 64,743 records (1.01% of cleaned post-ETL data) report zero passenger throughput.
+   - Cross-referencing flight schedules confirmed that 98.6% of zero intervals occur during the early 
+     morning non-operational window (00:00 to 03:59 local time).
+   - Preserved as true physical lane closures rather than naively imputed with moving averages.
+
+2. Spatial Key Resolution & Checkpoint Fingerprinting:
+   - Upstream raw TSA logs contained 35,809 records with missing or corrupted airport codes.
+   - Automated checkpoint fingerprinting matched checkpoint naming strings to recover 7,489 records.
+   - The remaining 22,190 unresolvable records were isolated to a null surrogate key (airportId = 0, 
+     airportMissing = 1), preventing them from aggregating into an artificial 9.71-million passenger 
+     phantom airport.
+
+3. Flight Delays and Advance vs. Tactical Cancellations:
+   - 99.4% of unassigned aircraft tail numbers occurred on cancelled flights.
+   - Advance cancellations (> 24 hours pre-departure) were purged from capacity calculations.
+   - Tactical cancellations (< 2 hours pre-departure) were retained in passenger demand curves, 
+     reflecting that affected travelers had already entered and cleared landside security checkpoints.
+
+----------------------------------------------------------------------------------------------------
+1.5 CHECKLIST OF TABLES, FIGURES, AND EXHIBITS FOR SECTION 1
+----------------------------------------------------------------------------------------------------
+[x] Table 1.1: Complete Post-ETL Warehouse Census vs. Raw Base Feeds (Section_1A_Data_Foundation_Census.csv).
+[x] Table 1.2: Post-ETL Master Descriptive Statistics across All 42M Records (Section_1B_Post_ETL_Master_Descriptive_Statistics.csv).
+[x] Table 1.3: Top 25 Candidate Commercial Airfields Post-ETL Census (Section_1C_Top25_Candidate_Airports_Post_ETL_Census.csv).
+[x] Table 1.4: Macro Summary Statistics across Candidate Airports (Section_1D_Top25_Macro_Summary_Statistics.csv).
+[x] Table 1.5: Top 25 Candidate Airfields Attribute Volatility Census (Section_1E_Top25_Attribute_Volatility_Census.csv).
+[x] Table 1.6: Top 25 Candidate Airfields Cross-Attribute Correlation Matrix (Section_1F_Top25_Attribute_Correlation_Matrix.csv).
+[x] Table 1.7: Operational Seasonality and Regime Demarcation Census (Section_1G_Top25_Seasonality_and_Operational_Regimes.csv).
+[x] Table 1.8: Temporal Seasonality by Day of Week and Calendar Month (Section_1H_Top25_Seasonality_by_Day_and_DOW.csv).
+[x] Figure 1.1: Complete Diurnal Throughput and Structural Zero Frequency Distribution (00:00–23:00).
+[x] Figure 1.2: Flight Departure Delay Distribution and Tactical Cancellation Classification Flowchart.
+====================================================================================================
+End of Section 1 Outline
+====================================================================================================

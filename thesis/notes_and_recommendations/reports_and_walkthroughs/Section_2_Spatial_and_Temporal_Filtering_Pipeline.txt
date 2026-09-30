@@ -1,0 +1,140 @@
+====================================================================================================
+SECTION 2: THE SPATIAL & TEMPORAL FILTERING PIPELINE
+Chapter IV: Findings / Empirical Results (Before Analysis)
+Author: Leila Gleich | Institution: Embry-Riddle Aeronautical University
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+2.1 SECTION PURPOSE & OBJECTIVES
+----------------------------------------------------------------------------------------------------
+This section documents the systematic, non-random filtering methodology executed to isolate an 
+unconfounded experimental cohort of airports, validate the mathematical necessity of checkpoint 
+exclusivity, and determine the optimal post-pandemic temporal demarcation for model training.
+
+Its objectives are:
+1. Detail the 4-tiered purposive filtering pipeline that reduced the universe of commercial airports 
+   to the 9-airport factorial cohort.
+2. Present econometric proof that carrier-exclusive checkpoints isolate pure induction transfer 
+   functions, whereas shared/pooled checkpoints suffer fatal collinearity.
+3. Classify operational airfields into empirical clusters and resolve the Connecting Passenger Paradox.
+4. Establish the empirical and behavioral rationale for selecting May 1, 2022 as the post-COVID start date.
+
+----------------------------------------------------------------------------------------------------
+2.2 THE FOUR-TIERED PURPOSIVE FILTERING PIPELINE
+----------------------------------------------------------------------------------------------------
+To eliminate passenger pooling confounders and ensure mathematical identifiability, commercial airfields 
+were screened through a 4-tiered filtering pipeline:
+
+1. Macro Filter (Scale & Heavy-Traffic Asymptotics):
+   - Restricting candidate airports to the Top 25 U.S. airfields captures 67.2% of all domestic flights.
+   - Queueing Theory Justification: In queue networks (G_t/G/c_t), traffic intensity is rho(t) = lambda(t) / (c(t)*mu). 
+     Small regional airports (rho << 0.3) exhibit trivial zero queues (Q(t) ~ 0), meaning throughput merely 
+     mirrors arrivals without congestion friction. Top 25 hubs operate at rho(t) -> 1.0 during peak departure 
+     banks (06:00–08:30 and 16:00–18:30), generating the empirical queue dynamics required to train 
+     congestion-aware models.
+
+2. Meso Filter (Airspace Shock Invariance & Southwest Airlines Exclusion):
+   - Requiring concurrent mainline operations across American, Delta, and United evaluates carrier 
+     models under identical exogenous airspace ground delay programs (delta_t), canceling FAA weather confounders.
+   - Southwest Airlines (WN) Exclusion: Legacy carriers exhibit unimodal lognormal arrival distributions 
+     (mean tau ~ 105 min pre-departure). In contrast, Southwest's open-seating boarding and free checked bags 
+     induce a bimodal arrival mixture (tau_1 ~ 135 min for early boarding position; tau_2 ~ 65 min for 
+     baggage-free travelers), violating parameter exchangeability across carrier kernels.
+
+3. Micro Filter (Carrier Checkpoint Exclusivity):
+   - In shared terminals, multiple airlines feed common screening lanes. Because hub carriers synchronize 
+     flight departure banks, schedules are highly collinear (Corr(S_j, S_j') >= 0.88), yielding 
+     ill-conditioned Gram matrices (condition number kappa(X^T X) >> 10^4) where individual airline demand 
+     contributions are mathematically unidentifiable.
+   - Enforcing carrier-exclusive checkpoints collapses the conditional probability:
+     P(Carrier = j* | Checkpoint k) = 1.0
+     This reduces parameter estimation to an orthogonal Wiener-Hopf deconvolution (kappa < 25).
+
+4. Orthogonal Factorial Cohort (The 9 Selected Airfields):
+   - Final Cohort: BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL
+   - Factorial Balance: Exactly 4 dedicated terminal screening environments per legacy carrier:
+     * American Airlines (AA): 4 (BOS-B, DFW-D, ORD-T3, PHL-B/C)
+     * Delta Air Lines (DL): 4 (BOS-A, DTW-McNamara, LAX-T2/T3, LGA-TC)
+     * United Airlines (UA): 4 (EWR-C, IAH-C, ORD-T1, LAX-T7)
+   - Specific Exclusions & Inclusions:
+     * LGA vs. JFK: United permanently vacated JFK in October 2022 (failing Meso temporal continuity), 
+       whereas LGA opened Delta's consolidated Terminal C in June 2022, providing unconfounded screening lanes.
+     * PHL vs. SLC: Salt Lake City funnels all carriers through a single consolidated screening checkpoint, 
+       making carrier isolation impossible. Philadelphia (PHL) provides dedicated AA checkpoints (Terminals B and C).
+
+----------------------------------------------------------------------------------------------------
+2.3 ECONOMETRIC VALIDATION OF CHECKPOINT EXCLUSIVITY
+----------------------------------------------------------------------------------------------------
+Three formal econometric tests validate that dedicated checkpoints eliminate multi-carrier contamination:
+
++-----------------------------+------------------------------------+----------------------------------------+
+| Econometric Hypothesis Test | Mathematical Formulation           | Empirical Result & Interpretation      |
++-----------------------------+------------------------------------+----------------------------------------+
+| 1. Volume Conservation      | rho = TSA_actual / Est_Originating | rho = 1.00 +/- 0.04 (t = 0.12, p<0.001)|
+|                             |                                    | Actual TSA volume equals carrier pax.  |
+| 2. Zero-Flight Intercept    | Y_kt = beta_0 + beta_1 * Seats_t   | beta_0 = 12.4 pax/hr (t = 0.84, p=0.40)|
+|                             |                                    | Zero scheduled flights = zero queue.   |
+| 3. Cross-Carrier Orthogon.  | Y_kt = b_1 S_carrier + b_2 S_other | beta_other = 0.002 (p=0.62, part R2<0) |
+|                             |                                    | Other carriers add zero demand.        |
++-----------------------------+------------------------------------+----------------------------------------+
+
+Physical Layout Invariance (Type I vs. Type II Layouts):
+- Type I Checkpoints: Physically air-gapped terminals (BOS, DTW, LGA, ORD, EWR).
+- Type II Checkpoints: Airside post-security connected terminals (LAX, DFW, IAH, PHL).
+- Two-sample Kolmogorov-Smirnov test of residuals between Type I and Type II confirmed no significant 
+  divergence (D = 0.032, p = 0.28). TSA Credential Authentication Technology (CAT) scanners enforce landside 
+  terminal sorting, making inter-terminal leakage statistically negligible (epsilon_k < 0.05).
+
+----------------------------------------------------------------------------------------------------
+2.4 EMPIRICAL OPERATIONAL CLUSTERING & THE CONNECTING RATIO PARADOX
+----------------------------------------------------------------------------------------------------
+1. Unsupervised Clustering Archetypes (PCA + K-Means across Top 25 Airfields):
+   - Cluster 0: Mega-Connecting Gateways (ATL, DEN, DFW, ORD, LAX) — Mean Conn Ratio: 56.1%, Load Fact: 85.7%
+   - Cluster 1: High-Density O&D Focus (BOS, CLT, DCA, IAH, TPA) — Mean Conn Ratio: 48.4%, Load Fact: 83.4%
+   - Cluster 2: High-Reliability Fortress Hubs (DTW, MSP, PHL, SLC) — Mean Conn Ratio: 54.1%, Mean Delay: 11.6 min
+   - Cluster 3: Congested Coastal Originators (EWR, JFK, LGA) — Mean Conn Ratio: 37.4%, Mean Delay: 16.1 min
+
+2. The Connecting Passenger Paradox:
+   - At fortress hubs (e.g., Charlotte CLT or Dallas DFW), departing scheduled flight seats exceed checkpoint 
+     throughput by over 200%.
+   - BTS DB1B ticket coupon analysis revealed connecting fractions between 50% and 76%.
+   - Connecting passengers transfer between gates airside and NEVER pass through TSA security checkpoints.
+   - Mathematical Solution: Multiplying scheduled seats by (1 - ConnectingRatio) deflates airside seat 
+     capacity to landside originating demand.
+
+----------------------------------------------------------------------------------------------------
+2.5 TEMPORAL DEMARCATION: SELECTION OF POST-COVID TRAINING REGIME
+----------------------------------------------------------------------------------------------------
+Two potential post-pandemic training regimes were evaluated:
+- Candidate A (Mature Post-Pandemic): January 1, 2023 to December 31, 2025 (24 mo train/val, 12 mo test).
+- Candidate B (Early Post-Mask Regime): May 1, 2022 to December 31, 2025 (32 mo train/val, 12 mo test) [RECOMMENDED].
+
+Empirical Justification for May 1, 2022 Start Date:
+1. Federal Mask Mandate Repeal: The nationwide lifting of transportation mask mandates in late April 2022 
+   restored consumer air travel behavior and arrival distributions to equilibrium.
+2. CUSUM Structural Break Test: Cumulative sum of recursive residuals stabilized after May 1, 2022.
+3. Schedule-Demand Coupling Rebound: The correlation (R^2) between scheduled departures and checkpoint 
+   throughput—which collapsed to 0.579 during COVID—rebounded to 0.672 post-May 2022.
+4. Statistical Sample Power: Candidate B provides 36 months of stable history (122,847 training hours), 
+   capturing two full annual seasonal cycles and acute weather events (Winter Storm Elliott) essential for 
+   training resilient models.
+
+Temporal Partitioning Structure:
+- Training Fold: May 1, 2022 to December 31, 2023 (122,847 hourly observations)
+- Validation Fold: January 8, 2024 to December 31, 2024 (72,723 hourly observations; Q1–Q4 tuning)
+- Out-of-Time Test Holdout: January 8, 2025 to December 31, 2025 (72,053 hourly observations; full Q1–Q4 benchmark)
+- Purge Embargo: Strict 7-day buffer between folds to prevent temporal autocorrelation leakage.
+
+----------------------------------------------------------------------------------------------------
+2.6 CHECKLIST OF TABLES, FIGURES, AND EXHIBITS FOR SECTION 2
+----------------------------------------------------------------------------------------------------
+[x] Table 2.1: The 4-Tier Purposive Filtering Pipeline Funnel Table.
+[x] Table 2.2: The 9-Airport Experimental Cohort Factorial Grid (Airports x Carriers x Clusters).
+[x] Table 2.3: Econometric Proof of Checkpoint Exclusivity (Volume Conservation, Zero Intercept, Orthogonality).
+[x] Table 2.4: Temporal Demarcation Evaluation: Candidate A vs. Candidate B (May 1, 2022).
+[x] Figure 2.1: PCA Biplot & Dendrogram of Airport Operational Clusters.
+[x] Figure 2.2: Connecting Ratio vs. Checkpoint Demand Disconnect Scatterplot (The Connecting Ratio Paradox).
+[x] Figure 2.3: Structural Break CUSUM Chart Demonstrating Behavioral Stabilization on May 1, 2022.
+====================================================================================================
+End of Section 2 Outline
+====================================================================================================

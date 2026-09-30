@@ -1,0 +1,112 @@
+====================================================================================================
+SECTION 4: REPRESENTATIVE MODEL SELECTION & HYPOTHESIS-ALIGNED SPECIFICATION
+Chapter IV: Findings / Empirical Results (Before Analysis)
+Author: Leila Gleich | Institution: Embry-Riddle Aeronautical University
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+4.1 SECTION PURPOSE & OBJECTIVES
+----------------------------------------------------------------------------------------------------
+This section documents the theoretical and methodological rationale for selecting the specific 
+predictive models evaluated in this research. 
+
+Rather than selecting algorithms arbitrarily or testing black-box libraries at random, each model 
+was purposively chosen to serve as an archetype representing its broader modeling paradigm:
+1. Deterministic Baselines (Status-Quo Airport Planning Practice)
+2. Probabilistic / Data-Driven Machine Learning (Continuous Kernel Density Estimation)
+3. Dynamic Hybrid Frameworks (Sequential Two-Stage Cyber-Physical Architecture)
+
+This principled selection ensures that empirical differences in forecast performance directly test 
+the core hypotheses regarding Robustness, Resilience, and Generalizability.
+
+----------------------------------------------------------------------------------------------------
+4.2 THE THREE MODEL PARADIGMS & HYPOTHESIS MAPPING
+----------------------------------------------------------------------------------------------------
++-----------------------------+------------------------------------+----------------------------------------+
+| Model Paradigm / Category   | Representative Model Architecture  | Hypothesis Role & Theoretical Mechanics|
++-----------------------------+------------------------------------+----------------------------------------+
+| 1. Deterministic Baseline   | M1: Contemporaneous Schedule       | Represents status-quo airport planning |
+|                             |     SARIMAX / Ridge Baseline       | (FAA Master Plans). Maps departing     |
+|                             | (Benchmarked with M0 Diurnal Naive)| flights at departure hour t directly to|
+|                             |                                    | checkpoint demand. Tests Hypothesis 1: |
+|                             |                                    | Does un-convolved scheduling fail?     |
++-----------------------------+------------------------------------+----------------------------------------+
+| 2. Probabilistic /          | M3: Convolved Lead Demand +        | Employs continuous lognormal passenger |
+|    Data-Driven ML           |     Lagged OTP Delays/Cancels      | arrival kernels (peaking at t+2) and   |
+|                             |                                    | lagged delay feedback (t-1). Tests     |
+|                             |                                    | Hypothesis 2: Does continuous arrival  |
+|                             |                                    | ML capture routine stochastic variance?|
++-----------------------------+------------------------------------+----------------------------------------+
+| 3. Dynamic Hybrid Framework | M5: Sequential Two-Stage           | Stage 1: Linear schedule trend baseline|
+|                             |     SARIMA-Tree Hybrid Model       | Stage 2: Gradient-boosted decision tree|
+|                             |                                    | on residuals (e_t = y_t - y_hat_1).    |
+|                             |                                    | Tests Hypothesis 3: Does a hybrid model|
+|                             |                                    | absorb acute operational shocks?       |
++-----------------------------+------------------------------------+----------------------------------------+
+
+----------------------------------------------------------------------------------------------------
+4.3 MATHEMATICAL FORMULATIONS OF THE THREE REPRESENTATIVE MODELS
+----------------------------------------------------------------------------------------------------
+1. Model 1 (M1 - Deterministic Linear Baseline):
+   y_t = beta_0 + beta_1 * SchedFlights_t + sum_{k=1}^K [a_k sin(2*pi*k*t/24) + b_k cos(2*pi*k*t/24)] + epsilon_t
+   - Assumes passenger arrival volume is contemporaneous with scheduled flight pushback times.
+   - Contains no lead horizons, no passenger arrival spreading, and no operational delay feedback.
+   - Scaled using M0 (Diurnal Naive Persistence: y_hat_t = y_{t-24}) to calculate MASE.
+
+2. Model 2 (M3 - Probabilistic / Data-Driven Convolved ML):
+   y_t = f(ConvolvedDemand_{t+1, t+2, t+3}, LoadFactor_t, DepDelay_{t-1}, CancelCount_{t-1}, DOW, Month)
+   - Estimates passenger volume using continuous lognormal arrival density convolution across pre-departure leads.
+   - Closed-form L2 regularization and gradient-boosted trees optimize objective without overfitting.
+   - Strictly enforces causal delay feedback by lagging flight delays to t-1.
+
+3. Model 3 (M5 - Sequential Two-Stage SARIMA-Tree Hybrid):
+   - Stage 1 (Global Diurnal Schedule Model):
+     y_hat_{Stage1, t} = beta_0 + beta_1 * ConvolvedDemand_t + HarmonicSeasonality(hour, dow, month)
+   - Stage 2 (Non-Linear Residual Tree):
+     Compute residual: e_t = y_t - y_hat_{Stage1, t}
+     Train Tree Regressor on e_t using features: [DepDelay_{t-1}, Cancel_{t-1}, ConnectingRatio, TaxiOut_{t-1}]
+     Yields residual forecast: e_hat_{Stage2, t}
+   - Composite Forecast:
+     y_hat_t = max(0, y_hat_{Stage1, t} + e_hat_{Stage2, t})
+   - Rationale: The linear stage preserves physical long-term conservation laws, while the tree stage 
+     captures sudden localized queue build-ups and weather delay shocks.
+
+----------------------------------------------------------------------------------------------------
+4.4 FEATURE ENGINEERING & LEAD-LAG ARRIVAL DECONVOLUTION
+----------------------------------------------------------------------------------------------------
+1. Empirical Evidence of Lead-Lag Asynchrony:
+   Empirical regression of checkpoint throughput against flight departure horizons demonstrated 
+   a profound physical asynchrony between takeoff times and checkpoint demand:
+
+   +------------------------------------+------------+------------------+---------------------------+
+   | Feature Horizon Representation     | Linear R^2 | Pearson Corr (r) | Empirical Slope (pax/flt) |
+   +------------------------------------+------------+------------------+---------------------------+
+   | Contemporaneous Departures (t)     | 0.1988     | 0.4459           | 38.42 pax/flight          |
+   | Lead Horizon t+1 (1 hr pre-dep)    | 0.3723     | 0.6102           | 62.15 pax/flight          |
+   | Lead Horizon t+2 (2 hr pre-dep)    | 0.4054     | 0.6367 (PEAK)    | 74.98 pax/flight (PEAK)   |
+   | Lead Horizon t+3 (3 hr pre-dep)    | 0.3299     | 0.5744           | 51.20 pax/flight          |
+   | Continuous Convolved Lead Demand   | 0.4878     | 0.6985           | 74.98 pax/flight          |
+   | Convolved Demand * T-100 Load Fact | 0.4985     | 0.7061           | 90.56 pax/flight          |
+   +------------------------------------+------------+------------------+---------------------------+
+
+2. Mathematical Formulation of the Arrival Convolution:
+   ConvolvedDemand_t = sum_{tau=1}^3 SchedSeats_{t+tau} * (1 - ConnectingRatio) * LoadFactor_t * f_arr(tau)
+   Where f_arr(tau) is parameterized by an empirical lognormal kernel:
+   tau ~ Lognormal(mu = 4.65, sigma = 0.32), mode at 90–120 minutes pre-departure.
+
+3. Strict Causality and Zero Lookahead Bias:
+   - Flight schedules (SchedSeats) are known months in advance.
+   - Monthly load factors (T-100) are lagged.
+   - Tactical flight delay metrics (DepDelay, TaxiOut, Cancellations) are strictly indexed at t-1, 
+     preventing the model from using future flight outcomes to predict past checkpoint queues.
+
+----------------------------------------------------------------------------------------------------
+4.5 CHECKLIST OF TABLES, FORMULAS, AND SCHEMATICS FOR SECTION 3
+----------------------------------------------------------------------------------------------------
+[x] Table 4.1: Hypothesis-to-Model Mapping and Theoretical Taxonomies.
+[x] Table 4.2: Lead-Lag Correlation Gradient Across Departure Horizons (t to t+3).
+[x] Figure 4.1: Mathematical Schematic of the Sequential Two-Stage SARIMA-Tree Hybrid (M5).
+[x] Figure 4.2: Empirical Lognormal Passenger Arrival Kernel vs. Flight Departure Dirac Delta.
+====================================================================================================
+End of Section 4 Outline
+====================================================================================================

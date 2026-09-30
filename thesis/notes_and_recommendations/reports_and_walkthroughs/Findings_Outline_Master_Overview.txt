@@ -1,0 +1,97 @@
+====================================================================================================
+CHAPTER IV: FINDINGS / EMPIRICAL RESULTS (BEFORE ANALYSIS)
+MASTER STRUCTURAL ROADMAP & OUTLINE OVERVIEW
+Author: Leila Gleich | Institution: Embry-Riddle Aeronautical University
+Degree: Master of Science in Aeronautics / Aviation Data Analytics
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. CHAPTER PURPOSE & METHODOLOGICAL DEMARCATION
+----------------------------------------------------------------------------------------------------
+Chapter IV is dedicated strictly to the objective, empirical presentation of findings and descriptive 
+statistics derived from data engineering, purposive sample filtering, model specification, and model 
+execution.
+
+To maintain the highest standards of academic rigor and prevent scope creep:
+- Chapter IV (Findings / Results) answers:
+  "WHAT DO THE CONFORMED DATA AND MODEL RUNS FACTUALLY DEMONSTRATE?"
+  It provides the unvarnished baseline statistics, complete post-ETL data health census, filtering 
+  evidence, exclusivity proofs, filtered modeling dataset descriptives, architectural justifications, 
+  and raw execution output tables.
+
+- Chapter V (Analysis & Discussion) answers:
+  "WHAT DO THESE FINDINGS MEAN FOR THE THESIS HYPOTHESES, EVALUATION MEASURES, AND AIRPORT OPERATIONS?"
+  It analyzes and interprets the results across the three core dimensions: Robustness, Resilience, 
+  and Generalizability, performing formal hypothesis testing (Diebold-Mariano) and evaluating trade-offs.
+
+----------------------------------------------------------------------------------------------------
+2. MASTER OUTLINE ARCHITECTURE & FILE INDEX (LOGICAL SCIENTIFIC PROGRESSION)
+----------------------------------------------------------------------------------------------------
+
+The findings chapter follows an intuitive, academically rigorous five-section progression:
+1. Raw Data Census -> 2. Sample Filtering -> 3. Filtered Dataset Descriptives -> 4. Model Selection -> 5. Model Execution
+
+* SECTION 1: INTRODUCTION & POST-ETL MASTER DESCRIPTIVE STATISTICS
+  - Text Outline: Section_1_Intro_and_Post_ETL_Descriptive_Statistics.txt
+  - Data Census CSV: Section_1A_Data_Foundation_Census.csv (42.06M Cleaned vs 67.22M Raw Rows)
+  - Post-ETL Master Descriptives CSV: Section_1B_Post_ETL_Master_Descriptive_Statistics.csv (All 42M rows)
+  - Top 25 Candidate Airports Census CSV: Section_1C_Top25_Candidate_Airports_Post_ETL_Census.csv
+  - Top 25 Macro Summary Stats CSV: Section_1D_Top25_Macro_Summary_Statistics.csv
+
+* SECTION 2: THE SPATIAL & TEMPORAL FILTERING PIPELINE
+  - Text Outline: Section_2_Spatial_and_Temporal_Filtering_Pipeline.txt
+  - Filtering Funnel CSV: Section_2A_Four_Tiered_Purposive_Filtering_Funnel.csv
+  - Cohort Factorial Grid CSV: Section_2B_Nine_Airport_Experimental_Cohort_Factorial_Grid.csv
+  - Econometric Exclusivity CSV: Section_2C_Econometric_Exclusivity_Validation.csv
+  - Temporal Demarcation CSV: Section_2D_Temporal_Demarcation_Candidate_Evaluation.csv
+
+* SECTION 3: DESCRIPTIVE STATISTICS OF THE FILTERED EXPERIMENTAL DATASET
+  - Text Outline: Section_3_Filtered_Dataset_Descriptive_Statistics.txt
+  - Filtered Dataset Stats CSV: Section_3A_Filtered_Dataset_Master_Descriptive_Statistics.csv (N=270,460 hours)
+  - Partition Folds Stats CSV: Section_3B_Temporal_Partitions_Descriptive_Statistics.csv (Train, Val, Test)
+  - Cross-Airport Distributions CSV: Section_3C_Cross_Airport_Spatial_Throughput_Distributions.csv (9 Airports)
+  - Conditioned Operational Regimes CSV: Section_3D_Conditioned_Operational_Regimes_Census.csv (Routine vs Shock)
+
+* SECTION 4: REPRESENTATIVE MODEL SELECTION & HYPOTHESIS-ALIGNED SPECIFICATION
+  - Text Outline: Section_4_Hypothesis_Aligned_Representative_Model_Selection.txt
+  - Model Taxonomy CSV: Section_4A_Hypothesis_Aligned_Representative_Model_Taxonomy.csv
+  - Arrival Deconvolution Gradient CSV: Section_4B_Lead_Lag_Arrival_Deconvolution_Gradient.csv
+
+* SECTION 5: EMPIRICAL MODEL EXECUTION & OUTPUT DESCRIPTIVE STATISTICS
+  - Text Outline: Section_5_Empirical_Model_Execution_and_Output_Descriptive_Statistics.txt
+  - Master Execution Matrix CSV: Section_5A_Master_Model_Execution_2025_Holdout_Matrix.csv
+  - Conditioned Regime Outputs CSV: Section_5B_Conditioned_Regime_Performance_Outputs.csv
+
+----------------------------------------------------------------------------------------------------
+3. SUMMARY TABLE: SECTION CONTENTS AND EMPIRICAL ARTIFACTS
+----------------------------------------------------------------------------------------------------
+Section | Primary Analytical Scope            | Companion Text File & CSV Data Tables
+--------+------------------------------------+------------------------------------------------------
+Sec 1   | Complete Post-ETL Cleaned Census   | Text: Section_1_Intro_and_Post_ETL_Descriptive_Statistics.txt
+        | (All 42,062,039 Rows Across 25 Air)| CSVs: Section_1A_Data_Foundation_Census.csv
+        |                                    |       Section_1B_Post_ETL_Master_Descriptive_Statistics.csv
+        |                                    |       Section_1C_Top25_Candidate_Airports_Post_ETL_Census.csv
+        |                                    |       Section_1D_Top25_Macro_Summary_Statistics.csv
+--------+------------------------------------+------------------------------------------------------
+Sec 2   | 4-Tier Filtering & Post-COVID Date | Text: Section_2_Spatial_and_Temporal_Filtering_Pipeline.txt
+        | (Top 25, WN Excl., Checkpoint Excl)| CSVs: Section_2A_Four_Tiered_Purposive_Filtering_Funnel.csv
+        |                                    |       Section_2B_Nine_Airport_Experimental_Cohort_Factorial_Grid.csv
+        |                                    |       Section_2C_Econometric_Exclusivity_Validation.csv
+        |                                    |       Section_2D_Temporal_Demarcation_Candidate_Evaluation.csv
+--------+------------------------------------+------------------------------------------------------
+Sec 3   | Filtered Experimental Data Stats   | Text: Section_3_Filtered_Dataset_Descriptive_Statistics.txt
+        | (N = 270,460 hours; 2022 to 2025)  | CSVs: Section_3A_Filtered_Dataset_Master_Descriptive_Statistics.csv
+        |                                    |       Section_3B_Temporal_Partitions_Descriptive_Statistics.csv
+        |                                    |       Section_3C_Cross_Airport_Spatial_Throughput_Distributions.csv
+        |                                    |       Section_3D_Conditioned_Operational_Regimes_Census.csv
+--------+------------------------------------+------------------------------------------------------
+Sec 4   | Representative Model Selection     | Text: Section_4_Hypothesis_Aligned_Representative_Model_Selection.txt
+        | (Deterministic, ML, Hybrid)        | CSVs: Section_4A_Hypothesis_Aligned_Representative_Model_Taxonomy.csv
+        |                                    |       Section_4B_Lead_Lag_Arrival_Deconvolution_Gradient.csv
+--------+------------------------------------+------------------------------------------------------
+Sec 5   | Empirical Execution Output Census  | Text: Section_5_Empirical_Model_Execution_and_Output_Descriptive_Statistics.txt
+        | (2025 Holdout Benchmark Outputs)   | CSVs: Section_5A_Master_Model_Execution_2025_Holdout_Matrix.csv
+        |                                    |       Section_5B_Conditioned_Regime_Performance_Outputs.csv
+====================================================================================================
+End of Master Roadmap
+====================================================================================================
