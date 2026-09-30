@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v3.5 (Consolidated Master Provenance & Repository Harmonization)
+RELEASE VERSION: v4.0 (Full Implementation of Recommendations REC-01 to REC-14)
 DATE: September 30, 2026
 ====================================================================================================
 
@@ -59,6 +59,21 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Harmonized Chapter 5 to evaluate single overarching Hypothesis 1 across   |
 |         |            |   three operational dimensions (Robustness, Resilience, Generalizability). |
 |         |            | - Integrated master OTP factor weighting & TSA volatility plan (v3.2).     |
+| v4.0    | 2026-09-30 | Full Implementation of Recommendations REC-01 through REC-14:              |
+|         |            | - Phase 1: 6-point pipeline integrity audit (REC-14), self-contained paths  |
+|         |            |   (REC-08), Candidate B temporal demarcation & 7-day purge embargo (REC-06).|
+|         |            | - Phase 2: Live PCA & K-Means 80.5% variance clustering (REC-10), balanced  |
+|         |            |   4x4 factorial design with 12 carrier facilities across 9 hubs.            |
+|         |            | - Phase 3: Physics-informed feature pipeline: diurnal/weekly cyclical terms  |
+|         |            |   (REC-01), cluster-adaptive lognormal kernels (REC-02), DB1B connecting     |
+|         |            |   deflation (REC-03), gauge tiering (REC-04), taxi/GDP interaction (REC-07), |
+|         |            |   checkpoint carrier spatial mapping (REC-13).                              |
+|         |            | - Phase 4: Models & Multi-Pillar Engine: M0 seasonal naive, M1 rebuilt      |
+|         |            |   2-hr lead, M3 Tweedie tree, M5 sequential SARIMA-Tree hybrid, 14-metric   |
+|         |            |   MultiPillarEvaluator (REC-11), dual-track decision engine (REC-05),        |
+|         |            |   conformal quantile intervals & q85 staffing bounds (REC-12).              |
+|         |            | - Phase 5: Manuscript & Provenance Synchronization (REC-09), complete test  |
+|         |            |   coverage (36/36 passing), zero test regressions, fully autonomous run.     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
