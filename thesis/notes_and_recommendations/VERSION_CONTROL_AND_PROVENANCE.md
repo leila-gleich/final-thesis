@@ -3,8 +3,8 @@
 PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Performance Coupling
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
-LOCATION: Results_and_Analysis/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v3.2 (Self-Contained Repository Consolidation & Hypothesis Harmonization)
+LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
+RELEASE VERSION: v3.5 (Consolidated Master Provenance & Repository Harmonization)
 DATE: September 30, 2026
 ====================================================================================================
 
@@ -31,17 +31,29 @@ auditability, reproducibility, and referential integrity across all empirical fi
 | v2.5    | 2026-08-30 | Purposive 4-Tier Filtering & 9-Airport Experimental Cohort: Isolated       |
 |         |            | carrier-exclusive screening lanes (BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, |
 |         |            | PHL) for orthogonal Wiener-Hopf deconvolution; partitioned 2025 holdout.   |
-| v3.0    | 2026-09-17 | Unified Results Architecture Release: Consolidates all four federal feeds, |
-|         |            | the Executive Summary Suite, the 25-airport master census, coupled cross-  |
-|         |            | dataset dynamics, and domain-organized results into Results_and_Analysis/. |
-| v3.1    | 2026-09-28 | Methodological Harmonization & Two-Chapter Finalization:                   |
+| v3.0    | 2026-09-17 | Unified Results Architecture Release & Multi-Tab Excel Consolidation:      |
+|         |            | Consolidates all four federal feeds, the Executive Summary Suite, the      |
+|         |            | 25-airport master census, coupled cross-dataset dynamics, and domain-      |
+|         |            | organized results into multi-tab Excel workbooks; archived component CSVs. |
+| v3.1    | 2026-09-24 | Unified Results Hub: Consolidated Results_and_Analysis/ and results/ into a |
+|         |            | single canonical results/ hub with full parity to final-thesis.             |
+| v3.2    | 2026-09-27 | Coupled Volatility & Temporal Regimes Integration: Integrated Coupled      |
+|         |            | Volatility Index, Diurnal Turbulence Shock Index, and 84-cell tensor into  |
+|         |            | Chapter III; added Tables 4.3b, 4.4a-c and Figures 4.1–4.4 to Chapter IV;  |
+|         |            | enriched Chapter V with Lead-Lag Asynchrony, Empty Checkpoint Fallacy,     |
+|         |            | Volatility Archetypes, and Regime-Switched Gated Inference Engine.         |
+| v3.3    | 2026-09-27 | Harmonized Sample Size & Partitioning Provenance: Corrected Candidate B    |
+|         |            | training duration (32 mo dev / 44 mo total); disambiguated Top 25 system   |
+|         |            | hours (23,400 / 8,760) and 9-airport complex counts (122,847 / 72,053)     |
+|         |            | from raw candidate facility logs (404k / 215k); logged prompt rationale.   |
+| v3.4    | 2026-09-28 | Methodological Harmonization & Two-Chapter Finalization:                   |
 |         |            | - Formalized balanced 4x4 factorial design across 9 hubs.                  |
 |         |            | - Verified OTP departing flights scope (unrestricted destinations).        |
 |         |            | - Econometrically confirmed Type I vs. Type II layout invariance           |
 |         |            |   via two-sample Kolmogorov-Smirnov test (D = 0.032, p = 0.28).            |
 |         |            | - Rebuilt M1 deterministic static 2-hr lead baseline (R^2 = 0.5293).       |
 |         |            | - Structured formal Chapter IV (Findings) and Chapter V (Analysis) split.  |
-| v3.2    | 2026-09-30 | Self-Contained Repository Consolidation & Hypothesis Harmonization:        |
+| v3.5    | 2026-09-30 | Self-Contained Repository Consolidation & Hypothesis Harmonization:        |
 |         |            | - Migrated 71 supplementary assets from legacy Gleich-Thesis.              |
 |         |            | - Integrated reproducible seasonal analysis runner and data tables.        |
 |         |            | - Harmonized Chapter 5 to evaluate single overarching Hypothesis 1 across   |
@@ -114,7 +126,7 @@ To guarantee machine learning and econometric validity, four critical remediatio
 ----------------------------------------------------------------------------------------------------
 4. COMPLETE REPOSITORY FILE MANIFEST & SITEMAP
 ----------------------------------------------------------------------------------------------------
-The Results_and_Analysis/ directory is structured into four primary hubs:
+The foundational analysis suite (housed in `results/foundational_analysis/`) is structured into four primary hubs:
 
 01_Executive_Summary/
    - 01_Executive_Top25_Airport_Coupled_Master_Census.csv: 25-airport master census combining OTP and TSA.

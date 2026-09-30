@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v3.3 (Sample Size & Partitioning Provenance Harmonization)
-DATE: September 2026
+RELEASE VERSION: v3.5 (Consolidated Master Provenance & Repository Harmonization)
+DATE: September 30, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -31,8 +31,10 @@ auditability, reproducibility, and referential integrity across all empirical fi
 | v2.5    | 2026-08-30 | Purposive 4-Tier Filtering & 9-Airport Experimental Cohort: Isolated       |
 |         |            | carrier-exclusive screening lanes (BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, |
 |         |            | PHL) for orthogonal Wiener-Hopf deconvolution; partitioned 2025 holdout.   |
-| v3.0    | 2026-09-17 | Multi-Tab Excel Consolidation: Consolidated loose CSV tables into parent-   |
-|         |            | named multi-tab Excel workbooks; archived component CSV data feeds.         |
+| v3.0    | 2026-09-17 | Unified Results Architecture Release & Multi-Tab Excel Consolidation:      |
+|         |            | Consolidates all four federal feeds, the Executive Summary Suite, the      |
+|         |            | 25-airport master census, coupled cross-dataset dynamics, and domain-      |
+|         |            | organized results into multi-tab Excel workbooks; archived component CSVs. |
 | v3.1    | 2026-09-24 | Unified Results Hub: Consolidated Results_and_Analysis/ and results/ into a |
 |         |            | single canonical results/ hub with full parity to final-thesis.             |
 | v3.2    | 2026-09-27 | Coupled Volatility & Temporal Regimes Integration: Integrated Coupled      |
@@ -44,6 +46,19 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | training duration (32 mo dev / 44 mo total); disambiguated Top 25 system   |
 |         |            | hours (23,400 / 8,760) and 9-airport complex counts (122,847 / 72,053)     |
 |         |            | from raw candidate facility logs (404k / 215k); logged prompt rationale.   |
+| v3.4    | 2026-09-28 | Methodological Harmonization & Two-Chapter Finalization:                   |
+|         |            | - Formalized balanced 4x4 factorial design across 9 hubs.                  |
+|         |            | - Verified OTP departing flights scope (unrestricted destinations).        |
+|         |            | - Econometrically confirmed Type I vs. Type II layout invariance           |
+|         |            |   via two-sample Kolmogorov-Smirnov test (D = 0.032, p = 0.28).            |
+|         |            | - Rebuilt M1 deterministic static 2-hr lead baseline (R^2 = 0.5293).       |
+|         |            | - Structured formal Chapter IV (Findings) and Chapter V (Analysis) split.  |
+| v3.5    | 2026-09-30 | Self-Contained Repository Consolidation & Hypothesis Harmonization:        |
+|         |            | - Migrated 71 supplementary assets from legacy Gleich-Thesis.              |
+|         |            | - Integrated reproducible seasonal analysis runner and data tables.        |
+|         |            | - Harmonized Chapter 5 to evaluate single overarching Hypothesis 1 across   |
+|         |            |   three operational dimensions (Robustness, Resilience, Generalizability). |
+|         |            | - Integrated master OTP factor weighting & TSA volatility plan (v3.2).     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
