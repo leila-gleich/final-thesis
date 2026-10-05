@@ -24,6 +24,7 @@ The purpose of this repository is to address the research question: *"How do det
 ```
 final-thesis/
 ├── README.md                           <-- Master GitHub repository guide (this file)
+├── AGENTS.md                           <-- AI Agent Operational Constitution & Execution Guidelines
 ├── LICENSE                             <-- MIT Open Source Academic License
 ├── .gitignore                          <-- Git exclusion rules (cache, OS, DuckDB)
 ├── requirements.txt                    <-- Python dependency specifications
@@ -211,3 +212,19 @@ python3 -m unittest discover tests
 * Master Manuscript Tables Registry: [results/manuscript_tables/README.md](results/manuscript_tables/README.md)
 * Comprehensive Master Draft: [Master_Results_and_Discussion_Comprehensive_Draft.md](thesis_docs/manuscripts/archive/Master_Results_and_Discussion_Comprehensive_Draft.md)
 * OTP Factor Weighting & Volatility Module: [OTP_FACTOR_WEIGHTING_AND_VOLATILITY_ANALYSIS.md](otp_volatility_analysis/OTP_FACTOR_WEIGHTING_AND_VOLATILITY_ANALYSIS.md)
+* Agent Operational Constitution & Rules: [AGENTS.md](AGENTS.md)
+
+---
+
+## AI Agent Operational Constitution & Repository Directives
+
+All automated AI coding agents, subagents, and LLM assistants operating in this repository are strictly governed by the rules codified in **[AGENTS.md](AGENTS.md)**:
+
+1. **Zero Modifications to Word Documents**: Under NO circumstances may any agent edit, modify, overwrite, or delete Microsoft Word manuscripts (`.docx`) unless the user explicitly states otherwise in writing in the current session.
+2. **Commit After Each Task**: Every discrete task, edit, or bug fix must immediately be committed with a clean, descriptive Git commit message.
+3. **Continuous Version Control & Provenance**: Every modification must update `results/00_VERSION_CONTROL_AND_PROVENANCE.md`.
+4. **Synchronize All Tables (CSV & Excel)**: All metric or parameter changes must be synchronized across both CSV tables (`results/manuscript_tables/`) and multi-tab Excel workbooks (`results/`) via `src/analysis/sync_manuscript_tables.py`.
+5. **Research Target Integrity**: The primary dependent variable is **TSA Throughput Volatility** ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$), never raw passenger volume ($y_t$).
+6. **The 4 Canonical Models**: Evaluation is restricted to $M_0$ (Control), $M_1^*$ (Deterministic Schedule Bank Volatility), $M_3$ (Supervised GBR), and $M_5$ (Sequential SARIMA-Tree Hybrid), preserving asymmetric trade-offs ($M_5$ is not universally best).
+7. **Strict Aviation Terminology Filter**: Strict adherence to genuine commercial aviation operations terms (*Nominal On-Time Baseline*, *Routine Daily Operations*, *Irregular Operations / IROPS*, *Carrier Checkpoint Isolation*), with zero tolerance for physics, biology, or lab-science jargon.
+

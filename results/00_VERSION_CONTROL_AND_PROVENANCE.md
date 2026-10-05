@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.5 (Throughput Volatility Overhaul & 4-Model Canonical Suite Audit)
+RELEASE VERSION: v4.6 (AI Agent Constitution & Repository Governance Deployment)
 DATE: October 5, 2026
 ====================================================================================================
 
@@ -123,6 +123,18 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Replaced technical jargon with defensible APA 7 aviation terminology.     |
 |         |            | - Safely archived legacy SSOT, early notes, and draft recs to archive/.     |
 |         |            | - Validated 100% self-contained architecture check and 38/38 unit tests.   |
+| v4.6    | 2026-10-05 | AI Agent Constitution & Repository Governance Deployment:                   |
+|         |            | - Authored AGENTS.md at repository root establishing non-negotiable agent   |
+|         |            |   operational policies and domain constraints.                             |
+|         |            | - Codified Zero Modifications to Microsoft Word (.docx) documents policy    |
+|         |            |   (no edits unless user explicitly states otherwise in session).            |
+|         |            | - Mandated git commit after each individual task with appropriate message.  |
+|         |            | - Mandated continuous updates to version control/provenance documents.      |
+|         |            | - Mandated synchronization of all related CSV tables and Excel workbooks.   |
+|         |            | - Reinforced throughput volatility targets and 4 canonical models.          |
+|         |            | - Codified strict aviation terminology filter: Nominal On-Time Baseline,    |
+|         |            |   Routine Daily Operations, Irregular Operations (IROPS); banned lab speak. |
+|         |            | - Updated README.md referencing AGENTS.md and agent governance directives.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
