@@ -20,7 +20,7 @@ DIMENSIONS_DIR = DATA_DIR / "dimensions"
 
 # Results and documentation directories
 RESULTS_DIR = BASE_DIR / "results"
-RESULTS_TABLES_DIR = BASE_DIR / "results-tables"
+RESULTS_TABLES_DIR = RESULTS_DIR / "tables"
 THESIS_DOCS_DIR = BASE_DIR / "thesis_docs"
 MANUSCRIPTS_DIR = THESIS_DOCS_DIR / "manuscripts"
 
