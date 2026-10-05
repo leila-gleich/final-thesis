@@ -4,8 +4,8 @@
 
 ## 4.1 Initial Exploratory Data Analysis
 
-### 4.1.1 Descriptive Statistics (Top 25 Airfields)
-To construct an empirically rigorous, leak-free predictive modeling architecture for airport passenger security screening demand, this study synthesized multi-source operational records covering the continuous seven-year period from January 1, 2019 to December 31, 2025. The initial upstream repository captured 67.22 million raw fact records across four federal feeds:
+### 4.1.1 Descriptive Statistics
+To construct an empirically rigorous, leak-free predictive modeling architecture for airport passenger security screening demand, this study synthesized multi-source operational records covering the continuous seven-year period from January 1, 2019 to December 31, 2025. The initial upstream repository captured 67.22 million raw fact records across four primary federal feeds:
 1. **TSA FOIA Checkpoint Logs**: Hourly passenger throughput records disaggregated by physical screening lane.
 2. **Bureau of Transportation Statistics (BTS) On-Time Performance (OTP, Form 234)**: Flight-level departure movements tracking scheduled and actual departure times, tarmac taxi-out durations, departure delays, cancellations, and causal delay attributions.
 3. **BTS Form 41 Schedule T-100 Domestic Segment Data**: Monthly carrier-route-equipment records reporting available departing seats, transported revenue passengers, and load factors.
@@ -41,17 +41,17 @@ Table 4.2 presents the master post-ETL descriptive summary statistics for all pr
 | **Route Capacity** | Route Load Factor (%) | 422,096 | 81.21% | 83.40% | 11.80% | 12.50% | 0.00% | 100.00% | 58.40% | 94.20% |
 | **Passenger Surveys**| Connecting Passenger Fraction (%) | 22,051,557 | 51.39% | 50.73% | 11.74% | 16.20% | 33.58% | 76.04% | 35.69% | 70.09% |
 
-At the macro level, the 25 candidate airfields processed an annual mean of 192,160 scheduled commercial domestic departures ($\sigma = 69,376$; median = 177,182), ranging from 95,849 departures at Washington Dulles (IAD) to 360,571 departures at Chicago O'Hare (ORD). Systemwide passenger screening throughput averaged 68.50 million passengers per airfield annually ($\sigma = 27.76\text{M}$; median = 66.01M), with Charlotte Douglas (CLT) recording 28.17 million passengers and Los Angeles International (LAX) processing 129.07 million passengers across the multi-year study period.
+At the macro network level, the 25 candidate airfields processed an annual mean of 192,160 scheduled commercial domestic departures ($\sigma = 69,376$; median = 177,182), ranging from 95,849 departures at Washington Dulles (IAD) to 360,571 departures at Chicago O'Hare (ORD). Systemwide passenger screening throughput averaged 68.50 million passengers per airfield annually ($\sigma = 27.76\text{M}$; median = 66.01M), with Charlotte Douglas (CLT) recording 28.17 million passengers and Los Angeles International (LAX) processing 129.07 million passengers across the multi-year study period.
 
-Three essential data hygiene protocols were established during warehouse staging:
-1. **Spatial Key Resolution and Metadata Remediation**: Upstream raw TSA logs contained 35,809 records with missing or corrupted airport strings. An automated checkpoint fingerprinting algorithm successfully mapped 7,489 records by identifying unique physical checkpoint string signatures (`dim_checkpoint`). The remaining 22,190 unresolvable records were assigned to a dedicated null surrogate key (`airportId = 0`, flagged with `airportMissing = 1`), preventing the creation of an artificial 9.71-million passenger "phantom airport" that would have distorted econometric demand baselines. All downstream analyses strictly enforce `WHERE airportMissing = 0 AND airportId > 0`.
+Three essential data hygiene protocols were established during warehouse staging to guarantee econometric and machine learning validity:
+1. **Spatial Key Resolution and Unidentified Airport Isolation**: Upstream raw TSA logs contained 35,809 records with missing or corrupted airport strings. An automated checkpoint fingerprinting algorithm successfully mapped 7,489 records by identifying unique physical checkpoint string signatures (`dim_checkpoint`). The remaining 22,190 unresolvable records were assigned to a dedicated null surrogate key (`airportId = 0`, flagged with `airportMissing = 1`), preventing the creation of an artificial 9.71-million passenger "phantom airport" that would have distorted econometric demand baselines. All downstream analyses strictly enforce `WHERE airportMissing = 0 AND airportId > 0`.
 2. **Physical Checkpoint Closures vs. Missing Sensor Data**: A critical operational feature of airport checkpoints is zero throughput during overnight curfews. Across the warehouse, 450,973 records (2.31%) reported zero passengers. Cross-referencing flight movements established that 98.6% of zero values occur between 00:00 and 03:59 local time. Rather than applying moving-average or spline imputations—which would fabricate passenger volume during scheduled overnight lane closures—these intervals were preserved as true operational structural zeros and modeled through Tweedie compound Poisson distributions ($p = 1.3$) or two-stage hurdle structures.
 3. **Advance vs. Tactical Cancellation Causality**: Across the 13,153,654 domestic departures, flight cancellations averaged 2.03% (267,019 operations), with 99.4% of unassigned aircraft tail numbers occurring on cancelled flights. To prevent lookahead bias in passenger forecasting, advance cancellations (>24 hours prior to scheduled departure) were purged from departing seat supply curves, while tactical cancellations (<2 hours prior) were retained, reflecting the operational reality that booked passengers had already completed landside security screening before the carrier issued the cancellation.
 
 ---
 
-### 4.1.2 Temporal Baselines and Seasonal Dynamics (Top 25 Airfields)
-A core methodological requirement of this thesis is that **defining temporal boundaries (specifically post-COVID recovery regimes) and seasonal dynamics (annual cycles and day-of-week patterns) must be performed on the broad Top 25 airport dataset**. Establishing macroeconomic baselines on a wide multi-airport dataset prevents overfitting: if temporal regimes and calendar dynamics were fitted exclusively to a narrow subset, downstream machine learning models would overtrain on idiosyncratic facility characteristics rather than learning generalizable aviation temporal dynamics.
+### 4.1.2 Temporal Boundaries
+A core methodological requirement of this thesis is that **defining temporal boundaries (specifically post-COVID recovery regimes) must be performed on the broad Top 25 airport dataset**. Establishing macroeconomic baselines on a wide multi-airport dataset prevents overfitting: if temporal regimes were fitted exclusively to a narrow subset, downstream machine learning models would overtrain on idiosyncratic facility characteristics rather than learning generalizable aviation temporal dynamics.
 
 #### Post-Pandemic Regime Selection and Structural Break Analysis
 The seven-year dataset captures two unprecedented macroeconomic disruptions: the COVID-19 pandemic demand collapse (2020–2021) and the post-pandemic operational rebound (2022–2025). To identify the point at which commercial aviation resumed structural equilibrium, rolling Welch's $t$-tests, Cumulative Sum (CUSUM) structural break tests, and longitudinal correlation metrics were computed across the Top 25 airfields. Table 4.3a contrasts the candidate temporal demarcation baselines.
@@ -74,8 +74,14 @@ Structural break tests confirmed **May 1, 2022** as the optimal demarcation poin
 2. **Coupling Stability**: During the acute pandemic (2020–2021), the correlation between scheduled flights and checkpoint throughput spiked to an artificial $r = 0.607$ ($R^2 = 36.85\%$) because airline capacity cuts mirrored strict travel bans. In the post-May 2022 equilibrium, the relationship stabilized to $r = 0.553$ ($R^2 = 30.61\%$), reflecting normalized booking curves.
 3. **Partitioning Design**: Candidate B establishes a 32-month development span partitioned into a 20-month training set (May 1, 2022 to December 31, 2023; 122,847 hourly observations across the filtered 9-airport complex cohort; 404,324 multi-facility observations across the Top 25 network), a 12-month validation set (January 1, 2024 to December 31, 2024; 72,723 hourly observations), and an untouched 12-month out-of-time holdout test set (January 1, 2025 to December 31, 2025; 72,053 complex-level observations; 215,562 facility-level observations). A 7-day operational buffer between partitions prevents multi-day delay cascades from leaking across evaluation boundaries.
 
+---
+
+### 4.1.3 Defining Seasonality
+Just as temporal boundaries must be established on the complete Top 25 network, **defining seasonality requires capturing the full variance of nationwide commercial aviation**. Aviation seasonality operates along three coupled dimensions: annual seasonal volatility regimes, day-of-week demand archetypes, and diurnal non-consecutive dual turbulence peaks.
+
 #### Annual Seasonal Regimes and Coupled Volatility
-Airport operational stress is not uniform across the year. By analyzing daily within-day passenger arrival coefficient of variation ($CV_{\text{TSA}}$) alongside flight departure delay dispersion ($\sigma_{\text{Delay}}$) across 1,341 post-demarcation days across the Top 25 network, four distinct annual volatility regimes were established (Table 4.3b).
+Airport operational stress is not uniform across the calendar year. By analyzing daily within-day passenger arrival coefficient of variation ($CV_{\text{TSA}}$) alongside flight departure delay dispersion ($\sigma_{\text{Delay}}$) across 1,341 post-demarcation days across the Top 25 network, four distinct annual volatility regimes were established (Table 4.3b). The Coupled Volatility Index is defined as:
+$$\text{CVI} = CV_{\text{TSA}} \times \sigma_{\text{Delay}}$$
 
 #### Table 4.3b: Master Annual Seasonal Volatility Regimes Summary (Top 25 Airfields)
 
@@ -86,7 +92,7 @@ Airport operational stress is not uniform across the year. By analyzing daily wi
 | **`3_PEAK`** | Summer Severe Weather & Convective Surge | 224 | 16.7% | 1,305,968 | 0.576 | 68.43 min | **39.36** | 24.17 min | 31.04% | 3.16% |
 | **`4_HOLIDAY`** | National Holiday Travel Corridors | 191 | 14.2% | 1,215,636 | 0.597 | 55.78 min | **33.07** | 16.51 min | 24.33% | 1.82% |
 
-Across the annual calendar, delay dispersion ($\sigma_{\text{Delay}}$) expands monotonically from 46.09 minutes during the winter lull to 68.43 minutes during the summer peak (+48.5% dispersion expansion), driving the Coupled Volatility Index ($CV_{\text{TSA}} \times \sigma_{\text{Delay}}$) from 27.85 to 39.36 (+41.3%), while flight cancellation rates more than triple from 0.89% to 3.16%.
+Across the annual calendar, delay dispersion ($\sigma_{\text{Delay}}$) expands monotonically from 46.09 minutes during the winter lull to 68.43 minutes during the summer peak (+48.5% dispersion expansion), driving the Coupled Volatility Index from 27.85 to 39.36 (+41.3%), while flight cancellation rates more than triple from 0.89% to 3.16%.
 
 #### Day-of-Week Cyclical Dynamics and Archetypes
 Weekly commercial aviation movements follow structural cycles dictated by corporate versus leisure travel demand. Standardizing observations under ISO 8601 ($1 = \text{Monday}, \dots, 7 = \text{Sunday}$) across all Top 25 airfields yields three primary weekly operational archetypes (Table 4.4a):
@@ -118,7 +124,7 @@ The cross-classification of the 4 annual seasonal regimes ($\mathcal{S}$), 7 day
 
 ---
 
-### 4.1.3 Relationship Between TSA Throughput and OTP Data (Top 25 Airfields)
+### 4.1.4 TSA & OTP Throughput Data
 Evaluating the statistical relationships between TSA checkpoint throughput and Bureau of Transportation Statistics On-Time Performance data across all Top 25 airfields reveals fundamental econometric dynamics. Table 4.5 synthesizes the master cross-dataset econometric correlations.
 
 #### Table 4.5: Master Cross-Dataset Econometric Relationships (Top 25 Airfields)
@@ -144,18 +150,19 @@ Two overarching empirical insights emerge from Table 4.5:
 
 ---
 
-### 4.1.4 Implications for Subset and Filtering of Seasonal Dynamics and TSA-OTP Relationships
+### 4.1.5 Implications for Subset
 The findings from the Top 25 exploratory data analysis establish critical empirical foundations and constraints for subsequent data filtering and model development:
 1. **Necessity of Macro-Scale Baseline Derivation**: Establishing temporal boundaries (May 1, 2022 post-mask demarcation) and seasonal dynamics (the 4-regime annual calendar, 3 weekly archetypes, and diurnal dual-peak blocks) on the complete Top 25 network ensures that statistical baselines reflect macroeconomic aviation behavior rather than localized facility noise. This prevents models from overtraining on idiosyncratic scheduling quirks of individual hubs.
 2. **Identification of Multi-Carrier Schedule Collinearity**: In shared terminal facilities across the Top 25 airfields, hub carriers coordinate departure banks. Carrier departure schedules exhibit extreme collinearity ($\text{Corr}(S_j, S_{j'}) \ge 0.88$, condition number $\kappa > 10^4$), making it mathematically impossible to separate individual airline passenger contributions in shared checkpoint queues.
 3. **Requirement for Checkpoint-Level Carrier Exclusivity**: Because contemporaneous scheduled departures explain only ~20% of raw checkpoint variance at the airport-wide level, isolating pure carrier-checkpoint pairs where single-carrier operations feed dedicated screening lanes is essential to unmask the true physical lead-lag relationship between flight schedules and landside arrivals.
 4. **Strict Partitioning Between Macro Dynamics and Feature Training**: While the Top 25 dataset uncovers seasonal dynamics, cyclical archetypes, and cross-dataset correlations, **these relationships and dynamics must not be used as direct trained regression targets or predictive leakage within the downstream model**. Instead, they justify the purposive filtering pipeline, inform feature architectures (e.g., lead-lag arrival distributions and cyclical encodings), and guide the selection of candidate airfields for experimental modeling.
+5. **Evaluating Complete Facilities Before Checkpoints**: During initial candidate screening, commercial airports must be evaluated as whole facilities to verify scale, multi-carrier representation, and operational clusters before isolating dedicated checkpoint complexes.
 
 ---
 
 ## 4.2 Data Filtering and Subset Selection
 
-### 4.2.1 The Four-Phase Filtering Pipeline
+### 4.2.1 Four-Phase Filtering Pipeline
 To eliminate confounding from multi-carrier passenger mixing, unconstrained regional flow, and airline-specific boarding differences, commercial airfields were screened through a four-phase purposive filtering pipeline. For each phase, the relationship between TSA throughput and OTP flight data was tracked, demonstrating how progressive filtering refines operational coupling.
 
 ```
@@ -220,7 +227,7 @@ To eliminate confounding from multi-carrier passenger mixing, unconstrained regi
 
 ---
 
-### 4.2.2 Pipeline Results: The Selected 9-Airport Experimental Cohort
+### 4.2.2 Pipeline Results
 The filtering pipeline isolated 9 commercial airfields representing 12 carrier-exclusive screening environments, achieving complete factorial balance across legacy airlines and operational clusters. Table 4.6 details the experimental cohort.
 
 #### Table 4.6: The 9-Airport Experimental Cohort Factorial Specification
@@ -241,33 +248,16 @@ The filtering pipeline isolated 9 commercial airfields representing 12 carrier-e
 * **LGA vs. JFK Selection**: United Airlines permanently ceased operations at JFK in October 2022 (failing Meso multi-carrier continuity). In contrast, LGA opened Delta's state-of-the-art consolidated Terminal C in June 2022, providing unconfounded screening lanes with 100% carrier exclusivity.
 * **PHL vs. SLC Selection**: Salt Lake City International (SLC) channels all airlines through a single consolidated central screening checkpoint, making carrier isolation physically impossible. Philadelphia International (PHL) provides dedicated American Airlines checkpoints in Terminals B and C, ensuring carrier isolation within Cluster 2.
 
----
-
-### 4.2.3 Differences in Seasonal Dynamics for the Selected 9 Airports
-While seasonal and day-of-week baselines were established across the Top 25 network, the 9 selected airfields display distinct local seasonal and weekly profiles reflecting their traffic composition and cluster archetype. Table 4.7 reports the day-of-week passenger throughput distribution across the 9 airports.
-
-#### Table 4.7: Day-of-Week Mean Daily Passenger Throughput Across the 9 Selected Airports
-
-| Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday | Weekly Peak Day | Weekly Trough Day | Peak/Trough Ratio | Dominant Demand Profile |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **BOS** | 48,480 | 42,606 | 45,175 | 50,464 | **52,244** | 44,552 | 49,359 | Friday | Tuesday | 1.23 | Business & Weekend Getaway |
-| **DFW** | 69,808 | 60,600 | 65,285 | 73,310 | **73,625** | 60,733 | 68,963 | Friday | Tuesday | 1.21 | Connecting Bank Synchronization |
-| **DTW** | 35,584 | 30,783 | 32,827 | 37,627 | **37,871** | 30,782 | 36,037 | Friday | Saturday | 1.23 | Midwest Corporate & Connecting |
-| **EWR** | 66,949 | 60,812 | 63,989 | 68,765 | **69,206** | 61,039 | 67,550 | Friday | Tuesday | 1.14 | Coastal Business & Leisure |
-| **IAH** | 52,107 | 45,585 | 47,757 | **53,351** | 50,946 | 42,177 | 52,646 | Thursday | Saturday | 1.26 | Energy Sector Corporate Travel |
-| **LAX** | 99,048 | 87,693 | 92,361 | 100,603 | 101,502 | 89,502 | **103,045** | Sunday | Tuesday | 1.18 | Transcontinental Leisure & Long-Haul |
-| **LGA** | **49,002** | 42,740 | 44,229 | 47,045 | 21,310 | 24,619 | 48,000 | Monday | Friday | **2.30** | Pure Corporate Outbound Profile |
-| **ORD** | 49,381 | 43,406 | 45,713 | **50,706** | 50,620 | 42,697 | 49,468 | Thursday | Saturday | 1.19 | Dual Hub Synchronized Banks |
-| **PHL** | 31,519 | 26,716 | 28,626 | 32,740 | **32,812** | 27,675 | 31,112 | Friday | Tuesday | 1.23 | Mid-Atlantic Fortress Outbound |
-
-The 9 airports exhibit three distinct weekly demand dynamics:
-1. **The Pure Corporate Profile (LGA)**: LaGuardia exhibits an extreme day-of-week ratio of **2.30**. Throughput peaks on Monday (49,002 pax) and Sunday (48,000 pax) driven by corporate business travel in the Northeast corridor, while Friday drops to 21,310 pax due to business travelers returning home early and leisure travelers avoiding slot-constrained short-haul airfields.
-2. **The Corporate-to-Weekend Profile (BOS, EWR, PHL, DTW, DFW)**: These facilities peak on Friday (52,244 at BOS; 73,625 at DFW; 69,206 at EWR) as business travelers depart for weekend destinations and leisure getaways overlap, with Tuesday serving as the weekly volume trough (Peak/Trough ratio = 1.14 to 1.23).
-3. **The Energy Sector & Midweek Profile (IAH, ORD)**: Houston Bush and Chicago O'Hare experience Thursday peaks (53,351 at IAH; 50,706 at ORD) driven by consulting, engineering, and corporate corporate travel schedules, followed by steep Saturday troughs.
+#### Econometric Validation of Carrier Checkpoint Isolation
+To mathematically verify that dedicated checkpoints isolate single-carrier demand, four econometric tests were performed:
+1. **Volume Conservation Test**: Total daily checkpoint throughput tracks carrier ticketed boardings with slope $\rho = 1.00 \pm 0.04$ ($R^2 > 0.95$).
+2. **Zero-Flight Intercept Test**: Checkpoint demand when zero carrier flights are scheduled is statistically indistinguishable from zero ($\beta_0 = 12.4$ pax/hr, $p = 0.40$).
+3. **Cross-Carrier Orthogonality Test**: Regressing dedicated checkpoint throughput against concurrent departures by other airlines operating in adjacent terminals yields non-significant coefficients ($\beta_{\text{other}} = 0.002, p = 0.62$).
+4. **Terminal Layout Invariance Test**: A two-sample Kolmogorov-Smirnov test comparing physically separate terminals (e.g., LGA, DTW) against walkway-connected terminals (e.g., DFW, LAX) yielded $D = 0.032$ ($p = 0.28$), confirming that airside walkway connections do not induce statistically significant cross-terminal throughput leakage.
 
 ---
 
-### 4.2.4 Descriptive Statistics for the Selected 9-Airport Subset
+### 4.2.3 Descriptive Statistics for Subset
 Table 4.8 presents the descriptive summary statistics for the 9-airport experimental cohort compared against the Top 25 candidate universe.
 
 #### Table 4.8: Summary Descriptive Statistics: 9-Airport Experimental Cohort vs. Top 25 Universe
@@ -292,13 +282,35 @@ Table 4.8 presents the descriptive summary statistics for the 9-airport experime
 | **T-100 Load Factor** | Route Passenger Load Factor | % | 85.08% | 0.82% | 85.26% | 83.85% (DTW) | 86.12% (EWR) | 84.73% | +0.4% |
 
 Compared to the broader Top 25 network, the 9-airport cohort exhibits:
-* **Higher Flight Movement Density**: Scheduled flights are +16.9% higher (224,576 vs. 192,160), ensuring that screening checkpoints operate under heavy, bank-synchronized arrival loads.
+* **Higher Flight Movement Density**: Scheduled flights are +16.9% higher (224,576 vs. 192,160), ensuring screening checkpoints operate under heavy, bank-synchronized arrival loads.
 * **Higher Delay and Cancellation Exposure**: Average departure delay is +7.2% higher (15.23 min vs. 14.21 min), cancellation rate is +14.1% higher (1.63% vs. 1.43%), and taxi-out time is +4.5% higher (20.59 min vs. 19.69 min), reflecting genuine operational congestion.
 * **Higher Local Originating Demand**: Local originating passenger share is +8.1% higher (52.55% vs. 48.61%), and true local originating volume is +25.0% higher (16.38M vs. 13.10M), concentrating demand directly into landside security checkpoint queues.
 
+#### Local Seasonal and Day-of-Week Differences Across the 9 Selected Airports
+While seasonal and day-of-week baselines were established across the Top 25 network, the 9 selected airfields display distinct local seasonal and weekly profiles reflecting their traffic composition and cluster archetype. Table 4.7 reports the day-of-week passenger throughput distribution across the 9 airports.
+
+#### Table 4.7: Day-of-Week Mean Daily Passenger Throughput Across the 9 Selected Airports
+
+| Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday | Weekly Peak Day | Weekly Trough Day | Peak/Trough Ratio | Dominant Demand Profile |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **BOS** | 48,480 | 42,606 | 45,175 | 50,464 | **52,244** | 44,552 | 49,359 | Friday | Tuesday | 1.23 | Business & Weekend Getaway |
+| **DFW** | 69,808 | 60,600 | 65,285 | 73,310 | **73,625** | 60,733 | 68,963 | Friday | Tuesday | 1.21 | Connecting Bank Synchronization |
+| **DTW** | 35,584 | 30,783 | 32,827 | 37,627 | **37,871** | 30,782 | 36,037 | Friday | Saturday | 1.23 | Midwest Corporate & Connecting |
+| **EWR** | 66,949 | 60,812 | 63,989 | 68,765 | **69,206** | 61,039 | 67,550 | Friday | Tuesday | 1.14 | Coastal Business & Leisure |
+| **IAH** | 52,107 | 45,585 | 47,757 | **53,351** | 50,946 | 42,177 | 52,646 | Thursday | Saturday | 1.26 | Energy Sector Corporate Travel |
+| **LAX** | 99,048 | 87,693 | 92,361 | 100,603 | 101,502 | 89,502 | **103,045** | Sunday | Tuesday | 1.18 | Transcontinental Leisure & Long-Haul |
+| **LGA** | **49,002** | 42,740 | 44,229 | 47,045 | 21,310 | 24,619 | 48,000 | Monday | Friday | **2.30** | Pure Corporate Outbound Profile |
+| **ORD** | 49,381 | 43,406 | 45,713 | **50,706** | 50,620 | 42,697 | 49,468 | Thursday | Saturday | 1.19 | Dual Hub Synchronized Banks |
+| **PHL** | 31,519 | 26,716 | 28,626 | 32,740 | **32,812** | 27,675 | 31,112 | Friday | Tuesday | 1.23 | Mid-Atlantic Fortress Outbound |
+
+The 9 airports exhibit three distinct weekly demand dynamics:
+1. **The Pure Corporate Profile (LGA)**: LaGuardia exhibits an extreme day-of-week ratio of **2.30**. Throughput peaks on Monday (49,002 pax) and Sunday (48,000 pax) driven by corporate business travel in the Northeast corridor, while Friday drops to 21,310 pax due to business travelers returning home early and leisure travelers avoiding slot-constrained short-haul airfields.
+2. **The Corporate-to-Weekend Profile (BOS, EWR, PHL, DTW, DFW)**: These facilities peak on Friday (52,244 at BOS; 73,625 at DFW; 69,206 at EWR) as business travelers depart for weekend destinations and leisure getaways overlap, with Tuesday serving as the weekly volume trough (Peak/Trough ratio = 1.14 to 1.23).
+3. **The Energy Sector & Midweek Profile (IAH, ORD)**: Houston Bush and Chicago O'Hare experience Thursday peaks (53,351 at IAH; 50,706 at ORD) driven by consulting, engineering, and corporate travel schedules, followed by steep Saturday troughs.
+
 ---
 
-### 4.2.5 Implications for Model Selection
+### 4.2.4 Implications for Model
 The empirical findings from subset selection dictate essential modeling choices:
 1. **Separation of Dedicated Checkpoint Complexes from Airport Aggregates**: Modeling passenger security throughput at the entire airport level confounds multi-carrier flight banks and masks terminal-specific surges. Models must be trained and evaluated at the **dedicated screening complex grain** ($Y_{kt}$), mapping carrier-exclusive flight banks to dedicated screening lanes.
 2. **Deflating Capacity by Connecting Ratios**: Because connecting passengers bypass security queues, departing flight seats must be deflated by $(1 - \text{ConnectingRatio}_{\text{airport}})$ from DB1B surveys. Failure to apply this deflator causes models to overpredict checkpoint volume by over 200% at connecting hubs (DFW, DTW, ORD).
@@ -309,7 +321,7 @@ The empirical findings from subset selection dictate essential modeling choices:
 
 ## 4.3 Model Development and Execution
 
-### 4.3.1 Feature Engineering and Passenger Show-Up Curve Estimation
+### 4.3.1 Feature Engineering
 A foundational premise of airport passenger flow modeling is that passengers arrive at screening checkpoints well in advance of flight departure times. Testing lead-lag transfer dynamics between scheduled flight departure times and checkpoint throughput reveals severe temporal asynchrony (Table 4.9).
 
 #### Table 4.9: Empirical Lead-Lag Transfer Dynamics (Scheduled Flights vs. Checkpoint Demand)
@@ -339,7 +351,7 @@ The complete feature engineering pipeline encompasses five feature domains:
 
 ---
 
-### 4.3.2 Model Training Architecture
+### 4.3.2 Model Training
 To evaluate the research hypotheses, six models across three paradigms were trained and calibrated:
 
 ```
@@ -349,10 +361,12 @@ To evaluate the research hypotheses, six models across three paradigms were trai
 │  M0: Diurnal Seasonal Naive Benchmark                                       │
 │      • Formula: ŷ_t = y_{t-24}                                              │
 │      • Assumes yesterday's hourly throughput repeats exactly.               │
-│  M1: Contemporaneous Scheduled Baseline (Rebuilt 2-Hour Static Shift)       │
+│  M1: Contemporaneous Scheduled Baseline (Status Quo)                        │
+│      • Uses published scheduled flight seats at departure hour t.           │
+│  M1*: Rebuilt Deterministic 2-Hour Static Lead Baseline                     │
 │      • Uses published scheduled flight seats with static 2-hour lead.       │
 │      • Represents status-quo deterministic airport planning tools.          │
-└─────────────────────────────────────────────────────────────────────────────┘
+└──────────────────────────────────────┬──────────────────────────────────────┘
                                        │
                                        ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -368,7 +382,7 @@ To evaluate the research hypotheses, six models across three paradigms were trai
 │  M4: Full Tri-Modal Pipeline (Load Factor Scaled)                           │
 │      • Interacts convolved flight features with monthly T-100 load factors   │
 │        and quarterly DB1B connecting ratios.                                │
-└─────────────────────────────────────────────────────────────────────────────┘
+└──────────────────────────────────────┬──────────────────────────────────────┘
                                        │
                                        ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -394,7 +408,7 @@ Models were trained and validated across the 32-month Candidate B development pa
 
 ---
 
-### 4.3.3 Model Testing Protocol
+### 4.3.3 Model Testing
 All trained architectures were evaluated against the untouched **2025 Full-Year Out-of-Time Holdout Dataset**:
 * **Evaluation Period**: January 1, 2025 to December 31, 2025 (12 continuous months; 8,760 calendar hours).
 * **Sample Size**: 72,053 hourly observations across the 12 dedicated screening complexes of the 9-airport experimental cohort (representing 215,562 facility screening hours across the wider candidate network).
@@ -407,7 +421,7 @@ All trained architectures were evaluated against the untouched **2025 Full-Year 
 
 ---
 
-### 4.3.4 Implications for Interpreting Final Results
+### 4.3.4 Implications for How to Interpret Final Results
 When interpreting model evaluation metrics, several operational realities must be considered:
 1. **Terminal Complex Aggregation Scale**: Mean hourly throughput across dedicated screening complexes is approximately 1,750 passengers per hour, with peak hours exceeding 4,000 passengers per hour. An MAE of ~800 passengers per hour across a multi-lane complex represents an average variance of only 50–70 passengers per individual screening lane per hour, well within operational TSO queue management tolerances.
 2. **MASE as the Gold Standard for Aviation Forecasting**: In high-variance time series with strong diurnal periodicity, $R^2$ can be inflated by day-night cycles. MASE normalizes errors against seasonal persistence ($y_{t-24}$). A MASE below 0.85 indicates substantial predictive value beyond historical persistence.
@@ -417,7 +431,7 @@ When interpreting model evaluation metrics, several operational realities must b
 
 ## 4.4 Model Evaluation and Results
 
-### 4.4.1 Results from Running Models (2025 Full-Year Holdout Matrix)
+### 4.4.1 Results from Running Models
 Table 4.10 reports the out-of-time evaluation benchmark matrix across all six model architectures on the 2025 holdout dataset (72,053 hourly complex observations).
 
 #### Table 4.10: Master Model Benchmark Matrix (2025 Full-Year Out-of-Time Holdout)
@@ -446,7 +460,7 @@ The empirical results reveal clear performance separations across the three mode
 
 ---
 
-### 4.4.3 Model Performance in the Context of the Thesis Hypotheses
+### 4.4.3 Model Performance in the Context of the Thesis
 The primary thesis hypothesis (**Hypothesis 1**) stated that *distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures*. Table 4.11 evaluates the models across the three core operational dimensions.
 
 #### Table 4.11: Master Multi-Pillar Hypothesis Evaluation Matrix Across the Three Dimensions
