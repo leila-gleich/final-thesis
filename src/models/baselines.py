@@ -12,8 +12,9 @@ from typing import Optional
 
 class DiurnalSeasonalNaive:
     """
-    M0: Diurnal Seasonal Naive Persistence Baseline (24-hour seasonal lag).
-    Predicts checkpoint throughput at time t using the observed volume at t - 24 hours.
+    M0: Diurnal Seasonal Naive Persistence Baseline for Throughput Volatility.
+    Predicts checkpoint throughput volatility at time t using observed volatility at t - lag.
+    Supports within-day hourly volatility (tsa_hourly_cv, tsa_hourly_std) and multi-day rolling volatility.
     """
     def __init__(self, lag_hours: int = 24):
         self.lag_hours = lag_hours
@@ -22,56 +23,65 @@ class DiurnalSeasonalNaive:
         """Naive baseline requires no parameter estimation."""
         return self
 
-    def predict(self, df: pd.DataFrame, target_col: str = "TSA_Throughput") -> np.ndarray:
+    def predict(self, df: pd.DataFrame, target_col: str = "tsa_hourly_cv") -> np.ndarray:
         """
-        Generates 24-hour lagged persistence forecast.
-        If target column is not present or has NaNs, imputes with airport-hour mean.
+        Generates lagged persistence volatility forecast.
+        Checks for target_col, falling back to tsa_hourly_std, tsa_hourly_cv, or TSA_Throughput.
         """
         if target_col in df.columns:
             preds = df[target_col].shift(self.lag_hours).bfill().fillna(df[target_col].mean()).values
+        elif "tsa_hourly_cv" in df.columns:
+            preds = df["tsa_hourly_cv"].shift(self.lag_hours).bfill().fillna(df["tsa_hourly_cv"].mean()).values
+        elif "tsa_hourly_std" in df.columns:
+            preds = df["tsa_hourly_std"].shift(self.lag_hours).bfill().fillna(df["tsa_hourly_std"].mean()).values
+        elif "TSA_Throughput" in df.columns:
+            preds = df["TSA_Throughput"].shift(self.lag_hours).bfill().fillna(df["TSA_Throughput"].mean()).values
         else:
-            preds = np.full(len(df), 850.0)
+            preds = np.full(len(df), 0.50)
         return np.maximum(0.0, preds)
 
 class DeterministicFixedLeadBaseline:
     """
-    M1: Rebuilt Deterministic 2-Hour Static Lead Baseline.
+    M1: Rebuilt Deterministic Schedule Volatility Baseline.
     
-    Reflects standard airport master planning practice (e.g. FAA / ACRP Report 40 baseline):
-    Applies a rigid, static 2-hour pre-departure arrival lead shift (t+2) to scheduled flight capacity.
-    Assumes constant average load factor (84.7%) and connecting deflation without dynamic volatility.
+    Reflects deterministic airport planning practice:
+    Derives predicted passenger screening volatility directly from scheduled flight departure bank dispersion
+    (standard deviation or CV of scheduled flight movements across hours).
     
     Equation:
-        y_hat_t = beta_0 + beta_1 * (Seats_{t+2} * LF * (1 - CR))
+        Vol_hat_t = beta_0 + beta_1 * Vol_sched_t
     """
-    def __init__(self, beta_0: float = 12.4, beta_1: float = 0.847):
+    def __init__(self, beta_0: float = 0.15, beta_1: float = 0.85):
         self.beta_0 = beta_0
         self.beta_1 = beta_1
 
     def fit(self, X: pd.DataFrame, y: pd.Series):
-        """Fits OLS linear scaling factor between 2-hour lead capacity and throughput."""
-        lead_demand = self._extract_lead_demand(X)
-        if len(y) > 10 and np.var(lead_demand) > 1e-4:
-            # Simple 1D linear regression
-            cov = np.cov(lead_demand, y)[0, 1]
-            var = np.var(lead_demand)
-            self.beta_1 = float(cov / var) if var > 0 else 0.847
-            self.beta_0 = float(np.mean(y) - self.beta_1 * np.mean(lead_demand))
+        """Fits OLS linear scaling factor between schedule dispersion and throughput volatility."""
+        sched_vol = self._extract_sched_volatility(X)
+        if len(y) > 10 and np.var(sched_vol) > 1e-6:
+            cov = np.cov(sched_vol, y)[0, 1]
+            var = np.var(sched_vol)
+            self.beta_1 = float(cov / var) if var > 0 else 0.85
+            self.beta_0 = float(np.mean(y) - self.beta_1 * np.mean(sched_vol))
         return self
 
-    def _extract_lead_demand(self, X: pd.DataFrame) -> np.ndarray:
-        if "convolved_lead2" in X.columns:
+    def _extract_sched_volatility(self, X: pd.DataFrame) -> np.ndarray:
+        if "sched_hourly_cv" in X.columns:
+            return X["sched_hourly_cv"].fillna(X["sched_hourly_cv"].mean()).values
+        elif "sched_hourly_std" in X.columns:
+            return X["sched_hourly_std"].fillna(X["sched_hourly_std"].mean()).values
+        elif "convolved_lead2" in X.columns:
             return X["convolved_lead2"].values
         elif "net_originating_demand" in X.columns:
             return X["net_originating_demand"].values
         elif "Scheduled_Departures" in X.columns:
             return X["Scheduled_Departures"].values * 140.0
         else:
-            return np.full(len(X), 800.0)
+            return np.full(len(X), 0.50)
 
     def predict(self, X: pd.DataFrame) -> np.ndarray:
-        lead_demand = self._extract_lead_demand(X)
-        preds = self.beta_0 + self.beta_1 * lead_demand
+        sched_vol = self._extract_sched_volatility(X)
+        preds = self.beta_0 + self.beta_1 * sched_vol
         return np.maximum(0.0, preds)
 
 if __name__ == "__main__":

@@ -1,0 +1,17 @@
+Metric Category,Operational Metric,Unit,9-Airport Mean,9-Airport Std Dev,9-Airport Median,9-Airport Min (Airport),9-Airport Max (Airport),Top 25 Mean,Delta (%)
+BTS OTP Operations,Scheduled Domestic Flights,flights,"224,576","78,441","206,024","138,372 (PHL)","360,571 (ORD)","192,160",+16.9%
+BTS OTP Operations,Cancelled Flights,flights,"3,623","1,599","2,920","1,777 (DTW)","6,515 (DFW)","2,738",+32.3%
+BTS OTP Operations,Flight Cancellation Rate,%,1.63%,0.50%,1.47%,0.99% (LAX),2.46% (LGA),1.43%,+14.1%
+BTS OTP Delays,Average Departure Delay,min,15.23,2.75,15.65,11.55 (DTW),19.85 (DFW),14.21,+7.2%
+BTS OTP Delays,Significant Delay Rate (>= 15m),%,21.42%,3.30%,20.14%,17.93% (LAX),28.07% (DFW),20.31%,+5.5%
+BTS OTP Delays,Runway Taxi-Out Queue Time,min,20.59,2.58,20.35,16.96 (DTW),24.67 (EWR),19.69,+4.5%
+TSA Checkpoint,Total Passenger Throughput,pax,"71,145,628","27,465,238","63,720,916","40,429,531 (PHL)","129,069,341 (LAX)","68,495,531",+3.9%
+TSA Checkpoint,Average Daily Passenger Count,pax/day,"53,075","20,473","47,553","30,171 (PHL)","96,249 (LAX)","51,138",+3.8%
+TSA Checkpoint,Average Hourly Passenger Count,pax/hr,418.53,157.02,388.40,239.60 (ORD),662.40 (LGA),540.34,-22.5%
+TSA Checkpoint,Peak Single-Hour Checkpoint Rush,pax/hr,"2,673",881,"2,654","1,385 (DTW)","4,020 (EWR)","2,784",-4.0%
+TSA Checkpoint,Demand Volatility (CV_TSA),ratio,0.8728,0.2000,0.9064,0.6488 (BOS),1.1240 (LGA),0.8250,+5.8%
+BTS DB1B Surveys,Connecting Passenger Share,%,47.45%,10.98%,44.41%,33.58% (EWR),66.32% (DFW),51.39%,-7.7%
+BTS DB1B Surveys,Local Originating Passenger Share,%,52.55%,10.98%,55.59%,33.68% (DFW),66.42% (EWR),48.61%,+8.1%
+BTS DB1B Surveys,True Local Originating TSA Demand,pax,"16,376,561","5,167,458","15,995,278","10,555,299 (DTW)","26,293,897 (LAX)","13,103,484",+25.0%
+T-100 Aircraft Gauge,Seating Capacity per Flight,seats,168.42,7.49,168.00,154.20 (LGA),182.30 (LAX),171.10,-1.6%
+T-100 Load Factor,Route Passenger Load Factor,%,85.08%,0.82%,85.26%,83.85% (DTW),86.12% (EWR),84.73%,+0.4%

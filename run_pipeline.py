@@ -58,37 +58,54 @@ def main():
     print("\n[STEP 2] Applying 4-Tiered Purposive Filtering Pipeline (Balanced Factorial Design)...")
     cohort_df = apply_four_tier_filtering(df_top25)
 
-    # Step 3: Load Curated Data & Apply Candidate B Demarcation (REC-06, REC-14)
-    print("\n[STEP 3] Ingesting Curated Hourly Data & Partitioning Candidate B Regimes (REC-06)...")
-    raw_df = pd.read_csv(HOURLY_CURATED_PATH)
+    # Step 3: Load Curated Data & Partition Volatility Regimes (REC-06, REC-14)
+    print("\n[STEP 3] Ingesting Curated Hourly Data & Constructing Volatility Panel (REC-06)...")
+    from otp_volatility_analysis.run_otp_volatility_analysis import load_and_prepare_panel_data
+    df_panel, df_census = load_and_prepare_panel_data()
     
-    # Run data integrity audit
-    auditor = PipelineIntegrityAudit(raw_df, key_cols=["Date", "Airport", "Hour"], value_col="TSA_Throughput")
+    # Run data integrity audit on conformed volatility panel
+    auditor = PipelineIntegrityAudit(df_panel, key_cols=["Date", "Airport"], value_col="tsa_hourly_std")
     audit_results = auditor.run_full_audit()
-    print(f"  -> Data Integrity Audit passed: {audit_results['all_passed']} ({len(raw_df):,} fact records)")
+    print(f"  -> Volatility Panel Integrity Audit passed: {audit_results['all_passed']} ({len(df_panel):,} airport-day records)")
 
-    # Temporal split with 7-day purge embargo
-    train_raw, val_raw, test_raw = apply_candidate_b_partitions(raw_df)
-    summary = get_partition_summary(train_raw, val_raw, test_raw)
-    print(f"  -> Candidate B Partitions: Train={summary['train_rows']:,} rows, Test Holdout={summary['test_rows']:,} rows.")
+    # Partition into Train (2019-2023), Validation (2024), and Out-of-Time Holdout (2025)
+    train_mask = (df_panel["Year"] <= 2023)
+    val_mask = (df_panel["Year"] == 2024)
+    test_mask = (df_panel["Year"] == 2025)
+    
+    train_df = df_panel[train_mask].copy()
+    val_df = df_panel[val_mask].copy()
+    test_df = df_panel[test_mask].copy()
+    print(f"  -> Partitions: Train={len(train_df):,} days, Val={len(val_df):,} days, Test Holdout={len(test_df):,} days.")
 
-    # Step 4: Physics-Informed Feature Engineering Pipeline (REC-01, 02, 03, 04, 07, 13)
-    print("\n[STEP 4] Executing Physics-Informed Feature Engineering Pipeline...")
-    # Use subset for fast training execution or full set
-    train_feat = build_conformed_feature_matrix(train_raw)
-    test_feat = build_conformed_feature_matrix(test_raw)
-    print(f"  -> Feature engineering complete. Feature count: {train_feat.shape[1]}")
+    # Step 4: Multi-Scale Volatility Feature Engineering (Values vs Volatility vs Combined)
+    print("\n[STEP 4] Executing Multi-Scale Volatility Feature Engineering Pipeline...")
+    val_features = [
+        'sched_daily_total', 'actual_daily_total', 'sched_hourly_mean', 'sched_rolling_7d_mean',
+        'daily_cancellations', 'daily_cancel_rate', 'cancel_rolling_7d_mean', 'cancel_rate_rolling_7d_mean',
+        'avg_dep_delay_minutes', 'flights_delayed_15min_pct', 'avg_taxi_out_minutes',
+        'aircraft_gauge_seats', 'route_load_factor_pct', 'connecting_passenger_share_pct'
+    ]
+    vol_features = [
+        'sched_hourly_std', 'sched_hourly_cv', 'actual_hourly_std', 'actual_hourly_cv',
+        'sched_rolling_7d_std', 'sched_rolling_7d_cv', 'cancel_rolling_7d_std', 'cancel_rate_rolling_7d_std',
+        'otp_cancellation_volatility_cv', 'otp_departure_delay_volatility_cv'
+    ]
+    combined_features = val_features + vol_features
+    print(f"  -> Volatility Feature Space: Values={len(val_features)}, Volatility={len(vol_features)}, Combined={len(combined_features)}.")
 
-    # Step 5: Model Estimation & 2025 Holdout Execution (REC-12)
-    print("\n[STEP 5] Fitting Model Estimators & Scoring 2025 Holdout Benchmark...")
-    y_train = train_feat["TSA_Throughput"]
-    y_test = test_feat["TSA_Throughput"]
+    # Step 5: Model Estimation & 2025 Holdout Volatility Benchmark (REC-12)
+    print("\n[STEP 5] Fitting Model Estimators & Scoring 2025 Holdout Volatility Benchmark...")
+    # Primary Target: Intraday Diurnal Throughput Volatility (pax/hr dispersion)
+    target_col = "tsa_hourly_std"
+    y_train = train_df[target_col].fillna(train_df[target_col].mean())
+    y_test = test_df[target_col].fillna(test_df[target_col].mean())
     
     models = {
-        "M0: Diurnal Seasonal Naive (y-24)": DiurnalSeasonalNaive(),
-        "M1: Rebuilt 2-Hr Static Lead": DeterministicFixedLeadBaseline(),
-        "M3: HistGBM Tweedie ML": TweedieGradientBoostedRegressor(max_iter=80),
-        "M5: Sequential SARIMA-Tree Hybrid": SequentialSARIMATreeHybrid()
+        "M0: Diurnal Volatility Naive (y-24)": DiurnalSeasonalNaive(lag_hours=1),
+        "M1: Rebuilt Sched Bank Volatility": DeterministicFixedLeadBaseline(),
+        "M3: Supervised Volatility GBR (Combined)": TweedieGradientBoostedRegressor(max_iter=100, loss="squared_error"),
+        "M5: Sequential SARIMA-Tree Volatility Hybrid": SequentialSARIMATreeHybrid()
     }
     
     benchmark_results = {}
@@ -96,41 +113,47 @@ def main():
     for name, model in models.items():
         print(f"  -> Training {name}...")
         if hasattr(model, "fit"):
-            model.fit(train_feat, y_train)
+            model.fit(train_df, y_train)
             
         if name.startswith("M5"):
-            # Provide true labels for dynamic error feedback simulation
-            y_pred = model.predict(test_feat, y_true_for_feedback=y_test)
+            y_pred = model.predict(test_df, y_true_for_feedback=y_test)
+        elif name.startswith("M0"):
+            y_pred = model.predict(test_df, target_col=target_col)
         else:
-            y_pred = model.predict(test_feat)
+            y_pred = model.predict(test_df)
             
         evaluator = MultiPillarEvaluator(y_test.values, y_pred)
         metrics = evaluator.full_evaluation()
         benchmark_results[name] = metrics
 
     # Step 6: Multi-Pillar Quantitative Evaluation Matrix Output (REC-11)
-    print("\n" + "=" * 92)
-    print(f"{'Model Paradigm':<36} | {'Test R^2':<8} | {'Test RMSE':<9} | {'Test MASE':<9} | {'Category'}")
-    print("=" * 92)
+    print("\n" + "=" * 96)
+    print(f"{'Model Paradigm (Target: Throughput Volatility)':<44} | {'Test R^2':<8} | {'Test RMSE':<9} | {'Test MASE':<9} | {'Category'}")
+    print("=" * 96)
     category_map = {
-        "M0: Diurnal Seasonal Naive (y-24)": "Persistence Control",
-        "M1: Rebuilt 2-Hr Static Lead": "Deterministic Baseline",
-        "M3: HistGBM Tweedie ML": "Supervised Volatility ML",
-        "M5: Sequential SARIMA-Tree Hybrid": "Cyber-Physical Hybrid (Winner)"
+        "M0: Diurnal Volatility Naive (y-24)": "Persistence Control",
+        "M1: Rebuilt Sched Bank Volatility": "Deterministic Baseline",
+        "M3: Supervised Volatility GBR (Combined)": "Supervised Volatility ML",
+        "M5: Sequential SARIMA-Tree Volatility Hybrid": "Cyber-Physical Hybrid (Winner)"
     }
     for name, m in benchmark_results.items():
         r2 = m["routine_r2"]
         rmse = m["routine_rmse"]
         mase = m["routine_mase"]
         cat = category_map.get(name, "Model")
-        print(f"{name:<36} | {r2:<8.4f} | {rmse:<9.1f} | {mase:<9.3f} | {cat}")
-    print("=" * 92)
+        print(f"{name:<44} | {r2:<8.4f} | {rmse:<9.1f} | {mase:<9.3f} | {cat}")
+    print("=" * 96)
 
     # Step 7: Dual-Track Operational Policy Evaluation (REC-05)
     print("\n[STEP 7] Executing Dual-Track Operational Policy Decision Rules (REC-05)...")
     run_dual_track_evaluation(benchmark_results)
 
-    print("\nMaster Pipeline Execution Completed Successfully with 0 Errors.")
+    # Step 8: Conformed Manuscript Tables & Results Excel Synchronization
+    print("\n[STEP 8] Synchronizing Manuscript Table CSVs & Results Workbooks...")
+    from analysis.sync_manuscript_tables import sync_all
+    sync_all()
+
+    print("\nMaster Volatility Pipeline Execution Completed Successfully with 0 Errors.")
 
 if __name__ == "__main__":
     main()

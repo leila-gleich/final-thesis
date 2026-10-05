@@ -89,8 +89,8 @@ class TestModelEstimators(unittest.TestCase):
         df_a, df_b = run_dual_track_evaluation()
         self.assertIsInstance(df_a, pd.DataFrame)
         self.assertIsInstance(df_b, pd.DataFrame)
-        self.assertEqual(len(df_a), 3)
-        self.assertEqual(len(df_b), 3)
+        self.assertEqual(len(df_a), 4)
+        self.assertEqual(len(df_b), 4)
 
 if __name__ == "__main__":
     unittest.main()

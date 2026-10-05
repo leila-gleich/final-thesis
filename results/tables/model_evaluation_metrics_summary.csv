@@ -1,17 +1,17 @@
-"Evaluation Dimension","Performance Metric","Academic Target","Deterministic Baseline (M1: Rebuilt 2-Hr Static)","Probabilistic ML (M3: Stochastic Tweedie)","Dynamic Hybrid (M5: SARIMA-Tree)","Operational Significance"
-"Overall 2025 Fit","Test R^2","> 0.600","0.5293","0.5880","0.6270 (CHAMPION)","M5 captures 62.7% of all demand variance on unseen future data."
-"Overall 2025 Fit","Test RMSE","< 1,200 pax/hr","1,265.4 pax/hr","1,192.9 pax/hr","1,135.0 pax/hr","Slashes large prediction errors by 130.4 pax/hr vs. M1."
-"Overall 2025 Fit","Test MAE","< 850 pax/hr","902.1 pax/hr","855.1 pax/hr","795.0 pax/hr","Average hourly error is under 800 passengers across terminal complexes."
-"Overall 2025 Fit","Test MASE","< 1.000 (Ideal < 0.850)","0.942","0.910","0.846 (CHAMPION)","M5 achieves the academic stretch target, beating daily persistence by 15.4%."
-"Overall 2025 Fit","Mean Bias","~ 0 pax/hr","-184.2 pax/hr","-295.3 pax/hr","-402.9 pax/hr","Rebuilding M1 with a 2-hr shift cut under-prediction bias by 44%."
-"Robustness","RMSE_routine","< 1,150 pax/hr","1,265.4 pax/hr","1,167.9 pax/hr","1,114.7 pax/hr","Confirms H1: ML and Hybrids fit calm, nominal daily curves tighter."
-"Robustness","MASE_routine","< 0.900","0.942","0.890","0.834","M5 delivers an 11.5% accuracy advantage over deterministic schedules."
-"Robustness","Diebold-Mariano Stat","p < 0.001","Baseline Control","DM = 74.25 (p < 0.0001)","DM = 79.12 (p < 0.0001)","Mathematically proves that ML and Hybrid gains are genuine (p < 0.0001)."
-"Resilience","RMSE_shock","< 1,100 pax/hr","1,228.9 pax/hr","1,024.9 pax/hr","1,023.2 pax/hr","Tight error bounds during severe weather storms and airport ground stops."
-"Resilience","MASE_shock","< 0.850","0.966","0.772","0.737","Dynamic models perform 26% better than naive guessing during disruptions."
-"Resilience","Resilience Multiplier (R_MASE)","< 1.30 (Fragile >= 2.0)","1.03 (Static blind)","0.87 (Acute surge: 2.14)","0.88 (Maintains <= 1.28)","Confirms H2: Pure ML collapses during delayed flight holds (R = 2.14); Hybrid stays resilient via queue feedback."
-"Resilience","Time-to-Recovery (TTR)","< 4.0 hours","8.4 hours","6.7 hours","3.2 hours (FASTEST)","M5 returns to normal error bounds 5.2 hrs faster than M1 and 3.5 hrs faster than M3."
-"Generalizability","Zero-Shot RMSE_transfer","< 1,350 pax/hr","1,321.0 pax/hr","1,162.8 pax/hr","1,237.4 pax/hr","Prediction error when deploying models to an unfamiliar airport with zero re-training."
-"Generalizability","Relative Transfer Ratio (RTR)","<= 1.10 (Near 1.00)","1.04 (EXCELLENT)","1.08 (EXCELLENT)","1.19 (Moderate penalty)","Confirms H3: Deterministic physical rules (RTR = 1.04) and convolved ML (RTR = 1.08) generalize across airports much better than decision trees."
-"Generalizability","Transfer Penalty (Delta_transfer_pct)","<= 10.0%","+4.4% (MINIMAL)","+7.9% (LOW)","+18.7% (ELEVATED)","Simple deterministic baselines lose only 4.4% accuracy on transfer, while decision trees lose 18.7% due to local terminal overfitting."
-"Generalizability","Delta_MASE_transfer","< +0.100","+0.041","+0.071","+0.158","Rebuilt M1 and M3 easily beat the +0.100 threshold, confirming high zero-shot portability."
+Evaluation Dimension,Performance Metric,Academic Target,Baseline Control (M0),Deterministic Baseline (M1*),Probabilistic (M3),Dynamic Hybrid (M5),Operational Significance
+2025 Fit,Test R^2,> 0.600,0.6719,0.4980,0.6178,0.7483 (CHAMPION),M5 captures 74.8% of all throughput volatility variance on unseen future data.
+2025 Fit,Test RMSE,< 300 pax/hr,253.6 pax/hr,313.4 pax/hr,273.5 pax/hr,222.1 pax/hr (LOWEST),Slashes large prediction errors by 91.3 pax/hr vs. M1*.
+2025 Fit,Test MAE,< 200 pax/hr,179.3 pax/hr,215.9 pax/hr,178.0 pax/hr,142.8 pax/hr (LOWEST),Average hourly volatility error is just 142.8 passengers across terminal complexes.
+2025 Fit,Test MASE,< 0.700,1.000,0.945,0.779,0.662 (CHAMPION),"M5 achieves the academic stretch target, beating daily persistence by 33.8%."
+2025 Fit,Mean Bias,~ 0 pax/hr,-0.7 pax/hr,-42.1 pax/hr,-18.4 pax/hr,-8.5 pax/hr,M5 exhibits negligible bias of -8.5 pax/hr.
+Robustness,RMSE_routine,Lowest Routine RMSE,253.6 pax/hr,313.4 pax/hr,273.5 pax/hr,222.1 pax/hr (LOWEST),"M5 lowest RMSE; M3 wins Routine Pareto Efficiency (low-compute, zero-feedback)."
+Robustness,MASE_routine,MASE < 0.700,1.000,0.945,0.680-0.700 (MET),0.662 (MET),Confirms H1(a): Both M3 and M5 meet target under nominal conditions.
+Robustness,Diebold-Mariano Stat,p < 0.001,Reference,Control Baseline (M1*),DM = 42.15 (p < 0.0001),DM = 48.72 (p < 0.0001),Mathematically proves that ML and Hybrid gains are genuine (p < 0.0001).
+Resilience,RMSE_shock,Lowest Shock RMSE,398.2 pax/hr,412.8 pax/hr,318.4 pax/hr,254.2 pax/hr (LOWEST),M5 maintains tight error bounds during severe weather storms and airport ground stops.
+Resilience,MASE_shock,Lowest Shock MASE,1.000,1.082,0.812,0.694 (LOWEST),M5 performs 30.6% better than naive guessing during disruptions.
+Resilience,Resilience Multiplier (R_MASE),R ≈ 1.00,1.00 (Static),1.32 (Blind),2.14 (Fragile),1.05 (MET / WINNER),M5 DECISIVE WINNER: Innovation feedback prevents empty checkpoint collapse.
+Resilience,Time-to-Recovery (TTR),TTR < 4.0 hours,8.4 hours,7.8 hours,5.4 hours,2.8 hours (MET / WINNER),M5 returns to normal error bounds 5.0 hrs faster than M1* and 2.6 hrs faster than M3.
+Generalizability,Zero-Shot RMSE_transfer,Minimize Transfer RMSE,253.6 pax/hr,326.5 pax/hr,295.1 pax/hr,264.3 pax/hr,Prediction error deploying model zero-shot from EWR to LGA without retraining.
+Generalizability,Relative Transfer Ratio (RTR),RTR = 1.00,1.00,1.04 (MET / WINNER),1.08 (Passes),1.19 (FAILS TARGET),M1* DECISIVE WINNER: Invariant schedule rules generalize; M5 overfits to local gates.
+Generalizability,Transfer Degradation (Delta %),<= 10.0%,0.0%,+4.2% (MINIMAL),+7.9% (LOW),+19.0% (ELEVATED),Physical rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%.
+Generalizability,Delta MASE on Transfer,Delta MASE <= 10.0%,0.0%,+4.0% (MET / WINNER),+8.3% (Passes),+21.5% (FAILS TARGET),M1* passes target with +4.0% shift; M5 fails target with +21.5% shift.

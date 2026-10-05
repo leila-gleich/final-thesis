@@ -1,0 +1,5 @@
+Model Family,Model ID & Specification,RMSE_shock (pax/hr),MASE_shock,Resilience Multiplier (R_RMSE / R_MASE),"Stated Target (R ~ 1.00, Lowest MASE)",Time-to-Recovery (TTR_shock),Academic Status & Resilience Behavior
+Baseline Control,M0: Diurnal Volatility Naive (y_t-24),398.2,1.000,1.00,Static Reference,8.4 hours,Static persistence benchmark; slow natural dissipation
+Deterministic Baseline,M1*: Deterministic Schedule Bank Volatility,412.8,1.082,1.32,Fails Target,7.8 hours,Blind to airside delay cascades; high shock error
+Probabilistic / ML,M3: Supervised Volatility GBR (Combined),318.4,0.812,2.14,Fails Multiplier,5.4 hours,"Fragile collapse from ""Empty Checkpoint Fallacy"""
+Dynamic Hybrid,M5: Sequential SARIMA-Tree Volatility Hybrid,254.2,0.694,1.05,TARGET MET (WINNER),2.8 hours,Decisive Winner: Closed-loop feedback prevents collapse

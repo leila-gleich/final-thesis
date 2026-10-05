@@ -1,0 +1,4 @@
+Model Family,Specification,RMSE_shock,MASE_shock,Disruption Error Multiplier (R_MASE)
+Deterministic Baseline,M1*: Deterministic 2-Hour Static Lead,1228.9,0.966,1.03
+Probabilistic / ML,M3: Show-Up Curve + OTP Delays/Cancels,1024.9,0.772,0.87 (Surge: 2.14)
+Two-Stage Hybrid,M5: Sequential SARIMA-Tree Hybrid,1023.2,0.737,0.88 (Maintains <= 1.28)

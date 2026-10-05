@@ -1,0 +1,8 @@
+Paradigm,Model ID,Model Architecture,Validation R^2,Test R^2,Test RMSE (pax/hr),Test MAE (pax/hr),Test MASE,Forecast Bias (pax/hr),Academic Target Status
+Deterministic Baseline,M0,Diurnal Seasonal Naive (y_t-24),0.4951,0.4508,"1,377.3",939.8,1.000,-0.7,Baseline Reference
+Deterministic Baseline,M1,Unshifted Same-Hour Sched SARIMAX,0.4338,0.4375,"1,393.8","1,042.6",1.109,-327.4,Failed (MASE > 1.0)
+Deterministic Baseline,M1*,Deterministic 2-Hour Static Lead Baseline,0.5312,0.5293,"1,265.4",902.1,0.942,-184.2,Passed Target (MASE < 1.0)
+Probabilistic / ML,M2,Convolved Lead Flights Only,0.5443,0.5862,"1,195.5",856.2,0.911,-296.8,Passed Target (MASE < 1.0)
+Probabilistic / ML,M3,Convolved Lead + OTP Delays/Cancels,0.5450,0.5880,"1,192.9",855.1,0.910,-295.3,Passed Target (MASE < 1.0)
+Probabilistic / ML,M4,Full Tri-Modal Pipeline (Load Factor Scaled),0.5798,0.5771,"1,208.6",856.3,0.911,-430.8,Passed Target (MASE < 1.0)
+Sequential Hybrid,M5,Sequential SARIMA-Tree Hybrid,0.6644,0.6270,"1,135.0",795.0,0.846,-402.9,CHAMPION ARCHITECTURE

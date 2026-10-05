@@ -44,8 +44,7 @@ This directory contains the **curated executive summary dataset** designed to pr
 
 ---
 
-## 3. Related Granular Files
-For complete underlying checkpoint-lane-hour, flight-level, and daily operational files, refer to:
-* Data sources: 
-* Domain analyses: 
-* Chapter drafts: 
+## 3. Related Granular Files & Conformed Tables
+* **Conformed Manuscript Tables**: [`../manuscript_tables/`](../manuscript_tables/README.md) (Tables 4.1, 4.2, 4.3a, 4.3b, 4.4a, 4.5).
+* **Seasonality and Regimes**: [`./seasonality_and_regimes/`](./seasonality_and_regimes/) (Season-analysis workbook & 84-cell grid).
+* **Synchronization Command**: Whenever analysis changes, run `python src/analysis/sync_manuscript_tables.py` or `python run_pipeline.py` to refresh all CSV tables and Excel workbooks.

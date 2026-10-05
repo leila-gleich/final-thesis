@@ -1,0 +1,4 @@
+Model Family,Model Architecture,In-Sample RMSE,Transfer RMSE (Direct Deployment),Delta Transfer Degradation,Transfer Error Penalty (RTR)
+Deterministic Baseline,M1 (Sched Baseline),1312.0,1370.3,+4.4%,1.04
+Probabilistic / ML,M3 (Show-Up Curve / Operational),1077.5,1162.8,+7.9%,1.08
+Two-Stage Hybrid,M5 (Sequential Tree Hybrid),1042.7,1237.4,+18.7%,1.19

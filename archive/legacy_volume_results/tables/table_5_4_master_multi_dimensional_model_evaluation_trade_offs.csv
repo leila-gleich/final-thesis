@@ -1,0 +1,4 @@
+Evaluation Criterion,Deterministic Baselines,Probabilistic / ML,Two-Stage Hybrid Framework
+1. Routine Operational Accuracy,Moderate (MASE = 0.88),SUPERIOR (MASE = 0.61),SUPERIOR (MASE = 0.60)
+2. Resilience Under Disruption,Poor (TTR = 8.4 hrs),Fragile (R_MASE = 2.14),SUPERIOR (R_MASE = 1.28)
+3. Cross-Airport Transferability,SUPERIOR (Delta = 8.4%),Poor (Delta = 48.2%),SUPERIOR (Delta = 11.4%)

@@ -24,19 +24,21 @@ thesis_docs/
 │   └── Chapter_5_SSOT.md               (Chapter V: Synthesis, H1 Proofs, Gated Inference)
 │
 ├── manuscripts/                        <-- Production manuscript deliverables & figures
-│   ├── Chapter_1_Introduction.docx     (Chapter I: Introduction & Scope)
-│   ├── Chapter_2_Literature_Review.docx (Chapter II: Literature Review - Word)
-│   ├── Chapter_2_Literature_Review.md  (Chapter II: Literature Review - Markdown)
-│   ├── Chapter_3_Methodology.md        (Chapter III: Methodology - Markdown)
-│   ├── Chapter_3_Methodology.docx      (Chapter III: Methodology - Word)
-│   ├── Chapter_4_Results_Empirical_Findings.md (Chapter IV: Empirical Results - Markdown)
-│   ├── Chapter_5_Analysis_and_Discussion.md (Chapter V: Analysis & Discussion - Markdown)
+│   ├── chp1-intro.md                   (Chapter I: Introduction & Scope)
+│   ├── chp2-litreview.md               (Chapter II: Literature Review)
+│   ├── chp3-methodology.md             (Chapter III: Methodology)
+│   ├── chp4-results.md                 (Chapter IV: Empirical Findings & Results)
+│   ├── chp5-discussion.md              (Chapter V: Analysis & Discussion)
+│   ├── glossary.md                     (Operational Terminology & Mathematical Glossary)
 │   ├── Gleich_700B_Proposal.docx       (Graduate Thesis Proposal Document)
 │   ├── Master_References_APA7.docx     (Master APA 7th Edition Reference Suite)
 │   ├── archive/                        <-- Archived Precursor & Superseded Drafts
 │   │   ├── Chapter_4_Results_Empirical_Findings.docx (Pre-restructure Word draft)
 │   │   └── Master_Results_and_Discussion_Comprehensive_Draft.md (Precursor combined draft)
 │   └── figures/                        <-- Publication Figures for Chapter IV
+│
+├── [results/manuscript_tables/]        <-- Conformed CSV Suite for All 16 Manuscript Tables
+│   └── (Sync with: python src/analysis/sync_manuscript_tables.py or run_pipeline.py)
 │       ├── 01_annual_seasonality_tsa_otp_clustering.png
 │       ├── 01_annual_volatility_tsa_otp_clustering.png
 │       ├── 02_day_of_week_dynamics.png

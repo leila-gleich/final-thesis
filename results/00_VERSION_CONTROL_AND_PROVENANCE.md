@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.3 (Codebase Modularization & Repository Architecture Consolidation)
+RELEASE VERSION: v4.4 (Manuscript Table CSV Suite & Results Excel Synchronization)
 DATE: October 5, 2026
 ====================================================================================================
 
@@ -101,6 +101,16 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - De-duplicated draft recommendations to thesis_docs/manuscripts/archive/. |
 |         |            | - Standardized requirements and docstrings for HistGradientBoostingRegressor.|
 |         |            | - Validated 100% self-contained architecture check and 36/36 unit tests.   |
+| v4.4    | 2026-10-05 | Manuscript Table CSV Suite & Results Excel Synchronization:                |
+|         |            | - Created results/manuscript_tables/ containing conformed CSVs for all 16   |
+|         |            |   tables across Chapters 4 & 5 (with canonical names and short aliases).   |
+|         |            | - Re-synchronized all Excel workbooks in results/ (04_model_execution,     |
+|         |            |   03_lead_lag, 05_robustness, 02_top9) with thesis updates.                |
+|         |            | - Added M1* Deterministic 2-Hour Static Lead Baseline across holdout tables.|
+|         |            | - Harmonized Table 4.9 lead-lag arrival transfer dynamics across workbooks. |
+|         |            | - Deployed automated synchronization runner (src/analysis/sync_manuscript_  |
+|         |            |   tables.py) integrated as Step 8 into run_pipeline.py.                    |
+|         |            | - Updated all READMEs with automated synchronization instructions.          |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

@@ -1,0 +1,9 @@
+Evaluation Criteria,Candidate A: Mature Post-Pandemic,Candidate B: Early Post-Mask Regime (Selected)
+Start Date,"January 1, 2023","May 1, 2022 (RECOMMENDED)"
+Statistical Demarcation Rationale,Rolling Welch's t-test variance convergence,CUSUM structural break stabilization; Mask Mandate Repeal
+Training Span,24 Months (2023-01 to 2024-12),32 Months (2022-05 to 2024-12; 20 mo train / 12 mo val)
+Holdout Test Span,12 Months (2025 Full-Year Holdout),12 Months (2025 Full-Year Holdout)
+Robustness Impact,Excellent baseline stability; limited historical depth,Superior: Captures two complete annual seasonal cycles
+Resilience Impact,Misses Winter Storm Elliott (Dec 2022),Superior: Encapsulates severe winter freeze and summer storms
+Generalizability Impact,Narrower training variance across spoke airfields,"Superior: 404,324 candidate multi-facility hourly records"
+Coupling Rebound (R^2),R^2 = 0.323 (Macro scheduled-to-TSA daily),R^2 rebounds from 0.368 (COVID) to 0.306–0.323 (Equilibrium)

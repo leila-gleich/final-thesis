@@ -1,0 +1,10 @@
+Airport Code,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday,Weekly Peak Day,Weekly Trough Day,Peak/Trough Ratio,Dominant Demand Profile
+BOS,"48,480","42,606","45,175","50,464","52,244","44,552","49,359",Friday,Tuesday,1.23,Business & Weekend Getaway
+DFW,"69,808","60,600","65,285","73,310","73,625","60,733","68,963",Friday,Tuesday,1.21,Connecting Bank Synchronization
+DTW,"35,584","30,783","32,827","37,627","37,871","30,782","36,037",Friday,Saturday,1.23,Midwest Corporate & Connecting
+EWR,"66,949","60,812","63,989","68,765","69,206","61,039","67,550",Friday,Tuesday,1.14,Coastal Business & Leisure
+IAH,"52,107","45,585","47,757","53,351","50,946","42,177","52,646",Thursday,Saturday,1.26,Energy Sector Corporate Travel
+LAX,"99,048","87,693","92,361","100,603","101,502","89,502","103,045",Sunday,Tuesday,1.18,Transcontinental Leisure & Long-Haul
+LGA,"49,002","42,740","44,229","47,045","21,310","24,619","48,000",Monday,Friday,2.30,Pure Corporate Outbound Profile
+ORD,"49,381","43,406","45,713","50,706","50,620","42,697","49,468",Thursday,Saturday,1.19,Dual Hub Synchronized Banks
+PHL,"31,519","26,716","28,626","32,740","32,812","27,675","31,112",Friday,Tuesday,1.23,Mid-Atlantic Fortress Outbound

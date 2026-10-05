@@ -1,0 +1,5 @@
+Seasonal Regime,Operational Regime Description,Calendar Days (N),Share of Days (%),Mean Daily TSA (Pax),Within-Day TSA CV,Delay Dispersion (sigma_Delay),Coupled Volatility Index,Mean Departure Delay,Flights Delayed >= 15m (%),Cancellation Rate (%)
+1_OFF_PEAK,Winter Lull & Mid-Autumn Shoulder,500,37.3%,"1,123,386",0.605,46.09 min,27.85,9.85 min,18.00%,0.89%
+2_MID_PEAK,Spring Ramps & Late-Summer Shoulder,426,31.8%,"1,187,095",0.589,55.06 min,32.38,15.14 min,23.23%,1.36%
+3_PEAK,Summer Severe Weather & Convective Surge,224,16.7%,"1,305,968",0.576,68.43 min,39.36,24.17 min,31.04%,3.16%
+4_HOLIDAY,National Holiday Travel Corridors,191,14.2%,"1,215,636",0.597,55.78 min,33.07,16.51 min,24.33%,1.82%

@@ -1,0 +1,5 @@
+Model Family,Specification,RMSE_routine,MASE_routine,Diebold-Mariano Test vs Baseline
+Deterministic Baseline,M1: Unshifted Same-Hour Sched SARIMAX,1365.7,1.083,Unshifted Baseline
+Deterministic Baseline,M1*: Deterministic 2-Hour Static Lead,1265.4,0.942,Control Baseline
+Probabilistic / ML,M3: Show-Up Curve + OTP Delays/Cancels,1167.9,0.890,DM = 74.247 (p < 0.0001)
+Two-Stage Hybrid,M5: Sequential SARIMA-Tree Hybrid,1114.7,0.834,DM = 79.123 (p < 0.0001)

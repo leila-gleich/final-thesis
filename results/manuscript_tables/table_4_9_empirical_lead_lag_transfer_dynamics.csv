@@ -1,0 +1,8 @@
+Lead-Lag Horizon,Pearson Correlation (r),Explanatory Power (R^2),Regression Slope (pax/flight),Operational & Planning Interpretation
+Lag t-1 (1 hr post-departure),0.1987,3.95%,16.06,Passenger has already boarded aircraft; residual correlation is spurious.
+Same-Hour Departure t (Gate departure),0.3403,11.58%,27.49,Unshifted flight schedule (same hour t) explains only 11.6% of checkpoint variance.
+Lead t+1 (1 hr pre-departure),0.4913,24.13%,39.70,Captures late-arriving business travelers and carry-on-only passengers.
+Lead t+2 (2 hr pre-departure),0.4876,23.78%,39.40,Modal show-up window conforming to ACRP Report 40 terminal standards.
+Lead t+3 (3 hr pre-departure),0.3800,14.44%,30.70,"Captures early holiday travelers, families, and international check-ins."
+Convolved Passenger Show-Up Curve,0.6985,48.78%,74.98,"Full lead-lag kernel deconvolution across t+1, t+2, t+3."
+Show-Up Curve x T-100 Load Factor,0.7061,49.85%,90.56,Convolved seats weighted by monthly carrier route load factor.

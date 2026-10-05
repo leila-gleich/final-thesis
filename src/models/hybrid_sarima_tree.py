@@ -33,14 +33,21 @@ class SequentialSARIMATreeHybrid:
         self.fitted = False
 
     def _get_stage1_features(self, X: pd.DataFrame) -> np.ndarray:
-        cols = ["convolved_lead2", "convolved_lead1", "sin_diurnal", "cos_diurnal", "sin_weekly", "cos_weekly"]
+        cols = [
+            "sched_hourly_cv", "sched_hourly_std", "sched_rolling_7d_cv",
+            "convolved_lead2", "convolved_lead1", "sin_diurnal", "cos_diurnal", "sin_weekly", "cos_weekly"
+        ]
         avail = [c for c in cols if c in X.columns]
         if not avail:
-            return np.ones((len(X), 1))
+            numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()[:4]
+            return X[numeric_cols].fillna(0.0).values if numeric_cols else np.ones((len(X), 1))
         return X[avail].fillna(0.0).values
 
     def _get_stage2_features(self, X: pd.DataFrame, lag_residuals: np.ndarray) -> np.ndarray:
         cols = [
+            "sched_hourly_std", "sched_hourly_cv", "sched_rolling_7d_std", "sched_rolling_7d_cv",
+            "daily_cancel_rate", "daily_cancellations", "avg_dep_delay_minutes", "otp_departure_delay_volatility_cv",
+            "avg_taxi_out_minutes", "aircraft_gauge_seats", "connecting_passenger_share_pct",
             "convolved_lead1", "convolved_lead2", "convolved_lead3",
             "minute_of_day", "sin_diurnal", "cos_diurnal",
             "is_regional", "is_narrowbody", "is_widebody",

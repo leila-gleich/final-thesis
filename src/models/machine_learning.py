@@ -31,17 +31,20 @@ MODEL_FEATURE_COLUMNS = [
 
 class TweedieGradientBoostedRegressor:
     """
-    M3: Gradient Boosted Regressor with Poisson/Tweedie Deviance Loss.
-    Optimizes for non-negative, heteroskedastic passenger arrival counts.
+    M3: Gradient Boosted Regressor for Throughput Volatility Modeling.
+    Optimizes for heteroskedastic, positive arrival volatility (CV and sigma).
+    Captures non-linear interactions across flight schedule bank dispersion,
+    tactical cancellations, departure delays, and surface taxi queues.
     """
-    def __init__(self, max_iter: int = 150, learning_rate: float = 0.08, max_depth: int = 6, random_state: int = 42):
+    def __init__(self, max_iter: int = 150, learning_rate: float = 0.08, max_depth: int = 6, loss: str = "squared_error", random_state: int = 42):
         self.max_iter = max_iter
         self.learning_rate = learning_rate
         self.max_depth = max_depth
+        self.loss = loss
         self.random_state = random_state
         self.feature_names = MODEL_FEATURE_COLUMNS
         self.model = HistGradientBoostingRegressor(
-            loss="poisson",
+            loss=self.loss,
             learning_rate=self.learning_rate,
             max_iter=self.max_iter,
             max_depth=self.max_depth,
@@ -50,9 +53,20 @@ class TweedieGradientBoostedRegressor:
         self.fitted = False
 
     def _prepare_X(self, X: pd.DataFrame) -> np.ndarray:
+        # Check if conformed volatility features are available
+        vol_cols = [c for c in [
+            'sched_hourly_std', 'sched_hourly_cv', 'sched_rolling_7d_std', 'sched_rolling_7d_cv',
+            'daily_cancel_rate', 'daily_cancellations', 'avg_dep_delay_minutes', 'otp_departure_delay_volatility_cv',
+            'avg_taxi_out_minutes', 'aircraft_gauge_seats', 'connecting_passenger_share_pct',
+            'sin_diurnal', 'cos_diurnal', 'sin_weekly', 'cos_weekly'
+        ] if c in X.columns]
+        
+        if vol_cols:
+            return X[vol_cols].fillna(0.0).values
+
         features = [col for col in self.feature_names if col in X.columns]
         if not features:
-            # Fallback to any numeric columns
+            # Fallback to all numeric columns
             numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
             return X[numeric_cols].fillna(0.0).values
         return X[features].fillna(0.0).values
