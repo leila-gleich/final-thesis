@@ -82,7 +82,7 @@ Evaluating the second dimension of **Hypothesis 1**, the research design posited
 ### Resilience Mechanics and the Empty Checkpoint Fallacy
 The coupled volatility findings explain the exact operational bottleneck mechanism during convective disruptions:
 1. **The "Empty Checkpoint Fallacy" in Pure Machine Learning**:
-   During the **Summer Convective Peak (*3_PEAK*)**, departure delay dispersion expands to $\sigma_{\text{Delay}} = 68.43\text{ min}$ and cancellations surge to $3.16\%$. A pure ML model ($M_3$ LightGBM) relying on flight schedules shifted by static show-up curves assumes that because flights scheduled for 18:00 have been delayed to 22:00 or ground-stopped, security checkpoints will experience an immediate demand collapse at 16:00. In reality, passengers arrived at the airport based on their original ticketed itineraries. Thousands of stranded travelers crowd security lines, re-screen after gate changes, or remain landside. Pure ML predicts an empty checkpoint, resulting in massive under-prediction errors.
+   During the **Summer Convective Peak (*3_PEAK*)**, departure delay dispersion expands to $\sigma_{\text{Delay}} = 68.43\text{ min}$ and cancellations surge to $3.16\%$. A pure ML model ($M_3$ HistGBM Tweedie Tree) relying on flight schedules shifted by static show-up curves assumes that because flights scheduled for 18:00 have been delayed to 22:00 or ground-stopped, security checkpoints will experience an immediate demand collapse at 16:00. In reality, passengers arrived at the airport based on their original ticketed itineraries. Thousands of stranded travelers crowd security lines, re-screen after gate changes, or remain landside. Pure ML predicts an empty checkpoint, resulting in massive under-prediction errors.
 2. **State-Space Innovation Compensation ($M_5$)**:
    The Two-Stage Hybrid dynamically tracks latent queue states using Kalman innovation residuals:
    $$e_t = y_t - C \hat{x}_{t|t-1}$$
@@ -126,7 +126,7 @@ To operationalize these empirical findings, the Transportation Security Administ
 
 * **Gate 1: Nominal Flow Inference ($\text{Coupled Volatility Index} < 30$)**
   * *Operating Regimes*: *1_OFF_PEAK* seasons, midweek baseline days (Tuesday and Wednesday), and midday steady plateau hours (08:00–13:00).
-  * *Assigned Architecture*: LightGBM Operational Tree ($M_3$).
+  * *Assigned Architecture*: Histogram Gradient Boosted Operational Tree ($M_3$).
   * *Operational Profile*: Fast, automated execution delivering superior point accuracy ($\text{MASE} \approx 0.60$) with minimal computational latency.
 * **Gate 2: Tactical Shock Inference ($\text{Coupled Volatility Index} \ge 35$)**
   * *Operating Regimes*: *3_PEAK* summer convective storms, holiday travel corridors, Monday outbound and Sunday return peaks, and diurnal turbulence peaks (05:00 and 17:00).

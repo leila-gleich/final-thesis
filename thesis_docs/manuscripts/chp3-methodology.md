@@ -7,7 +7,7 @@ This chapter details the methodological architecture and empirical framework dev
 
 The primary objective of this research is to evaluate the comparative predictive accuracy and operational utility of three distinct forecasting paradigms:
 1. **Deterministic Baselines ($M_0, M_1$)**: Classical reference benchmarks relying on diurnal seasonal persistence ($y_{t-24}$) and contemporaneous scheduled flight departures.
-2. **Probabilistic and Machine Learning Architectures ($M_2, M_3, M_4$)**: Data-driven, non-linear formulations—including empirical passenger show-up arrival distributions (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010), Gradient Boosted Count Regressors (LightGBM), and multi-source operational feature pipelines incorporating flight delays and cancellations.
+2. **Probabilistic and Machine Learning Architectures ($M_2, M_3, M_4$)**: Data-driven, non-linear formulations—including empirical passenger show-up arrival distributions (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010), Histogram Gradient Boosted Count Regressors (HistGBM under Poisson/Tweedie deviance loss), and multi-source operational feature pipelines incorporating flight delays and cancellations.
 3. **Sequential Two-Stage Hybrid Frameworks ($M_5$)**: Integrated architectures combining queueing dynamics and time-series error correction with non-linear decision trees to dynamically correct for queue backlogs during severe operational disruptions.
 
 ### Core Research Hypotheses

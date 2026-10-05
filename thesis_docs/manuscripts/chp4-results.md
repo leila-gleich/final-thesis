@@ -323,7 +323,7 @@ To evaluate the research hypotheses, six models across three paradigms were trai
   * *Model $M_1$ (Contemporaneous Scheduled Baseline, Status Quo)*: Uses published scheduled flight seats at departure hour $t$.
   * *Model $M_1^*$ (Rebuilt Deterministic 2-Hour Static Lead Baseline)*: Uses published scheduled flight seats with a static two-hour lead time, representing status-quo airport planning tools.
 * **Paradigm 2: Probabilistic and Machine Learning**
-  * *Model $M_2$ (Convolved Passenger Show-Up Curve, No Delays)*: Gradient Boosted Count Regressor (LightGBM, Tweedie $p = 1.3$) using convolved lead flights ($t+1, t+2, t+3$) and cyclical harmonics.
+  * *Model $M_2$ (Convolved Passenger Show-Up Curve, No Delays)*: Histogram Gradient Boosted Count Regressor (HistGBM, Tweedie/Poisson deviance loss) using convolved lead flights ($t+1, t+2, t+3$) and cyclical harmonics.
   * *Model $M_3$ (Stochastic Operational Tree, Show-Up Curve + OTP Delays/Cancellations)*: Expands $M_2$ with lagged delay indicators ($t-1$), cancellations, and taxi times, optimizing the Tweedie deviance loss objective:
 $$\min \sum 2 \left( \frac{y^{2-p}}{(1-p)(2-p)} - \frac{y \hat{y}^{1-p}}{1-p} + \frac{\hat{y}^{2-p}}{2-p} \right)$$
   * *Model $M_4$ (Full Tri-Modal Pipeline, Load Factor Scaled)*: Interacts convolved flight features with monthly T-100 load factors and quarterly DB1B connecting ratios.

@@ -139,7 +139,7 @@ To operationalize the findings, airport operations centers should implement dyna
                  │                                               │
                  ▼                                               ▼
        ┌───────────────────┐                           ┌───────────────────┐
-       │   LightGBM (M3)   │                           │ Hybrid EKF (M5)   │
+       │   HistGBM (M3)    │                           │ Hybrid EKF (M5)   │
        │  Fast, Automated  │                           │ Dynamic Feedback  │
        │    MASE ≈ 0.60    │                           │  R_MASE ≤ 1.28    │
        └───────────────────┘                           └───────────────────┘

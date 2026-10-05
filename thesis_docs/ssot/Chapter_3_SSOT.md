@@ -131,7 +131,7 @@ $$\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H} \quad (4 \time
 | **$M_0$** | Diurnal Seasonal Naive | $y_t = y_{t-24}$ | Historical lagged checkpoint throughput 24 hours prior. |
 | **$M_1$** | Contemporaneous Sched SARIMAX | $\Phi(B)(1 - B)(1 - B^{24}) y_t = \beta \text{SchedSeats}_t + \Theta(B) \epsilon_t$ | Contemporaneous scheduled seats departing in hour $t$, day-of-week indicators. |
 | **$M_2$** | Empirical Show-Up Curve Regressor | $y_t = \sum_{h=1}^3 \omega_h \text{OriginatingDemand}_{t+h} + \epsilon_t$ | ACRP Report 40 distributed-lag lead horizons ($t+1, t+2, t+3$), DB1B connecting deflator. |
-| **$M_3$** | Operational Count Regressor (LightGBM) | $\hat{y}_t = \arg\min_F \sum_{i=1}^N L(y_i, F(x_i))$ (Tweedie $p = 1.3$) | Distributed show-up demand ($t+1..t+3$), prior-hour delay ($\text{DepDelay}_{t-1}$), cancellations, DOW, month. |
+| **$M_3$** | Operational Count Regressor (HistGBM Tweedie) | $\hat{y}_t = \arg\min_F \sum_{i=1}^N L(y_i, F(x_i))$ (Tweedie $p = 1.3$) | Distributed show-up demand ($t+1..t+3$), prior-hour delay ($\text{DepDelay}_{t-1}$), cancellations, DOW, month. |
 | **$M_4$** | Full Tri-Modal Pipeline | Tree ensemble with multi-source interaction tensors | All $M_3$ features + BTS T-100 route load factors, aircraft gauge, carrier indicators. |
 | **$M_5$** | Sequential Two-Stage Tree Hybrid | $\hat{y}_t = \hat{y}_{\text{SARIMA}, t} + \hat{r}_{\text{Tree}, t} + K_t (y_{t-1} - \hat{y}_{t-1})$ | Stage 1 SARIMA baseline + Stage 2 Gradient Boosted residual model + Stage 3 recursive Kalman state innovation. |
 

@@ -198,7 +198,7 @@ $$\text{Demand}_{\text{convolved}, t} = \sum_{h=1}^{3} w_h \cdot \left[ \sum_{f 
 | **Sequential Hybrid** | **$M_5$** | Sequential SARIMA-Tree Hybrid | **0.6644** | **0.6270** | **1,135.0** | **795.0** | **0.846** | **-402.9** | **CHAMPION ARCHITECTURE** |
 
 * **Statistical Significance (Diebold-Mariano Test vs. Rebuilt $M_1^*$)**:
-  - Model $M_3$ (LightGBM Tweedie): $DM = 74.25, p < 0.0001$.
+  - Model $M_3$ (HistGBM Tweedie): $DM = 74.25, p < 0.0001$.
   - Model $M_5$ (Sequential Hybrid): $DM = 79.12, p < 0.0001$.
 
 ### 3.10 Master Multi-Pillar Hypothesis Evaluation Matrix Across the Three Dimensions

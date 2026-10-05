@@ -61,7 +61,7 @@ CHAPTER I: INTRODUCTION
 ### 3.2 Core Thesis Hypothesis ($H_1$)
 
 * **Overarching Hypothesis ($H_1$)**: Across the three forecasting paradigms (deterministic operational baselines, data-driven machine learning, and sequential state-space hybrids), **no individual architecture will prove universally superior across all three evaluation dimensions**. Rather, systematic trade-offs exist:
-  * **$H_{1a}$ (Robustness)**: Non-linear machine learning models ($M_3$ LightGBM) and two-stage hybrids ($M_5$) will demonstrate superior routine operational accuracy ($\text{MASE}_{\text{routine}} < 0.90$) by capturing complex non-linear day-of-week, aircraft gauge, and lead-lag arrival distributions.
+  * **$H_{1a}$ (Robustness)**: Non-linear machine learning models ($M_3$ HistGBM Tweedie) and two-stage hybrids ($M_5$) will demonstrate superior routine operational accuracy ($\text{MASE}_{\text{routine}} < 0.90$) by capturing complex non-linear day-of-week, aircraft gauge, and lead-lag arrival distributions.
   * **$H_{1b}$ (Resilience)**: Sequential two-stage hybrid models ($M_5$) will demonstrate superior disruption resilience ($R_{\text{MASE}} \le 1.30$, time-to-recovery $\text{TTR} \le 4.0\text{ hours}$), resisting the "empty checkpoint fallacy" that degrades pure machine learning models during severe weather delay cascades.
   * **$H_{1c}$ (Generalizability)**: Simple deterministic physical rules ($M_1^*$) and convolved machine learning models ($M_3$) will exhibit superior zero-shot spatial transferability ($\text{RTR} \le 1.10$, error degradation $\le 10\%$) because empirical passenger show-up curves abstract away facility-specific terminal over-fitting.
 
