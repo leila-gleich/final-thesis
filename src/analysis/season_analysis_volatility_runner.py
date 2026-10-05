@@ -41,19 +41,21 @@ from openpyxl.utils import get_column_letter
 
 # Paths configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 
+RESULTS_REGIMES_DIR = os.path.join(PROJECT_ROOT, "results", "01_top25_clustering", "seasonality_and_regimes")
 OUTPUT_DIRS = [
-    SCRIPT_DIR
+    RESULTS_REGIMES_DIR
 ]
 FIGURES_DIR = os.path.join(PROJECT_ROOT, "thesis_docs", "manuscripts", "figures")
 
-DATA_DIR = "/Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/Archive/700b-data-warehouse/data/processed"
-DIM_DATE_PATH = os.path.join(PROJECT_ROOT, "archive", "superseded_code_snapshot", "dimensions", "dim_date.csv")
-DIM_AIRPORT_PATH = os.path.join(PROJECT_ROOT, "archive", "superseded_code_snapshot", "dimensions", "dim_airport.csv")
+DIM_DATE_PATH = os.path.join(PROJECT_ROOT, "data", "dimensions", "dim_date.csv")
+DIM_AIRPORT_PATH = os.path.join(PROJECT_ROOT, "data", "dimensions", "dim_airport.csv")
 
-TSA_PARQUET = os.path.join(DATA_DIR, "tsav1.parquet")
-OTP_PARQUET = os.path.join(DATA_DIR, "otpv1.parquet")
+DEFAULT_PROCESSED_DIR = os.path.join(PROJECT_ROOT, "data", "processed")
+DATA_DIR = os.getenv("PROCESSED_DATA_DIR", DEFAULT_PROCESSED_DIR)
+TSA_PARQUET = os.getenv("TSA_PARQUET_PATH", os.path.join(DATA_DIR, "tsav1.parquet"))
+OTP_PARQUET = os.getenv("OTP_PARQUET_PATH", os.path.join(DATA_DIR, "otpv1.parquet"))
 
 TOP25_AIRPORT_IDS = [
     24,  # ATL

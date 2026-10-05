@@ -228,8 +228,8 @@ Every empirical number in Section 3 is programmatically linked to canonical data
 | **Table 4.1** | Multi-Source Post-ETL Census | `src/etl/build_db1v0.py` | `results/01_top25_clustering/01_top25_clustering.xlsx` (Sheet: `Census_Master`) |
 | **Table 4.2** | Post-ETL Master Descriptives | `src/etl/profile_db1b.py` | `results/01_top25_clustering/01_top25_clustering.xlsx` (Sheet: `Descriptive_Stats`) |
 | **Table 4.3a** | Post-Pandemic Demarcation | `src/analysis/run_regime_analysis.py` | `thesis_docs/notes/methodology_memos/candidate_b_deep_dive_justification.md` |
-| **Table 4.3b** | Annual Volatility Regimes | `season-analysis/run_season_analysis.py` | `results/01_top25_clustering/01_top25_clustering.xlsx` (Sheet: `Seasonality_Regimes`) |
-| **Table 4.4a** | Day-of-Week Archetypes | `season-analysis/run_season_analysis.py` | `results/01_top25_clustering/01_top25_clustering.xlsx` (Sheet: `DOW_Archetypes`) |
+| **Table 4.3b** | Annual Volatility Regimes | `src/analysis/season_analysis_volatility_runner.py` | `results/01_top25_clustering/seasonality_and_regimes/seasonal_regimes_summary.csv` & `season-analysis.xlsx` |
+| **Table 4.4a** | Day-of-Week Archetypes | `src/analysis/season_analysis_volatility_runner.py` | `results/01_top25_clustering/seasonality_and_regimes/day_of_week_regimes_summary.csv` & `season-analysis.xlsx` |
 | **Table 4.5** | TSA-OTP Econometric Corrs | `otp_volatility_analysis/run_analysis.py` | `results/01_top25_clustering/01_top25_clustering.xlsx` (Sheet: `Econometric_Correlations`) |
 | **Table 4.6** | 9-Airport Factorial Specification | `src/analysis/run_4tier_filtering.py` | `results/02_4tier_filtering/02_4tier_filtering.xlsx` (Sheet: `Factorial_Matrix`) |
 | **Table 4.7** | 9-Airport DOW Profile | `src/analysis/run_top9_analysis.py` | `results/02_4tier_filtering/02_top9_cohort_comprehensive_analysis.xlsx` |

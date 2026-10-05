@@ -47,36 +47,49 @@ final-thesis/
 │       ├── empirical_walkthroughs/     # Step-by-step validation reports & descriptive statistics
 │       └── provenance_and_standards/   # Provenance specification, decision logs, style guides
 │
-├── season-analysis/                    <-- Seasonal Volatility & Diurnal Regime Module
-│   ├── season_analysis_volatility_runner.py # Reproducible seasonal analysis runner
-│   ├── season-analysis.xlsx            # Multi-tab seasonal regimes & sufficiency workbook
-│   ├── diurnal_hourly_by_dow.csv       # Hourly diurnal profiles by day of week
-│   └── seasonal_regimes_summary.csv    # Seasonal regime metrics and sample sizes
+├── otp_volatility_analysis/            <-- OTP Factor Weighting & TSA Volatility Module
+│   ├── run_otp_volatility_analysis.py  # Self-contained empirical volatility runner
+│   ├── OTP_FACTOR_WEIGHTING_AND_VOLATILITY_ANALYSIS.md
+│   ├── Figures 1–5 (.png)              # 300 DPI publication figures
+│   └── Tables 01–05 (.csv)             # Out-of-time evaluation & factor weighting benchmarks
 │
 ├── src/                                <-- Modular Python Source Code Infrastructure
+│   ├── analysis/                       <-- Seasonal Volatility & Empirical Runners
+│   │   └── season_analysis_volatility_runner.py # Reproducible seasonal regimes runner
 │   ├── etl/                            <-- Ingestion, Top 25 Clustering & 4-Tier Filtering
 │   │   ├── build_db1v0.py
 │   │   ├── perform_top25_clustering.py # Step 1: Top 25 PCA & K-Means clustering
-│   │   └── apply_4tier_filtering.py    # Step 2: 4-tier filtering pipeline (Top 25 -> 9 Cohort)
-│   ├── features/                       <-- Lead-Lag Deconvolution & Feature Engineering
-│   │   ├── temporal_features.py
-│   │   └── lead_lag_convolution.py     # Continuous passenger arrival kernel deconvolution
+│   │   ├── apply_4tier_filtering.py    # Step 2: 4-tier filtering pipeline (Top 25 -> 9 Cohort)
+│   │   └── pipeline_audit.py           # Step 3: Standardized 6-point referential audit
+│   ├── features/                       <-- Physics-Informed Feature Engineering Pipeline
+│   │   ├── time_features.py            # REC-01 Diurnal & weekly continuous cyclical terms
+│   │   ├── cluster_adapt.py            # REC-02 Cluster-adaptive lognormal arrival kernels
+│   │   ├── demand_deflat.py            # REC-03 DB1B connecting ratio demand deflation
+│   │   ├── fleet_tiers.py              # REC-04 Airframe gauge tiers (Regional/Narrow/Wide)
+│   │   ├── airside_flow.py             # REC-07 Taxi-out congestion interaction terms
+│   │   ├── checkpoint_map.py           # REC-13 Checkpoint spatial confidence weighting
+│   │   └── feature_pipeline.py         # Master conformed feature matrix orchestrator
 │   ├── models/                         <-- Deterministic, ML, and Dynamic Hybrid Models
-│   │   ├── baselines.py                # Diurnal Naive & Contemporaneous SARIMAX
-│   │   ├── machine_learning.py         # LightGBM / XGBoost Tweedie Regressors
-│   │   └── hybrid_sarima_tree.py       # Sequential SARIMA-Tree Hybrid & State-Space
-│   └── utils/                          <-- DB Connection & Logging Utilities
-│       ├── db_connection.py
-│       └── logger.py
+│   │   ├── baselines.py                # M0 Diurnal Naive & M1 2-Hr Static Lead Baseline
+│   │   ├── machine_learning.py         # M3 HistGradientBoosting Poisson/Tweedie Regressor
+│   │   ├── hybrid_sarima_tree.py       # M5 Sequential SARIMA-Tree Hybrid & Feedback (Winner)
+│   │   ├── eval_pillars.py             # REC-11 Multi-pillar quantitative evaluation suite
+│   │   └── dual_track_eval.py          # REC-05 Dual-track operational policy decision rules
+│   ├── data/                           <-- Regime Demarcation & Partitioning
+│   │   └── split_regimes.py            # REC-06 Candidate B & 7-day purge embargoes
+│   └── utils/                          <-- Path Resolution & Logging Utilities
+│       ├── paths.py                    # REC-08 Self-contained repository path registry
+│       └── logger.py                   # Standardized logging utility
 ├── data/                               <-- Data Directory (Curated aggregates, samples, dimensions, raw staging)
 │   ├── curated/                        # Coupled hourly & daily TSA/flight aggregates (2019–2025)
 │   ├── sample/                         # Representative sample fixtures for pipeline validation
 │   ├── dimensions/                     # Conformed star schema lookup tables (airports, dates, etc.)
-│   ├── raw/                            # Federal source files & staging (git-ignored)
+│   ├── raw/                            # Federal source files & staging (git-ignored stubs)
 │   └── processed/                      # Conformed intermediate tables (git-ignored)
 ├── results/                            <-- Publication-grade results tables & CSV censuses
 │   ├── 00_VERSION_CONTROL_AND_PROVENANCE.md
 │   ├── 01_top25_clustering/            # Top 25 spatial census & PCA/K-Means cluster outputs
+│   │   └── seasonality_and_regimes/    # Season-analysis.xlsx, 84-cell tensor & seasonal CSVs
 │   ├── 02_4tier_filtering/             # 4-tier filtering funnel & 9-airport experimental grid
 │   ├── 03_lead_lag_deconvolution/      # Lead-lag arrival deconvolution gradients
 │   ├── 04_model_execution_2025_holdout/# 2025 out-of-time holdout benchmark matrix
