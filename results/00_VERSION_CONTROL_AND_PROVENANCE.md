@@ -74,6 +74,24 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   conformal quantile intervals & q85 staffing bounds (REC-12).              |
 |         |            | - Phase 5: Manuscript & Provenance Synchronization (REC-09), complete test  |
 |         |            |   coverage (36/36 passing), zero test regressions, fully autonomous run.     |
+| v4.1    | 2026-10-04 | Chapter IV Outline Harmonization, SSOT Deployment & Manuscript Cleanup:     |
+|         |            | - Rewrote Chapter IV manuscript (Chapter_4_Results_Empirical_Findings.md)   |
+|         |            |   to strictly follow the 4-part, 17-subsection outline (4.1 Initial EDA,    |
+|         |            |   4.2 Data Filtering & Subset Selection, 4.3 Model Development & Execution, |
+|         |            |   4.4 Model Evaluation & Results).                                          |
+|         |            | - Authored Chapter IV Single Source of Truth data registry and spec.        |
+|         |            | - Archived non-SSOT / superseded precursor files to                          |
+|         |            |   thesis_docs/manuscripts/archive/ to eliminate version ambiguity.          |
+|         |            | - Synchronized file trees across thesis_docs/README.md and provenance logs. |
+| v4.2    | 2026-10-04 | Full SSOT Directory Deployment Across All Five Chapters:                    |
+|         |            | - Created dedicated first-class directory: thesis_docs/ssot/.               |
+|         |            | - Moved Chapter_4_SSOT.md to canonical location thesis_docs/ssot/.          |
+|         |            | - Authored authoritative SSOT documents for Chapter 1 (Introduction/Scope), |
+|         |            |   Chapter 2 (Literature Review), Chapter 3 (Methodology), Chapter 4         |
+|         |            |   (Findings/Results), and Chapter 5 (Analysis/Discussion).                  |
+|         |            | - Created thesis_docs/ssot/README.md establishing SSOT governance,          |
+|         |            |   companion draft mapping, benchmark registries, and jargon rules.          |
+|         |            | - Updated thesis_docs/README.md to establish the 4-pillar thesis structure. |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

@@ -1,10 +1,11 @@
 # Thesis Manuscripts, Recommendations & Research Notes Directory
 
-Welcome to the `thesis_docs/` directory of the repository. This folder is organized into three distinct, intuitive pillars:
+Welcome to the `thesis_docs/` directory of the repository. This folder is organized into four distinct, intuitive pillars:
 
-1. **`manuscripts/`**: Formal thesis manuscript chapters (Word `.docx` and Markdown `.md`), complete unified drafts, graduate proposal, master APA 7 references, and publication figures.
-2. **`recommendations/`**: Actionable guidance, turn-key chapter update guides (`chapter_updates/`), defense strategy, and master technical implementation plans (`implementation_plans/`).
-3. **`notes/`**: Empirical research notes, methodological justifications (`methodology_memos/`), step-by-step validation reports (`empirical_walkthroughs/`), and governance standards (`provenance_and_standards/`).
+1. **`ssot/`**: The authoritative **Single Source of Truth (SSOT)** specifications for all five chapters (`Chapter_1_SSOT.md` through `Chapter_5_SSOT.md`), defining immutable empirical metrics, mathematical formulations, sample sizes, and literature lineages.
+2. **`manuscripts/`**: Formal thesis manuscript chapters (Word `.docx` and Markdown `.md`), complete unified drafts, graduate proposal, master APA 7 references, and publication figures.
+3. **`recommendations/`**: Actionable guidance, turn-key chapter update guides (`chapter_updates/`), defense strategy, and master technical implementation plans (`implementation_plans/`).
+4. **`notes/`**: Empirical research notes, methodological justifications (`methodology_memos/`), step-by-step validation reports (`empirical_walkthroughs/`), and governance standards (`provenance_and_standards/`).
 
 ---
 
@@ -14,17 +15,27 @@ Welcome to the `thesis_docs/` directory of the repository. This folder is organi
 thesis_docs/
 ├── README.md                           <-- Master directory guide (this file)
 │
+├── ssot/                               <-- Master Single Source of Truth (SSOT) Specifications
+│   ├── README.md                       (SSOT directory overview, governance & cross-chapter map)
+│   ├── Chapter_1_SSOT.md               (Chapter I: Research Question, H1, Triad, Scope)
+│   ├── Chapter_2_SSOT.md               (Chapter II: Literature Taxonomy, Critique, Citations)
+│   ├── Chapter_3_SSOT.md               (Chapter III: Mathematical Specs, Pipeline, 84-Cell Grid)
+│   ├── Chapter_4_SSOT.md               (Chapter IV: Master Numerical Registry & Model Results)
+│   └── Chapter_5_SSOT.md               (Chapter V: Synthesis, H1 Proofs, Gated Inference)
+│
 ├── manuscripts/                        <-- Production manuscript deliverables & figures
 │   ├── Chapter_1_Introduction.docx     (Chapter I: Introduction & Scope)
-│   ├── Chapter_2_Literature_Review.docx (Chapter II: Literature Review)
+│   ├── Chapter_2_Literature_Review.docx (Chapter II: Literature Review - Word)
+│   ├── Chapter_2_Literature_Review.md  (Chapter II: Literature Review - Markdown)
 │   ├── Chapter_3_Methodology.md        (Chapter III: Methodology - Markdown)
 │   ├── Chapter_3_Methodology.docx      (Chapter III: Methodology - Word)
 │   ├── Chapter_4_Results_Empirical_Findings.md (Chapter IV: Empirical Results - Markdown)
-│   ├── Chapter_4_Results_Empirical_Findings.docx (Chapter IV: Empirical Results - Word)
 │   ├── Chapter_5_Analysis_and_Discussion.md (Chapter V: Analysis & Discussion - Markdown)
-│   ├── Master_Results_and_Discussion_Comprehensive_Draft.md (Unified Chapters IV & V Master Draft)
 │   ├── Gleich_700B_Proposal.docx       (Graduate Thesis Proposal Document)
 │   ├── Master_References_APA7.docx     (Master APA 7th Edition Reference Suite)
+│   ├── archive/                        <-- Archived Precursor & Superseded Drafts
+│   │   ├── Chapter_4_Results_Empirical_Findings.docx (Pre-restructure Word draft)
+│   │   └── Master_Results_and_Discussion_Comprehensive_Draft.md (Precursor combined draft)
 │   └── figures/                        <-- Publication Figures for Chapter IV
 │       ├── 01_annual_seasonality_tsa_otp_clustering.png
 │       ├── 01_annual_volatility_tsa_otp_clustering.png
