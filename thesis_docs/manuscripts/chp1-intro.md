@@ -1,12 +1,11 @@
-# CHAPTER I: INTRODUCTION
+# Chapter I
 
----
+# Introduction
 
-## 1.1 Context and Operational Motivation
-
+## Context and Operational Motivation
 As commercial air travel demand continues to outpace the capacity of landside airport terminal infrastructure, inefficient resource allocation at passenger security screening checkpoints has emerged as a critical operational bottleneck across the National Airspace System (Adacher et al., 2017). Airport terminal operators and federal security authorities face the dual challenge of sustaining stringent screening standards while minimizing passenger queue delays. Traditionally, terminal passenger flow forecasting has relied on static, time-of-day planning tables or direct proportional scaling of published airline flight schedules. However, the systemic demand shocks and operational disruptions of the post-pandemic era have exposed severe structural flaws in these conventional forecasting approaches (Hopfe et al., 2024).
 
-Conventional forecast evaluation in transportation planning has historically emphasized average error metrics—such as Root Mean Squared Error (RMSE) or Mean Absolute Percentage Error (MAPE)—evaluated under routine, undisturbed operating conditions. Yet, in volatile airport operating environments, an evaluation framework based solely on nominal-day accuracy is insufficient. A forecasting model that achieves low average error during calm, clear-weather periods may fail catastrophically during severe convective weather ground delay programs, unexpected terminal lane closures, or sudden schedule collapses. 
+Conventional forecast evaluation in transportation planning has historically emphasized average error metrics—such as Root Mean Squared Error (RMSE) or Mean Absolute Percentage Error (MAPE)—evaluated under routine, undisturbed operating conditions. Yet, in volatile airport operating environments, an evaluation framework based solely on nominal-day accuracy is insufficient. A forecasting model that achieves low average error during calm, clear-weather periods may fail catastrophically during severe convective weather ground delay programs, unexpected terminal lane closures, or sudden schedule collapses.
 
 In modern airport operations, the most valuable predictive model is not necessarily the one with the lowest marginal error under ideal conditions, but the model that:
 1. **Remains reliable during routine operations (Robustness)**: Providing consistent, low-error baseline staffing recommendations during undisturbed flight banks.
@@ -15,50 +14,32 @@ In modern airport operations, the most valuable predictive model is not necessar
 
 This study systematically examines the suitability of predictive modeling frameworks—spanning deterministic operational baselines, data-driven decision-tree architectures, and sequential state-space hybrid models—for forecasting Transportation Security Administration (TSA) checkpoint throughput across routine, volatile, and disrupted demand regimes.
 
----
-
-## 1.2 Significance of the Study
-
-This research contributes to both transportation science theory and practical airport operations by advancing a multidimensional, regime-aware evaluation framework. While traditional airport planning literature treats passenger demand as a static reflection of published departures, this study establishes that passenger arrivals at security screening follow complex behavioral show-up curves (ACRP Report 40) that are decoupled from contemporaneous flight departure timestamps.
+## Significance of the Study
+This research contributes to both transportation science theory and practical airport operations by advancing a multidimensional, regime-aware evaluation framework. While traditional airport planning literature treats passenger demand as a static reflection of published departures, this study establishes that passenger arrivals at security screening follow complex behavioral show-up curves (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010) that are decoupled from contemporaneous flight departure timestamps.
 
 By identifying the conditions under which distinct predictive modeling paradigms maintain operational fidelity, this research provides airport Federal Security Directors (FSDs), airline hub operations managers, and FAA planners with actionable, data-driven decision tools. Specifically, it demonstrates how integrating airline ticket coupon connecting ratios (BTS DB1B) and real-time flight delay feedback cuts checkpoint forecast error by **14.2%** and prevents the severe under-prediction common during severe weather delay cascades.
 
----
-
-## 1.3 Statement of the Problem
-
-Airport passenger arrivals and queuing behaviors are inherently uncertain and fluctuate dynamically based on departure bank structures, traveler booking characteristics, and air traffic disruptions (Cheng et al., 2012; Dönmez et al., 2025). Existing models for managing passenger security screening demand frequently rely on static time-of-day curves or pre-pandemic operational assumptions that fail to reflect contemporary travel patterns (Ebert et al., 2021). 
+## Statement of the Problem
+Airport passenger arrivals and queuing behaviors are inherently uncertain and fluctuate dynamically based on departure bank structures, traveler booking characteristics, and air traffic disruptions (Cheng et al., 2012; Dönmez et al., 2025). Existing models for managing passenger security screening demand frequently rely on static time-of-day curves or pre-pandemic operational assumptions that fail to reflect contemporary travel patterns (Ebert et al., 2021).
 
 This mismatch between checkpoint lane allocation and fluctuating passenger demand contributes to chronic congestion at peak hours, excessive passenger wait times, and inefficient staffing utilization. Crucially, the aviation sector currently lacks a dynamic framework for evaluating predictive models beyond aggregate, undisturbed accuracy metrics. Because modern airport operations cannot be assumed to follow static, deterministic flight schedules, the absence of a multidimensional evaluation methodology leaves airport authorities at risk of deploying decision tools that collapse during sudden operational disruptions or fail when deployed across unfamiliar terminal complexes.
 
----
-
-## 1.4 Purpose Statement
-
-The primary objective of this research is to evaluate and compare predictive modeling frameworks—including deterministic time-series baselines, operational decision-tree models, and sequential two-stage hybrid architectures—to optimize airport checkpoint capacity through data-driven operational decision tools rather than costly capital facility expansion. 
+## Purpose Statement
+The primary objective of this research is to evaluate and compare predictive modeling frameworks—including deterministic time-series baselines, operational decision-tree models, and sequential two-stage hybrid architectures—to optimize airport checkpoint capacity through data-driven operational decision tools rather than costly capital facility expansion.
 
 By analyzing the empirical relationship between airside flight operations and landside TSA security throughput across the Top 25 U.S. commercial airfields from 2019 to 2025, this study assesses model performance against three primary operational criteria: **Robustness**, **Resilience**, and **Generalizability**. Rather than seeking a single, universally optimal model, this research determines which forecasting frameworks perform best under each operational demand state, providing airport authorities with the empirical justification needed to deploy regime-switched forecasting systems.
 
----
-
-## 1.5 Research Question
-
+## Research Question
 Which predictive modeling frameworks are most effective for forecasting airport passenger security screening throughput when prioritizing **robustness** (routine operational accuracy), **resilience** (stability under convective weather and delay disruptions), or **generalizability** (cross-airport portability across terminal layouts) as the primary operational evaluation metric?
 
----
-
-## 1.6 Delimitations
-
+## Delimitations
 1. **Geographic Scope**: This study evaluates commercial air traffic and security screening operations within the contiguous United States, focusing on the Top 25 commercial airfields categorized under FAA hub classifications.
 2. **Temporal Scope**: The longitudinal dataset spans January 1, 2019 through December 31, 2025. Model training and evaluation are focused on the verified post-pandemic operational regime starting May 1, 2022 (following the nationwide rescission of federal transportation mask mandates), reserving the full 12-month calendar year of 2025 as a strict out-of-time holdout evaluation window.
 3. **Data Sources**: Analysis is delimited to publicly accessible and FOIA-disclosed federal aviation datasets, including TSA FOIA hourly screening counts, Bureau of Transportation Statistics (BTS) On-Time Flight Performance (Form 234), BTS Schedule T-100 Segment traffic, and BTS DB1B/DB1C 10% ticket coupon surveys.
 4. **Evaluation Standards**: Model performance is measured using rigorous operational forecasting metrics, including Root Mean Squared Error (RMSE), Mean Absolute Scaled Error (MASE), the Disruption Error Multiplier ($R_{\text{MASE}}$), the Relative Transfer Ratio (RTR), and Diebold-Mariano tests for statistical significance.
 
----
-
-## 1.7 Limitations and Assumptions
-
+## Limitations and Assumptions
 1. **Staffing and Lane Configuration Opacity**: Due to the proprietary and security-sensitive nature of TSA checkpoint operations, confidential operational variables—such as exact Transportation Security Officer (TSO) shift allocations, active lane counts per 15-minute interval, and manual queue snake reconfigurations—are not publicly available. The methodology controls for this by aggregating lane-level counts into terminal complex throughput totals.
-2. **Passenger Checked Baggage and Curb Dwell**: Granular airline bag-drop and ticket counter processing logs are proprietary to individual air carriers. The analysis incorporates passenger show-up distributions established in **ACRP Report 40 (*Airport Passenger Terminal Planning and Design*)** as empirical representations of pre-security lead times.
+2. **Passenger Checked Baggage and Curb Dwell**: Granular airline bag-drop and ticket counter processing logs are proprietary to individual air carriers. The analysis incorporates passenger show-up distributions established in ACRP Report 40 (*Airport Passenger Terminal Planning and Design*; Transportation Research Board, 2010) as empirical representations of pre-security lead times.
 3. **Connecting Passenger Surveys**: The proportion of transferring passengers who remain airside is estimated using quarterly BTS DB1B coupon surveys. The framework assumes that connecting ratios remain stable across monthly operating horizons within given carrier-terminal complexes.
 4. **Operational Exogeneity**: Exogenous severe weather disruptions (convective storm lines, winter blizzards) are captured through departure delay distributions and flight cancellation indicators reported in BTS Form 234.
