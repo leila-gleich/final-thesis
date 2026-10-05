@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "final-thesis"
-version = "3.0.0"
+version = "4.3.0"
 description = "TSA Checkpoint Throughput Forecasting & Airside-Landside Queue Dynamics"
 readme = "README.md"
 requires-python = ">=3.10"

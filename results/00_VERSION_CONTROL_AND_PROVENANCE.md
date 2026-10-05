@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.0 (Full Implementation of Recommendations REC-01 to REC-14)
-DATE: September 30, 2026
+RELEASE VERSION: v4.3 (Codebase Modularization & Repository Architecture Consolidation)
+DATE: October 5, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -92,6 +92,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Created thesis_docs/ssot/README.md establishing SSOT governance,          |
 |         |            |   companion draft mapping, benchmark registries, and jargon rules.          |
 |         |            | - Updated thesis_docs/README.md to establish the 4-pillar thesis structure. |
+| v4.3    | 2026-10-05 | Codebase Modularization & Repository Architecture Consolidation:            |
+|         |            | - Exposed splitters, transformers, and evaluation engines in src package    |
+|         |            |   inits (src.data, src.features, src.models).                              |
+|         |            | - Relocated seasonal volatility data to results/seasonality_and_regimes/    |
+|         |            |   and migrated analysis runner to src/analysis/.                           |
+|         |            | - Archived superseded DuckDB/ETL scripts to archive/superseded_scripts/.    |
+|         |            | - De-duplicated draft recommendations to thesis_docs/manuscripts/archive/. |
+|         |            | - Standardized requirements and docstrings for HistGradientBoostingRegressor.|
+|         |            | - Validated 100% self-contained architecture check and 36/36 unit tests.   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

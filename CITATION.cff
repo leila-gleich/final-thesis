@@ -6,8 +6,8 @@ authors:
     given-names: "Leila"
     affiliation: "Embry-Riddle Aeronautical University"
     email: "gleichl@my.erau.edu"
-version: 3.0.0
-date-released: 2026-09-24
+version: 4.3.0
+date-released: 2026-10-05
 repository-code: "https://github.com/leila-gleich/final-thesis"
 license: "MIT"
 type: "thesis"
