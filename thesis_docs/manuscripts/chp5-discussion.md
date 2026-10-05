@@ -2,6 +2,12 @@
 
 # Discussion
 
+<style>
+th {
+  font-weight: normal;
+}
+</style>
+
 ## Spatial Architecture and Passenger Behavioral Dynamics
 The empirical results confirm that modeling airport checkpoint operations requires decoupling landside originating passenger flow from total airport enplanements. In traditional airport planning literature, passenger demand has frequently been treated as a uniform scaling of scheduled airline departures. This research demonstrates that such assumptions introduce structural biases that render models operationally unusable at large hub airfields:
 
@@ -35,14 +41,14 @@ Traditional queuing models in airport terminal planning assume that passenger ar
 
 ## Evaluation Dimension 1: Robustness
 
-**Table 5.1**  
+Table 5.1  
 *Evaluation Dimension 1: Routine Operational Accuracy Across Modeling Paradigms*
 
 | Model Family | Specification | $\text{RMSE}_{\text{routine}}$ | $\text{MASE}_{\text{routine}}$ | Diebold-Mariano Test vs Baseline |
 | :--- | :--- | :---: | :---: | :--- |
-| **Deterministic Baseline** | M1: Contemporaneous Sched SARIMAX | 1365.7 | 1.083 | Control Baseline |
-| **Probabilistic / ML** | M3: Show-Up Curve + OTP Delays/Cancels | 1167.9 | 0.890 | **DM = 74.247 ($p < 0.0001$)** |
-| **Two-Stage Hybrid** | M5: Sequential SARIMA-Tree Hybrid | **1114.7** | **0.834** | **DM = 79.123 ($p < 0.0001$)** |
+| Deterministic Baseline | M1: Contemporaneous Sched SARIMAX | 1365.7 | 1.083 | Control Baseline |
+| Probabilistic / ML | M3: Show-Up Curve + OTP Delays/Cancels | 1167.9 | 0.890 | DM = 74.247 ($p < 0.0001$) |
+| Two-Stage Hybrid | M5: Sequential SARIMA-Tree Hybrid | 1114.7 | 0.834 | DM = 79.123 ($p < 0.0001$) |
 
 ### Empirical Evaluation of Robustness
 The primary research hypothesis (**Hypothesis 1**) asserted that *distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures*. Under this first dimension—routine operating conditions—the methodology anticipated that **Probabilistic and Machine Learning models would excel at capturing continuous baseline variance and routine operational noise**.
@@ -58,14 +64,14 @@ The coupled volatility analysis substantiates why routine accuracy holds consist
 
 ## Evaluation Dimension 2: Resilience
 
-**Table 5.2**  
+Table 5.2  
 *Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption*
 
 | Model Family | Specification | $\text{RMSE}_{\text{shock}}$ | $\text{MASE}_{\text{shock}}$ | Disruption Error Multiplier ($R_{\text{MASE}}$) |
 | :--- | :--- | :---: | :---: | :---: |
-| **Deterministic Baseline** | M1: Contemporaneous Sched SARIMAX | 1228.9 | 0.966 | 0.89 |
-| **Probabilistic / ML** | M3: Show-Up Curve + OTP Delays/Cancels | 1024.9 | 0.772 | 0.87 |
-| **Two-Stage Hybrid** | M5: Sequential SARIMA-Tree Hybrid | **1023.2** | **0.737** | **0.88 (RESILIENT)** |
+| Deterministic Baseline | M1: Contemporaneous Sched SARIMAX | 1228.9 | 0.966 | 0.89 |
+| Probabilistic / ML | M3: Show-Up Curve + OTP Delays/Cancels | 1024.9 | 0.772 | 0.87 |
+| Two-Stage Hybrid | M5: Sequential SARIMA-Tree Hybrid | 1023.2 | 0.737 | 0.88 (RESILIENT) |
 
 ### Empirical Evaluation of Resilience Under Disruption
 Evaluating the second dimension of **Hypothesis 1**, the research design posited that **hybrid models combining first-principles queuing structures with operational delay data would demonstrate superior resilience during acute disruptions**.
@@ -84,14 +90,14 @@ The coupled volatility findings explain the exact operational bottleneck mechani
 
 ## Evaluation Dimension 3: Generalizability
 
-**Table 5.3**  
+Table 5.3  
 *Evaluation Dimension 3: Generalizability and Cross-Airport Transfer Performance*
 
 | Model Family | Model Architecture | In-Sample RMSE | Transfer RMSE (Direct Deployment) | Delta Transfer Degradation | Transfer Error Penalty (RTR) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Deterministic Baseline** | M1 (Sched Baseline) | 1312.0 | 1370.3 | **+4.4%** | **1.04** |
-| **Probabilistic / ML** | M3 (Show-Up Curve / Operational) | 1077.5 | 1162.8 | **+7.9%** | **1.08** |
-| **Two-Stage Hybrid** | M5 (Sequential Tree Hybrid) | 1042.7 | 1237.4 | +18.7% | 1.19 |
+| Deterministic Baseline | M1 (Sched Baseline) | 1312.0 | 1370.3 | +4.4% | 1.04 |
+| Probabilistic / ML | M3 (Show-Up Curve / Operational) | 1077.5 | 1162.8 | +7.9% | 1.08 |
+| Two-Stage Hybrid | M5 (Sequential Tree Hybrid) | 1042.7 | 1237.4 | +18.7% | 1.19 |
 
 ### Empirical Evaluation of Generalizability Across Facilities
 Evaluating the third dimension of **Hypothesis 1**, the methodology posited that **deterministic baselines and structured operational queue-based hybrid models would generalize better across terminal layouts than over-parameterized neural networks**, directly demonstrating the asymmetric trade-offs inherent in the single hypothesis.
@@ -106,14 +112,14 @@ The architectural contrast between over-parameterized models and volatility-cond
 
 ## Master Synthesis and Operational Recommendations
 
-**Table 5.4**  
+Table 5.4  
 *Master Multi-Dimensional Model Evaluation and Architecture Trade-Off Matrix*
 
 | Evaluation Criterion | Deterministic Baselines | Probabilistic / ML | Two-Stage Hybrid Framework |
 | :--- | :--- | :--- | :--- |
-| **1. Routine Operational Accuracy** | Moderate ($\text{MASE} = 0.88$) | **SUPERIOR ($\text{MASE} = 0.61$)** | **SUPERIOR ($\text{MASE} = 0.60$)** |
-| **2. Resilience Under Disruption** | Poor ($\text{TTR} = 8.4$ hrs) | Fragile ($R_{\text{MASE}} = 2.14$) | **SUPERIOR ($R_{\text{MASE}} = 1.28$)** |
-| **3. Cross-Airport Transferability** | **SUPERIOR ($\Delta = 8.4\%$)** | Poor ($\Delta = 48.2\%$) | **SUPERIOR ($\Delta = 11.4\%$)** |
+| 1. Routine Operational Accuracy | Moderate ($\text{MASE} = 0.88$) | SUPERIOR ($\text{MASE} = 0.61$) | SUPERIOR ($\text{MASE} = 0.60$) |
+| 2. Resilience Under Disruption | Poor ($\text{TTR} = 8.4$ hrs) | Fragile ($R_{\text{MASE}} = 2.14$) | SUPERIOR ($R_{\text{MASE}} = 1.28$) |
+| 3. Cross-Airport Transferability | SUPERIOR ($\Delta = 8.4\%$) | Poor ($\Delta = 48.2\%$) | SUPERIOR ($\Delta = 11.4\%$) |
 
 ### The Regime-Switched Gated Inference Engine
 To operationalize these empirical findings, the Transportation Security Administration (TSA) and Airport Operations Centers (AOC) should deploy a **Regime-Switched Gated Inference Engine** that dynamically switches between forecasting architectures based on real-time coupled volatility:

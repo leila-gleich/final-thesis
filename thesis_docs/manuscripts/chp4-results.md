@@ -2,6 +2,12 @@
 
 # Results
 
+<style>
+th {
+  font-weight: normal;
+}
+</style>
+
 ## Initial Exploratory Data Analysis
 
 ### Descriptive Statistics
@@ -13,35 +19,35 @@ To construct an empirically rigorous, leak-free predictive modeling architecture
 
 Following conformed extraction, automated entity resolution, data cleaning, and star-schema relational synthesis across conformed dimension keys (*dim_date*, *dim_time_block*, *dim_airport*, *dim_airline*, *dim_aircraft*, *dim_checkpoint*), the nationwide post-ETL analytical warehouse retains **42,062,039 conformed records** across the candidate network of the Top 25 U.S. commercial airfields. Table 4.1 documents the post-ETL data foundation census across all four federal data sources.
 
-**Table 4.1**  
+Table 4.1  
 *Master Post-ETL Multi-Source Data Foundation Census (Full Candidate Commercial Network)*
 
 | Primary Data Feed | Entity Grain | Raw Ingested Rows | Post-ETL Cleaned Rows | Network & Facility Coverage | Conformance & Data Health Status |
 | :--- | :--- | :---: | :---: | :--- | :--- |
-| **TSA FOIA Checkpoint Logs** | Checkpoint-Lane-Hour | 19,500,286 | **6,434,732** | 25 Airfields, 955 Screening Lanes | 100% Non-Null; Zero Orphans; 2.70 Billion Passengers Screened |
-| **BTS On-Time Performance (OTP)** | Flight Departure | 45,777,091 | **13,153,654** | 25 Airfields, 17 Reporting Carriers | 100% Non-Null Dimensions; 13.15 Million Domestic Departures Tracking Delays & Cancels |
-| **BTS Form 41 Schedule T-100** | Carrier-Route-Month | 1,945,451 | **422,096** | 25 Airfields, 18 Operating Carriers | 100% Non-Null Dimensions; 2.09 Billion Departing Seats, 1.70 Billion Passengers |
-| **BTS DB1B / DB1C Ticket Surveys** | Ticket Coupon Itinerary | 12,910,384 | **22,051,557** | Closed 25-Airport City Pairs | 100% Non-Null Dimensions; 22.05 Million Coupon Records (62.16 Million Ticketed Travelers) |
-| **Combined Analytical Warehouse** | Multi-Source Fact Records | **67,222,828** | **42,062,039** | Full 25-Airfield Candidate Network | Comprehensive conformed relational warehouse; 100% referential integrity |
+| TSA FOIA Checkpoint Logs | Checkpoint-Lane-Hour | 19,500,286 | 6,434,732 | 25 Airfields, 955 Screening Lanes | 100% Non-Null; Zero Orphans; 2.70 Billion Passengers Screened |
+| BTS On-Time Performance (OTP) | Flight Departure | 45,777,091 | 13,153,654 | 25 Airfields, 17 Reporting Carriers | 100% Non-Null Dimensions; 13.15 Million Domestic Departures Tracking Delays & Cancels |
+| BTS Form 41 Schedule T-100 | Carrier-Route-Month | 1,945,451 | 422,096 | 25 Airfields, 18 Operating Carriers | 100% Non-Null Dimensions; 2.09 Billion Departing Seats, 1.70 Billion Passengers |
+| BTS DB1B / DB1C Ticket Surveys | Ticket Coupon Itinerary | 12,910,384 | 22,051,557 | Closed 25-Airport City Pairs | 100% Non-Null Dimensions; 22.05 Million Coupon Records (62.16 Million Ticketed Travelers) |
+| Combined Analytical Warehouse | Multi-Source Fact Records | 67,222,828 | 42,062,039 | Full 25-Airfield Candidate Network | Comprehensive conformed relational warehouse; 100% referential integrity |
 
 Table 4.2 presents the master post-ETL descriptive summary statistics for all primary operational variables across the nationwide Top 25 data repository.
 
-**Table 4.2**  
+Table 4.2  
 *Post-ETL Master Summary Descriptive Statistics (Top 25 Cleaned Data Warehouse)*
 
 | Operational Domain | Variable Name | Sample Size ($N$) | Mean | Median | Std Dev | IQR | Min | Max | 5th Pct | 95th Pct |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **TSA Throughput** | Hourly Lane Throughput (pax/hr) | 6,434,732 | 420.17 | 293.00 | 444.84 | 447.00 | 0.00 | 5,336.00 | 10.00 | 1,316.00 |
-| **Flight Delays** | Flight Departure Delay (minutes) | 13,153,654 | 12.70 | -2.00 | 52.75 | 14.00 | -105.00 | 3,695.00 | -10.00 | 83.00 |
-| **Flight Delays** | Significant Delay Rate ($\ge$ 15 min) | 13,153,654 | 20.12% | 0.00% | 40.09% | 0.00% | 0.00% | 100.00% | 0.00% | 100.00% |
-| **Flight Operations** | Flight Cancellation Rate | 13,153,654 | 2.03% | 0.00% | 14.09% | 0.00% | 0.00% | 100.00% | 0.00% | 100.00% |
-| **Flight Operations** | Runway Taxi-Out Queue Time (min) | 13,153,654 | 18.84 | 16.00 | 10.03 | 9.00 | 1.00 | 180.00 | 8.00 | 39.00 |
-| **Flight Operations** | Airborne Flight Duration (min) | 13,153,654 | 141.50 | 126.00 | 75.40 | 92.00 | 15.00 | 720.00 | 45.00 | 310.00 |
-| **Flight Operations** | Scheduled Flight Distance (miles) | 13,153,654 | 1,052.12 | 867.00 | 624.80 | 820.00 | 67.00 | 5,095.00 | 230.00 | 2,550.00 |
-| **Route Capacity** | Available Seats per Route-Month | 422,096 | 4,962.40 | 2,512.00 | 7,019.66 | 5,480.00 | 1.00 | 145,200.00 | 120.00 | 19,200.00 |
-| **Route Capacity** | Transported Pax per Route-Month | 422,096 | 4,030.05 | 1,927.00 | 5,938.42 | 4,380.00 | 0.00 | 128,500.00 | 85.00 | 15,800.00 |
-| **Route Capacity** | Route Load Factor (%) | 422,096 | 81.21% | 83.40% | 11.80% | 12.50% | 0.00% | 100.00% | 58.40% | 94.20% |
-| **Passenger Surveys**| Connecting Passenger Fraction (%) | 22,051,557 | 51.39% | 50.73% | 11.74% | 16.20% | 33.58% | 76.04% | 35.69% | 70.09% |
+| TSA Throughput | Hourly Lane Throughput (pax/hr) | 6,434,732 | 420.17 | 293.00 | 444.84 | 447.00 | 0.00 | 5,336.00 | 10.00 | 1,316.00 |
+| Flight Delays | Flight Departure Delay (minutes) | 13,153,654 | 12.70 | -2.00 | 52.75 | 14.00 | -105.00 | 3,695.00 | -10.00 | 83.00 |
+| Flight Delays | Significant Delay Rate ($\ge$ 15 min) | 13,153,654 | 20.12% | 0.00% | 40.09% | 0.00% | 0.00% | 100.00% | 0.00% | 100.00% |
+| Flight Operations | Flight Cancellation Rate | 13,153,654 | 2.03% | 0.00% | 14.09% | 0.00% | 0.00% | 100.00% | 0.00% | 100.00% |
+| Flight Operations | Runway Taxi-Out Queue Time (min) | 13,153,654 | 18.84 | 16.00 | 10.03 | 9.00 | 1.00 | 180.00 | 8.00 | 39.00 |
+| Flight Operations | Airborne Flight Duration (min) | 13,153,654 | 141.50 | 126.00 | 75.40 | 92.00 | 15.00 | 720.00 | 45.00 | 310.00 |
+| Flight Operations | Scheduled Flight Distance (miles) | 13,153,654 | 1,052.12 | 867.00 | 624.80 | 820.00 | 67.00 | 5,095.00 | 230.00 | 2,550.00 |
+| Route Capacity | Available Seats per Route-Month | 422,096 | 4,962.40 | 2,512.00 | 7,019.66 | 5,480.00 | 1.00 | 145,200.00 | 120.00 | 19,200.00 |
+| Route Capacity | Transported Pax per Route-Month | 422,096 | 4,030.05 | 1,927.00 | 5,938.42 | 4,380.00 | 0.00 | 128,500.00 | 85.00 | 15,800.00 |
+| Route Capacity | Route Load Factor (%) | 422,096 | 81.21% | 83.40% | 11.80% | 12.50% | 0.00% | 100.00% | 58.40% | 94.20% |
+| Passenger Surveys| Connecting Passenger Fraction (%) | 22,051,557 | 51.39% | 50.73% | 11.74% | 16.20% | 33.58% | 76.04% | 35.69% | 70.09% |
 
 At the macro network level, the 25 candidate airfields processed an annual mean of 192,160 scheduled commercial domestic departures ($\sigma = 69,376$; median = 177,182), ranging from 95,849 departures at Washington Dulles (IAD) to 360,571 departures at Chicago O'Hare (ORD). Systemwide passenger screening throughput averaged 68.50 million passengers per airfield annually ($\sigma = 27.76\text{M}$; median = 66.01M), with Charlotte Douglas (CLT) recording 28.17 million passengers and Los Angeles International (LAX) processing 129.07 million passengers across the multi-year study period.
 
@@ -56,19 +62,19 @@ A core methodological requirement of this thesis is that **defining temporal bou
 #### Post-Pandemic Regime Selection and Structural Break Analysis.
 The seven-year dataset captures two unprecedented macroeconomic disruptions: the COVID-19 pandemic demand collapse (2020–2021) and the post-pandemic operational rebound (2022–2025). To identify the point at which commercial aviation resumed structural equilibrium, rolling Welch's $t$-tests, Cumulative Sum (CUSUM) structural break tests, and longitudinal correlation metrics were computed across the Top 25 airfields. Table 4.3a contrasts the candidate temporal demarcation baselines.
 
-**Table 4.3a**  
+Table 4.3a  
 *Post-Pandemic Temporal Demarcation Evaluation Across the Top 25 Network*
 
 | Evaluation Criteria | Candidate A: Mature Post-Pandemic | Candidate B: Early Post-Mask Regime *(Selected)* |
 | :--- | :--- | :--- |
-| **Start Date** | January 1, 2023 | **May 1, 2022 (RECOMMENDED)** |
-| **Statistical Demarcation Rationale** | Rolling Welch's $t$-test variance convergence | CUSUM structural break stabilization; Mask Mandate Repeal |
-| **Training Span** | 24 Months (2023-01 to 2024-12) | **32 Months (2022-05 to 2024-12; 20 mo train / 12 mo val)** |
-| **Holdout Test Span** | 12 Months (2025 Full-Year Holdout) | **12 Months (2025 Full-Year Holdout)** |
-| **Robustness Impact** | Excellent baseline stability; limited historical depth | **Superior: Captures two complete annual seasonal cycles** |
-| **Resilience Impact** | Misses Winter Storm Elliott (Dec 2022) | **Superior: Encapsulates severe winter freeze and summer storms** |
-| **Generalizability Impact** | Narrower training variance across spoke airfields | **Superior: 404,324 candidate multi-facility hourly records** |
-| **Coupling Rebound ($R^2$)** | $R^2 = 0.323$ (Macro scheduled-to-TSA daily) | **$R^2$ rebounds from 0.368 (COVID) to 0.306–0.323 (Equilibrium)** |
+| Start Date | January 1, 2023 | May 1, 2022 (RECOMMENDED) |
+| Statistical Demarcation Rationale | Rolling Welch's $t$-test variance convergence | CUSUM structural break stabilization; Mask Mandate Repeal |
+| Training Span | 24 Months (2023-01 to 2024-12) | 32 Months (2022-05 to 2024-12; 20 mo train / 12 mo val) |
+| Holdout Test Span | 12 Months (2025 Full-Year Holdout) | 12 Months (2025 Full-Year Holdout) |
+| Robustness Impact | Excellent baseline stability; limited historical depth | Superior: Captures two complete annual seasonal cycles |
+| Resilience Impact | Misses Winter Storm Elliott (Dec 2022) | Superior: Encapsulates severe winter freeze and summer storms |
+| Generalizability Impact | Narrower training variance across spoke airfields | Superior: 404,324 candidate multi-facility hourly records |
+| Coupling Rebound ($R^2$) | $R^2 = 0.323$ (Macro scheduled-to-TSA daily) | $R^2$ rebounds from 0.368 (COVID) to 0.306–0.323 (Equilibrium) |
 
 Structural break tests confirmed **May 1, 2022** as the optimal demarcation point for empirical model development:
 1. **Federal Transit Mask Mandate Repeal**: The nationwide vacatur of federal transit mask requirements on April 18, 2022 restored unconstrained business and leisure travel behavior. By May 1, 2022, load factors recovered to 84.7%, matching pre-pandemic baselines.
@@ -82,15 +88,15 @@ Just as temporal boundaries must be established on the complete Top 25 network, 
 Airport operational stress is not uniform across the calendar year. By analyzing daily within-day passenger arrival coefficient of variation ($CV_{\text{TSA}}$) alongside flight departure delay dispersion ($\sigma_{\text{Delay}}$) across 1,341 post-demarcation days across the Top 25 network, four distinct annual volatility regimes were established (Table 4.3b). The Coupled Volatility Index is defined as:
 $$\text{CVI} = CV_{\text{TSA}} \times \sigma_{\text{Delay}}$$
 
-**Table 4.3b**  
+Table 4.3b  
 *Master Annual Seasonal Volatility Regimes Summary (Top 25 Airfields)*
 
 | Seasonal Regime | Operational Regime Description | Calendar Days ($N$) | Share of Days (%) | Mean Daily TSA (Pax) | Within-Day TSA $CV$ | Delay Dispersion ($\sigma_{\text{Delay}}$) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed $\ge 15$m (%) | Cancellation Rate (%) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **1_OFF_PEAK** | Winter Lull & Mid-Autumn Shoulder | 500 | 37.3% | 1,123,386 | 0.605 | 46.09 min | **27.85** | 9.85 min | 18.00% | 0.89% |
-| **2_MID_PEAK** | Spring Ramps & Late-Summer Shoulder | 426 | 31.8% | 1,187,095 | 0.589 | 55.06 min | **32.38** | 15.14 min | 23.23% | 1.36% |
-| **3_PEAK** | Summer Severe Weather & Convective Surge | 224 | 16.7% | 1,305,968 | 0.576 | 68.43 min | **39.36** | 24.17 min | 31.04% | 3.16% |
-| **4_HOLIDAY** | National Holiday Travel Corridors | 191 | 14.2% | 1,215,636 | 0.597 | 55.78 min | **33.07** | 16.51 min | 24.33% | 1.82% |
+| 1_OFF_PEAK | Winter Lull & Mid-Autumn Shoulder | 500 | 37.3% | 1,123,386 | 0.605 | 46.09 min | 27.85 | 9.85 min | 18.00% | 0.89% |
+| 2_MID_PEAK | Spring Ramps & Late-Summer Shoulder | 426 | 31.8% | 1,187,095 | 0.589 | 55.06 min | 32.38 | 15.14 min | 23.23% | 1.36% |
+| 3_PEAK | Summer Severe Weather & Convective Surge | 224 | 16.7% | 1,305,968 | 0.576 | 68.43 min | 39.36 | 24.17 min | 31.04% | 3.16% |
+| 4_HOLIDAY | National Holiday Travel Corridors | 191 | 14.2% | 1,215,636 | 0.597 | 55.78 min | 33.07 | 16.51 min | 24.33% | 1.82% |
 
 Across the annual calendar, delay dispersion ($\sigma_{\text{Delay}}$) expands monotonically from 46.09 minutes during the winter lull to 68.43 minutes during the summer peak (+48.5% dispersion expansion), driving the Coupled Volatility Index from 27.85 to 39.36 (+41.3%), while flight cancellation rates more than triple from 0.89% to 3.16%.
 
@@ -100,18 +106,18 @@ Weekly commercial aviation movements follow structural cycles dictated by corpor
 2. **Outbound Corporate Surge (Monday & Thursday)**: Mondays experience the highest within-day TSA arrival volatility across the entire week ($CV = 0.604$, Coupled Volatility Index = $34.00$), driven by concentrated early-morning business traveler screening banks.
 3. **Leisure Return Delay Propagation (Sunday)**: Sundays exhibit the most severe network-wide delay cascades, generating the highest mean departure delay ($17.78\text{ min}$), the highest delay dispersion ($\sigma_{\text{Delay}} = 58.07\text{ min}$), and the highest rate of flights delayed $\ge 15$ minutes ($25.60\%$).
 
-**Table 4.4a**  
+Table 4.4a  
 *Day-of-Week Volatility Dynamics and Operational Archetypes (Top 25 Airfields)*
 
 | Day of Week | DOW Name | Operational Volatility Archetype | Study Days ($N$) | Mean Daily TSA (Pax) | Within-Day TSA $CV$ | Delay Dispersion ($\sigma_{\text{Delay}}$) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed $\ge 15$m (%) |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **1** | Monday | Outbound Business Surge & High Screening Volatility | 192 | 1,246,150 | **0.604** | 56.56 min | **34.00** | 15.78 min | 23.54% |
-| **2** | Tuesday | Midweek Operational Reset (Low Turbulence) | 192 | 1,076,625 | 0.601 | **50.09 min** | **29.99** | 11.69 min | 19.44% |
-| **3** | Wednesday | Midweek Baseline Stability (Minimum Volatility) | 192 | 1,123,368 | 0.594 | **49.27 min** | **29.13** | 12.22 min | 20.05% |
-| **4** | Thursday | Corporate Outbound & Early Weekend Ramp | 191 | 1,254,744 | 0.589 | 54.65 min | 31.96 | 15.39 min | 23.35% |
-| **5** | Friday | Combined Business & Weekend Getaway Surge | 191 | 1,241,359 | 0.592 | 55.58 min | 32.77 | 16.61 min | 24.76% |
-| **6** | Saturday | Volume Trough & Fleet Repositioning | 191 | 1,089,699 | 0.602 | 54.16 min | 32.45 | 14.64 min | 22.47% |
-| **7** | Sunday | Leisure Return Peak & Evening Delay Propagation | 192 | 1,279,017 | 0.577 | **58.07 min** | **33.40** | **17.78 min** | **25.60%** |
+| 1 | Monday | Outbound Business Surge & High Screening Volatility | 192 | 1,246,150 | 0.604 | 56.56 min | 34.00 | 15.78 min | 23.54% |
+| 2 | Tuesday | Midweek Operational Reset (Low Turbulence) | 192 | 1,076,625 | 0.601 | 50.09 min | 29.99 | 11.69 min | 19.44% |
+| 3 | Wednesday | Midweek Baseline Stability (Minimum Volatility) | 192 | 1,123,368 | 0.594 | 49.27 min | 29.13 | 12.22 min | 20.05% |
+| 4 | Thursday | Corporate Outbound & Early Weekend Ramp | 191 | 1,254,744 | 0.589 | 54.65 min | 31.96 | 15.39 min | 23.35% |
+| 5 | Friday | Combined Business & Weekend Getaway Surge | 191 | 1,241,359 | 0.592 | 55.58 min | 32.77 | 16.61 min | 24.76% |
+| 6 | Saturday | Volume Trough & Fleet Repositioning | 191 | 1,089,699 | 0.602 | 54.16 min | 32.45 | 14.64 min | 22.47% |
+| 7 | Sunday | Leisure Return Peak & Evening Delay Propagation | 192 | 1,279,017 | 0.577 | 58.07 min | 33.40 | 17.78 min | 25.60% |
 
 #### Diurnal Non-Consecutive Dual Turbulence Peaks.
 Rather than dividing the 24 hours of each operational day into arbitrary consecutive time blocks, diurnal hours were categorized by the Operational Turbulence Shock Index ($T(h)$), which evaluates passenger screening surge volatility and flight departure delay dispersion:
@@ -126,23 +132,23 @@ The cross-classification of the 4 annual seasonal regimes ($\mathcal{S}$), 7 day
 ### TSA and OTP Throughput Data
 Evaluating the statistical relationships between TSA checkpoint throughput and Bureau of Transportation Statistics On-Time Performance data across all Top 25 airfields reveals fundamental econometric dynamics. Table 4.5 synthesizes the master cross-dataset econometric correlations.
 
-**Table 4.5**  
+Table 4.5  
 *Master Cross-Dataset Econometric Relationships (Top 25 Airfields)*
 
 | Relationship Category | Metric 1 (OTP / Capacity) | Metric 2 (TSA Demand / Queue) | Sample Grain | Pearson $r$ | $R^2$ (%) | $t$-statistic | $p$-value | Operational Significance & Interpretation |
 | :--- | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Volume Coupling** | Raw Scheduled Flight Departures | Total TSA Checkpoint Throughput | Top 25 Airfields | 0.4572 | 20.90% | 2.47 | $< 0.05$ | Modest linear coupling; scheduled flights alone explain only 20.9% of checkpoint passenger variance due to connecting passenger volume. |
-| **Connecting Deflation** | Raw Scheduled Flight Departures | True Local Originating TSA Demand | Top 25 Airfields | **0.6704** | **44.94%** | 4.33 | $< 0.001$ | Strong linear coupling; removing connecting transfers via DB1B ticket surveys increases explained variance by +115% (from 20.9% to 44.9%). |
-| **Hub Scale vs. Connecting**| Connecting Passenger Ratio (%) | Scheduled Flight Volume | Top 25 Airfields | 0.4503 | 20.28% | 2.42 | $< 0.05$ | Hub scale effect; larger airline hub operations inherently possess higher connecting passenger fractions (e.g., CLT 76.0%, ATL 70.1%). |
-| **Surface Queue Feedback** | Runway Taxi-Out Queue Time (min) | Total TSA Checkpoint Throughput | Top 25 Airfields | 0.2867 | 8.22% | 1.44 | $0.163$ | Directional trend; airports processing higher passenger volumes with larger aircraft experience longer tarmac taxi queues. |
-| **Surface-to-Air Feedback** | Mean Flight Departure Delay (min) | Runway Taxi-Out Queue Time (min) | 63,925 Airport-Days | **0.4971** | **24.71%** | 2.74 | $< 0.001$ | Delayed gate pushbacks compress outbound aircraft into congested runway sequencing queues. |
-| **Schedule Delay Coupling** | Significant Delays (DepDel15 %) | Total TSA Checkpoint Throughput | Top 25 Airfields | 0.2019 | 4.08% | 0.99 | $0.332$ | Weak coupling; flight delay rates are primarily governed by convective weather and ATC ground delay programs rather than landside volume. |
-| **Hourly Volatility Transmission** | Hourly TSA Throughput Volatility ($CV$) | Flight Departure Delay Volatility ($CV$) | Top 25 Airfields | **0.4375** | **19.14%** | 2.33 | $< 0.05$ | Direct operational coupling; spiky passenger arrivals at checkpoints inject variance into boarding gate closures and pushback times. |
-| **Daily Volatility Coupling** | Daily TSA Throughput Volatility ($CV$) | Flight Departure Delay Volatility ($CV$) | Top 25 Airfields | 0.3714 | 13.79% | 1.92 | $0.067$ | Day-to-day checkpoint throughput dispersion tracks daily flight departure delay dispersion across the network. |
-| **Surge vs. Delay Volatility** | Hourly TSA Peak-to-Median Surge Ratio | Flight Departure Delay Volatility ($CV$) | Top 25 Airfields | 0.3480 | 12.11% | 1.78 | $0.088$ | Airfields with sharp peak-to-median checkpoint rushes experience heightened schedule volatility. |
-| **Weekly Cyclical Coupling** | Day-of-Week Mean Daily TSA Pax | Day-of-Week Mean Departure Delay (min) | 7 Days ($N=7$) | **0.9022** | **81.40%** | 4.68 | $< 0.01$ | Deterministic weekly cadence; weekly passenger surge days (Sunday/Monday) explain 81.4% of weekly departure delay variance. |
-| **Weekly Delay Rate Coupling**| Day-of-Week Mean Daily TSA Pax | Day-of-Week DepDel15 Rate (%) | 7 Days ($N=7$) | **0.9000** | **81.00%** | 4.62 | $< 0.01$ | Weekly passenger volume peaks directly produce the week's highest flight delay rates (Sunday DepDel15 = 20.55%). |
-| **Annual Monthly Coupling** | Monthly Mean Daily TSA Pax | Monthly Mean Departure Delay (min) | 12 Months ($N=12$) | **0.6313** | **39.85%** | 2.57 | $< 0.05$ | Summer peak alignment; summer passenger surges coincide with peak convective thunderstorm delays in June and July. |
+| Volume Coupling | Raw Scheduled Flight Departures | Total TSA Checkpoint Throughput | Top 25 Airfields | 0.4572 | 20.90% | 2.47 | $< 0.05$ | Modest linear coupling; scheduled flights alone explain only 20.9% of checkpoint passenger variance due to connecting passenger volume. |
+| Connecting Deflation | Raw Scheduled Flight Departures | True Local Originating TSA Demand | Top 25 Airfields | 0.6704 | 44.94% | 4.33 | $< 0.001$ | Strong linear coupling; removing connecting transfers via DB1B ticket surveys increases explained variance by +115% (from 20.9% to 44.9%). |
+| Hub Scale vs. Connecting| Connecting Passenger Ratio (%) | Scheduled Flight Volume | Top 25 Airfields | 0.4503 | 20.28% | 2.42 | $< 0.05$ | Hub scale effect; larger airline hub operations inherently possess higher connecting passenger fractions (e.g., CLT 76.0%, ATL 70.1%). |
+| Surface Queue Feedback | Runway Taxi-Out Queue Time (min) | Total TSA Checkpoint Throughput | Top 25 Airfields | 0.2867 | 8.22% | 1.44 | $0.163$ | Directional trend; airports processing higher passenger volumes with larger aircraft experience longer tarmac taxi queues. |
+| Surface-to-Air Feedback | Mean Flight Departure Delay (min) | Runway Taxi-Out Queue Time (min) | 63,925 Airport-Days | 0.4971 | 24.71% | 2.74 | $< 0.001$ | Delayed gate pushbacks compress outbound aircraft into congested runway sequencing queues. |
+| Schedule Delay Coupling | Significant Delays (DepDel15 %) | Total TSA Checkpoint Throughput | Top 25 Airfields | 0.2019 | 4.08% | 0.99 | $0.332$ | Weak coupling; flight delay rates are primarily governed by convective weather and ATC ground delay programs rather than landside volume. |
+| Hourly Volatility Transmission | Hourly TSA Throughput Volatility ($CV$) | Flight Departure Delay Volatility ($CV$) | Top 25 Airfields | 0.4375 | 19.14% | 2.33 | $< 0.05$ | Direct operational coupling; spiky passenger arrivals at checkpoints inject variance into boarding gate closures and pushback times. |
+| Daily Volatility Coupling | Daily TSA Throughput Volatility ($CV$) | Flight Departure Delay Volatility ($CV$) | Top 25 Airfields | 0.3714 | 13.79% | 1.92 | $0.067$ | Day-to-day checkpoint throughput dispersion tracks daily flight departure delay dispersion across the network. |
+| Surge vs. Delay Volatility | Hourly TSA Peak-to-Median Surge Ratio | Flight Departure Delay Volatility ($CV$) | Top 25 Airfields | 0.3480 | 12.11% | 1.78 | $0.088$ | Airfields with sharp peak-to-median checkpoint rushes experience heightened schedule volatility. |
+| Weekly Cyclical Coupling | Day-of-Week Mean Daily TSA Pax | Day-of-Week Mean Departure Delay (min) | 7 Days ($N=7$) | 0.9022 | 81.40% | 4.68 | $< 0.01$ | Deterministic weekly cadence; weekly passenger surge days (Sunday/Monday) explain 81.4% of weekly departure delay variance. |
+| Weekly Delay Rate Coupling| Day-of-Week Mean Daily TSA Pax | Day-of-Week DepDel15 Rate (%) | 7 Days ($N=7$) | 0.9000 | 81.00% | 4.62 | $< 0.01$ | Weekly passenger volume peaks directly produce the week's highest flight delay rates (Sunday DepDel15 = 20.55%). |
+| Annual Monthly Coupling | Monthly Mean Daily TSA Pax | Monthly Mean Departure Delay (min) | 12 Months ($N=12$) | 0.6313 | 39.85% | 2.57 | $< 0.05$ | Summer peak alignment; summer passenger surges coincide with peak convective thunderstorm delays in June and July. |
 
 Two overarching empirical insights emerge from Table 4.5:
 1. **The Hub Disconnect**: Raw scheduled flight departures explain only 20.90% ($R^2$) of TSA security checkpoint passenger throughput across the Top 25 network ($r = 0.4572, p < 0.05$). However, when departing seats are deflated using BTS DB1B connecting ratios to isolate true local originating passengers, explained variance jumps to **44.94%** ($r = 0.6704, p < 0.001$), an increase of +115%. At major connecting hubs such as Charlotte (CLT) and Atlanta (ATL), up to 70% to 76% of passengers transfer between gates airside without entering landside security queues. Failing to account for connecting ratios creates a 2.5-fold distortion in checkpoint demand modeling.
@@ -190,20 +196,20 @@ The four sequential filtering stages of this pipeline progress as follows:
 ### Pipeline Results
 The filtering pipeline isolated 9 commercial airfields representing 12 carrier-exclusive screening environments, achieving complete factorial balance across legacy airlines and operational clusters. Table 4.6 details the experimental cohort.
 
-**Table 4.6**  
+Table 4.6  
 *The Nine-Airport Experimental Cohort Factorial Specification*
 
 | Airport Code | Airport Name | Dominant Legacy Carrier | Carrier Hub Role | Dedicated Terminal Screening Complex | Cluster Archetype | Strategic Justification & Selection Rationale |
 | :---: | :--- | :---: | :--- | :--- | :--- | :--- |
-| **BOS** | Boston Logan | DL / AA | Dual Focus Station | Terminal A (DL) & Terminal B (AA) | Cluster 1: High-Density O&D Focus | Unconfounded Northeast high-yield O&D demand; physically separate terminal finger piers. |
-| **DFW** | Dallas/Fort Worth | AA | Primary Fortress Hub | Terminal D Screening Complex | Cluster 0: Mega-Connecting Gateway | American Airlines primary mega-connecting fortress hub; high gauge international operations. |
-| **DTW** | Detroit Metro | DL | Primary Fortress Hub | McNamara Terminal Complex | Cluster 2: High-Reliability Fortress | Delta primary Midwest fortress hub; world-class operational fluidity and high connecting ratio. |
-| **EWR** | Newark Liberty | UA | Primary Fortress Hub | Terminal C Screening Complex | Cluster 3: Congested Coastal Originator | United primary East Coast fortress hub; severe New York airspace slot congestion. |
-| **IAH** | Houston Bush | UA | Primary Fortress Hub | Terminal C Screening Complex | Cluster 1: High-Density O&D Focus | United southern hub; balanced energy sector business O&D travel and Latin American connecting banks. |
-| **LAX** | Los Angeles World | DL / AA / UA | Tri-Carrier Parity Hub | Terminals 2/3 (DL), 4 (AA), 7 (UA) | Cluster 0: Mega-Connecting Gateway | Massive transpacific and transcontinental origin-destination demand across all three legacy carriers. |
-| **LGA** | New York LaGuardia | DL | Primary Fortress Hub | Terminal C Screening Complex | Cluster 3: Congested Coastal Originator | Consolidated Delta Terminal C (opened June 2022); perimeter rule market and pure O&D flows. |
-| **ORD** | Chicago O'Hare | UA / AA | Dual Fortress Hub | Terminal 1 (UA) & Terminal 3 (AA) | Cluster 0: Mega-Connecting Gateway | Intense head-to-head legacy carrier competition; dual hub bank synchronization. |
-| **PHL** | Philadelphia Intl | AA | Primary Fortress Hub | Terminals B & C Complexes | Cluster 2: High-Reliability Fortress | American Mid-Atlantic transatlantic hub; counterpart to Delta's Midwestern fortress at DTW. |
+| BOS | Boston Logan | DL / AA | Dual Focus Station | Terminal A (DL) & Terminal B (AA) | Cluster 1: High-Density O&D Focus | Unconfounded Northeast high-yield O&D demand; physically separate terminal finger piers. |
+| DFW | Dallas/Fort Worth | AA | Primary Fortress Hub | Terminal D Screening Complex | Cluster 0: Mega-Connecting Gateway | American Airlines primary mega-connecting fortress hub; high gauge international operations. |
+| DTW | Detroit Metro | DL | Primary Fortress Hub | McNamara Terminal Complex | Cluster 2: High-Reliability Fortress | Delta primary Midwest fortress hub; world-class operational fluidity and high connecting ratio. |
+| EWR | Newark Liberty | UA | Primary Fortress Hub | Terminal C Screening Complex | Cluster 3: Congested Coastal Originator | United primary East Coast fortress hub; severe New York airspace slot congestion. |
+| IAH | Houston Bush | UA | Primary Fortress Hub | Terminal C Screening Complex | Cluster 1: High-Density O&D Focus | United southern hub; balanced energy sector business O&D travel and Latin American connecting banks. |
+| LAX | Los Angeles World | DL / AA / UA | Tri-Carrier Parity Hub | Terminals 2/3 (DL), 4 (AA), 7 (UA) | Cluster 0: Mega-Connecting Gateway | Massive transpacific and transcontinental origin-destination demand across all three legacy carriers. |
+| LGA | New York LaGuardia | DL | Primary Fortress Hub | Terminal C Screening Complex | Cluster 3: Congested Coastal Originator | Consolidated Delta Terminal C (opened June 2022); perimeter rule market and pure O&D flows. |
+| ORD | Chicago O'Hare | UA / AA | Dual Fortress Hub | Terminal 1 (UA) & Terminal 3 (AA) | Cluster 0: Mega-Connecting Gateway | Intense head-to-head legacy carrier competition; dual hub bank synchronization. |
+| PHL | Philadelphia Intl | AA | Primary Fortress Hub | Terminals B & C Complexes | Cluster 2: High-Reliability Fortress | American Mid-Atlantic transatlantic hub; counterpart to Delta's Midwestern fortress at DTW. |
 
 #### Key Airport Selection Contrasts.
 * **LGA vs. JFK Selection**: United Airlines permanently ceased operations at JFK in October 2022 (failing Meso multi-carrier continuity). In contrast, LGA opened Delta's state-of-the-art consolidated Terminal C in June 2022, providing unconfounded screening lanes with 100% carrier exclusivity.
@@ -220,27 +226,27 @@ To mathematically verify that dedicated checkpoints isolate single-carrier deman
 
 Table 4.7 presents the descriptive summary statistics for the nine-airport experimental cohort compared against the Top 25 candidate universe.
 
-**Table 4.7**  
+Table 4.7  
 *Summary Descriptive Statistics: Nine-Airport Experimental Cohort Versus Top 25 Universe*
 
 | Metric Category | Operational Metric | Unit | 9-Airport Mean | 9-Airport Std Dev | 9-Airport Median | 9-Airport Min (Airport) | 9-Airport Max (Airport) | Top 25 Mean | Delta (%) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **BTS OTP Operations** | Scheduled Domestic Flights | flights | 224,576 | 78,441 | 206,024 | 138,372 (PHL) | 360,571 (ORD) | 192,160 | +16.9% |
-| **BTS OTP Operations** | Cancelled Flights | flights | 3,623 | 1,599 | 2,920 | 1,777 (DTW) | 6,515 (DFW) | 2,738 | +32.3% |
-| **BTS OTP Operations** | Flight Cancellation Rate | % | 1.63% | 0.50% | 1.47% | 0.99% (LAX) | 2.46% (LGA) | 1.43% | +14.1% |
-| **BTS OTP Delays** | Average Departure Delay | min | 15.23 | 2.75 | 15.65 | 11.55 (DTW) | 19.85 (DFW) | 14.21 | +7.2% |
-| **BTS OTP Delays** | Significant Delay Rate ($\ge$ 15m) | % | 21.42% | 3.30% | 20.14% | 17.93% (LAX) | 28.07% (DFW) | 20.31% | +5.5% |
-| **BTS OTP Delays** | Runway Taxi-Out Queue Time | min | 20.59 | 2.58 | 20.35 | 16.96 (DTW) | 24.67 (EWR) | 19.69 | +4.5% |
-| **TSA Checkpoint** | Total Passenger Throughput | pax | 71,145,628 | 27,465,238 | 63,720,916 | 40,429,531 (PHL) | 129,069,341 (LAX) | 68,495,531 | +3.9% |
-| **TSA Checkpoint** | Average Daily Passenger Count | pax/day | 53,075 | 20,473 | 47,553 | 30,171 (PHL) | 96,249 (LAX) | 51,138 | +3.8% |
-| **TSA Checkpoint** | Average Hourly Passenger Count | pax/hr | 418.53 | 157.02 | 388.40 | 239.60 (ORD) | 662.40 (LGA) | 540.34 | -22.5% |
-| **TSA Checkpoint** | Peak Single-Hour Checkpoint Rush | pax/hr | 2,673 | 881 | 2,654 | 1,385 (DTW) | 4,020 (EWR) | 2,784 | -4.0% |
-| **TSA Checkpoint** | Demand Volatility ($CV_{\text{TSA}}$) | ratio | 0.8728 | 0.2000 | 0.9064 | 0.6488 (BOS) | 1.1240 (LGA) | 0.8250 | +5.8% |
-| **BTS DB1B Surveys** | Connecting Passenger Share | % | 47.45% | 10.98% | 44.41% | 33.58% (EWR) | 66.32% (DFW) | 51.39% | -7.7% |
-| **BTS DB1B Surveys** | Local Originating Passenger Share | % | 52.55% | 10.98% | 55.59% | 33.68% (DFW) | 66.42% (EWR) | 48.61% | +8.1% |
-| **BTS DB1B Surveys** | True Local Originating TSA Demand | pax | 16,376,561 | 5,167,458 | 15,995,278 | 10,555,299 (DTW) | 26,293,897 (LAX) | 13,103,484 | +25.0% |
-| **T-100 Aircraft Gauge** | Seating Capacity per Flight | seats | 168.42 | 7.49 | 168.00 | 154.20 (LGA) | 182.30 (LAX) | 171.10 | -1.6% |
-| **T-100 Load Factor** | Route Passenger Load Factor | % | 85.08% | 0.82% | 85.26% | 83.85% (DTW) | 86.12% (EWR) | 84.73% | +0.4% |
+| BTS OTP Operations | Scheduled Domestic Flights | flights | 224,576 | 78,441 | 206,024 | 138,372 (PHL) | 360,571 (ORD) | 192,160 | +16.9% |
+| BTS OTP Operations | Cancelled Flights | flights | 3,623 | 1,599 | 2,920 | 1,777 (DTW) | 6,515 (DFW) | 2,738 | +32.3% |
+| BTS OTP Operations | Flight Cancellation Rate | % | 1.63% | 0.50% | 1.47% | 0.99% (LAX) | 2.46% (LGA) | 1.43% | +14.1% |
+| BTS OTP Delays | Average Departure Delay | min | 15.23 | 2.75 | 15.65 | 11.55 (DTW) | 19.85 (DFW) | 14.21 | +7.2% |
+| BTS OTP Delays | Significant Delay Rate ($\ge$ 15m) | % | 21.42% | 3.30% | 20.14% | 17.93% (LAX) | 28.07% (DFW) | 20.31% | +5.5% |
+| BTS OTP Delays | Runway Taxi-Out Queue Time | min | 20.59 | 2.58 | 20.35 | 16.96 (DTW) | 24.67 (EWR) | 19.69 | +4.5% |
+| TSA Checkpoint | Total Passenger Throughput | pax | 71,145,628 | 27,465,238 | 63,720,916 | 40,429,531 (PHL) | 129,069,341 (LAX) | 68,495,531 | +3.9% |
+| TSA Checkpoint | Average Daily Passenger Count | pax/day | 53,075 | 20,473 | 47,553 | 30,171 (PHL) | 96,249 (LAX) | 51,138 | +3.8% |
+| TSA Checkpoint | Average Hourly Passenger Count | pax/hr | 418.53 | 157.02 | 388.40 | 239.60 (ORD) | 662.40 (LGA) | 540.34 | -22.5% |
+| TSA Checkpoint | Peak Single-Hour Checkpoint Rush | pax/hr | 2,673 | 881 | 2,654 | 1,385 (DTW) | 4,020 (EWR) | 2,784 | -4.0% |
+| TSA Checkpoint | Demand Volatility ($CV_{\text{TSA}}$) | ratio | 0.8728 | 0.2000 | 0.9064 | 0.6488 (BOS) | 1.1240 (LGA) | 0.8250 | +5.8% |
+| BTS DB1B Surveys | Connecting Passenger Share | % | 47.45% | 10.98% | 44.41% | 33.58% (EWR) | 66.32% (DFW) | 51.39% | -7.7% |
+| BTS DB1B Surveys | Local Originating Passenger Share | % | 52.55% | 10.98% | 55.59% | 33.68% (DFW) | 66.42% (EWR) | 48.61% | +8.1% |
+| BTS DB1B Surveys | True Local Originating TSA Demand | pax | 16,376,561 | 5,167,458 | 15,995,278 | 10,555,299 (DTW) | 26,293,897 (LAX) | 13,103,484 | +25.0% |
+| T-100 Aircraft Gauge | Seating Capacity per Flight | seats | 168.42 | 7.49 | 168.00 | 154.20 (LGA) | 182.30 (LAX) | 171.10 | -1.6% |
+| T-100 Load Factor | Route Passenger Load Factor | % | 85.08% | 0.82% | 85.26% | 83.85% (DTW) | 86.12% (EWR) | 84.73% | +0.4% |
 
 Compared to the broader Top 25 network, the 9-airport cohort exhibits:
 * **Higher Flight Movement Density**: Scheduled flights are +16.9% higher (224,576 vs. 192,160), ensuring screening checkpoints operate under heavy, bank-synchronized arrival loads.
@@ -251,20 +257,20 @@ Compared to the broader Top 25 network, the 9-airport cohort exhibits:
 
 While seasonal and day-of-week baselines were established across the Top 25 network, the nine selected airfields display distinct local seasonal and weekly profiles reflecting their traffic composition and cluster archetype. Table 4.8 reports the day-of-week passenger throughput distribution across the nine airports.
 
-**Table 4.8**  
+Table 4.8  
 *Day-of-Week Mean Daily Passenger Throughput Across the Nine Selected Airports*
 
 | Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday | Weekly Peak Day | Weekly Trough Day | Peak/Trough Ratio | Dominant Demand Profile |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **BOS** | 48,480 | 42,606 | 45,175 | 50,464 | **52,244** | 44,552 | 49,359 | Friday | Tuesday | 1.23 | Business & Weekend Getaway |
-| **DFW** | 69,808 | 60,600 | 65,285 | 73,310 | **73,625** | 60,733 | 68,963 | Friday | Tuesday | 1.21 | Connecting Bank Synchronization |
-| **DTW** | 35,584 | 30,783 | 32,827 | 37,627 | **37,871** | 30,782 | 36,037 | Friday | Saturday | 1.23 | Midwest Corporate & Connecting |
-| **EWR** | 66,949 | 60,812 | 63,989 | 68,765 | **69,206** | 61,039 | 67,550 | Friday | Tuesday | 1.14 | Coastal Business & Leisure |
-| **IAH** | 52,107 | 45,585 | 47,757 | **53,351** | 50,946 | 42,177 | 52,646 | Thursday | Saturday | 1.26 | Energy Sector Corporate Travel |
-| **LAX** | 99,048 | 87,693 | 92,361 | 100,603 | 101,502 | 89,502 | **103,045** | Sunday | Tuesday | 1.18 | Transcontinental Leisure & Long-Haul |
-| **LGA** | **49,002** | 42,740 | 44,229 | 47,045 | 21,310 | 24,619 | 48,000 | Monday | Friday | **2.30** | Pure Corporate Outbound Profile |
-| **ORD** | 49,381 | 43,406 | 45,713 | **50,706** | 50,620 | 42,697 | 49,468 | Thursday | Saturday | 1.19 | Dual Hub Synchronized Banks |
-| **PHL** | 31,519 | 26,716 | 28,626 | 32,740 | **32,812** | 27,675 | 31,112 | Friday | Tuesday | 1.23 | Mid-Atlantic Fortress Outbound |
+| BOS | 48,480 | 42,606 | 45,175 | 50,464 | 52,244 | 44,552 | 49,359 | Friday | Tuesday | 1.23 | Business & Weekend Getaway |
+| DFW | 69,808 | 60,600 | 65,285 | 73,310 | 73,625 | 60,733 | 68,963 | Friday | Tuesday | 1.21 | Connecting Bank Synchronization |
+| DTW | 35,584 | 30,783 | 32,827 | 37,627 | 37,871 | 30,782 | 36,037 | Friday | Saturday | 1.23 | Midwest Corporate & Connecting |
+| EWR | 66,949 | 60,812 | 63,989 | 68,765 | 69,206 | 61,039 | 67,550 | Friday | Tuesday | 1.14 | Coastal Business & Leisure |
+| IAH | 52,107 | 45,585 | 47,757 | 53,351 | 50,946 | 42,177 | 52,646 | Thursday | Saturday | 1.26 | Energy Sector Corporate Travel |
+| LAX | 99,048 | 87,693 | 92,361 | 100,603 | 101,502 | 89,502 | 103,045 | Sunday | Tuesday | 1.18 | Transcontinental Leisure & Long-Haul |
+| LGA | 49,002 | 42,740 | 44,229 | 47,045 | 21,310 | 24,619 | 48,000 | Monday | Friday | 2.30 | Pure Corporate Outbound Profile |
+| ORD | 49,381 | 43,406 | 45,713 | 50,706 | 50,620 | 42,697 | 49,468 | Thursday | Saturday | 1.19 | Dual Hub Synchronized Banks |
+| PHL | 31,519 | 26,716 | 28,626 | 32,740 | 32,812 | 27,675 | 31,112 | Friday | Tuesday | 1.23 | Mid-Atlantic Fortress Outbound |
 
 The 9 airports exhibit three distinct weekly demand dynamics:
 1. **The Pure Corporate Profile (LGA)**: LaGuardia exhibits an extreme day-of-week ratio of **2.30**. Throughput peaks on Monday (49,002 pax) and Sunday (48,000 pax) driven by corporate business travel in the Northeast corridor, while Friday drops to 21,310 pax due to business travelers returning home early and leisure travelers avoiding slot-constrained short-haul airfields.
@@ -283,18 +289,18 @@ The empirical findings from subset selection dictate essential modeling choices:
 ### Feature Engineering
 A foundational premise of airport passenger flow modeling is that passengers arrive at screening checkpoints well in advance of flight departure times. Testing lead-lag transfer dynamics between scheduled flight departure times and checkpoint throughput reveals severe temporal asynchrony (Table 4.9).
 
-**Table 4.9**  
+Table 4.9  
 *Empirical Lead-Lag Transfer Dynamics (Scheduled Flights Versus Checkpoint Demand)*
 
 | Lead-Lag Horizon | Pearson Correlation ($r$) | Explanatory Power ($R^2$) | Regression Slope (pax/flight) | Operational & Planning Interpretation |
 | :--- | :---: | :---: | :---: | :--- |
-| **Lag $t-1$ (1 hr post-departure)** | 0.1987 | 3.95% | 16.06 | Passenger has already boarded aircraft; residual correlation is spurious. |
-| **Contemporaneous $t$ (Gate departure)** | 0.3403 | 11.58% | 27.49 | Contemporaneous flight schedule explains only 11.6% of checkpoint variance. |
-| **Lead $t+1$ (1 hr pre-departure)** | 0.4913 | 24.13% | 39.70 | Captures late-arriving business travelers and carry-on-only passengers. |
-| **Lead $t+2$ (2 hr pre-departure)** | **0.4876** | **23.78%** | **39.40** | **Modal show-up window conforming to ACRP Report 40 terminal standards.** |
-| **Lead $t+3$ (3 hr pre-departure)** | 0.3800 | 14.44% | 30.70 | Captures early holiday travelers, families, and international check-ins. |
-| **Convolved Passenger Show-Up Curve** | **0.6985** | **48.78%** | **74.98** | **Full lead-lag kernel deconvolution across $t+1, t+2, t+3$.** |
-| **Show-Up Curve $\times$ T-100 Load Factor** | **0.7061** | **49.85%** | **90.56** | **Convolved seats weighted by monthly carrier route load factor.** |
+| Lag $t-1$ (1 hr post-departure) | 0.1987 | 3.95% | 16.06 | Passenger has already boarded aircraft; residual correlation is spurious. |
+| Contemporaneous $t$ (Gate departure) | 0.3403 | 11.58% | 27.49 | Contemporaneous flight schedule explains only 11.6% of checkpoint variance. |
+| Lead $t+1$ (1 hr pre-departure) | 0.4913 | 24.13% | 39.70 | Captures late-arriving business travelers and carry-on-only passengers. |
+| Lead $t+2$ (2 hr pre-departure) | 0.4876 | 23.78% | 39.40 | Modal show-up window conforming to ACRP Report 40 terminal standards. |
+| Lead $t+3$ (3 hr pre-departure) | 0.3800 | 14.44% | 30.70 | Captures early holiday travelers, families, and international check-ins. |
+| Convolved Passenger Show-Up Curve | 0.6985 | 48.78% | 74.98 | Full lead-lag kernel deconvolution across $t+1, t+2, t+3$. |
+| Show-Up Curve $\times$ T-100 Load Factor | 0.7061 | 49.85% | 90.56 | Convolved seats weighted by monthly carrier route load factor. |
 
 Contemporaneous scheduled flights explain less than 12% of checkpoint throughput variance. Explanatory power peaks across the Lead $t+1$ and Lead $t+2$ horizons ($R^2 \approx 24\%$), corresponding directly to the 90–120 minute modal passenger show-up window established in airport terminal planning guidelines (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010).
 
@@ -356,18 +362,18 @@ When interpreting model evaluation metrics, several operational realities must b
 ### Results from Running Models
 Table 4.10 reports the out-of-time evaluation benchmark matrix across all six model architectures on the 2025 holdout dataset (72,053 hourly complex observations).
 
-**Table 4.10**  
+Table 4.10  
 *Master Model Benchmark Matrix (2025 Full-Year Out-of-Time Holdout)*
 
 | Paradigm | Model ID | Model Architecture | Validation $R^2$ | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Forecast Bias (pax/hr) | Academic Target Status |
 | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Deterministic Baseline** | **$M_0$** | Diurnal Seasonal Naive ($y_{t-24}$) | 0.4951 | 0.4508 | 1,377.3 | 939.8 | 1.000 | -0.7 | Baseline Reference |
-| **Deterministic Baseline** | **$M_1$** | Contemporaneous Sched SARIMAX *(Old)* | 0.4338 | 0.4375 | 1,393.8 | 1,042.6 | 1.109 | -327.4 | Failed ($\text{MASE} > 1.0$) |
-| **Deterministic Baseline** | **$M_1^*$**| Rebuilt 2-Hour Static Sched Baseline | 0.5312 | **0.5293** | **1,265.4** | **902.1** | **0.942** | **-184.2** | Passed Target ($\text{MASE} < 1.0$) |
-| **Probabilistic / ML** | **$M_2$** | Convolved Lead Flights Only | 0.5443 | 0.5862 | 1,195.5 | 856.2 | 0.911 | -296.8 | Passed Target ($\text{MASE} < 1.0$) |
-| **Probabilistic / ML** | **$M_3$** | Convolved Lead + OTP Delays/Cancels | 0.5450 | **0.5880** | **1,192.9** | **855.1** | **0.910** | **-295.3** | Passed Target ($\text{MASE} < 1.0$) |
-| **Probabilistic / ML** | **$M_4$** | Full Tri-Modal Pipeline (Load Factor Scaled) | 0.5798 | 0.5771 | 1,208.6 | 856.3 | 0.911 | -430.8 | Passed Target ($\text{MASE} < 1.0$) |
-| **Sequential Hybrid** | **$M_5$** | Sequential SARIMA-Tree Hybrid | **0.6644** | **0.6270** | **1,135.0** | **795.0** | **0.846** | **-402.9** | **CHAMPION ARCHITECTURE** |
+| Deterministic Baseline | $M_0$ | Diurnal Seasonal Naive ($y_{t-24}$) | 0.4951 | 0.4508 | 1,377.3 | 939.8 | 1.000 | -0.7 | Baseline Reference |
+| Deterministic Baseline | $M_1$ | Contemporaneous Sched SARIMAX *(Old)* | 0.4338 | 0.4375 | 1,393.8 | 1,042.6 | 1.109 | -327.4 | Failed ($\text{MASE} > 1.0$) |
+| Deterministic Baseline | $M_1^*$| Rebuilt 2-Hour Static Sched Baseline | 0.5312 | 0.5293 | 1,265.4 | 902.1 | 0.942 | -184.2 | Passed Target ($\text{MASE} < 1.0$) |
+| Probabilistic / ML | $M_2$ | Convolved Lead Flights Only | 0.5443 | 0.5862 | 1,195.5 | 856.2 | 0.911 | -296.8 | Passed Target ($\text{MASE} < 1.0$) |
+| Probabilistic / ML | $M_3$ | Convolved Lead + OTP Delays/Cancels | 0.5450 | 0.5880 | 1,192.9 | 855.1 | 0.910 | -295.3 | Passed Target ($\text{MASE} < 1.0$) |
+| Probabilistic / ML | $M_4$ | Full Tri-Modal Pipeline (Load Factor Scaled) | 0.5798 | 0.5771 | 1,208.6 | 856.3 | 0.911 | -430.8 | Passed Target ($\text{MASE} < 1.0$) |
+| Sequential Hybrid | $M_5$ | Sequential SARIMA-Tree Hybrid | 0.6644 | 0.6270 | 1,135.0 | 795.0 | 0.846 | -402.9 | CHAMPION ARCHITECTURE |
 
 ### General Model Performance
 The empirical results reveal clear performance separations across the three modeling paradigms:
@@ -382,22 +388,22 @@ The empirical results reveal clear performance separations across the three mode
 ### Model Performance in the Context of the Thesis
 The primary thesis hypothesis (**Hypothesis 1**) stated that *distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures*. Table 4.11 evaluates the models across the three core operational dimensions.
 
-**Table 4.11**  
+Table 4.11  
 *Master Multi-Pillar Hypothesis Evaluation Matrix Across the Three Dimensions*
 
 | Operational Dimension | Performance Metric | Formula / Definition | Academic Target Benchmark | Deterministic Baseline ($M_1^*$) | Probabilistic ML ($M_3$) | Dynamic Hybrid ($M_5$) | Hypothesis Confirmation Status |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Dimension 1: Robustness** | $\text{RMSE}_{\text{routine}}$ (Delay $< 15$m; 0 Cancels) | $\sqrt{\text{mean}((y - \hat{y})^2 \mid \text{routine})}$ | $< 1,150$ pax/hr | 1,265.4 pax/hr | 1,167.9 pax/hr | **1,114.7 pax/hr** | **Confirms H1(a)**: ML and Hybrid models fit nominal daily curves tighter. |
-| **Dimension 1: Robustness** | $\text{MASE}_{\text{routine}}$ (Relative Routine Error) | $\text{MAE}_{\text{routine}} / \text{MAE}_{\text{naive}}$ | $< 0.900$ | 0.942 | 0.890 | **0.834 (SUPERIOR)**| $M_5$ delivers an 11.5% accuracy gain over deterministic planning under normal conditions. |
-| **Dimension 1: Robustness** | Diebold-Mariano ($DM$) Stat & $p$-value | $DM$ Loss Differential Test vs. $M_1^*$ | $p < 0.001$ | Baseline Control | $DM = 74.25$ ($p < 0.0001$) | **$DM = 79.12$ ($p < 0.0001$)** | Statistical significance proves ML and Hybrid gains are genuine and reproducible. |
-| **Dimension 2: Resilience** | $\text{RMSE}_{\text{shock}}$ (Delay $\ge 45$m or Cancels $\ge 5$) | $\sqrt{\text{mean}((y - \hat{y})^2 \mid \text{shock})}$ | $< 1,100$ pax/hr | 1,228.9 pax/hr | 1,024.9 pax/hr | **1,023.2 pax/hr** | Dynamic models maintain tight error bounds during severe weather storms. |
-| **Dimension 2: Resilience** | $\text{MASE}_{\text{shock}}$ (Relative Disruption Error) | $\text{MAE}_{\text{shock}} / \text{MAE}_{\text{naive}}$ | $< 0.850$ | 0.966 | 0.772 | **0.737 (SUPERIOR)**| Dynamic models perform 26% better than naive guessing during disruptions. |
-| **Dimension 2: Resilience** | Resilience Multiplier ($R_{\text{MASE}}$) | $\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$ | $< 1.30$ (Fragile $\ge 2.0$) | 1.03 (Static blind) | 0.87 (Acute surge: 2.14) | **0.88 (Maintains $\le 1.28$)** | **Confirms H1(b)**: Pure ML collapses during delayed flight holds ($R = 2.14$); Hybrid stays resilient via queue feedback. |
-| **Dimension 2: Resilience** | Time-to-Recovery ($\text{TTR}_{\text{shock}}$) | Kaplan-Meier survival to $\pm 2\sigma$ error | $< 4.0$ hours | 8.4 hours | 6.7 hours | **3.2 hours (FASTEST)** | $M_5$ returns to normal error bounds 5.2 hrs faster than $M_1^*$ and 3.5 hrs faster than $M_3$. |
-| **Dimension 3: Generalizability**| Zero-Shot $\text{RMSE}_{\text{transfer}}$ | Transfer from EWR to LGA (no retraining) | $< 1,350$ pax/hr | 1,321.0 pax/hr | **1,162.8 pax/hr** | 1,237.4 pax/hr | Out-of-the-box accuracy when deploying model to an unfamiliar airport facility. |
-| **Dimension 3: Generalizability**| Relative Transfer Ratio (RTR) | $\text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$ | $\le 1.10$ | **1.04 (EXCELLENT)** | **1.08 (EXCELLENT)** | 1.19 (Moderate penalty) | **Confirms H1(c)**: Deterministic physical rules ($RTR = 1.04$) and convolved ML ($RTR = 1.08$) generalize better than decision trees. |
-| **Dimension 3: Generalizability**| Transfer Penalty ($\Delta_{\text{transfer}}$) | $((\text{RMSE}_{\text{trans}} - \text{RMSE}_{\text{in}}) / \text{RMSE}_{\text{in}}) \times 100$ | $\le 10.0\%$ | **+4.4% (MINIMAL)** | **+7.9% (LOW)** | +18.7% (Elevated) | Simple physical rules lose only 4.4% accuracy; complex residual trees lose 18.7% due to local terminal overfitting. |
-| **Dimension 3: Generalizability**| Change in MASE on Transfer ($\Delta\text{MASE}$) | $\text{MASE}_{\text{transfer}} - \text{MASE}_{\text{in-sample}}$ | $< +0.100$ | **+0.041** | **+0.071** | +0.158 | Rebuilt $M_1^*$ and $M_3$ beat the $+0.100$ threshold, confirming high zero-shot portability. |
+| Dimension 1: Robustness | $\text{RMSE}_{\text{routine}}$ (Delay $< 15$m; 0 Cancels) | $\sqrt{\text{mean}((y - \hat{y})^2 \mid \text{routine})}$ | $< 1,150$ pax/hr | 1,265.4 pax/hr | 1,167.9 pax/hr | 1,114.7 pax/hr | Confirms H1(a): ML and Hybrid models fit nominal daily curves tighter. |
+| Dimension 1: Robustness | $\text{MASE}_{\text{routine}}$ (Relative Routine Error) | $\text{MAE}_{\text{routine}} / \text{MAE}_{\text{naive}}$ | $< 0.900$ | 0.942 | 0.890 | 0.834 (SUPERIOR)| $M_5$ delivers an 11.5% accuracy gain over deterministic planning under normal conditions. |
+| Dimension 1: Robustness | Diebold-Mariano ($DM$) Stat & $p$-value | $DM$ Loss Differential Test vs. $M_1^*$ | $p < 0.001$ | Baseline Control | $DM = 74.25$ ($p < 0.0001$) | $DM = 79.12$ ($p < 0.0001$) | Statistical significance proves ML and Hybrid gains are genuine and reproducible. |
+| Dimension 2: Resilience | $\text{RMSE}_{\text{shock}}$ (Delay $\ge 45$m or Cancels $\ge 5$) | $\sqrt{\text{mean}((y - \hat{y})^2 \mid \text{shock})}$ | $< 1,100$ pax/hr | 1,228.9 pax/hr | 1,024.9 pax/hr | 1,023.2 pax/hr | Dynamic models maintain tight error bounds during severe weather storms. |
+| Dimension 2: Resilience | $\text{MASE}_{\text{shock}}$ (Relative Disruption Error) | $\text{MAE}_{\text{shock}} / \text{MAE}_{\text{naive}}$ | $< 0.850$ | 0.966 | 0.772 | 0.737 (SUPERIOR)| Dynamic models perform 26% better than naive guessing during disruptions. |
+| Dimension 2: Resilience | Resilience Multiplier ($R_{\text{MASE}}$) | $\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$ | $< 1.30$ (Fragile $\ge 2.0$) | 1.03 (Static blind) | 0.87 (Acute surge: 2.14) | 0.88 (Maintains $\le 1.28$) | Confirms H1(b): Pure ML collapses during delayed flight holds ($R = 2.14$); Hybrid stays resilient via queue feedback. |
+| Dimension 2: Resilience | Time-to-Recovery ($\text{TTR}_{\text{shock}}$) | Kaplan-Meier survival to $\pm 2\sigma$ error | $< 4.0$ hours | 8.4 hours | 6.7 hours | 3.2 hours (FASTEST) | $M_5$ returns to normal error bounds 5.2 hrs faster than $M_1^*$ and 3.5 hrs faster than $M_3$. |
+| Dimension 3: Generalizability| Zero-Shot $\text{RMSE}_{\text{transfer}}$ | Transfer from EWR to LGA (no retraining) | $< 1,350$ pax/hr | 1,321.0 pax/hr | 1,162.8 pax/hr | 1,237.4 pax/hr | Out-of-the-box accuracy when deploying model to an unfamiliar airport facility. |
+| Dimension 3: Generalizability| Relative Transfer Ratio (RTR) | $\text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$ | $\le 1.10$ | 1.04 (EXCELLENT) | 1.08 (EXCELLENT) | 1.19 (Moderate penalty) | Confirms H1(c): Deterministic physical rules ($RTR = 1.04$) and convolved ML ($RTR = 1.08$) generalize better than decision trees. |
+| Dimension 3: Generalizability| Transfer Penalty ($\Delta_{\text{transfer}}$) | $((\text{RMSE}_{\text{trans}} - \text{RMSE}_{\text{in}}) / \text{RMSE}_{\text{in}}) \times 100$ | $\le 10.0\%$ | +4.4% (MINIMAL) | +7.9% (LOW) | +18.7% (Elevated) | Simple physical rules lose only 4.4% accuracy; complex residual trees lose 18.7% due to local terminal overfitting. |
+| Dimension 3: Generalizability| Change in MASE on Transfer ($\Delta\text{MASE}$) | $\text{MASE}_{\text{transfer}} - \text{MASE}_{\text{in-sample}}$ | $< +0.100$ | +0.041 | +0.071 | +0.158 | Rebuilt $M_1^*$ and $M_3$ beat the $+0.100$ threshold, confirming high zero-shot portability. |
 
 #### Empirical Evaluation of Hypothesis Dimensions.
 1. **Dimension 1: Robustness (Confirmed)**:
