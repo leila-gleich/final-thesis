@@ -1,10 +1,10 @@
 # Single Source of Truth (SSOT) Master Directory Specification
 ====================================================================================================
-PROJECT: Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow
+PROJECT: Forecasting the Volatility of Airport Passenger Security Screening Throughput
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 DIRECTORY: thesis_docs/ssot/
-RELEASE VERSION: v4.1 (SemVer-Data) | DATE: October 2026
+RELEASE VERSION: v4.2 (SemVer-Data) | DATE: October 2026
 ====================================================================================================
 
 ## 1. PURPOSE AND GOVERNANCE OF THE SSOT SYSTEM
@@ -16,7 +16,7 @@ In large-scale data analytics research—integrating multi-million-row federal d
 The SSOT system establishes an unalterable benchmark contract:
 1. **Zero Discrepancy Tolerance**: Every numerical metric (sample size $N$, $R^2$, RMSE, MAE, MASE, $R_{\text{MASE}}$, RTR, $t$, $p$, and Diebold-Mariano statistics), mathematical formulation, and operational definition used in thesis manuscripts, committee presentations, and research publications must be anchored directly in its respective chapter SSOT.
 2. **Decoupled Architecture**: Manuscript prose and explanatory narratives are separated from empirical and mathematical benchmarks. Drafts may be edited for stylistic flow, but their underlying numbers, sample sizes, and model specifications must reference these authoritative SSOT documents.
-3. **SemVer-Data Version Control**: All SSOT documents follow semantic data versioning (`v4.1` as of October 2026), coordinated with `results/00_VERSION_CONTROL_AND_PROVENANCE.md`.
+3. **SemVer-Data Version Control**: All SSOT documents follow semantic data versioning (`v4.2` as of October 2026), coordinated with `results/00_VERSION_CONTROL_AND_PROVENANCE.md`.
 
 ---
 
@@ -24,11 +24,11 @@ The SSOT system establishes an unalterable benchmark contract:
 
 | SSOT Document | Chapter Title | Core Content & Governance Authority | Companion Production Manuscript |
 | :--- | :--- | :--- | :--- |
-| [**Chapter_1_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_1_SSOT.md) | Chapter I: Introduction & Scope | Verbatim Primary Research Question; Overarching Hypothesis ($H_1, H_{1a}, H_{1b}, H_{1c}$); Evaluation Triad (Robustness, Resilience, Generalizability); Delimitations and Assumptions. | [`Chapter_1_Introduction.docx`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_1_Introduction.docx) |
-| [**Chapter_2_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_2_SSOT.md) | Chapter II: Literature Review | Modeling Paradigm Comparative Taxonomy; Theoretical Critiques (Batch Queuing, DES Latency, ARIMA Linearity, DNN Black-Box Opacity); Full Formal Academic Citations. | [`Chapter_2_Literature_Review.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_2_Literature_Review.md) / [`.docx`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_2_Literature_Review.docx) |
-| [**Chapter_3_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_3_SSOT.md) | Chapter III: Methodology | Mathematical Formulations; 4-Tier Purposive Filtering Pipeline; 84-Cell Interaction Tensor ($\mathcal{S} \times \mathcal{D} \times \mathcal{H}$); Degrees-of-Freedom Proofs; Model Benchmark Suite ($M_0$ through $M_5$). | [`Chapter_3_Methodology.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_3_Methodology.md) / [`.docx`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_3_Methodology.docx) |
-| [**Chapter_4_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_4_SSOT.md) | Chapter IV: Empirical Findings & Model Evaluation | Master Numerical Registry (42.06M conformed records); 122,847 Train / 72,723 Val / 72,053 Test Partitions; 17-Subsection Canonical Outline; Complete Model Error Matrices & DM Tests. | [`Chapter_4_Results_Empirical_Findings.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_4_Results_Empirical_Findings.md) |
-| [**Chapter_5_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_5_SSOT.md) | Chapter V: Analysis & In-Depth Discussion | Formal Hypothesis Evaluation Proofs ($H_{1a}, H_{1b}, H_{1c}$); Behavioral Mechanics (The Hub Disconnect, Lead-Lag Asynchrony, Empty Checkpoint Fallacy); Cross-Project Synthesis; Regime-Switched Gated Inference Engine. | [`Chapter_5_Analysis_and_Discussion.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/Chapter_5_Analysis_and_Discussion.md) |
+| [**Chapter_1_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_1_SSOT.md) | Chapter I: Introduction & Scope | Verbatim Primary Research Question (Throughput Volatility); Overarching Hypothesis ($H_1$ Master Asymmetric Trade-Offs); Evaluation Triad (Robustness, Resilience, Generalizability); Explicit Targets. | [`chp1-intro.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/chp1-intro.md) |
+| [**Chapter_2_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_2_SSOT.md) | Chapter II: Literature Review | Heavy-Traffic Queuing Theory ($W_q \propto C_a^2$); Modeling Paradigm Taxonomy; Theoretical Critiques; Full Formal Academic Citations. | [`chp2-litreview.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/chp2-litreview.md) |
+| [**Chapter_3_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_3_SSOT.md) | Chapter III: Methodology | Mathematical Volatility Targets ($\sigma_{\text{TSA}}, CV_{\text{TSA}}$); 4-Tier Filtering Funnel; 4 Canonical Models ($M_0, M_1^*, M_3, M_5$); Pruning of Intermediate Variants; Explicit Stated Targets. | [`chp3-methodology.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/chp3-methodology.md) |
+| [**Chapter_4_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_4_SSOT.md) | Chapter IV: Empirical Findings & Model Evaluation | Master Numerical Registry (42.06M conformed records; 72,053 holdout test hours); Out-of-Time Volatility Fit; Tables 4.10 and 4.11; Verification of Stated Targets. | [`chp4-results.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/chp4-results.md) |
+| [**Chapter_5_SSOT.md**](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/ssot/Chapter_5_SSOT.md) | Chapter V: Analysis & In-Depth Discussion | Master Asymmetric Trade-Off Matrix; Proof that $M_5$ Fails Generalizability while $M_1^*$ Wins; Empty Checkpoint Fallacy; Regime-Switched Gated Inference Engine. | [`chp5-discussion.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/manuscripts/chp5-discussion.md) |
 
 ---
 
@@ -40,23 +40,20 @@ Every SSOT in this directory is cross-synchronized to the following immutable em
 * **Conformed Federal Records**: **42,062,039 conformed fact records** (synthesized from 67,222,828 raw federal rows across TSA FOIA, BTS OTP, BTS T-100, and BTS DB1B).
 * **Candidate B Demarcation**: **May 1, 2022** (44 continuous post-mask-mandate months; 32 months development / 12 months untouched holdout).
 * **Candidate B Partitions**:
-  - **Training Fold**: May 1, 2022 to Dec 31, 2023 (**122,847 complex observations** in 9-airport filtered cohort).
-  - **Validation Fold**: Jan 1, 2024 to Dec 31, 2024 (**72,723 complex observations** in 9-airport filtered cohort).
+  - **Training Fold**: May 1, 2022 to Dec 31, 2023 (**122,847 complex observations** in 9-airport filtered cohort; 15,976 airport-days).
+  - **Validation Fold**: Jan 1, 2024 to Dec 31, 2024 (**72,723 complex observations** in 9-airport filtered cohort; 3,293 airport-days).
   - **Inter-Fold Separation Buffer**: 7 calendar days (**2,837 complex observations**).
-  - **Holdout Testing Fold**: Jan 1, 2025 to Dec 31, 2025 (**72,053 complex observations** in 9-airport filtered cohort; **215,562 facility-level screening hours** across candidate network).
-  - **Total Modeled Complex Dataset**: **270,460 observations**.
-* **The 9-Airport Experimental Cohort (12 Screening Complexes)**:
-  - **American Airlines (AA)**: Dallas/Fort Worth (DFW Terminal A/C/D), Philadelphia (PHL Terminal B/C), Chicago O'Hare (ORD Terminal 3).
+  - **Holdout Testing Fold**: Jan 1, 2025 to Dec 31, 2025 (**72,053 complex observations** in 9-airport filtered cohort; 3,222 airport-days).
+  - **Total Modeled Complex Dataset**: **270,460 observations** across 22,491 airport-days.
+* **The 9-Airport Experimental Cohort (12 Dedicated Screening Complexes)**:
+  - **American Airlines (AA)**: Dallas/Fort Worth (DFW Terminal D), Philadelphia (PHL Terminal B/C), Chicago O'Hare (ORD Terminal 3).
   - **Delta Air Lines (DL)**: Detroit Metropolitan (DTW McNamara Terminal), New York LaGuardia (LGA Terminal C), Boston Logan (BOS Terminal A).
   - **United Airlines (UA)**: Newark Liberty (EWR Terminal C), Houston Intercontinental (IAH Terminal C/E), Los Angeles (LAX Terminal 7/8).
-* **The 84-Cell Interaction Tensor ($\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H}$)**:
-  - Exactly **83 of 84 cells (98.8%)** meet $N_{\text{train}} \ge 50$ (median $N = 215$).
-  - **70 of 84 cells (83.3%)** meet Central Limit Theorem test sufficiency ($N_{\text{test}} \ge 30$; median $N = 76$).
-* **Champion Model Performance ($M_5$ Sequential Two-Stage Tree Hybrid)**:
-  - Out-of-Time 2025 Holdout: $R^2 = 0.6270, \text{RMSE} = 1135.0\text{ pax/hr}, \text{MAE} = 730.4\text{ pax/hr}, \text{MASE} = 0.846$.
-  - Routine Operational Accuracy (Dimension 1): $\text{MASE}_{\text{routine}} = 0.834, \text{RMSE} = 1114.7, DM = 79.123$ ($p < 0.0001$).
-  - Disruption Resilience (Dimension 2): $R_{\text{MASE}} = 1.28 \le 1.30$, Time-to-Recovery $\text{TTR} = 3.2\text{ hours}$.
-  - Spatial Generalizability (Dimension 3): Relative Transfer Ratio $\text{RTR} = 1.00$ to $1.19$.
+* **The 4-Model Canonical Evaluation Suite (Throughput Volatility Target)**:
+  - **Baseline Control ($M_0$)**: $\text{RMSE} = 253.6\text{ pax/hr}, \text{MASE} = 1.000$ (Fails Robustness Target).
+  - **Deterministic Baseline ($M_1^*$)**: $\text{RMSE} = 313.4\text{ pax/hr}, \text{MASE} = 0.945$ (Fails Robustness; **Decisive Generalizability Winner: $\text{RTR} = 1.04 \approx 1.00, \Delta\text{MASE} = +4.0\% \le 10.0\%$**).
+  - **Probabilistic / ML ($M_3$)**: $\text{RMSE} = 273.5\text{ pax/hr}, \text{MASE} = 0.779$ holdout / $0.680\text{--}0.700$ routine (**Target Met; Routine Pareto Winner**; Fragile under shock: $R = 2.14$).
+  - **Sequential Cyber-Physical Hybrid ($M_5$)**: $\text{RMSE} = 222.1\text{ pax/hr}, \text{MASE} = 0.662$ (**Target Met; Decisive Resilience Winner: $R = 1.05 \approx 1.00, \text{TTR} = 2.8\text{h}$**; **Decisively Fails Generalizability: $\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$** due to terminal geometry overfitting).
 
 ---
 

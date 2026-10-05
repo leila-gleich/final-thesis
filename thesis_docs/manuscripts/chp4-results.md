@@ -299,12 +299,12 @@ Table 4.9
 | Lead $t+1$ (1 hr pre-departure) | 0.4913 | 24.13% | 39.70 | Captures late-arriving business travelers and carry-on-only passengers. |
 | Lead $t+2$ (2 hr pre-departure) | 0.4876 | 23.78% | 39.40 | Modal show-up window conforming to ACRP Report 40 terminal standards. |
 | Lead $t+3$ (3 hr pre-departure) | 0.3800 | 14.44% | 30.70 | Captures early holiday travelers, families, and international check-ins. |
-| Convolved Passenger Show-Up Curve | 0.6985 | 48.78% | 74.98 | Full lead-lag kernel deconvolution across $t+1, t+2, t+3$. |
+| Convolved Passenger Show-Up Curve | 0.6985 | 48.78% | 74.98 | Empirical passenger show-up curve convolution across lead horizons $t+1, t+2, t+3$. |
 | Show-Up Curve $\times$ T-100 Load Factor | 0.7061 | 49.85% | 90.56 | Convolved seats weighted by monthly carrier route load factor. |
 
 Unshifted scheduled flights in the same departure hour explain less than 12% of checkpoint throughput variance. Explanatory power peaks across the Lead $t+1$ and Lead $t+2$ horizons ($R^2 \approx 24\%$), corresponding directly to the 90–120 minute modal passenger show-up window established in airport terminal planning guidelines (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010).
 
-Based on these findings, an empirical passenger arrival kernel was constructed by convolving scheduled departing seats across lead horizons ($t+1, t+2, t+3$):
+Based on these findings, an empirical passenger show-up distribution was constructed by convolving scheduled departing seats across lead horizons ($t+1, t+2, t+3$):
 $$\text{Demand}_{\text{convolved}, t} = \sum_{h=1}^{3} w_h \cdot \left[ \sum_{f \in \mathcal{F}_{t+h}} \text{Seats}_f \cdot \text{LoadFactor}_f \cdot (1 - \text{ConnectingRatio}) \right]$$
 where weights $w_1 = 0.35$, $w_2 = 0.50$, and $w_3 = 0.15$ match empirical ACRP Report 40 arrival distributions.
 
@@ -316,7 +316,7 @@ The complete feature engineering pipeline encompasses five functional operationa
 5. **Facility Physical Features**: Screening lane count, checkpoint configuration type (finger pier vs. linear), aircraft seating gauge (`aircraft_gauge_seats`), route load factors, and connecting passenger ratios.
 
 ### Model Training
-To evaluate the research hypotheses, six models across three paradigms were trained and calibrated to forecast passenger throughput volatility:
+To evaluate the research hypotheses, the canonical evaluation suite—representing each distinct modeling paradigm along with the persistence baseline—was calibrated and benchmarked against the 2025 out-of-time holdout partition:
 
 ### The Consolidated Four-Model Evaluation Suite
 

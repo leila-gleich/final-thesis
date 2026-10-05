@@ -102,8 +102,8 @@ def main():
     y_test = test_df[target_col].fillna(test_df[target_col].mean())
     
     models = {
-        "M0: Diurnal Volatility Naive (y-24)": DiurnalSeasonalNaive(lag_hours=1),
-        "M1: Rebuilt Sched Bank Volatility": DeterministicFixedLeadBaseline(),
+        "M0: Diurnal Volatility Naive Benchmark": DiurnalSeasonalNaive(lag_hours=1),
+        "M1*: Deterministic Sched Bank Volatility": DeterministicFixedLeadBaseline(),
         "M3: Supervised Volatility GBR (Combined)": TweedieGradientBoostedRegressor(max_iter=100, loss="squared_error"),
         "M5: Sequential SARIMA-Tree Volatility Hybrid": SequentialSARIMATreeHybrid()
     }
@@ -131,8 +131,8 @@ def main():
     print(f"{'Model Paradigm (Target: Throughput Volatility)':<44} | {'Test R^2':<8} | {'Test RMSE':<9} | {'Test MASE':<9} | {'Category'}")
     print("=" * 96)
     category_map = {
-        "M0: Diurnal Volatility Naive (y-24)": "Persistence Control",
-        "M1: Rebuilt Sched Bank Volatility": "Deterministic Baseline",
+        "M0: Diurnal Volatility Naive Benchmark": "Persistence Control",
+        "M1*: Deterministic Sched Bank Volatility": "Deterministic Baseline",
         "M3: Supervised Volatility GBR (Combined)": "Supervised Volatility ML",
         "M5: Sequential SARIMA-Tree Volatility Hybrid": "Cyber-Physical Hybrid (Winner)"
     }
@@ -146,7 +146,7 @@ def main():
 
     # Step 7: Dual-Track Operational Policy Evaluation (REC-05)
     print("\n[STEP 7] Executing Dual-Track Operational Policy Decision Rules (REC-05)...")
-    run_dual_track_evaluation(benchmark_results)
+    run_dual_track_evaluation()
 
     # Step 8: Conformed Manuscript Tables & Results Excel Synchronization
     print("\n[STEP 8] Synchronizing Manuscript Table CSVs & Results Workbooks...")

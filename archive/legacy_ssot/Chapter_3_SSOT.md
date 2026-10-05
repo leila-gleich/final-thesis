@@ -124,44 +124,37 @@ $$\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H} \quad (4 \time
 
 ---
 
-## 4. THE 4-MODEL CANONICAL EVALUATION SUITE FOR THROUGHPUT VOLATILITY
+## 4. CANONICAL MODEL ARCHITECTURES ($M_0$ THROUGH $M_5$)
 
-Following the Phase 2 Four-Tiered Purposive Filtering pipeline (Macro congestion, Meso airspace invariance, Micro checkpoint exclusivity, and balanced factorial design), the candidate model space was consolidated into **exactly four canonical models** (one per paradigm plus baseline control):
-
-| Model ID | Paradigm | Formal Nomenclature | Algorithmic Formulation | Primary Explanatory Features & Role |
-| :--- | :--- | :--- | :--- | :--- |
-| **$M_0$** | **Baseline Control** | Diurnal Volatility Naive Persistence | $\widehat{\text{Vol}}_{M0, t} = \text{Vol}_{t-24}$ | Historical lagged checkpoint volatility 24 hours prior; scale-free MASE denominator. |
-| **$M_1^*$** | **Deterministic Baseline** | Deterministic Schedule Bank Volatility Baseline | $\widehat{\text{Vol}}_{M1^*, t} = \beta_0 + \beta_1 \cdot \text{Vol}_{\text{sched\_conv}, t}$ | Scheduled flight bank departure dispersion convolved with lognormal passenger show-up physics; **Generalizability Winner**. |
-| **$M_3$** | **Probabilistic / ML** | Supervised Volatility Gradient Boosted Trees | $\widehat{\text{Vol}}_{M3, t} = f_{\text{GBR}}(\mathbf{x}_t^{\text{convolved}}, \mathbf{x}_t^{\text{Values}}, \mathbf{x}_t^{\text{Volatilities}})$ | Convolved arrivals + 24 OTP feature attributes (14 values, 10 volatilities); **Routine Pareto Winner**. |
-| **$M_5$** | **Dynamic Hybrid** | Sequential SARIMA-Tree Volatility Hybrid | $\widehat{\text{Vol}}_{M5, t} = \widehat{\text{Vol}}_{\text{SARIMA}, t} + g_{\text{Tree}}(\mathbf{x}_t^{\text{airside}}, e_{t-1})$ | Stage 1 linear diurnal SARIMA + Stage 2 gradient boosted residual tree with **1-step error innovation feedback ($e_{t-1}$)**; **Resilience Winner**. |
-
-### Pruned Intermediate Exploratory Variations
-* **Model $M_1$ (Unshifted Flight Schedule Dispersion)**: Pruned due to phase distortion ($r=0.12$) from omitting the 105-minute mean passenger show-up lag.
-* **Model $M_2$ (Lead Flights Only Baseline)**: Pruned due to truncation bias during afternoon secondary delay cascades.
-* **Model $M_4$ (Load-Factor Scaled Linear Regression)**: Pruned because linear capacity scaling is redundant with non-linear tree interactions learned by $M_3$ and $M_5$.
+| Model ID | Formal Nomenclature | Algorithmic Formulation | Primary Explanatory Features |
+| :--- | :--- | :--- | :--- |
+| **$M_0$** | Diurnal Seasonal Naive | $y_t = y_{t-24}$ | Historical lagged checkpoint throughput 24 hours prior. |
+| **$M_1$** | Contemporaneous Sched SARIMAX | $\Phi(B)(1 - B)(1 - B^{24}) y_t = \beta \text{SchedSeats}_t + \Theta(B) \epsilon_t$ | Contemporaneous scheduled seats departing in hour $t$, day-of-week indicators. |
+| **$M_2$** | Empirical Show-Up Curve Regressor | $y_t = \sum_{h=1}^3 \omega_h \text{OriginatingDemand}_{t+h} + \epsilon_t$ | ACRP Report 40 distributed-lag lead horizons ($t+1, t+2, t+3$), DB1B connecting deflator. |
+| **$M_3$** | Operational Count Regressor (HistGBM Tweedie) | $\hat{y}_t = \arg\min_F \sum_{i=1}^N L(y_i, F(x_i))$ (Tweedie $p = 1.3$) | Distributed show-up demand ($t+1..t+3$), prior-hour delay ($\text{DepDelay}_{t-1}$), cancellations, DOW, month. |
+| **$M_4$** | Full Tri-Modal Pipeline | Tree ensemble with multi-source interaction tensors | All $M_3$ features + BTS T-100 route load factors, aircraft gauge, carrier indicators. |
+| **$M_5$** | Sequential Two-Stage Tree Hybrid | $\hat{y}_t = \hat{y}_{\text{SARIMA}, t} + \hat{r}_{\text{Tree}, t} + K_t (y_{t-1} - \hat{y}_{t-1})$ | Stage 1 SARIMA baseline + Stage 2 Gradient Boosted residual model + Stage 3 recursive Kalman state innovation. |
 
 ---
 
-## 5. FORMAL EVALUATION METRICS REGISTRY AND EXPLICIT ACADEMIC TARGETS
+## 5. FORMAL EVALUATION METRICS REGISTRY
 
 1. **Root Mean Squared Error (RMSE)**:
-   $$\text{RMSE} = \sqrt{\frac{1}{N}\sum_{t=1}^N (\text{Vol}_t - \widehat{\text{Vol}}_t)^2}$$
-2. **Mean Absolute Scaled Error (MASE)** (Hyndman & Koehler, 2006):
-   $$\text{MASE} = \frac{\frac{1}{N}\sum_{t=1}^N |\text{Vol}_t - \widehat{\text{Vol}}_t|}{\frac{1}{N-24}\sum_{t=25}^N |\text{Vol}_t - \text{Vol}_{t-24}|}$$
-3. **Dimension 1: Robustness Operational Regime and Targets**:
-   - *Operational Regime*: Nominal flight operations ($\text{DepDelay} < 15\text{ min}$, zero flight cancellations).
-   - *Explicit Targets*: $\mathbf{\min \text{RMSE}_{\text{routine}}}$ and $\mathbf{\text{MASE}_{\text{routine}} < 0.700}$.
-4. **Dimension 2: Resilience Operational Regime and Targets**:
-   - *Operational Regime*: Severe systemic disruptions ($\text{DepDelay} \ge 45\text{ min}$ or cancellations $\ge 5$).
-   - *Governing Metrics*: Disruption Error Multiplier $R_{\text{RMSE}} = \frac{\text{RMSE}_{\text{shock}}}{\text{RMSE}_{\text{routine}}}$, $R_{\text{MASE}} = \frac{\text{MASE}_{\text{shock}}}{\text{MASE}_{\text{routine}}}$, Shock MASE ($\text{MASE}_{\text{shock}}$), Time-to-Recovery ($\text{TTR}$).
-   - *Explicit Targets*: $\mathbf{R_{\text{RMSE}} \approx 1.00 \ (R_{\text{MASE}} \approx 1.00)}$, $\mathbf{\min \text{MASE}_{\text{shock}}}$, and $\mathbf{\text{TTR} < 4.0\text{ hours}}$.
-5. **Dimension 3: Generalizability Operational Regime and Targets**:
-   - *Operational Regime*: Zero-shot spatial deployment from Source (EWR) to Target (LGA) without local retraining.
-   - *Governing Metrics*: Relative Transfer Ratio $\text{RTR} = \frac{\text{RMSE}_{\text{transfer}}}{\text{RMSE}_{\text{in-sample}}}$, Percentage Change in MASE on Transfer $\Delta\text{MASE}_{\text{transfer}} = \frac{\Delta\text{MASE}}{\text{MASE}_{\text{in}}} \times 100\%$.
-   - *Explicit Targets*: $\mathbf{\text{RTR} \approx 1.00 \ (1.00 \pm 0.05)}$ and $\mathbf{\Delta\text{MASE}_{\text{transfer}} \le 10.0\%}$.
+   $$\text{RMSE} = \sqrt{\frac{1}{N}\sum_{t=1}^N (y_t - \hat{y}_t)^2}$$
+2. **Mean Absolute Error (MAE)**:
+   $$\text{MAE} = \frac{1}{N}\sum_{t=1}^N |y_t - \hat{y}_t|$$
+3. **Mean Absolute Scaled Error (MASE)** (Hyndman & Koehler, 2006):
+   $$\text{MASE} = \frac{\frac{1}{N}\sum_{t=1}^N |y_t - \hat{y}_t|}{\frac{1}{N-24}\sum_{t=25}^N |y_t - y_{t-24}|}$$
+   $\text{MASE} < 1.0$ indicates outperformance relative to the diurnal seasonal naive baseline.
+4. **Disruption Error Multiplier ($R_{\text{MASE}}$)** (Dimension 2: Resilience):
+   $$R_{\text{MASE}} = \frac{\text{MASE}_{\text{shock}}}{\text{MASE}_{\text{routine}}}$$
+   $R_{\text{MASE}} \le 1.30$ denotes resilient performance; $R_{\text{MASE}} > 1.50$ denotes severe fragility.
+5. **Relative Transfer Ratio (RTR)** (Dimension 3: Generalizability):
+   $$\text{RTR} = \frac{\text{RMSE}_{\text{transfer}}}{\text{RMSE}_{\text{in-sample}}}$$
+   $\text{RTR} \le 1.10$ ($\Delta_{\text{transfer}} \le 10\%$) establishes zero-shot cross-airport portability.
 6. **Diebold-Mariano Hypothesis Test Statistic ($DM$)**:
    $$DM = \frac{\bar{d}}{\sqrt{\hat{V}(\bar{d}) / N}} \sim \mathcal{N}(0, 1)$$
-   Evaluates statistical significance of loss differentials relative to the deterministic benchmark ($p < 0.001$).
+   where $d_t = |e_{1,t}|^p - |e_{2,t}|^p$ evaluates whether the difference in forecast loss is statistically significant.
 
 ---
 

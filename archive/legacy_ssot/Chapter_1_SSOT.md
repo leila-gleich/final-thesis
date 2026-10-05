@@ -56,26 +56,26 @@ CHAPTER I: INTRODUCTION
 
 ### 3.1 Verbatim Primary Research Question
 
-> **"Which predictive modeling frameworks—spanning deterministic persistence controls, deterministic schedule dispersion baselines, supervised machine learning tree ensembles, and sequential cyber-physical hybrids—are most effective for forecasting airport passenger security screening throughput volatility ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$) when prioritizing robustness (routine operational accuracy), resilience (stability under convective weather and delay disruptions), or generalizability (cross-airport portability across terminal layouts) as the primary operational evaluation metric?"**
+> **"Which predictive modeling frameworks are most effective for forecasting airport passenger security screening throughput when prioritizing robustness (routine operational accuracy), resilience (stability under convective weather and delay disruptions), or generalizability (cross-airport portability across terminal layouts) as the primary operational evaluation metric?"**
 
-### 3.2 Core Thesis Hypothesis ($H_1$ - Master Asymmetric Trade-Off Hypothesis)
+### 3.2 Core Thesis Hypothesis ($H_1$)
 
-* **Overarching Hypothesis ($H_1$)**: Across the four canonical forecasting paradigms evaluated following four-tiered purposive filtering (baseline control, deterministic flight schedule physics, supervised machine learning, and dynamic cyber-physical hybrid), **no individual architecture will prove universally superior across all three evaluation dimensions**. Rather, inherent mathematical properties establish stark, asymmetric trade-offs:
-  * **$H_{1a}$ (Robustness Target: Lowest $\text{RMSE}_{\text{routine}}$ and $\text{MASE}_{\text{routine}} < 0.700$)**: Supervised machine learning ($M_3$ HistGBR) and two-stage hybrids ($M_5$) will achieve the robustness target ($\text{MASE}_{\text{routine}} < 0.700$) by capturing non-linear calendar and lead-lag arrival distributions, whereas naive persistence ($M_0$) and deterministic baselines ($M_1^*$) fail this threshold ($\text{MASE} \ge 0.94$). Machine learning ($M_3$) delivers the computationally lightweight, Pareto-efficient routine solution.
-  * **$H_{1b}$ (Resilience Target: $R_{\text{RMSE}} \approx 1.00 \ (R_{\text{MASE}} \approx 1.00)$, Lowest $\text{MASE}_{\text{shock}}$, and $\text{TTR} < 4.0\text{ hours}$)**: The dynamic cyber-physical hybrid ($M_5$) will be the sole architecture to satisfy the resilience target due to closed-loop recursive 1-step error innovation feedback ($e_{t-1}$). Static supervised ML ($M_3$) collapses during disruptions ($R \ge 2.0$) from the Empty Checkpoint Fallacy, while deterministic baselines remain blind to delay cascades.
-  * **$H_{1c}$ (Generalizability Target: $\text{RTR} \approx 1.00$ and $\Delta\text{MASE}_{\text{transfer}} \le 10.0\%$)**: The deterministic convolved schedule physics baseline ($M_1^*$) will decisively satisfy the generalizability target ($\text{RTR} \approx 1.00, \Delta\text{MASE} \le 10.0\%$) because flight schedule convolution is invariant to local terminal geometry. Conversely, the cyber-physical hybrid ($M_5$) decisively fails the generalizability target ($\text{RTR} \gg 1.00, \Delta\text{MASE} > 10.0\%$) due to decision tree terminal geometry overfitting.
+* **Overarching Hypothesis ($H_1$)**: Across the three forecasting paradigms (deterministic operational baselines, data-driven machine learning, and sequential state-space hybrids), **no individual architecture will prove universally superior across all three evaluation dimensions**. Rather, systematic trade-offs exist:
+  * **$H_{1a}$ (Robustness)**: Non-linear machine learning models ($M_3$ HistGBM Tweedie) and two-stage hybrids ($M_5$) will demonstrate superior routine operational accuracy ($\text{MASE}_{\text{routine}} < 0.90$) by capturing complex non-linear day-of-week, aircraft gauge, and lead-lag arrival distributions.
+  * **$H_{1b}$ (Resilience)**: Sequential two-stage hybrid models ($M_5$) will demonstrate superior disruption resilience ($R_{\text{MASE}} \le 1.30$, time-to-recovery $\text{TTR} \le 4.0\text{ hours}$), resisting the "empty checkpoint fallacy" that degrades pure machine learning models during severe weather delay cascades.
+  * **$H_{1c}$ (Generalizability)**: Simple deterministic physical rules ($M_1^*$) and convolved machine learning models ($M_3$) will exhibit superior zero-shot spatial transferability ($\text{RTR} \le 1.10$, error degradation $\le 10\%$) because empirical passenger show-up curves abstract away facility-specific terminal over-fitting.
 
-### 3.3 The Triad of Operational Evaluation Dimensions and Stated Targets
+### 3.3 The Triad of Operational Evaluation Dimensions
 
 1. **Dimension 1: Robustness (Routine Operational Accuracy)**
-   - *Operational Definition*: Accuracy and precision during nominal, undisturbed operations ($\text{Departure Delay} < 15\text{ minutes}$, zero tactical cancellations).
-   - *Primary Metrics & Targets*: Lowest $\text{RMSE}_{\text{routine}}$, $\mathbf{\text{MASE}_{\text{routine}} < 0.700}$, Diebold-Mariano significance test ($p < 0.001$).
+   - *Operational Definition*: The accuracy, precision, and consistency of the forecast model during nominal, undisturbed operating conditions ($\text{Departure Delay} < 15\text{ minutes}$, zero tactical cancellations).
+   - *Primary Metrics*: $\text{RMSE}_{\text{routine}}$, $\text{MAE}_{\text{routine}}$, $\text{MASE}_{\text{routine}}$ (target $< 0.900$), Diebold-Mariano significance test ($p < 0.001$).
 2. **Dimension 2: Resilience (Performance Under Severe Disruption)**
-   - *Operational Definition*: Stability, error bounded-ness, and speed of recovery during acute operational shocks ($\text{Departure Delay} \ge 45\text{ minutes}$ or tactical cancellations $\ge 5$).
-   - *Primary Metrics & Targets*: $\mathbf{R_{\text{RMSE}} \approx 1.00 \ (R_{\text{MASE}} \approx 1.00)}$, Lowest $\text{MASE}_{\text{shock}}$, and Time-to-Recovery $\mathbf{\text{TTR}_{\text{shock}} < 4.0\text{ hours}}$.
+   - *Operational Definition*: The stability, error bounded-ness, and speed of recovery of the forecast model during acute exogenous operational shocks ($\text{Departure Delay} \ge 45\text{ minutes}$ or tactical cancellations $\ge 5$).
+   - *Primary Metrics*: $\text{RMSE}_{\text{shock}}$, $\text{MASE}_{\text{shock}}$, Disruption Error Multiplier ($R_{\text{MASE}} = \text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$, target $< 1.30$), Time-to-Recovery ($\text{TTR}_{\text{shock}} \le 4.0\text{ hours}$ via Kaplan-Meier survival curves).
 3. **Dimension 3: Generalizability (Cross-Airport Transferability)**
-   - *Operational Definition*: External validity and zero-shot portability when deploying a trained model to an unfamiliar airport facility without site-specific historical recalibration.
-   - *Primary Metrics & Targets*: $\mathbf{\text{RTR} \approx 1.00 \ (1.00 \pm 0.05)}$, Transfer Degradation $\le 10.0\%$, and $\mathbf{\Delta\text{MASE}_{\text{transfer}} \le 10.0\%}$.
+   - *Operational Definition*: The external validity and zero-shot portability of a trained model when deployed to an unfamiliar airport facility without site-specific historical recalibration.
+   - *Primary Metrics*: Zero-Shot $\text{RMSE}_{\text{transfer}}$, Relative Transfer Ratio ($\text{RTR} = \text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$, target $\le 1.10$), Transfer Degradation Penalty ($\Delta_{\text{transfer}} \le 10.0\%$), and $\Delta\text{MASE} < +0.100$.
 
 ### 3.4 Formal Research Delimitations
 

@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.4 (Manuscript Table CSV Suite & Results Excel Synchronization)
+RELEASE VERSION: v4.5 (Throughput Volatility Overhaul & 4-Model Canonical Suite Audit)
 DATE: October 5, 2026
 ====================================================================================================
 
@@ -111,6 +111,18 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Deployed automated synchronization runner (src/analysis/sync_manuscript_  |
 |         |            |   tables.py) integrated as Step 8 into run_pipeline.py.                    |
 |         |            | - Updated all READMEs with automated synchronization instructions.          |
+| v4.5    | 2026-10-05 | Throughput Volatility Overhaul & 4-Model Canonical Suite Audit:             |
+|         |            | - Re-targeted core research from raw volume to TSA throughput volatility    |
+|         |            |   (within-day sigma_TSA, scale-free CV_TSA, and 7-day rolling sigma_7d).    |
+|         |            | - Consolidated model suite to exactly 4 canonical models (M0, M1*, M3, M5)  |
+|         |            |   and documented pruning of exploratory variants (M1, M2, M4).             |
+|         |            | - Formalized explicit academic performance targets across Robustness,       |
+|         |            |   Resilience, and Generalizability.                                        |
+|         |            | - Verified Master Asymmetric Trade-Off Matrix: M5 wins Resilience, M1* wins|
+|         |            |   Generalizability, M3 wins Routine Pareto Efficiency.                     |
+|         |            | - Replaced technical jargon with defensible APA 7 aviation terminology.     |
+|         |            | - Safely archived legacy SSOT, early notes, and draft recs to archive/.     |
+|         |            | - Validated 100% self-contained architecture check and 38/38 unit tests.   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
