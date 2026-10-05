@@ -141,7 +141,7 @@ All models were trained on Candidate B data (May 2022 – Dec 2023), tuned on 20
 | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :--- |
 | **Deterministic Baseline** | M0 | Diurnal Seasonal Naive ($y_{t-24}$) | 0.4508 | 1377.3 | 939.8 | 1.000 | Control |
 | **Deterministic Baseline** | M1 | Contemporaneous Sched SARIMAX | 0.4375 | 1393.8 | 1042.6 | 1.109 | Baseline |
-| **Probabilistic / ML** | M3 | LightGBM Tweedie (Convolved + OTP) | 0.5880 | 1192.9 | 855.1 | 0.910 | High Accuracy |
+| **Probabilistic / ML** | M3 | HistGBM Tweedie / Poisson (Convolved + OTP) | 0.5880 | 1192.9 | 855.1 | 0.910 | High Accuracy |
 | **Dynamic Hybrid** | **M5** | **Sequential SARIMA-Tree Hybrid** | **0.6270** | **1135.0** | **795.0** | **0.846** | **WINNER** |
 
 ---

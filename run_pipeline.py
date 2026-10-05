@@ -87,7 +87,7 @@ def main():
     models = {
         "M0: Diurnal Seasonal Naive (y-24)": DiurnalSeasonalNaive(),
         "M1: Rebuilt 2-Hr Static Lead": DeterministicFixedLeadBaseline(),
-        "M3: LightGBM Tweedie ML": TweedieGradientBoostedRegressor(max_iter=80),
+        "M3: HistGBM Tweedie ML": TweedieGradientBoostedRegressor(max_iter=80),
         "M5: Sequential SARIMA-Tree Hybrid": SequentialSARIMATreeHybrid()
     }
     
@@ -115,7 +115,7 @@ def main():
     category_map = {
         "M0: Diurnal Seasonal Naive (y-24)": "Persistence Control",
         "M1: Rebuilt 2-Hr Static Lead": "Deterministic Baseline",
-        "M3: LightGBM Tweedie ML": "Supervised Volatility ML",
+        "M3: HistGBM Tweedie ML": "Supervised Volatility ML",
         "M5: Sequential SARIMA-Tree Hybrid": "Cyber-Physical Hybrid (Winner)"
     }
     for name, m in benchmark_results.items():

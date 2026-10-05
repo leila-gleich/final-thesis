@@ -2,7 +2,7 @@
 src/models/machine_learning.py
 -------------------------------
 Supervised Machine Learning Models for Airport Passenger Flow:
-- M3: Gradient Boosted Tweedie / Poisson Deviance Regressor (p=1.3)
+- M3: HistGradientBoosting Poisson Deviance Regressor (Tweedie family, p=1.0–1.3)
       Captures non-linear feature interactions across diurnal cycles,
       fleet gauge tiers, and airside delay interaction terms.
 """
