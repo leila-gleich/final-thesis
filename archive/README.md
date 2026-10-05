@@ -24,13 +24,22 @@ archive/
 │   ├── 04_Appendix_and_Reference/
 │   └── *.png
 │
-└── legacy_parquet/                 <-- 49 conformed legacy tables compressed to Snappy Parquet
-    ├── 01_Executive_Top25_Airport_Coupled_Master_Census.parquet
-    ├── 02_Executive_Cross_Dataset_Statistical_Relationships_and_Volatility.parquet
-    ├── 03_Executive_Coupled_Seasonality_and_Operational_Regimes.parquet
-    ├── BTS_DB1B_Top25_Connecting_Ratio_Census.parquet
-    ├── Section_1A_to_5A_*.parquet
-    └── TSA_Top25_*.parquet
+├── legacy_parquet/                 <-- 49 conformed legacy tables compressed to Snappy Parquet
+│   ├── 01_Executive_Top25_Airport_Coupled_Master_Census.parquet
+│   ├── 02_Executive_Cross_Dataset_Statistical_Relationships_and_Volatility.parquet
+│   ├── 03_Executive_Coupled_Seasonality_and_Operational_Regimes.parquet
+│   ├── BTS_DB1B_Top25_Connecting_Ratio_Census.parquet
+│   ├── Section_1A_to_5A_*.parquet
+│   └── TSA_Top25_*.parquet
+│
+└── superseded_scripts/             <-- Historical ETL and warehouse analysis scripts
+    ├── candidate_b_deep_dive.py    # Pre-demarcation DuckDB exploration (results compiled)
+    ├── regime_analysis.py          # Pre-demarcation regime analysis (results compiled)
+    ├── filter_top_20pct_airports.py# Historical Top 78 filter (superseded by 4-tier filtering)
+    ├── filter_datasets_by_otp.py   # Legacy warehouse filter (superseded by conformed data)
+    ├── generate_v1_datasets.py     # Initial batch ETL pipeline for warehouse v1
+    ├── transform_otp_time.py       # Vectorized timestamp script (modularized to time_features.py)
+    └── temporal_features.py        # Legacy rolling average query (modularized to time_features.py)
 ```
 
 ---

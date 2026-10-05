@@ -10,7 +10,6 @@ from .checkpoint_map import compute_checkpoint_weights, get_checkpoint_confidenc
 from .feature_pipeline import build_conformed_feature_matrix
 
 # Backward-compatibility legacy exports
-from .temporal_features import add_rolling_features, extract_temporal_features
 from .lead_lag_convolution import (
     compute_arrival_weights,
     convolve_scheduled_demand,
@@ -33,8 +32,6 @@ __all__ = [
     "get_checkpoint_confidence",
     "build_conformed_feature_matrix",
     # Legacy compatibility
-    "add_rolling_features",
-    "extract_temporal_features",
     "compute_arrival_weights",
     "convolve_scheduled_demand",
     "continuous_passenger_arrival_kernel",
