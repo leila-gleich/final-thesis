@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.12 (Consolidated Master Multi-Tab Excel Workbook thesis_tables.xlsx)
+RELEASE VERSION: v4.13 (Appendix Standard Literature Equations & Formulas Audit)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -198,6 +198,17 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   APA 7th headers, cell notes, auto-filters, and auto-adjusted widths.      |
 |         |            | - Integrated workbook compilation into src/analysis/sync_manuscript_tables.py|
 |         |            |   and deployed thesis_tables.xlsx to results/ and results/manuscript_tables/.|
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.13   | 2026-10-06 | Appendix Table Specification: Standard Literature Equations & Formulas:    |
+|         |            | - Authored appendix_standard_literature_equations.csv in both              |
+|         |            |   results/manuscript_tables/ and results/tables/ cataloging 20 peer-        |
+|         |            |   reviewed mathematical equations and statistical metrics.                 |
+|         |            | - Spans Kingman queuing approximations, ACRP Report 40 arrival curves,     |
+|         |            |   BTS Form 41 / DB1B accounting identities, statistical dispersion targets,|
+|         |            |   time-series error metrics (RMSE, MAE, MASE), and econometric tests.       |
+|         |            | - Authored thesis_docs/recommendations/PROPOSED_EDITS_ELIMINATE_ORIGINAL_   |
+|         |            |   FORMULAS.md outlining location-by-location text replacements to eliminate|
+|         |            |   the 2 original formulas (T(h) and CVI) in favor of standard equivalents. |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
