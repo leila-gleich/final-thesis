@@ -1,5 +1,5 @@
-Model Family,Model ID & Specification,RMSE_routine (pax/hr),MASE_routine,Stated Target (MASE < 0.70),Diebold-Mariano Test vs Control,Academic Status & Operational Role
-Baseline Control,M0: Diurnal Volatility Naive (y_t-24),253.6,1.000,Fails Target,Baseline Reference,Historical 24h persistence control benchmark
-Deterministic Baseline,M1*: Deterministic Schedule Bank Volatility,313.4,0.945,Fails Target,Control Baseline,First-principles convolved schedule baseline
-Probabilistic / ML,M3: Supervised Volatility GBR (Combined Values + Vol),273.5,0.680–0.700,Target Met,DM = 42.15 (p < 0.0001),"Routine Pareto Winner: Fast, zero-feedback, low-compute"
-Dynamic Hybrid,M5: Sequential SARIMA-Tree Volatility Hybrid,222.1,0.662,Target Met,DM = 48.72 (p < 0.0001),Lowest Routine RMSE: In-sample cyclical-tree fit
+Model Family,Model Name,Operational Approach,RMSE_routine (pax/hr),MASE_routine,Stated Target (MASE < 0.70),Statistical Test vs Control,Operational Status & Recommended Role
+Baseline Control,Baseline Control,Daily Persistence Benchmark (y_t-24),253.6,1.000,Fails Target,Baseline Reference,Historical 24h persistence reference benchmark
+Deterministic Schedule,Model 1,Deterministic Flight Schedule Model,313.4,0.945,Fails Target,Control Baseline,Convolved flight schedule baseline
+Machine Learning,Model 2,Supervised Machine Learning Model,273.5,0.680–0.700,Target Met,DM = 42.15 (p < 0.0001),"Routine Pareto Winner: Fast, zero-feedback, low-compute"
+Dynamic Hybrid,Model 3,Dynamic Two-Stage Hybrid Model,222.1,0.662,Target Met,DM = 48.72 (p < 0.0001),Lowest Routine RMSE: Tight schedule-and-residual fit

@@ -173,8 +173,8 @@ In strict compliance with `thesis_docs/notes/provenance_and_standards/Jargon_and
 ## 6. CROSS-CHAPTER INTEGRATION ROADMAP
 
 * **Handoff from Chapter I (Introduction)**: Chapter I defines the core research questions, $H_1$, and the operational motivation; Chapter II provides the theoretical taxonomy, mathematical foundations, and historical critique.
-* **Handoff to Chapter III (Methodology)**: Chapter II identifies the limitations of single-metric benchmarks, batch arrival dynamics, and the "empty checkpoint fallacy"; Chapter III translates these insights into the 4-phase filtering pipeline, the 84-cell interaction tensor ($\mathcal{S} \times \mathcal{D} \times \mathcal{H}$), the Coupled Volatility Index ($\text{CVI}$), and the six model architectures ($M_0$ through $M_5$).
-* **Handoff to Chapter IV (Findings)**: Chapter II establishes the benchmark model taxonomy ($M_0$ to $M_5$); Chapter IV empirically evaluates their performance across 122,847 train / 72,723 val / 72,053 test observations.
+* **Handoff to Chapter III (Methodology)**: Chapter II identifies the limitations of single-metric benchmarks, batch arrival dynamics, and the "empty checkpoint fallacy"; Chapter III translates these insights into the 4-phase filtering pipeline, the 84-cell interaction grid ($\mathcal{S} \times \mathcal{D} \times \mathcal{H}$), the Coupled Volatility Index ($\text{CVI}$), and the candidate model suite (Baseline Control, Model 1, Model 2, Model 3).
+* **Handoff to Chapter IV (Findings)**: Chapter II establishes the benchmark model taxonomy; Chapter IV empirically evaluates their performance across 122,847 train / 72,723 val / 72,053 test observations.
 * **Handoff to Chapter V (Discussion)**: Chapter II reviews the theoretical arguments for hybrid architectures; Chapter V synthesizes the empirical validation of $H_{1a}, H_{1b}, H_{1c}$ into the operational Regime-Switched Gated Inference Engine.
 
 ====================================================================================================

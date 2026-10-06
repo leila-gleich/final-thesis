@@ -1,5 +1,5 @@
-Paradigm,Model ID,Model Architecture,Validation R^2,Test R^2,Test RMSE (pax/hr),Test MAE (pax/hr),Test MASE,Forecast Bias (pax/hr),Academic Target Status
-Baseline Control,M0,Diurnal Volatility Naive (y_t-24),0.4412,0.6719,253.6,179.3,1.000,-0.7,Baseline Reference
-Deterministic Baseline,M1*,Deterministic Schedule Bank Volatility Baseline,0.4912,0.4980,313.4,215.9,0.945,-42.1,Passed Target (MASE < 1.0)
-Probabilistic / ML,M3,Supervised Volatility GBR (Combined Values + Vol),0.5455,0.6178,273.5,178.0,0.779,-18.4,Passed Target (MASE < 0.850)
-Sequential Hybrid,M5,Sequential SARIMA-Tree Volatility Hybrid,0.7120,0.7483,222.1,142.8,0.662,-8.5,High-Accuracy In-Sample Fit
+Paradigm,Model Name,Operational Description,Validation R^2,Test R^2,Test RMSE (pax/hr),Test MAE (pax/hr),Test MASE,Forecast Bias (pax/hr),Academic Target Status
+Baseline Control,Baseline Control,Daily Persistence Benchmark (y_t-24),0.4412,0.6719,253.6,179.3,1.000,-0.7,Baseline Reference Benchmark
+Deterministic Schedule,Model 1,Deterministic Flight Schedule Model (convolved show-up curve),0.4912,0.4980,313.4,215.9,0.945,-42.1,Passed Target (MASE < 1.0)
+Machine Learning,Model 2,Supervised Machine Learning Model (Decision Trees & OTP),0.5455,0.6178,273.5,178.0,0.779,-18.4,Passed Target (MASE < 0.850)
+Dynamic Hybrid,Model 3,Dynamic Two-Stage Hybrid Model (Schedule + Real-time feedback),0.7120,0.7483,222.1,142.8,0.662,-8.5,High-Accuracy In-Sample Fit

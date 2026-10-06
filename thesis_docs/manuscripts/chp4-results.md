@@ -317,69 +317,65 @@ The complete feature engineering pipeline encompasses five functional operationa
 
 ### Model Training
 To evaluate the research hypotheses, the canonical evaluation suite—representing each distinct modeling paradigm along with the persistence baseline—was calibrated and benchmarked against the 2025 out-of-time holdout partition:
+### The Candidate Predictive Models and Baseline Control
 
-### The Consolidated Four-Model Evaluation Suite
+Following the four-tiered purposive filtering pipeline (which established the balanced 9-airport experimental cohort across 12 carrier-exclusive terminal screening complexes), the research benchmarks **three candidate predictive models representing distinct operational paradigms**, evaluated against an empirical persistence control:
 
-Following the four-tiered purposive filtering pipeline (which established the balanced 9-airport experimental cohort across 12 carrier-exclusive terminal screening complexes), the research methodology prunes preliminary and intermediate model variations ($M_1$ unshifted contemporaneous schedule, $M_2$ lead flights only without OTP, and $M_4$ monthly load factor scaling) to establish a rigorous, uncluttered benchmark suite consisting of **exactly four canonical models (one per paradigm, plus the persistence control baseline)**:
-
-* **1. Baseline Control Benchmark ($M_0$)**:
-  * *Diurnal Volatility Naive Persistence*: $\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$. Assumes today's hourly checkpoint throughput volatility repeats yesterday's observed dispersion exactly, establishing the non-parametric reference threshold ($\text{MASE} \equiv 1.000$).
-* **2. Deterministic Physical Baseline ($M_1^*$)**:
-  * *Deterministic Schedule Bank Volatility Baseline*: Derives expected passenger arrival dispersion directly from published airline flight departure banks convolved across empirical ACRP Report 40 passenger show-up curves ($t+1, t+2, t+3$). It captures macro schedule geometry without requiring statistical training or airside delay telemetry.
-* **3. Probabilistic and Machine Learning Architecture ($M_3$)**:
-  * *Supervised Volatility Gradient Boosted Regressor (Combined Values + Volatility)*: A non-linear decision-tree regressor trained across the convolved flight schedule and the 24 Bureau of Transportation Statistics On-Time Performance (OTP) attributes (incorporating tactical flight cancellations, prior-hour delay turbulence, and surface taxi queues).
-* **4. Dynamic Cyber-Physical Hybrid Framework ($M_5$)**:
-  * *Sequential SARIMA-Tree Volatility Hybrid with State-Space Feedback*:
-    * *Stage 1 (Linear Cyclical Rhythms)*: Captures recurring diurnal and weekly baseline volatility harmonics ($\widehat{\text{Vol}}_{1, t}$).
-    * *Stage 2 (Non-Linear Residual Tree)*: Predicts residual volatility error shocks ($\hat{e}_t$) using airside delay dispersion, tactical cancellations, and operational regime indicators.
-    * *Closed-Loop State Tracking*: Integrates recursive 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) to dynamically sense passenger dwell and update terminal queue estimates during flight delays.
+* **Baseline Control Benchmark (Daily Persistence)**:
+  * *Operational Approach*: Assumes today's hourly checkpoint arrival volatility repeats yesterday's observed dispersion exactly ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$). This non-parametric reference standard establishes the scaling baseline ($\text{MASE} \equiv 1.000$).
+* **Model 1: Deterministic Flight Schedule Model (Physical Baseline)**:
+  * *Operational Approach*: Derives expected passenger arrival dispersion directly from published airline flight departure banks convolved across empirical ACRP Report 40 passenger show-up curves ($t+1, t+2, t+3$). It captures macro schedule geometry without requiring statistical machine learning or airside delay telemetry.
+* **Model 2: Supervised Machine Learning Model (Flight Operations & Delays)**:
+  * *Operational Approach*: An automated decision-tree model trained across the convolved flight schedule and 24 Bureau of Transportation Statistics (BTS) On-Time Performance (OTP) operational features (incorporating tactical flight cancellations, prior-hour delay dispersion, and surface taxi queues).
+* **Model 3: Dynamic Two-Stage Hybrid Model (Schedule + Real-Time Feedback)**:
+  * *Operational Approach*: Combines daily and weekly flight schedule cycles with live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) from actual checkpoint screening counts. When unexpected flight delays hold passengers landside, the dynamic error correction senses the accumulation and immediately adjusts the forecast upward.
 
 #### Training Window and Partitioning Design.
 Models were trained and validated across the 32-month Candidate B development partition:
 * **Training Window**: May 1, 2022 to December 31, 2023 (15,976 airport-days across the 9-airport filtered complex cohort).
-* **Validation Window**: January 1, 2024 to December 31, 2024 (3,293 airport-days), used for hyperparameter tuning (learning rate $\eta = 0.05$, max depth = 6, num leaves = 63).
+* **Validation Window**: January 1, 2024 to December 31, 2024 (3,293 airport-days), used for model calibration.
 * **Operational Buffer**: A 7-day purge buffer between partitions ensures that multi-day delay cascades from December 2023 do not leak into the January 2024 validation partition.
 
 ### Model Testing
-All four trained architectures were evaluated against the untouched **2025 Full-Year Out-of-Time Holdout Dataset**:
+All models were evaluated against the untouched **2025 Full-Year Out-of-Time Holdout Dataset**:
 * **Evaluation Period**: January 1, 2025 to December 31, 2025 (12 continuous months; 3,222 test airport-days; 72,053 complex-level screening hours).
 * **Primary Target**: Intraday Diurnal Throughput Volatility ($\sigma_{\text{TSA, hr}}$, measured in passengers per hour dispersion across the 24 hours of day $d$) and Scale-Free Relative Volatility ($CV_{\text{TSA, hr}} = \sigma / \mu$).
-* **Evaluation Metrics**: Models were benchmarked across standard accuracy metrics: Coefficient of Determination ($R^2$), Root Mean Squared Error (RMSE; pax/hr), Mean Absolute Error (MAE; pax/hr), Mean Absolute Scaled Error (MASE; relative to naive persistence), and Mean Forecast Bias.
+* **Evaluation Metrics**: Models were benchmarked across standard operational metrics: Coefficient of Determination ($R^2$), Root Mean Squared Error (RMSE; pax/hr), Mean Absolute Error (MAE; pax/hr), Mean Absolute Scaled Error (MASE; relative to daily persistence), and Mean Forecast Bias.
 
 ### Implications for How to Interpret Final Results
 When interpreting model evaluation metrics, several operational realities must be considered:
-1. **Dispersion Scale vs. Volume Scale**: Unlike mean hourly throughput volume (which averages ~1,750 pax/hr across dedicated complexes), diurnal throughput standard deviation ($\sigma_{\text{TSA, hr}}$) averages 540 to 880 passengers per hour across hub complexes. An RMSE of ~220 pax/hr represents an extremely tight fit to intraday arrival swings.
-2. **MASE as the Gold Standard for Volatility Forecasting**: In stochastic volatility processes, $R^2$ can be influenced by volume scale. MASE normalizes errors against seasonal persistence ($\text{Vol}_{t-24}$). A MASE below 0.85 indicates substantial predictive skill beyond historical persistence.
+1. **Dispersion Scale vs. Volume Scale**: Unlike mean hourly throughput volume (which averages ~1,750 pax/hr across dedicated complexes), diurnal throughput standard deviation ($\sigma_{\text{TSA, hr}}$) averages 540 to 880 passengers per hour across hub complexes. An RMSE of ~220 pax/hr represents an exceptionally close fit to intraday arrival swings.
+2. **MASE as the Primary Standard for Volatility Forecasting**: MASE normalizes errors against daily persistence ($\text{Vol}_{t-24}$). A MASE below 0.85 indicates substantial predictive skill beyond historical patterns, while a MASE below 0.70 represents outstanding accuracy.
 3. **Conformal Staffing Buffers**: Airport security planners can translate predicted throughput volatility directly into risk-buffered lane allocations ($c(t) = \lceil (\hat{\mu}_t + z_q \cdot \hat{\sigma}_t) / \mu_{\text{lane}} \rceil$) to prevent queue overflow during peak departure banks.
 
 ## Model Evaluation and Results
 
 ### Results from Running Models
-Table 4.10 reports the out-of-time evaluation benchmark matrix across the four canonical model architectures on the 2025 holdout dataset (3,222 test airport-days; 72,053 hourly complex observations).
+Table 4.10 reports the out-of-time evaluation benchmark matrix across the candidate model architectures on the 2025 holdout dataset (3,222 test airport-days; 72,053 hourly complex observations).
 
 Table 4.10  
 *Master Model Benchmark Matrix for TSA Throughput Volatility (2025 Full-Year Out-of-Time Holdout)*
 
-| Paradigm | Model ID | Model Architecture | Validation $R^2$ | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Forecast Bias (pax/hr) | Academic Target Status |
-| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Baseline Control** | $M_0$ | Diurnal Volatility Naive ($y_{t-24}$) | 0.4412 | 0.6719 | 253.6 | 179.3 | 1.000 | -0.7 | Baseline Reference |
-| **Deterministic Baseline** | $M_1^*$| Deterministic Schedule Bank Volatility Baseline | 0.4912 | 0.4980 | 313.4 | 215.9 | 0.945 | -42.1 | Passed Target ($\text{MASE} < 1.0$) |
-| **Probabilistic / ML** | $M_3$ | Supervised Volatility GBR (Combined Values + Vol) | 0.5455 | 0.6178 | 273.5 | 178.0 | 0.779 | -18.4 | Passed Target ($\text{MASE} < 0.850$) |
-| **Sequential Hybrid** | $M_5$ | Sequential SARIMA-Tree Volatility Hybrid | 0.7120 | 0.7483 | 222.1 | 142.8 | 0.662 | -8.5 | High-Accuracy In-Sample Fit |
+| Paradigm | Model Name | Operational Description | Validation $R^2$ | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Forecast Bias (pax/hr) | Academic Target Status |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Baseline Control** | **Baseline Control** | Daily Persistence Benchmark ($y_{t-24}$) | 0.4412 | 0.6719 | 253.6 | 179.3 | 1.000 | -0.7 | Baseline Reference Benchmark |
+| **Deterministic Schedule** | **Model 1** | Deterministic Flight Schedule Model (convolved show-up curve) | 0.4912 | 0.4980 | 313.4 | 215.9 | 0.945 | -42.1 | Passed Target ($\text{MASE} < 1.0$) |
+| **Machine Learning** | **Model 2** | Supervised Machine Learning Model (Decision Trees & OTP) | 0.5455 | 0.6178 | 273.5 | 178.0 | 0.779 | -18.4 | Passed Target ($\text{MASE} < 0.850$) |
+| **Dynamic Hybrid** | **Model 3** | Dynamic Two-Stage Hybrid Model (Schedule + Real-time feedback) | 0.7120 | 0.7483 | 222.1 | 142.8 | 0.662 | -8.5 | High-Accuracy In-Sample Fit |
 
 ### General Model Performance Across the 9-Airport Cohort
-The empirical results reveal clear performance separations across the four canonical modeling paradigms:
-1. **The Deterministic Schedule Baseline ($M_1^*$)**:
-   By convolving scheduled flight departures across empirical ACRP Report 40 passenger show-up curves, $M_1^*$ achieves $\text{Test } R^2 = 0.4980$ ($\text{RMSE} = 313.4\text{ pax/hr}, \text{MASE} = 0.945$). It outperforms naive persistence by 5.5% without requiring any real-time operational telemetry or machine learning infrastructure.
-2. **Supervised Non-Linear Feature Coupling ($M_3$)**:
-   Incorporating the full 24 OTP feature attributes (airside flight delay dispersion, tactical cancellations, and taxi-out queues) elevates explained variance to **$R^2 = 0.6178$** ($\text{RMSE} = 273.5\text{ pax/hr}, \text{MASE} = 0.779$). Diebold-Mariano tests confirm that $M_3$'s error reductions over deterministic scheduling are statistically decisive ($DM = 42.15, p < 0.0001$).
-3. **The Sequential SARIMA-Tree Hybrid ($M_5$)**:
-   By coupling a linear cyclical seasonal foundation with non-linear tree residual corrections, $M_5$ explains **74.83% of total passenger throughput volatility variance** on unobserved holdout data ($\text{Test } R^2 = 0.7483$), achieving an RMSE of **222.1 pax/hr** and a holdout MASE of **0.662**.
+The empirical results reveal clear performance separations across the modeling paradigms:
+1. **The Deterministic Schedule Baseline (Model 1)**:
+   By shifting scheduled flight departures across empirical ACRP Report 40 passenger arrival curves, Model 1 achieves $\text{Test } R^2 = 0.4980$ ($\text{RMSE} = 313.4\text{ pax/hr}, \text{MASE} = 0.945$). It outperforms simple persistence by 5.5% without requiring real-time flight tracking or machine learning infrastructure.
+2. **Supervised Feature Coupling (Model 2)**:
+   Incorporating 24 BTS OTP feature attributes (departure delay dispersion, tactical cancellations, and taxi queues) elevates explained variance to **$R^2 = 0.6178$** ($\text{RMSE} = 273.5\text{ pax/hr}, \text{MASE} = 0.779$). Statistical loss differential tests confirm that Model 2's error reductions over deterministic scheduling are statistically decisive ($DM = 42.15, p < 0.0001$).
+3. **The Dynamic Two-Stage Hybrid (Model 3)**:
+   By coupling a daily flight schedule foundation with live real-time error feedback, Model 3 explains **74.83% of total passenger throughput volatility variance** on unobserved holdout data ($\text{Test } R^2 = 0.7483$), achieving an RMSE of **222.1 pax/hr** and a holdout MASE of **0.662**.
 
 ### Model Performance in the Context of the Thesis (Asymmetric Hypothesis Testing)
 The primary thesis hypothesis (**Hypothesis 1**) asserted that *distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures*. 
 
-Critically, **the hybrid model ($M_5$) is NOT the winner across all performance measures**. To determine model efficacy, the four canonical architectures were evaluated against explicit performance targets across the three operational dimensions:
+Critically, **the hybrid model (Model 3) is NOT the winner across all performance measures**. To determine model efficacy, the candidate architectures were evaluated against explicit performance targets across the three operational dimensions:
 * **Robustness Target**: Lowest $\text{RMSE}_{\text{routine}}$ and $\text{MASE}_{\text{routine}} < 0.70$ under nominal flight conditions.
 * **Resilience Target**: Recovery RMSE Multiplier $R_{\text{RMSE}} \approx 1.00$ and lowest $\text{MASE}_{\text{shock}}$ under acute disruptions.
 * **Generalizability Target**: Relative Transfer Ratio $\text{RTR} = 1.00$ and Change in MASE on transfer $\Delta \text{MASE} \le 10.0\%$.
@@ -387,48 +383,48 @@ Critically, **the hybrid model ($M_5$) is NOT the winner across all performance 
 Table 4.11 presents the formal multi-pillar hypothesis evaluation matrix.
 
 Table 4.11  
-*Master Multi-Pillar Hypothesis Evaluation Matrix Across the Four Canonical Models (Throughput Volatility)*
+*Master Multi-Pillar Hypothesis Evaluation Matrix Across the Four Models (Throughput Volatility)*
 
-| Operational Dimension | Performance Metric | Formula / Definition | Academic Stated Target | Baseline Control ($M_0$) | Deterministic Baseline ($M_1^*$) | Probabilistic ML ($M_3$) | Dynamic Hybrid ($M_5$) | Paradigm Dimension Winner & Status |
+| Operational Dimension | Performance Metric | Formula / Definition | Academic Stated Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Paradigm Dimension Winner & Status |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Dimension 1: Robustness** | $\text{RMSE}_{\text{routine}}$ (Delay $< 15$m; 0 Cancels) | $\sqrt{\text{mean}((\text{Vol} - \widehat{\text{Vol}})^2 \mid \text{routine})}$ | Lowest Routine RMSE | 253.6 pax/hr | 313.4 pax/hr | 273.5 pax/hr | **222.1 pax/hr** | **$M_5$ achieves lowest RMSE**; $M_3$ delivers low-compute routine Pareto fit. |
-| **Dimension 1: Robustness** | $\text{MASE}_{\text{routine}}$ (Relative Routine Error) | $\text{MAE}_{\text{routine}} / \text{MAE}_{\text{naive}}$ | **$\text{MASE} < 0.700$** | 1.000 | 0.945 | **0.680\text{--}0.700** | **0.662** | **Target Met by $M_3$ and $M_5$**; confirms H1(a) (ML/Hybrids fit routine rhythms). |
-| **Dimension 1: Robustness** | Diebold-Mariano ($DM$) Stat & $p$-value | $DM$ Loss Differential Test vs. $M_1^*$ | $p < 0.001$ | Reference | Control Baseline | $DM = 42.15$ ($p < 0.0001$) | $DM = 48.72$ ($p < 0.0001$) | Statistically proves ML and Hybrid gains over deterministic scheduling are genuine. |
-| **Dimension 2: Resilience** | $\text{RMSE}_{\text{shock}}$ (Delay $\ge 45$m or Cancels $\ge 5$) | $\sqrt{\text{mean}((\text{Vol} - \widehat{\text{Vol}})^2 \mid \text{shock})}$ | Lowest Shock RMSE | 398.2 pax/hr | 412.8 pax/hr | 318.4 pax/hr | **254.2 pax/hr** | **$M_5$ minimizes absolute error** during severe convective storms. |
-| **Dimension 2: Resilience** | $\text{MASE}_{\text{shock}}$ (Relative Disruption Error) | $\text{MAE}_{\text{shock}} / \text{MAE}_{\text{naive}}$ | Lowest Shock MASE | 1.000 | 1.082 | 0.812 | **0.694 (LOWEST)** | **$M_5$ performs 30.6% better** than naive persistence during airport ground stops. |
-| **Dimension 2: Resilience** | Resilience Multiplier ($R_{\text{MASE}}$) | $\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$ | **$R \approx 1.00$** (Fragile $\ge 2.0$) | 1.00 (Static) | 1.32 (Blind to Delays) | 2.14 (Fragile Collapse) | **1.05 (RESILIENT)** | **$M_5$ DECISIVE WINNER (Target Met)**; closed-loop feedback prevents collapse. |
-| **Dimension 2: Resilience** | Time-to-Recovery ($\text{TTR}_{\text{shock}}$) | Kaplan-Meier survival to $\pm 2\sigma$ error | **$\text{TTR} < 4.0$ hours** | 8.4 hours | 7.8 hours | 5.4 hours | **2.8 hours (FASTEST)** | **$M_5$ returns to normal error bounds** 5.0 hrs faster than $M_1^*$ and 2.6 hrs faster than $M_3$. |
+| **Dimension 1: Robustness** | $\text{RMSE}_{\text{routine}}$ (Nominal: Delay $< 15$m; 0 Cancels) | $\sqrt{\text{mean}((\text{Vol} - \widehat{\text{Vol}})^2 \mid \text{routine})}$ | Lowest Routine RMSE | 253.6 pax/hr | 313.4 pax/hr | 273.5 pax/hr | **222.1 pax/hr** | **Model 3 achieves lowest RMSE**; Model 2 delivers low-compute routine Pareto fit. |
+| **Dimension 1: Robustness** | $\text{MASE}_{\text{routine}}$ (Relative Routine Error) | $\text{MAE}_{\text{routine}} / \text{MAE}_{\text{naive}}$ | **$\text{MASE} < 0.700$** | 1.000 | 0.945 | **0.680\text{--}0.700** | **0.662** | **Target Met by Model 2 and Model 3**; confirms H1(a) (ML/Hybrids fit routine rhythms). |
+| **Dimension 1: Robustness** | Statistical Significance vs Baseline | Loss Differential Test vs. Model 1 | $p < 0.001$ | Reference | Control Baseline | $DM = 42.15$ ($p < 0.0001$) | $DM = 48.72$ ($p < 0.0001$) | Statistically proves ML and Hybrid gains over deterministic scheduling are genuine. |
+| **Dimension 2: Resilience** | $\text{RMSE}_{\text{shock}}$ (IROPS: Delay $\ge 45$m or Cancels $\ge 5$) | $\sqrt{\text{mean}((\text{Vol} - \widehat{\text{Vol}})^2 \mid \text{shock})}$ | Lowest Shock RMSE | 398.2 pax/hr | 412.8 pax/hr | 318.4 pax/hr | **254.2 pax/hr** | **Model 3 minimizes absolute error** during severe convective storms. |
+| **Dimension 2: Resilience** | $\text{MASE}_{\text{shock}}$ (Relative Disruption Error) | $\text{MAE}_{\text{shock}} / \text{MAE}_{\text{naive}}$ | Lowest Shock MASE | 1.000 | 1.082 | 0.812 | **0.694 (LOWEST)** | **Model 3 performs 30.6% better** than daily persistence during airport ground stops. |
+| **Dimension 2: Resilience** | Disruption Multiplier ($R_{\text{MASE}}$) | $\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$ | **$R \approx 1.00$** (Fragile $\ge 2.0$) | 1.00 (Static) | 1.32 (Blind to Delays) | 2.14 (Fragile Collapse) | **1.05 (RESILIENT)** | **Model 3 DECISIVE WINNER (Target Met)**; live feedback prevents collapse. |
+| **Dimension 2: Resilience** | Time-to-Recovery ($\text{TTR}_{\text{shock}}$) | Elapsed time to return to normal error bounds | **$\text{TTR} < 4.0$ hours** | 8.4 hours | 7.8 hours | 5.4 hours | **2.8 hours (FASTEST)** | **Model 3 returns to normal error bounds** 5.0 hrs faster than Model 1 and 2.6 hrs faster than Model 2. |
 | **Dimension 3: Generalizability**| Zero-Shot $\text{RMSE}_{\text{transfer}}$ | Transfer from EWR to LGA (no retraining) | Minimize Transfer RMSE | 253.6 pax/hr | 326.5 pax/hr | 295.1 pax/hr | 264.3 pax/hr | Out-of-the-box accuracy when deploying model to an unfamiliar airport facility. |
-| **Dimension 3: Generalizability**| Relative Transfer Ratio (RTR) | $\text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$ | **$\text{RTR} = 1.00$** | 1.00 | **1.04 (TARGET MET)** | 1.08 | **1.19 (FAILS TARGET)** | **$M_1^*$ DECISIVE WINNER**; $M_5$ suffers heavy penalty due to terminal overfitting. |
-| **Dimension 3: Generalizability**| Transfer Degradation ($\Delta_{\text{transfer}}$) | $((\text{RMSE}_{\text{trans}} - \text{RMSE}_{\text{in}}) / \text{RMSE}_{\text{in}}) \times 100$ | Minimal Penalty ($\le 10\%$) | 0.0% | **+4.2% (MINIMAL)** | +7.9% (LOW) | **+19.0% (ELEVATED)** | Deterministic physical rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%. |
-| **Dimension 3: Generalizability**| Change in MASE on Transfer ($\Delta\text{MASE}$) | $\text{MASE}_{\text{transfer}} - \text{MASE}_{\text{in-sample}}$ | **$\Delta\text{MASE} \le 10.0\%$** | 0.0% | **+4.0% (TARGET MET)** | +8.3% (PASSES) | **+21.5% (FAILS TARGET)** | **$M_1^*$ passes target with +4.0% shift** ($+0.038$); $M_5$ fails target with +21.5% shift ($+0.142$). |
+| **Dimension 3: Generalizability**| Relative Transfer Ratio (RTR) | $\text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$ | **$\text{RTR} = 1.00$** | 1.00 | **1.04 (TARGET MET)** | 1.08 | **1.19 (FAILS TARGET)** | **Model 1 DECISIVE WINNER**; Model 3 suffers heavy penalty due to terminal overfitting. |
+| **Dimension 3: Generalizability**| Transfer Degradation ($\Delta_{\text{transfer}}$) | Percent increase in transfer RMSE | Minimal Penalty ($\le 10\%$) | 0.0% | **+4.2% (MINIMAL)** | +7.9% (LOW) | **+19.0% (ELEVATED)** | Deterministic physical rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%. |
+| **Dimension 3: Generalizability**| Change in MASE on Transfer ($\Delta\text{MASE}$) | $\text{MASE}_{\text{transfer}} - \text{MASE}_{\text{in-sample}}$ | **$\Delta\text{MASE} \le 10.0\%$** | 0.0% | **+4.0% (TARGET MET)** | +8.3% (PASSES) | **+21.5% (FAILS TARGET)** | **Model 1 passes target with +4.0% shift** ($+0.038$); Model 3 fails target with +21.5% shift ($+0.142$). |
 
 #### Empirical Confirmation of Asymmetric Trade-Offs (Hypothesis 1 Verified).
-1. **Dimension 1: Robustness (Routine Conditions)**:
-   Both the Supervised Machine Learning model ($M_3$) and Sequential Hybrid ($M_5$) achieve the academic target of $\text{MASE} < 0.70$ under routine operations. However, $M_3$ achieves this with near-zero computational overhead and zero feedback latency, making it the preferred operational choice for calm, routine staffing.
-2. **Dimension 2: Resilience (Severe Disruption)**:
-   The Dynamic Hybrid Framework ($M_5$) is the **decisive champion of Resilience**. While pure ML ($M_3$) suffers from the "Empty Checkpoint Fallacy" during delayed flight holds ($R_{\text{MASE}} = 2.14$), $M_5$'s recursive 1-step error innovation feedback ($e_{t-1}$) maintains a resilient multiplier of $R_{\text{MASE}} = 1.05 \approx 1.00$ and achieves the fastest Time-to-Recovery ($\text{TTR} = 2.8\text{ hours}$).
+1. **Dimension 1: Robustness (Nominal & Routine Conditions)**:
+   Both the Supervised Machine Learning model (Model 2) and Dynamic Hybrid (Model 3) achieve the academic target of $\text{MASE} < 0.70$ under routine operations. However, Model 2 achieves this with near-zero computational overhead and zero feedback latency, making it the preferred operational choice for everyday routine staffing.
+2. **Dimension 2: Resilience (Severe Disruption / IROPS)**:
+   The Dynamic Hybrid Framework (Model 3) is the **decisive champion of Resilience**. While pure machine learning (Model 2) suffers from the "Empty Checkpoint Fallacy" during delayed flight holds ($R_{\text{MASE}} = 2.14$), Model 3's recursive error feedback ($e_{t-1}$) maintains a resilient multiplier of $R_{\text{MASE}} = 1.05 \approx 1.00$ and achieves the fastest Time-to-Recovery ($\text{TTR} = 2.8\text{ hours}$).
 3. **Dimension 3: Generalizability (Zero-Shot Portability)**:
-   The Deterministic Schedule Bank Baseline ($M_1^*$) is the **decisive champion of Generalizability**. It successfully meets both stated targets: $\text{RTR} = 1.04 \approx 1.00$ and $\Delta\text{MASE} = +4.0\% \le 10.0\%$. Conversely, **the Hybrid model ($M_5$) decisively fails the Generalizability targets** ($\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$) because its decision-tree component overfits to Newark's specific terminal geometry and carrier bank timings. This empirical failure disproves universal hybrid dominance and decisively confirms Hypothesis 1.
+   The Deterministic Flight Schedule Model (Model 1) is the **decisive champion of Generalizability**. It successfully meets both stated targets: $\text{RTR} = 1.04 \approx 1.00$ and $\Delta\text{MASE} = +4.0\% \le 10.0\%$. Conversely, **the Hybrid model (Model 3) decisively fails the Generalizability targets** ($\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$) because its decision-tree component overfits to Newark's specific terminal geometry and carrier bank timings. This empirical failure disproves universal hybrid dominance and decisively confirms Hypothesis 1.
 
 ## The Values versus Volatility Paradigm Empirical Results
 
 The central empirical comparison of this thesis evaluates whether predicting TSA throughput volatility requires tracking the **values (levels) of OTP attributes**, the **volatility of OTP attributes**, or a **combined dual model**. Evaluating across the 2025 out-of-time holdout ($N = 3,222$ test days) across the three volatility targets reveals:
 
 1. **Intraday Diurnal Absolute Volatility ($\sigma_{\text{TSA, hr}}$, pax/hr dispersion)**:
-   * *Values Only*: Achieves $R^2 = 0.6229$ ($\text{RMSE} = 271.6$). Because raw variance naturally scales with airport passenger volume (Tweedie dispersion property $\text{Var}(Y) \propto \mu^p$), flight volume counts anchor the base magnitude of the facility.
+   * *Values Only*: Achieves $R^2 = 0.6229$ ($\text{RMSE} = 271.6$). Because raw variance naturally scales with airport passenger volume, flight volume counts anchor the base magnitude of the facility.
    * *Volatility Only*: Achieves $R^2 = 0.4980$ ($\text{RMSE} = 313.4$).
-   * *Combined Representation*: Achieves $R^2 = 0.6178$ in non-linear GBR ($\text{RMSE} = 273.5, \text{MAE} = 178.0$).
+   * *Combined Representation*: Achieves $R^2 = 0.6178$ in non-linear decision trees ($\text{RMSE} = 273.5, \text{MAE} = 178.0$).
 2. **Intraday Scale-Free Relative Volatility ($CV_{\text{TSA, hr}} = \sigma / \mu$, ratio)**:
    * Under this scale-free regime, Values Only drops to $R^2 = 0.1823$.
-   * Volatility Only captures $R^2 = 0.1853$ in non-linear GBR.
+   * Volatility Only captures $R^2 = 0.1853$ in decision trees.
    * **The Combined Dual Model outperforms all architectures ($R^2 = 0.2208$, $\text{RMSE} = 0.1853$, $\text{MAE} = 0.1010$)**, proving that scale-free arrival burstiness reflects an interaction between carrier schedule volume and operational disruption.
 3. **Multi-Day Temporal Rolling Volatility ($\sigma_{\text{TSA, 7d}}$, pax/day)**:
-   * **Feature Values Completely Collapse**: Yielding negative test scores (OLS $R^2 = -0.2688$; GBR $R^2 = -0.0506$). Because static flight counts remain relatively constant across seasons, static volume levels are blind to temporal turbulence.
-   * **Feature Volatility Succeeds**: In sharp contrast, Feature Volatility metrics achieve **$R^2 = +0.2313$ (OLS) and $R^2 = +0.3105$ (GBR)**, improving to **$R^2 = +0.3166$** in the Combined Model, with RMSE dropping from 4,090.7 to 3,002.3 pax/day. This confirms Hypothesis $H_2$.
+   * **Feature Values Completely Collapse**: Yielding negative test scores ($R^2 = -0.2688$ in linear regression; $R^2 = -0.0506$ in decision trees). Because static flight counts remain relatively constant across seasons, static volume levels are blind to temporal turbulence.
+   * **Feature Volatility Succeeds**: In sharp contrast, Feature Volatility metrics achieve **$R^2 = +0.2313$ (linear) and $R^2 = +0.3105$ (decision trees)**, improving to **$R^2 = +0.3166$** in the Combined Model, with RMSE dropping from 4,090.7 to 3,002.3 pax/day. This confirms Hypothesis $H_2$.
 
 ### Master Factor Weighting Hierarchy of OTP Attributes
-Synthesizing regularized regressions (Ridge, Lasso, Elastic Net), tree ensembles (Random Forest, Gradient Boosting), and permutation importance establishes the consensus predictive weights of all 24 OTP attributes:
+Synthesizing variable importance across models establishes the consensus predictive weights of all 24 OTP attributes:
 * **Schedule Scale & Density (64.47% Consensus Share)**: Governed by `sched_rolling_7d_mean` (23.73%), `actual_daily_total` (11.64%), and `sched_hourly_mean` (6.91%).
 * **Tactical Cancellations (16.48% Share)**: Driven by cancellation rate volatility (`otp_cancellation_volatility_cv`: 8.79%).
 * **Network Buffers & Capacity (7.85% Share)**: Aircraft seating capacity (`aircraft_gauge_seats`: 4.26%) smooths day-to-day volatility.
@@ -438,6 +434,6 @@ Synthesizing regularized regressions (Ridge, Lasso, Elastic Net), tree ensembles
 ### Implications of Model Performance for Predictive Forecasting in Aviation
 1. **Deploying Dual-Paradigm Volatility Models for Staffing**: Rather than allocating security lanes based on static flight departure counts, TSA planners must incorporate **feature volatility metrics** (rolling 7-day schedule variance and cancellation volatility) to forecast queue dispersion.
 2. **Operational Deployment via a Dual-Track Decision Engine**:
-   * *Nominal Tracking Track*: During clear weather ($T(h) < 0.75$), operational planning should rely on the **Supervised Volatility Model ($M_3$)**, delivering high accuracy ($\text{MASE} = 0.779$) and superior spatial portability ($RTR = 1.08$).
-   * *Tactical Shock Track*: When severe storms or ground stops occur ($T(h) \ge 0.75$), the system should engage the **Sequential Hybrid ($M_5$)**, utilizing closed-loop error feedback to achieve rapid recovery ($\text{TTR} = 2.8\text{ hours}$).
+   * *Nominal Tracking Track*: During clear weather ($T(h) < 0.75$), operational planning should rely on the **Supervised Machine Learning Model (Model 2)**, delivering high accuracy ($\text{MASE} = 0.779$) and superior spatial portability ($RTR = 1.08$).
+   * *Tactical Shock Track*: When severe storms or ground stops occur ($T(h) \ge 0.75$), the system should engage the **Dynamic Two-Stage Hybrid (Model 3)**, utilizing live error feedback to achieve rapid recovery ($\text{TTR} = 2.8\text{ hours}$).
 3. **Dynamic Lane Buffers via Conformal Prediction**: By pairing predicted volatility with conformal quantile bounds ($\hat{y}_{0.85}$), security directors can establish dynamic lane buffers ($c(t) = \lceil (\hat{\mu}_t + 1.036 \cdot \hat{\sigma}_t) / \mu_{\text{lane}} \rceil$) that absorb queue surges without chronic overstaffing.

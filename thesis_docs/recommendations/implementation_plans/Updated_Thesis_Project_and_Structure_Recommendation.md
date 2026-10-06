@@ -14,10 +14,11 @@
 
 This document provides the definitive, updated architectural recommendation for the graduate thesis project structure, data integration pipeline, and formal chapter organization.
 
-The thesis evaluates three distinct modeling paradigms:
-1. **Deterministic Baselines** (M0 Diurnal Seasonal Naive, M1 Rebuilt 2-Hour Static Lead Schedule)
-2. **Probabilistic / Supervised Machine Learning** (M2 Convolved Density, M3 LightGBM Tweedie Deviance)
-3. **Cyber-Physical Hybrids** (M5 Sequential SARIMA-Tree, State-Space Digital Twin)
+The thesis evaluates three distinct candidate modeling paradigms benchmarked against an empirical baseline control:
+1. **Baseline Control**: Daily Persistence Benchmark ($y_{t-24}$, non-parametric $\text{MASE} \equiv 1.000$)
+2. **Model 1 (Deterministic Schedule Model)**: Published flight bank dispersion convolved with ACRP Report 40 passenger arrival curves
+3. **Model 2 (Supervised Machine Learning Model)**: Decision trees combining convolved arrivals and 24 BTS OTP operational features
+4. **Model 3 (Dynamic Two-Stage Hybrid Model)**: Sequential schedule foundation coupled with live 1-step error innovation feedback ($e_{t-1}$)
 
 These models are rigorously evaluated across **three core operational dimensions**:
 * **Dimension 1: Robustness** (Routine steady-state accuracy, nominal operations, departure delays $< 15\text{ min}$, $\text{MASE}_{\text{routine}}$).
@@ -60,7 +61,7 @@ To satisfy both ERAU academic committee standards and operational utility for TS
   ├── 3.5 Temporal Scope: Network-Theoretic Post-Pandemic Demarcation (May 1, 2022 CUSUM/Chow)
   ├── 3.6 Econometric Validation of Carrier-Exclusive Checkpoints (Volume Conservation & KS Invariance)
   ├── 3.7 Feature Deconvolution & Passenger Show-Up Curve Convolution
-  ├── 3.8 Model Architectures & Estimation Procedures (M0 through M5)
+  ├── 3.8 Model Architectures & Estimation Procedures (Baseline Control, Model 1, Model 2, and Model 3)
   └── 3.9 Multi-Metric Evaluation Framework (Robustness, Resilience, Generalizability Formulations)
 
   CHAPTER IV: FINDINGS (EMPIRICAL RESULTS)
@@ -173,14 +174,12 @@ Chapter IV Content Flow:
 * **Objective**: Present final, unvarnished comparative performance on the 215,562 holdout observations.
 * **Performance Summary Table**:
 
-| Model Family | ID | Architecture & Features | Val $R^2$ | Test $R^2$ | Test RMSE | Test MAE | Test MASE |
+| Model Paradigm | Candidate Model | Architecture & Features | Val $R^2$ | Test $R^2$ | Test RMSE | Test MAE | Test MASE |
 | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Deterministic Baseline** | M0 | Diurnal Seasonal Naive ($y_{t-24}$) | 0.4951 | 0.4508 | 1377.3 | 939.8 | 1.000 |
-| **Deterministic Baseline** | M1 | Rebuilt 2-Hr Static Lead ($t+2$) | 0.5312 | 0.5293 | 1265.4 | 902.1 | 0.942 |
-| **Probabilistic / ML** | M2 | Convolved Lead Density Only | 0.5443 | 0.5862 | 1195.5 | 856.2 | 0.911 |
-| **Probabilistic / ML** | M3 | LightGBM Tweedie ($p=1.3$) + OTP Delays | 0.5450 | **0.5880** | **1192.9** | **855.1** | **0.910** |
-| **Probabilistic / ML** | M4 | Full Tri-Modal Pipeline (Convolved + OTP + LF) | 0.5798 | 0.5771 | 1208.6 | 856.3 | 0.911 |
-| **Dynamic Cyber-Hybrid** | M5 | Sequential SARIMA-Tree Hybrid | **0.6644** | **0.6270** | **1135.0** | **795.0** | **0.846** |
+| **Baseline Control** | **Baseline Control** | Daily Persistence Benchmark ($y_{t-24}$) | 0.4412 | 0.6719 | 253.6 | 179.3 | 1.000 |
+| **Deterministic Baseline** | **Model 1** | Deterministic Flight Schedule Model (convolved show-up curve) | 0.4912 | 0.4980 | 313.4 | 215.9 | 0.945 |
+| **Machine Learning** | **Model 2** | Supervised Machine Learning Model (Decision Trees & OTP) | 0.5455 | 0.6178 | 273.5 | 178.0 | 0.779 |
+| **Dynamic Hybrid** | **Model 3** | Dynamic Two-Stage Hybrid Model (Schedule + Real-time feedback) | 0.7120 | **0.7483** | **222.1** | **142.8** | **0.662** |
 
 * **Companion Deliverables**:
   * Table 4.10: *Master Model Benchmark Matrix on 2025 Holdout Data*.
@@ -219,21 +218,20 @@ Chapter V Narrative Flow:
 
 ### 5.3 Deep-Dive: Evaluation Dimension 1 – Robustness (Routine Operational Accuracy)
 * **Statistical Evaluation**:
-  * Under routine conditions ($\text{depDel} < 15\text{ min}$), Supervised ML (M3) and Dynamic Hybrids (M5) achieve $\text{MASE}_{\text{routine}} = 0.890$ and $0.834$, significantly outperforming the rebuilt deterministic baseline (M1: $\text{MASE} = 0.942$).
-  * Diebold-Mariano tests confirm statistical significance ($DM = 74.25$ and $79.12$, $p < 0.0001$).
-* **Hypothesis 1 Evaluation**:
-  * *Confirmed*: Non-linear gradient boosted trees capture diurnal curves, day-of-week interactions, and aircraft seat capacity non-linearities without rigid distributional assumptions.
-  * Isolating M1 vs. M3 proves the specific incremental value of modeling stochastic passenger arrivals and monthly load factor variations.
+  * Under routine conditions ($\text{depDel} < 15\text{ min}$), Supervised ML (Model 2) and Dynamic Hybrids (Model 3) achieve $\text{MASE}_{\text{routine}} \le 0.700$ and $0.662$, significantly outperforming the deterministic flight schedule baseline (Model 1: $\text{MASE} = 0.945$).
+  * Diebold-Mariano tests confirm statistical significance ($DM = 42.15$ and $48.72$, $p < 0.0001$).
+* **Hypothesis 1(a) Evaluation**:
+  * *Confirmed*: Non-linear gradient boosted trees capture diurnal curves, day-of-week interactions, and aircraft seat capacity non-linearities without rigid distributional assumptions. Model 2 delivers the optimal Pareto-efficient routine solution.
 
 ### 5.4 Deep-Dive: Evaluation Dimension 2 – Resilience Under Disruption (Shock Absorption & Dynamic Recovery)
 * **Performance Under Acute Stress**:
-  * Evaluation during Winter Storm Elliott (Dec 2022) and major convective ground stops.
-  * Pure ML models suffer acute degradation ($R_{\text{MASE}} = 2.14$): when flights are delayed past midnight, gate departures vanish from the evening schedule, causing ML to predict empty checkpoints while stranded passengers congest the terminal.
-  * The Dynamic Hybrid (M5) maintains resilience ($R_{\text{MASE}} = 1.28 \le 1.30$) by ingesting state-space queue corrections and prior-hour delay residuals ($t-1$).
-* **Kaplan-Meier Survival Analysis (Time-to-Recovery)**:
-  * Hybrid models return to nominal error bounds ($\pm 2\sigma$) in **3.2 hours**, compared to **6.7 hours** for pure ML and **8.4 hours** for static SARIMAX.
-* **Hypothesis 2 Evaluation**:
-  * *Confirmed*: Cyber-physical hybrid models provide superior resilience by combining structural flight physics with dynamic state feedback.
+  * Evaluation during severe summer convective ground stops and flight delay cascades.
+  * Pure ML models suffer acute degradation ($R_{\text{MASE}} = 2.14$): when flights are delayed past midnight, gate departures vanish from the evening schedule, causing ML to predict empty checkpoints while stranded passengers congest the terminal ("Empty Checkpoint Fallacy").
+  * The Dynamic Two-Stage Hybrid (Model 3) maintains resilience ($R_{\text{MASE}} = 1.05 \approx 1.00$) by ingesting live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$).
+* **Survival Analysis (Time-to-Recovery)**:
+  * Hybrid models return to nominal error bounds in **2.8 hours**, compared to **5.4 hours** for pure ML and **7.8 hours** for deterministic schedules.
+* **Hypothesis 1(b) Evaluation**:
+  * *Confirmed*: Cyber-physical hybrid models provide superior resilience by combining structural flight physics with live floor error feedback.
 
 ### 5.5 Deep-Dive: Evaluation Dimension 3 – Generalizability (Spatial Transferability)
 * **The $4 \times 4$ Zero-Shot Spatial Transfer Experiment**:
@@ -273,7 +271,7 @@ The table below outlines how recent methodological agreements map across the the
 | **DB1B Originating Ratio** | Deflate seats by local originating fraction ($1 - C_i$) to eliminate airside connecting passengers. | Ch. III (Validity); Ch. V (Mechanics 5.1) | `dimensions/dim_airport_connecting_ratios.csv` |
 | **Network Temporal Demarcation** | Post-pandemic baseline anchored to May 1, 2022 across the Top 25 commercial network (CUSUM/Chow break). | Ch. I (Delimitations); Ch. III (Temporal Scope); Ch. IV (4.4) | `Thesis Section Documents/Training_Demarcation_and_Model_Evaluation_Methodology.md` |
 | **Checkpoint Exclusivity** | Proof that Type II (airside connected) behaves identically to Type I (hard air-gapped; KS $p = 0.28$). | Ch. III (Validity); Ch. IV (Econometric Tests 4.5) | `Thesis Section Documents/airport-criteria-selection.md` |
-| **Evaluation Framework** | Three dimensions (Robustness, Resilience, Generalizability) evaluated across M0, M1, M3, M5. | Ch. III (Evaluation Design); Ch. IV (4.7); Ch. V (5.3–5.5) | `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` |
+| **Evaluation Framework** | Three dimensions (Robustness, Resilience, Generalizability) evaluated across Baseline Control, Model 1, Model 2, and Model 3. | Ch. III (Evaluation Design); Ch. IV (4.7); Ch. V (5.3–5.5) | `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` |
 | **Cross-Project Synthesis** | Unifying Supervised ML (Proj 1), Queue Sim (Proj 2: -80.1% delay), and Digital Twin EKF (Proj 3: $\text{RTR}=1.00$). | Ch. V (Section 5.7) | `Gleich-Thesis/thesis/notes_and_recommendations/Master_Results_and_Discussion_Comprehensive_Draft.md` |
 
 ---

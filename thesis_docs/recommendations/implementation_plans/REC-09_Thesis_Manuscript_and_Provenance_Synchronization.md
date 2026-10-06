@@ -32,7 +32,7 @@ Empirical updates, model benchmark figures, and dataset definitions across `fina
 - Update Master Model Benchmark Matrix with 2025 full-year holdout metrics.
 
 ### 2.3 Chapter V (Discussion & Operational Synthesis) Updates
-- Present Dual-Track Model Selection Policy (M5 for Hub AOCs vs. M3 for Zero-Shot Network Transfer).
+- Present Dual-Track Model Selection Policy (Model 3 for Hub AOCs vs. Model 1 / Model 2 for Zero-Shot Network Transfer).
 - Detail security-airside delay feedback coupling ($r = 0.6272, R^2 = 39.34\%$).
 - Formulate practical decision-support heuristics for TSA Federal Security Directors.
 

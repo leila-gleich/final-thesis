@@ -1,5 +1,5 @@
-Model Family,Model ID & Architecture,In-Sample RMSE (pax/hr),Zero-Shot Transfer RMSE (pax/hr),Relative Transfer Ratio (RTR),Transfer Degradation (Delta_transfer),Change in MASE (DeltaMASE),"Academic Target Status (RTR=1.00, DeltaMASE<= 10%)"
-Baseline Control,M0: Diurnal Naive (y_t-24),253.6,253.6,1.00,0.0%,0.0%,Benchmark Reference
-Deterministic Baseline,M1*: Deterministic Sched Bank Volatility,313.4,326.5,1.04,+4.2%,+4.0% (+0.038),TARGET MET (WINNER)
-Probabilistic / ML,M3: Supervised Volatility GBR,273.5,295.1,1.08,+7.9%,+8.3% (+0.065),Passes Both Targets (<= 10%)
-Dynamic Hybrid,M5: Sequential SARIMA-Tree Volatility Hybrid,222.1,264.3,1.19,+19.0%,+21.5% (+0.142),FAILS BOTH TARGETS
+Model Family,Model Name,Operational Approach,In-Sample RMSE (pax/hr),Zero-Shot Transfer RMSE (pax/hr),Relative Transfer Ratio (RTR),Transfer Degradation (Delta_transfer),Change in MASE (DeltaMASE),"Academic Target Status (RTR=1.00, DeltaMASE<= 10%)"
+Baseline Control,Baseline Control,Daily Persistence Benchmark (y_t-24),253.6,253.6,1.00,0.0%,0.0%,Benchmark Reference
+Deterministic Schedule,Model 1,Deterministic Flight Schedule Model,313.4,326.5,1.04,+4.2%,+4.0% (+0.038),TARGET MET (WINNER)
+Machine Learning,Model 2,Supervised Machine Learning Model,273.5,295.1,1.08,+7.9%,+8.3% (+0.065),Passes Both Targets (<= 10%)
+Dynamic Hybrid,Model 3,Dynamic Two-Stage Hybrid Model,222.1,264.3,1.19,+19.0%,+21.5% (+0.142),FAILS BOTH TARGETS

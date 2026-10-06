@@ -18,6 +18,7 @@ To support airport Federal Security Directors (FSDs), operational planners, and 
 | [Airside](#airside) | Infrastructure, Agencies & Programs |
 | [Allen-Cunneen / Kingman Volatility Queuing Approximation ($W_q \propto C_a^2$)](#allen-cunneen-kingman-volatility-queuing-approximation-wq-ca2) | Queuing & Passenger Dynamics |
 | [Autoregressive Integrated Moving Average (ARIMA / SARIMA / SARIMAX)](#autoregressive-integrated-moving-average-arima-sarima-sarimax) | Predictive Modeling |
+| [Baseline Control Benchmark (Daily Persistence)](#baseline-control-benchmark-daily-persistence) | Predictive Modeling |
 | [Available Seats per Route-Month](#available-seats-per-route-month) | Datasets & Data Hygiene |
 | [Batch Arrival Dynamics](#batch-arrival-dynamics) | Queuing & Passenger Dynamics |
 | [Bimodal Arrival Mixture](#bimodal-arrival-mixture) | Queuing & Passenger Dynamics |
@@ -74,13 +75,9 @@ To support airport Federal Security Directors (FSDs), operational planners, and 
 | [Mean Absolute Percentage Error (MAPE)](#mean-absolute-percentage-error-mape) | Evaluation & Statistics |
 | [Mean Absolute Scaled Error (MASE)](#mean-absolute-scaled-error-mase) | Evaluation & Statistics |
 | [Mean Forecast Bias](#mean-forecast-bias) | Evaluation & Statistics |
-| [Model $M_0$ (Diurnal Volatility Naive Benchmark)](#model-m0-diurnal-volatility-naive-benchmark) | Predictive Modeling |
-| [Model $M_1$ (Unshifted Same-Hour Schedule Volatility Baseline)](#model-m1-unshifted-same-hour-schedule-volatility-baseline) | Predictive Modeling |
-| [Model $M_1^*$ (Deterministic Schedule Bank Volatility Baseline)](#model-m1-star-deterministic-schedule-bank-volatility-baseline) | Predictive Modeling |
-| [Model $M_2$ (Convolved Schedule Bank Volatility Model)](#model-m2-convolved-schedule-bank-volatility-model) | Predictive Modeling |
-| [Model $M_3$ (Supervised Volatility Tree Regressor)](#model-m3-supervised-volatility-tree-regressor) | Predictive Modeling |
-| [Model $M_4$ (Tri-Modal Volatility Pipeline Regressor)](#model-m4-tri-modal-volatility-pipeline-regressor) | Predictive Modeling |
-| [Model $M_5$ (Sequential Two-Stage Cyber-Physical Volatility Hybrid)](#model-m5-sequential-two-stage-cyber-physical-volatility-hybrid) | Predictive Modeling |
+| [Model 1: Deterministic Flight Schedule Model](#model-1-deterministic-flight-schedule-model-physical-baseline) | Predictive Modeling |
+| [Model 2: Supervised Machine Learning Model](#model-2-supervised-machine-learning-model-flight-operations--delays) | Predictive Modeling |
+| [Model 3: Dynamic Two-Stage Hybrid Model](#model-3-dynamic-two-stage-hybrid-model-schedule--real-time-feedback) | Predictive Modeling |
 | [Multi-Carrier Schedule Collinearity](#multi-carrier-schedule-collinearity) | Queuing & Passenger Dynamics |
 | [Multi-Day Temporal Volatility ($\sigma_{\text{TSA, 7d}}$)](#multi-day-temporal-volatility-tsa-7d) | Volatility & Filtering |
 | [National Airspace System (NAS)](#national-airspace-system-nas) | Infrastructure, Agencies & Programs |
@@ -93,7 +90,6 @@ To support airport Federal Security Directors (FSDs), operational planners, and 
 | [Out-of-Time Holdout Evaluation](#out-of-time-holdout-evaluation) | Evaluation & Statistics |
 | [Overnight Structural Zero](#overnight-structural-zero) | Datasets & Data Hygiene |
 | [Peak Surge Shock Ratio ($S_{\text{TSA}, d}$)](#peak-surge-shock-ratio-stsa-d) | Volatility & Filtering |
-| [Pruned Intermediate Model Variations ($M_1, M_2, M_4$)](#pruned-intermediate-model-variations-m1-m2-m4) | Predictive Modeling |
 | [Purposive Four-Tiered Filtering Funnel](#purposive-four-tiered-filtering-funnel) | Volatility & Filtering |
 | [Queuing Theory](#queuing-theory) | Queuing & Passenger Dynamics |
 | [Regime-Switched Gated Inference Engine](#regime-switched-gated-inference-engine) | Predictive Modeling |
@@ -376,15 +372,18 @@ The central methodological comparison evaluating whether forecasting TSA through
 
 *This category covers the benchmark forecasting models, decision-tree machine learning algorithms, time-series baselines, and dynamic cyber-physical hybrid methods evaluated for forecasting passenger throughput volatility across Chapters III, IV, and V.*
 
-### 4-Model Canonical Evaluation Suite
-The definitive set of four forecasting models representing each fundamental modeling paradigm evaluated across the post-filtering experimental cohort:
-1. *Baseline Control ($M_0$)*: Diurnal Volatility Naive Persistence benchmark ($y_{t-24}$).
-2. *Deterministic Baseline ($M_1^*$)*: Deterministic Schedule Bank Volatility Baseline derived from physical flight schedule convolution.
-3. *Probabilistic / ML ($M_3$)*: Supervised Volatility Gradient-Boosted Regressor combining feature values and volatility with 24 OTP operational attributes.
-4. *Dynamic Cyber-Physical Hybrid ($M_5$)*: Sequential SARIMA-Tree Volatility Hybrid incorporating closed-loop 1-step error innovation feedback ($e_{t-1}$).
+### The Candidate Predictive Models and Baseline Control
+The definitive suite of three candidate forecasting models representing distinct operational paradigms, evaluated against an empirical daily persistence baseline control:
+1. *Baseline Control*: Diurnal Volatility Naive Persistence benchmark ($y_{t-24}$).
+2. *Model 1 (Deterministic Flight Schedule Model)*: Derived from published flight schedules convolved across empirical ACRP Report 40 passenger show-up curves.
+3. *Model 2 (Supervised Machine Learning Model)*: Supervised decision-tree model combining flight schedule dispersion and 24 BTS OTP operational attributes (delays, cancellations, taxi queues).
+4. *Model 3 (Dynamic Two-Stage Hybrid Model)*: Two-stage sequential model combining schedule baselines with live 1-step error innovation feedback ($e_{t-1}$).
 
 ### Autoregressive Integrated Moving Average (ARIMA / SARIMA / SARIMAX)
 A standard statistical time-series forecasting method. In plain terms, it predicts future values using a combination of recent past values (autoregression) and recent forecast errors (moving average). In volatility forecasting, seasonal SARIMA models capture recurring daily (24-hour) and weekly (168-hour) baseline volatility cycles.
+
+### Baseline Control Benchmark (Daily Persistence)
+The canonical baseline control benchmark that assumes checkpoint throughput volatility today will be identical to volatility observed during the exact same period yesterday ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$). Establishes the scale-free reference standard ($\text{MASE} \equiv 1.000$).
 
 ### Discrete Event Simulation (DES)
 A computer simulation method that models the movement of individual passengers through each step of an airport terminal (e.g., waiting in line, ticket scanning, removing shoes, body scanning, and gathering belongings). While detailed, DES requires extensive computing time and detailed lane staffing data that are not publicly available in real time.
@@ -395,41 +394,26 @@ A type of advanced neural network designed to analyze time-series sequences. Whi
 ### Gradient-Boosted Decision Trees (GBM / HistGBM)
 An automated machine learning method that builds a sequence of simple, rule-based decision trees. In throughput volatility modeling, trees capture complex non-linear interactions between flight schedule bank dispersion, tactical flight cancellations, and airside delay turbulence.
 
-### Kalman Filtering / State-Space Innovation Feedback
-A real-time error-correction tracking method. In volatility forecasting, it functions like an intelligent thermostat: if actual checkpoint queue turbulence exceeds schedule-based expectations, the system feeds the 1-step residual error directly into the next hour's forecast, preventing runaway queue collapses during severe flight delays.
+### Kalman Filtering / Live Error Innovation Feedback
+A real-time error-correction tracking method. In volatility forecasting, it functions like an intelligent thermostat: if actual checkpoint queue turbulence exceeds schedule-based expectations, the system feeds the 1-step residual error ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) directly into the next hour's forecast, preventing runaway queue collapses during severe flight delays.
 
 ### Long Short-Term Memory (LSTM)
 A specialized neural network architecture designed to learn long sequences of time-series data. Although widely used in computer science research, it requires massive amounts of training data, functions as an opaque "black box," and often memorizes airport-specific terminal layouts rather than general travel patterns.
 
-### Model $M_0$ (Diurnal Volatility Naive Benchmark)
-The canonical baseline control benchmark that assumes checkpoint throughput volatility today will be identical to volatility observed during the exact same period yesterday ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$).
+### Model 1: Deterministic Flight Schedule Model (Physical Baseline)
+Derives predicted passenger screening volatility directly from published airline flight departure banks convolved across empirical ACRP Report 40 passenger arrival curves ($t+1, t+2, t+3$). It operates as a deterministic physical baseline without requiring statistical machine learning or airside delay telemetry, proving highly portable across airports.
 
-### Model $M_1$ (Unshifted Same-Hour Schedule Volatility Baseline)
-An exploratory unshifted schedule model evaluated during early model formulation that attempted to predict screening volatility using flight departures in the identical unshifted hour. Pruned after the 4-tier filtering pipeline due to severe lead-lag misspecification ($R^2 < 0, \text{MASE} = 1.716$).
+### Model 2: Supervised Machine Learning Model (Flight Operations & Delays)
+A supervised decision-tree regressor trained on convolved flight departures and 24 Bureau of Transportation Statistics (BTS) On-Time Performance (OTP) attributes (incorporating schedule dispersion, tactical flight cancellations, prior-hour delay turbulence, and taxi-out queues). Achieves optimal routine operational efficiency ($\text{MASE} \le 0.70$) with zero real-time feedback latency.
 
-### Model $M_1^*$ (Deterministic Schedule Bank Volatility Baseline)
-The canonical deterministic baseline model that derives predicted passenger screening volatility directly from convolved scheduled flight departure bank dispersion ($\sigma_{\text{sched}}$ or $CV_{\text{sched}}$) using empirical ACRP Report 40 show-up curves without requiring operational delay data or machine learning infrastructure.
-
-### Model $M_2$ (Convolved Schedule Bank Volatility Model)
-An intermediate machine learning exploration that predicted checkpoint volatility based solely on scheduled flight departure dispersion distributed across lead-lag arrival show-up horizons ($t+1, t+2, t+3$), without incorporating real-time flight delays or cancellations. Pruned after the 4-tier filtering pipeline in favor of canonical model $M_3$.
-
-### Model $M_3$ (Supervised Volatility Tree Regressor)
-The canonical probabilistic / machine learning model. A supervised gradient-boosted decision-tree regressor trained on the complete 24-attribute OTP feature space (incorporating schedule bank dispersion, tactical cancellations, taxi-out queues, and prior-hour delay turbulence) to forecast passenger throughput volatility ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$). Achieves optimal routine Pareto efficiency ($\text{MASE} \le 0.70$).
-
-### Model $M_4$ (Tri-Modal Volatility Pipeline Regressor)
-An intermediate exploratory decision-tree regressor that interacted convolved flight schedule volatility with monthly route load factors (BTS T-100) and quarterly connecting passenger buffers (BTS DB1B). Pruned after the 4-tier filtering pipeline in favor of canonical model $M_3$.
-
-### Model $M_5$ (Sequential Two-Stage Cyber-Physical Volatility Hybrid)
-The canonical dynamic cyber-physical hybrid forecasting architecture for throughput volatility. In Stage 1, a linear cyclical SARIMA model captures diurnal and seasonal baseline volatility rhythms. In Stage 2, a gradient-boosted residual decision tree estimates tactical volatility shocks caused by airside delays and cancellations, utilizing recursive 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) to achieve decisive resilience during severe disruptions ($\text{TTR} = 2.8\text{h}, R_{\text{MASE}} = 1.05$).
+### Model 3: Dynamic Two-Stage Hybrid Model (Schedule + Real-Time Feedback)
+A sequential two-stage forecasting framework that combines recurring flight schedule cycles with live real-time error feedback. In Stage 1, recurring daily and weekly flight schedules capture baseline passenger rhythms. In Stage 2, decision trees estimate residual volatility shocks caused by flight delays, utilizing live 1-step error feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) from the checkpoint floor to achieve decisive resilience during severe convective disruptions ($\text{TTR} = 2.8\text{h}, R_{\text{MASE}} = 1.05$).
 
 ### Non-Homogeneous Poisson Process (NHPP)
 A standard queuing model where arrival rates change over the course of the day (e.g., higher in the morning, lower at night) but still assumes that each arriving passenger enters the line independently of all others.
 
-### Pruned Intermediate Model Variations ($M_1, M_2, M_4$)
-Exploratory model variants developed during preliminary research that were systematically pruned after the 4-tier filtering pipeline: $M_1$ (unshifted same-hour baseline), $M_2$ (lead-flight-only formulation), and $M_4$ (load-factor scaled formulation). Pruning eliminated redundant intermediate configurations to isolate the 4 Canonical Models ($M_0, M_1^*, M_3, M_5$) representing each distinct modeling paradigm.
-
-### Regime-Switched Gated Inference Engine
-A recommended operational tool for airport command centers that monitors daily airport turbulence: using fast, automated decision trees ($M_3$) during routine operations, and automatically switching to the Two-Stage Hybrid model ($M_5$) with real-time error feedback during severe storm disruptions.
+### Regime-Switched Gated Inference Engine (The Airport Operator's Playbook)
+A recommended operational decision framework for airport command centers that monitors real-time airport turbulence: deploying the fast, automated Supervised Machine Learning Model (Model 2) during routine operations, and automatically engaging the Dynamic Two-Stage Hybrid Model (Model 3) with live error feedback during severe convective storms and ground delay programs.
 
 ### Tweedie Compound Poisson Distribution
 A statistical distribution used in generalized linear modeling that handles positive continuous numbers while accommodating exact zeros. In airport checkpoint modeling, it ensures non-negative predictions and properly handles overnight structural closures.
@@ -466,13 +450,13 @@ A score of 1.0 to 1.3 indicates a resilient model whose accuracy remains stable 
 One of the three primary performance dimensions in this study. It evaluates whether a volatility forecasting model calibrated on one airport terminal can be deployed to a different airport without needing to be retrained on local historical data.
 
 ### Generalizability Target ($\text{RTR} = 1.00, \Delta\text{MASE} \le 10\%$)
-The stated academic performance target for cross-airport transferability: achieving a Relative Transfer Ratio ($\text{RTR}$) of approximately 1.00 and a change in MASE upon transfer ($\Delta\text{MASE}$) less than or equal to 10.0%. Successfully met by the Deterministic Baseline ($M_1^*$, $\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$), but failed by the Dynamic Hybrid ($M_5$, $\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$) due to decision tree terminal geometry overfitting.
+The stated academic performance target for cross-airport transferability: achieving a Relative Transfer Ratio ($\text{RTR}$) of approximately 1.00 and a change in MASE upon transfer ($\Delta\text{MASE}$) less than or equal to 10.0%. Successfully met by the Deterministic Flight Schedule Model (Model 1, $\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$), but failed by the Dynamic Hybrid (Model 3, $\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$) due to decision tree terminal geometry overfitting.
 
 ### Kaplan-Meier Survival Analysis
 A statistical method used to calculate how long it takes for an event to occur. In this study, it measures the Time-to-Recovery ($\text{TTR}$): how many hours it takes for a forecasting model's prediction error to return to normal baseline levels after a major flight disruption event.
 
 ### Master Asymmetric Trade-Off Matrix
-The master synthesis evaluation matrix (Table 5.4) that formalizes Hypothesis 1 by benchmarking the four canonical models ($M_0, M_1^*, M_3, M_5$) across Robustness, Resilience, and Generalizability against explicit academic targets. Conclusively demonstrates that no single model dominates across all dimensions: $M_5$ wins Resilience, $M_1^*$ wins Generalizability, and $M_3$ wins Routine Pareto Efficiency.
+The master synthesis evaluation matrix (Table 5.4) that formalizes Hypothesis 1 by benchmarking the candidate models (Model 1, Model 2, Model 3) and baseline control across Robustness, Resilience, and Generalizability against explicit academic targets. Conclusively demonstrates that no single model dominates across all dimensions: Model 3 wins Resilience, Model 1 wins Generalizability, and Model 2 wins Routine Pareto Efficiency.
 
 ### Mean Absolute Error (MAE)
 An accuracy metric that calculates the average absolute difference between predicted volatility and actual volatility:
@@ -503,13 +487,13 @@ A score near 1.0 indicates that the model transfers seamlessly across airports w
 One of the three core evaluative pillars defined in this study, assessing how well a forecast model maintains reasonable accuracy and avoids volatility collapse during severe operational shocks, such as winter freezes, thunderstorms, or ground stops.
 
 ### Resilience Target ($R_{\text{RMSE}} \approx 1.00$, Lowest $\text{MASE}_{\text{shock}}$)
-The stated academic performance target for operational disruptions: maintaining a Recovery Multiplier $R_{\text{RMSE}} \approx 1.00$ ($R_{\text{MASE}} \approx 1.00$), the lowest $\text{MASE}_{\text{shock}}$ during flight delays $\ge 45$ min or cancellations $\ge 5$, and rapid recovery ($\text{TTR} < 4.0\text{ hours}$). Decisively won by the Dynamic Hybrid ($M_5$, $R_{\text{MASE}} = 1.05, \text{MASE}_{\text{shock}} = 0.694, \text{TTR} = 2.8\text{h}$).
+The stated academic performance target for operational disruptions: maintaining a Recovery Multiplier $R_{\text{RMSE}} \approx 1.00$ ($R_{\text{MASE}} \approx 1.00$), the lowest $\text{MASE}_{\text{shock}}$ during flight delays $\ge 45$ min or cancellations $\ge 5$, and rapid recovery ($\text{TTR} < 4.0\text{ hours}$). Decisively won by the Dynamic Two-Stage Hybrid (Model 3, $R_{\text{MASE}} = 1.05, \text{MASE}_{\text{shock}} = 0.694, \text{TTR} = 2.8\text{h}$).
 
 ### Robustness (Evaluation Dimension 1)
 One of the three core evaluative pillars defined in this study, assessing the day-in, day-out accuracy and consistency of a forecasting model under normal, on-time operating conditions.
 
 ### Robustness Target ($\text{RMSE}_{\text{routine}}$ Lowest, $\text{MASE}_{\text{routine}} < 0.70$)
-The stated academic performance target for routine operations: achieving the lowest root mean squared error under routine conditions (departure delays $< 15$ min, 0 cancellations) and an out-of-time $\text{MASE}_{\text{routine}} < 0.700$. Achieved by $M_5$ ($\text{RMSE} = 222.1, \text{MASE} = 0.662$) and $M_3$ ($\text{MASE} = 0.680\text{--}0.700$).
+The stated academic performance target for routine operations: achieving the lowest root mean squared error under routine conditions (departure delays $< 15$ min, 0 cancellations) and an out-of-time $\text{MASE}_{\text{routine}} < 0.700$. Achieved by Model 3 ($\text{RMSE} = 222.1, \text{MASE} = 0.662$) and Model 2 ($\text{MASE} = 0.680\text{--}0.700$).
 
 ### Root Mean Squared Error (RMSE)
 A standard forecasting accuracy metric that measures the overall spread of prediction errors:

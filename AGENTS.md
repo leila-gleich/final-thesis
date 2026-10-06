@@ -42,32 +42,31 @@
 
 ---
 
-## 3. The 4-Model Canonical Evaluation Suite
+## 3. The 3-Model Candidate Evaluation Suite & Baseline Control
 
-### Policy 3.1: Exactly Four Canonical Models (Plus Pruned Variations Rationale)
-Following the 4-tier filtering pipeline (which established the 9-airport experimental cohort across 12 carrier-exclusive complexes), the evaluation suite is restricted to **exactly four canonical models (one per paradigm, plus control)**:
-1. **$M_0$ (Baseline Control Benchmark)**: Diurnal Volatility Naive Persistence ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$, non-parametric $\text{MASE} \equiv 1.000$).
-2. **$M_1^*$ (Deterministic Physical Baseline)**: Deterministic Schedule Bank Volatility Baseline (ACRP Report 40 lead-lag show-up curve convolution across lead horizons $t+1, t+2, t+3$).
-3. **$M_3$ (Probabilistic & Machine Learning Architecture)**: Supervised Volatility Gradient Boosted Regressor (Combined Values + Volatility across 24 BTS OTP attributes).
-4. **$M_5$ (Dynamic Cyber-Physical Hybrid Framework)**: Sequential Two-Stage SARIMA-Tree Volatility Hybrid with live 1-step error innovation feedback ($e_{t-1}$).
+### Policy 3.1: Exactly Three Candidate Models Plus Baseline Control
+Following the 4-tier filtering pipeline (which established the 9-airport experimental cohort across 12 carrier-exclusive complexes), the evaluation suite is restricted to **exactly three candidate models representing distinct operational paradigms**, benchmarked against an empirical baseline control:
+1. **Baseline Control**: Diurnal Volatility Naive Persistence Benchmark ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$, non-parametric $\text{MASE} \equiv 1.000$).
+2. **Model 1 (Deterministic Flight Schedule Model)**: Deterministic Physical Baseline convolving scheduled airline flight banks across empirical ACRP Report 40 passenger show-up curves ($t+1, t+2, t+3$).
+3. **Model 2 (Supervised Machine Learning Model)**: Automated decision-tree regressor incorporating flight schedule dispersion and 24 BTS OTP operational attributes (delays, cancellations, taxi queues).
+4. **Model 3 (Dynamic Two-Stage Hybrid Model)**: Sequential two-stage model coupling recurring schedule cycles with live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) from the checkpoint floor.
 
-### Policy 3.2: Pruned Intermediate Variations Must Remain Archived
-* **$M_1$ (Unshifted Contemporaneous Schedule)**: Pruned due to severe phase distortion ($r = 0.12$) ignoring the 105-minute mean lead time. Superseded by convolved $M_1^*$.
-* **$M_2$ (Lead Flights Only Baseline)**: Pruned due to truncation bias during afternoon secondary delay cascades.
-* **$M_4$ (Load-Factor Scaled Linear Regression)**: Pruned due to mathematical redundancy with non-linear capacity interactions in $M_3$ and $M_5$.
+### Policy 3.2: Zero Internal Code Variable Tags in Prose and Tables
+* **Strict Rule**: Never use internal code variable tags ($M_0, M_1^*, M_3, M_5$) in manuscript prose, tables, or documentation. Always refer to models by their plain-English names: **Baseline Control**, **Model 1 (Deterministic)**, **Model 2 (Machine Learning)**, and **Model 3 (Dynamic Hybrid)**.
+* Historical exploratory variants ($M_1, M_2, M_4$) were pruned during preliminary research and must not appear as missing gaps to human readers.
 
 ---
 
 ## 4. Operational Performance Dimensions & Asymmetric Trade-Offs
 
-### Policy 4.1: The Hybrid Model ($M_5$) is NOT Universally Dominant
-Never state or imply that the hybrid model ($M_5$) is universally best across all performance measures. The thesis explicitly demonstrates **Asymmetric Trade-Offs ($H_1$)**:
+### Policy 4.1: The Hybrid Model (Model 3) is NOT Universally Dominant
+Never state or imply that the hybrid model (Model 3) is universally best across all performance measures. The thesis explicitly demonstrates **Asymmetric Trade-Offs ($H_1$)**:
 
 | Evaluation Dimension | Operational Regime | Stated Academic Target | Dimension Winner & Strategic Reality |
 | :--- | :--- | :--- | :--- |
-| **Dimension 1: Robustness** | Nominal On-Time Baseline ($\text{Delay} < 15$m, 0 Cancels) & Routine Daily Operations | Lowest $\text{RMSE}_{\text{routine}}$ & $\mathbf{\text{MASE}_{\text{routine}} < 0.700}$ | **$M_5$ achieves lowest RMSE** ($\text{RMSE} = 222.1, \text{MASE} = 0.662$); **$M_3$ wins Routine Pareto Efficiency** ($\text{MASE} = 0.680\text{--}0.700$, zero feedback compute latency). |
-| **Dimension 2: Resilience** | Irregular Operations / IROPS ($\text{Delay} \ge 45$m or Cancels $\ge 5$) | Recovery Multiplier $\mathbf{R_{\text{RMSE}} \approx 1.00}$, lowest $\text{MASE}_{\text{shock}}$, $\mathbf{\text{TTR} < 4.0\text{h}}$ | **$M_5$ DECISIVE WINNER**: $R_{\text{MASE}} = \mathbf{1.05}$, $\text{MASE}_{\text{shock}} = \mathbf{0.694}$, $\text{TTR} = \mathbf{2.8\text{h}}$. Pure ML ($M_3$) fragilely collapses ($R = 2.14$) due to Empty Checkpoint Fallacy. |
-| **Dimension 3: Generalizability** | Zero-Shot Spatial Transfer (EWR $\to$ LGA) without retraining | Relative Transfer Ratio $\mathbf{\text{RTR} \approx 1.00}$ & $\mathbf{\Delta\text{MASE}_{\text{transfer}} \le 10.0\%}$ | **$M_1^*$ DECISIVE WINNER**: $\text{RTR} = \mathbf{1.04}$, $\Delta\text{MASE} = \mathbf{+4.0\%}$. **$M_5$ DECISIVELY FAILS**: $\text{RTR} = \mathbf{1.19} > 1.00$, $\Delta\text{MASE} = \mathbf{+21.5\%} > 10.0\%$ due to decision tree terminal geometry overfitting. |
+| **Dimension 1: Robustness** | Nominal On-Time Baseline ($\text{Delay} < 15$m, 0 Cancels) & Routine Daily Operations | Lowest $\text{RMSE}_{\text{routine}}$ & $\mathbf{\text{MASE}_{\text{routine}} < 0.700}$ | **Model 3 achieves lowest RMSE** ($\text{RMSE} = 222.1, \text{MASE} = 0.662$); **Model 2 wins Routine Pareto Efficiency** ($\text{MASE} = 0.680\text{--}0.700$, zero feedback compute latency). |
+| **Dimension 2: Resilience** | Irregular Operations / IROPS ($\text{Delay} \ge 45$m or Cancels $\ge 5$) | Recovery Multiplier $\mathbf{R_{\text{RMSE}} \approx 1.00}$, lowest $\text{MASE}_{\text{shock}}$, $\mathbf{\text{TTR} < 4.0\text{h}}$ | **Model 3 DECISIVE WINNER**: $R_{\text{MASE}} = \mathbf{1.05}$, $\text{MASE}_{\text{shock}} = \mathbf{0.694}$, $\text{TTR} = \mathbf{2.8\text{h}}$. Pure ML (Model 2) fragilely collapses ($R = 2.14$) due to Empty Checkpoint Fallacy. |
+| **Dimension 3: Generalizability** | Zero-Shot Spatial Transfer (EWR $\to$ LGA) without retraining | Relative Transfer Ratio $\mathbf{\text{RTR} \approx 1.00}$ & $\mathbf{\Delta\text{MASE}_{\text{transfer}} \le 10.0\%}$ | **Model 1 DECISIVE WINNER**: $\text{RTR} = \mathbf{1.04}$, $\Delta\text{MASE} = \mathbf{+4.0\%}$. **Model 3 DECISIVELY FAILS**: $\text{RTR} = \mathbf{1.19} > 1.00$, $\Delta\text{MASE} = \mathbf{+21.5\%} > 10.0\%$ due to decision tree terminal geometry overfitting. |
 
 ---
 
@@ -116,7 +115,7 @@ All text, metrics, table titles, and code documentation must use authentic comme
 Before concluding ANY task, every agent must verify:
 - [ ] Were Microsoft Word documents (`.docx`) preserved untouched (0 edits)?
 - [ ] Does all analysis and prose target throughput volatility ($\sigma_{\text{TSA}}$ / $CV_{\text{TSA}}$) rather than raw volume?
-- [ ] Were the 4 canonical models ($M_0, M_1^*, M_3, M_5$) evaluated with asymmetric trade-offs preserved?
+- [ ] Were the 3 candidate models and baseline control (Baseline Control, Model 1, Model 2, Model 3) evaluated with asymmetric trade-offs preserved?
 - [ ] Were all lab-science/physics jargon terms replaced with authentic aviation operations terms?
 - [ ] Are all 16 tables in CSV and companion Excel workbooks fully synchronized?
 - [ ] Has `results/00_VERSION_CONTROL_AND_PROVENANCE.md` been updated with the change log?

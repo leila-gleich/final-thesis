@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.6 (AI Agent Constitution & Repository Governance Deployment)
+RELEASE VERSION: v4.7 (Candidate Model Suite Streamlining, Plain-Language Calibration & Multi-Pillar Harmonization)
 DATE: October 5, 2026
 ====================================================================================================
 
@@ -135,6 +135,20 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Codified strict aviation terminology filter: Nominal On-Time Baseline,    |
 |         |            |   Routine Daily Operations, Irregular Operations (IROPS); banned lab speak. |
 |         |            | - Updated README.md referencing AGENTS.md and agent governance directives.  |
+| v4.7    | 2026-10-05 | Candidate Model Suite Streamlining & Plain-Language Qualitative Calibration:|
+|         |            | - Streamlined model nomenclature to 3 candidate models + baseline control:  |
+|         |            |   Baseline Control (Daily Persistence), Model 1 (Deterministic Schedule),  |
+|         |            |   Model 2 (Supervised Machine Learning), Model 3 (Dynamic Two-Stage Hybrid).|
+|         |            | - Excised all internal code variable artifacts (M0, M1*, M3, M5) from       |
+|         |            |   manuscripts, SSOTs, READMEs, and conformed CSV/Excel tables.              |
+|         |            | - Grounded theoretical mechanics in intuitive operational frameworks:       |
+|         |            |   "The Checkpoint Tipping Point" (Kingman's Law), "The Staffing Safety      |
+|         |            |   Cushion" (Dynamic Lane Buffers), "The Airport Operator's Playbook"       |
+|         |            |   (Regime-Switched Gated Engine), and "The Empty Checkpoint Fallacy".       |
+|         |            | - Excised orphaned draft fragments and dead links in Chapter 5 and glossary.|
+|         |            | - Synchronized all 16 manuscript tables across CSV and companion Excel      |
+|         |            |   workbooks (02, 03, 04, 05) via sync_manuscript_tables.py.                 |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); 38/38 tests OK. |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

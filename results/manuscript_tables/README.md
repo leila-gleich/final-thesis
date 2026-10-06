@@ -36,11 +36,11 @@ This registry ensures complete transparency, auditability, and mathematical repr
 | **Table 4.8** | Day-of-Week Mean Daily Passenger Throughput Across the Nine Selected Airports | [`table_4_8_day_of_week_mean_daily_passenger_throughput_nine_airports.csv`](table_4_8_day_of_week_mean_daily_passenger_throughput_nine_airports.csv) | [`table_4_8.csv`](table_4_8.csv) | 9 rows x 12 cols | `chp4-results.md` | [`02_top9_cohort_comprehensive_analysis.xlsx`](../02_4tier_filtering/02_top9_cohort_comprehensive_analysis.xlsx) |
 | **Table 4.9** | Empirical Lead-Lag Transfer Dynamics (Scheduled Flights Versus Checkpoint Demand) | [`table_4_9_empirical_lead_lag_transfer_dynamics.csv`](table_4_9_empirical_lead_lag_transfer_dynamics.csv) | [`table_4_9.csv`](table_4_9.csv) | 7 rows x 5 cols | `chp4-results.md` | [`03_lead_lag_deconvolution.xlsx`](../03_lead_lag_deconvolution/03_lead_lag_deconvolution.xlsx) |
 | **Table 4.10** | Master Model Benchmark Matrix for TSA Throughput Volatility (2025 Full-Year Out-of-Time Holdout) | [`table_4_10_master_model_benchmark_matrix.csv`](table_4_10_master_model_benchmark_matrix.csv) | [`table_4_10.csv`](table_4_10.csv) | 4 rows x 10 cols | `chp4-results.md` | [`04_model_execution_2025_holdout.xlsx`](../04_model_execution_2025_holdout/04_model_execution_2025_holdout.xlsx) |
-| **Table 4.11** | Master Multi-Pillar Hypothesis Evaluation Matrix Across the Four Canonical Models (Throughput Volatility) | [`table_4_11_master_multi_pillar_hypothesis_evaluation_matrix.csv`](table_4_11_master_multi_pillar_hypothesis_evaluation_matrix.csv) | [`table_4_11.csv`](table_4_11.csv) | 11 rows x 9 cols | `chp4-results.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
-| **Table 5.1** | Evaluation Dimension 1: Routine Operational Accuracy Across the Four Canonical Models | [`table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv`](table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv) | [`table_5_1.csv`](table_5_1.csv) | 4 rows x 7 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
-| **Table 5.2** | Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption | [`table_5_2_evaluation_dimension_2_resilience_and_shock_performance.csv`](table_5_2_evaluation_dimension_2_resilience_and_shock_performance.csv) | [`table_5_2.csv`](table_5_2.csv) | 4 rows x 8 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
-| **Table 5.3** | Evaluation Dimension 3: Generalizability and Cross-Airport Transfer Performance | [`table_5_3_evaluation_dimension_3_generalizability_and_cross_airport_transfer.csv`](table_5_3_evaluation_dimension_3_generalizability_and_cross_airport_transfer.csv) | [`table_5_3.csv`](table_5_3.csv) | 4 rows x 8 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
-| **Table 5.4** | Master Asymmetric Trade-Off Matrix Across the Four Canonical Models | [`table_5_4_master_asymmetric_trade_off_matrix.csv`](table_5_4_master_asymmetric_trade_off_matrix.csv) | [`table_5_4.csv`](table_5_4.csv) | 3 rows x 7 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
+| **Table 4.11** | Master Multi-Pillar Hypothesis Evaluation Matrix Across the Four Models (Throughput Volatility) | [`table_4_11_master_multi_pillar_hypothesis_evaluation_matrix.csv`](table_4_11_master_multi_pillar_hypothesis_evaluation_matrix.csv) | [`table_4_11.csv`](table_4_11.csv) | 11 rows x 9 cols | `chp4-results.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
+| **Table 5.1** | Evaluation Dimension 1: Routine Operational Accuracy Across the Candidate Models | [`table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv`](table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv) | [`table_5_1.csv`](table_5_1.csv) | 4 rows x 8 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
+| **Table 5.2** | Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption | [`table_5_2_evaluation_dimension_2_resilience_and_shock_performance.csv`](table_5_2_evaluation_dimension_2_resilience_and_shock_performance.csv) | [`table_5_2.csv`](table_5_2.csv) | 4 rows x 9 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
+| **Table 5.3** | Evaluation Dimension 3: Generalizability and Cross-Airport Transfer Performance | [`table_5_3_evaluation_dimension_3_generalizability_and_cross_airport_transfer.csv`](table_5_3_evaluation_dimension_3_generalizability_and_cross_airport_transfer.csv) | [`table_5_3.csv`](table_5_3.csv) | 4 rows x 9 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
+| **Table 5.4** | Master Asymmetric Trade-Off Matrix Across the Candidate Models | [`table_5_4_master_asymmetric_trade_off_matrix.csv`](table_5_4_master_asymmetric_trade_off_matrix.csv) | [`table_5_4.csv`](table_5_4.csv) | 3 rows x 7 cols | `chp5-discussion.md` | [`05_robustness_resilience_generalizability.xlsx`](../05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx) |
 
 ---
 
@@ -89,16 +89,16 @@ This registry ensures complete transparency, auditability, and mathematical repr
     - *Companion Workbook*: `results/03_lead_lag_deconvolution/03_lead_lag_deconvolution.xlsx` (Sheet: `Section_4B_Lead_Lag_Arrival_Dec`).
 
 11. **Table 4.10: Master Model Benchmark Matrix (2025 Holdout)** (`table_4_10_master_model_benchmark_matrix.csv`)
-    - *Scope*: Master benchmark matrix across the Four Canonical Models ($M_0, M_1^*, M_3, M_5$) on 72,053 holdout observations.
+    - *Scope*: Master benchmark matrix across the candidate predictive models and baseline control (Model 1, Model 2, Model 3, and Baseline Control) on 72,053 holdout observations.
     - *Companion Workbook*: `results/04_model_execution_2025_holdout/04_model_execution_2025_holdout.xlsx` (Sheet: `Section_5A_Master_Model_Executi`).
 
 12. **Table 4.11: Master Multi-Pillar Hypothesis Evaluation Matrix** (`table_4_11_master_multi_pillar_hypothesis_evaluation_matrix.csv`)
-    - *Scope*: Formal empirical hypothesis test matrix across Robustness, Resilience, and Generalizability with explicit academic targets benchmarking $M_0, M_1^*, M_3, M_5$.
+    - *Scope*: Formal empirical hypothesis test matrix across Robustness, Resilience, and Generalizability with explicit academic targets benchmarking candidate models against baseline control.
     - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `master_model_evaluation_metrics`).
 
 ### Chapter 5: Analysis and Discussion
 
-13. **Table 5.1: Routine Operational Accuracy Across the Four Canonical Models** (`table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv`)
+13. **Table 5.1: Routine Operational Accuracy Across the Candidate Models** (`table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv`)
     - *Scope*: Robustness evaluation under nominal flight conditions (RMSE, MASE, stated target $\text{MASE} < 0.70$, and Diebold-Mariano significance testing).
     - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `Summary`).
 
@@ -110,17 +110,17 @@ This registry ensures complete transparency, auditability, and mathematical repr
     - *Scope*: Zero-shot spatial transfer evaluation from EWR to LGA without retraining (RMSE, RTR $= 1.00$, $\Delta\text{MASE} \le 10.0\%$).
     - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `Summary`).
 
-16. **Table 5.4: Master Asymmetric Trade-Off Matrix Across the Four Canonical Models** (`table_5_4_master_asymmetric_trade_off_matrix.csv` / `master_asymmetric_trade_off_matrix.csv`)
+16. **Table 5.4: Master Asymmetric Trade-Off Matrix Across the Candidate Models** (`table_5_4_master_asymmetric_trade_off_matrix.csv` / `master_asymmetric_trade_off_matrix.csv`)
     - *Scope*: Synthesis of architectural trade-offs demonstrating asymmetric performance strengths across the three modeling families and confirming Hypothesis 1.
     - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `Summary`).
 
 ### Companion Operational Decision Matrices
 
 17. **Master Asymmetric Trade-Off Matrix** (`master_asymmetric_trade_off_matrix.csv`)
-    - *Scope*: Standalone conformed export of the Master Asymmetric Trade-Off Matrix with explicit academic targets, canonical models, and dimension winners.
+    - *Scope*: Standalone conformed export of the Master Asymmetric Trade-Off Matrix with explicit academic targets, candidate models, and dimension winners.
 
 18. **Dual-Track Model Selection Policy** (`dual_track_model_selection_policy.csv`)
-    - *Scope*: Gated operational deployment rules for Gate 1 (Routine Flow Track $\to M_3$) and Gate 2 (Tactical Shock Track $\to M_5$).
+    - *Scope*: Gated operational deployment rules for Gate 1 (Routine Flow Track $\to$ Model 2) and Gate 2 (Tactical Shock Track $\to$ Model 3).
 
 ---
 

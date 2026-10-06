@@ -73,9 +73,9 @@ final-thesis/
 │   │   ├── checkpoint_map.py           # Checkpoint spatial confidence weighting
 │   │   └── feature_pipeline.py         # Master conformed feature matrix orchestrator
 │   ├── models/                         <-- Deterministic, ML, and Dynamic Hybrid Volatility Models
-│   │   ├── baselines.py                # M0 Diurnal Naive & M1* Schedule Bank Volatility
-│   │   ├── machine_learning.py         # M3 Supervised Volatility Gradient Boosted Regressor
-│   │   ├── hybrid_sarima_tree.py       # M5 Sequential SARIMA-Tree Volatility Hybrid (Winner)
+│   │   ├── baselines.py                # Daily Persistence & Deterministic Schedule Volatility
+│   │   ├── machine_learning.py         # Supervised Machine Learning Volatility Decision Trees
+│   │   ├── hybrid_sarima_tree.py       # Dynamic Two-Stage Hybrid Volatility Model
 │   │   ├── eval_pillars.py             # Multi-pillar quantitative evaluation suite
 │   │   └── dual_track_eval.py          # Dual-track operational policy decision rules
 │   ├── data/                           <-- Regime Demarcation & Partitioning
@@ -135,40 +135,40 @@ Per the thesis methodology, candidate airfields are selected and processed throu
 
 ## Key Empirical Findings & Model Benchmarks (2025 Out-of-Time Holdout)
 
-Following the 4-tier purposive filtering pipeline, intermediate model variations ($M_1$ unshifted, $M_2$ lead flights only, $M_4$ load-factor scaled) were pruned to isolate the **Four Canonical Models** representing each fundamental modeling paradigm. All models were benchmarked against 72,053 complex hourly observations (3,222 airport-days) in the full 2025 out-of-time holdout targeting Diurnal Throughput Volatility ($\sigma_{\text{TSA, hr}}$, pax/hr dispersion):
+Following the 4-tier purposive filtering pipeline, the evaluation benchmarks **three candidate predictive models representing distinct operational paradigms**, evaluated against an empirical persistence control. All models were benchmarked against 72,053 complex hourly observations (3,222 airport-days) in the full 2025 out-of-time holdout targeting Diurnal Throughput Volatility ($\sigma_{\text{TSA, hr}}$, pax/hr dispersion):
 
-| Model Paradigm | ID | Architecture | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Academic Target Status |
+| Model Paradigm | Candidate Model | Architecture / Approach | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Academic Target Status |
 | :--- | :---: | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Baseline Control** | $M_0$ | Diurnal Volatility Naive ($y_{t-24}$) | 0.6719 | 253.6 | 179.3 | 1.000 | Baseline Reference Benchmark |
-| **Deterministic Baseline** | $M_1^*$| Deterministic Schedule Bank Volatility Baseline | 0.4980 | 313.4 | 215.9 | 0.945 | Passed Target ($\text{MASE} < 1.0$) |
-| **Probabilistic / ML** | $M_3$ | Supervised Volatility GBR (Combined Values + Vol) | 0.6178 | 273.5 | 178.0 | 0.779 | Passed Target ($\text{MASE} < 0.850$) |
-| **Dynamic Hybrid** | $M_5$ | Sequential SARIMA-Tree Volatility Hybrid | **0.7483** | **222.1** | **142.8** | **0.662** | High-Accuracy In-Sample Fit |
+| **Baseline Control** | **Baseline Control** | Daily Persistence Benchmark ($y_{t-24}$) | 0.6719 | 253.6 | 179.3 | 1.000 | Baseline Reference Benchmark |
+| **Deterministic Baseline** | **Model 1** | Deterministic Flight Schedule Model (convolved show-up curve) | 0.4980 | 313.4 | 215.9 | 0.945 | Passed Target ($\text{MASE} < 1.0$) |
+| **Machine Learning** | **Model 2** | Supervised Machine Learning Model (Decision Trees & OTP) | 0.6178 | 273.5 | 178.0 | 0.779 | Passed Target ($\text{MASE} < 0.850$) |
+| **Dynamic Hybrid** | **Model 3** | Dynamic Two-Stage Hybrid Model (Schedule + Real-time feedback) | **0.7483** | **222.1** | **142.8** | **0.662** | High-Accuracy In-Sample Fit |
 
-*Note*. Exploratory variations ($M_1, M_2, M_4$) were archived after 4-tier filtering.
+*Note*. Evaluated across the 9-airport balanced experimental cohort on the 2025 full-year out-of-time holdout.
 
 ### Master Asymmetric Trade-Off Matrix (Testing Hypothesis 1)
 
 The primary thesis hypothesis (**Hypothesis 1**) asserted that *distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures*. 
 
-Critically, **the hybrid model ($M_5$) is NOT best across every performance measure**. The models were evaluated against three explicit academic targets:
+Critically, **the hybrid model (Model 3) is NOT best across every performance measure**. The models were evaluated against three explicit academic targets:
 * **Robustness Target**: Lowest $\text{RMSE}_{\text{routine}}$ & $\text{MASE}_{\text{routine}} < 0.700$ under nominal operations.
 * **Resilience Target**: Recovery RMSE Multiplier $R_{\text{RMSE}} \approx 1.00$ & Lowest $\text{MASE}_{\text{shock}}$ ($\text{TTR} < 4.0\text{h}$) under acute disruptions.
 * **Generalizability Target**: Relative Transfer Ratio $\text{RTR} = 1.00$ & Change in MASE on transfer $\Delta\text{MASE} \le 10.0\%$.
 
-| Evaluation Dimension | Stated Academic Target | Baseline Control ($M_0$) | Deterministic Baseline ($M_1^*$) | Probabilistic / ML ($M_3$) | Dynamic Hybrid ($M_5$) | Dimension Winner & Operational Justification |
+| Evaluation Dimension | Stated Academic Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Dimension Winner & Operational Justification |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Dimension 1: Robustness** (Routine: Delay $< 15$m, 0 Cancels) | Lowest $\text{RMSE}_{\text{routine}}$; $\text{MASE}_{\text{routine}} < 0.70$ | $\text{RMSE} = 253.6$, $\text{MASE} = 1.000$ (Fails) | $\text{RMSE} = 313.4$, $\text{MASE} = 0.945$ (Fails) | $\text{RMSE} = 273.5$, $\text{MASE} = 0.680\text{--}0.700$ (**Target Met**) | $\text{RMSE} = \mathbf{222.1}$ (Lowest), $\text{MASE} = \mathbf{0.662}$ (**Target Met**) | **$M_5$ achieves lowest RMSE**; **$M_3$ wins Routine Pareto Efficiency** (meets target with zero online compute overhead). |
-| **Dimension 2: Resilience** (Disruption: Delay $\ge 45$m or Cancels $\ge 5$) | $R_{\text{RMSE}} \approx 1.00$; Lowest $\text{MASE}_{\text{shock}}$; $\text{TTR} < 4.0\text{h}$ | $R = 1.00$, $\text{MASE} = 1.000$, $\text{TTR} = 8.4\text{h}$ | $R = 1.32$, $\text{MASE} = 1.082$, $\text{TTR} = 7.8\text{h}$ | $R = 2.14$ (Fragile), $\text{MASE} = 0.812$, $\text{TTR} = 5.4\text{h}$ | $R = \mathbf{1.05}$ (**Target Met**), $\text{MASE} = \mathbf{0.694}$ (Lowest), $\text{TTR} = \mathbf{2.8\text{h}}$ (**Target Met**) | **$M_5$ DECISIVE WINNER**: Closed-loop recursive feedback ($e_{t-1}$) prevents empty-checkpoint collapse and recovers in 2.8h. |
-| **Dimension 3: Generalizability** (Zero-Shot Transfer: EWR $\to$ LGA) | $\text{RTR} = 1.00$; $\Delta\text{MASE} \le 10.0\%$ | $\text{RTR} = 1.00$, $\Delta\text{MASE} = 0.0\%$ (Static Ref) | $\text{RTR} = \mathbf{1.04}$ (**Target Met**), $\Delta\text{MASE} = \mathbf{+4.0\%}$ (**Target Met**) | $\text{RTR} = 1.08$, $\Delta\text{MASE} = +8.3\%$ (Passes) | $\text{RTR} = \mathbf{1.19}$ (**FAILS TARGET**), $\Delta\text{MASE} = \mathbf{+21.5\%}$ (**FAILS TARGET**) | **$M_1^*$ DECISIVE WINNER**: Physical schedule convolution is invariant to facility layout; $M_5$ overfits to local gate geometry. |
+| **Dimension 1: Robustness** (Routine: Delay $< 15$m, 0 Cancels) | Lowest $\text{RMSE}_{\text{routine}}$; $\text{MASE}_{\text{routine}} < 0.70$ | $\text{RMSE} = 253.6$, $\text{MASE} = 1.000$ (Fails) | $\text{RMSE} = 313.4$, $\text{MASE} = 0.945$ (Fails) | $\text{RMSE} = 273.5$, $\text{MASE} = 0.680\text{--}0.700$ (**Target Met**) | $\text{RMSE} = \mathbf{222.1}$ (Lowest), $\text{MASE} = \mathbf{0.662}$ (**Target Met**) | **Model 3 achieves lowest RMSE**; **Model 2 wins Routine Pareto Efficiency** (meets target with zero online compute overhead). |
+| **Dimension 2: Resilience** (Disruption: Delay $\ge 45$m or Cancels $\ge 5$) | $R_{\text{RMSE}} \approx 1.00$; Lowest $\text{MASE}_{\text{shock}}$; $\text{TTR} < 4.0\text{h}$ | $R = 1.00$, $\text{MASE} = 1.000$, $\text{TTR} = 8.4\text{h}$ | $R = 1.32$, $\text{MASE} = 1.082$, $\text{TTR} = 7.8\text{h}$ | $R = 2.14$ (Fragile), $\text{MASE} = 0.812$, $\text{TTR} = 5.4\text{h}$ | $R = \mathbf{1.05}$ (**Target Met**), $\text{MASE} = \mathbf{0.694}$ (Lowest), $\text{TTR} = \mathbf{2.8\text{h}}$ (**Target Met**) | **Model 3 DECISIVE WINNER**: Closed-loop recursive feedback ($e_{t-1}$) prevents empty-checkpoint collapse and recovers in 2.8h. |
+| **Dimension 3: Generalizability** (Zero-Shot Transfer: EWR $\to$ LGA) | $\text{RTR} = 1.00$; $\Delta\text{MASE} \le 10.0\%$ | $\text{RTR} = 1.00$, $\Delta\text{MASE} = 0.0\%$ (Static Ref) | $\text{RTR} = \mathbf{1.04}$ (**Target Met**), $\Delta\text{MASE} = \mathbf{+4.0\%}$ (**Target Met**) | $\text{RTR} = 1.08$, $\Delta\text{MASE} = +8.3\%$ (Passes) | $\text{RTR} = \mathbf{1.19}$ (**FAILS TARGET**), $\Delta\text{MASE} = \mathbf{+21.5\%}$ (**FAILS TARGET**) | **Model 1 DECISIVE WINNER**: Physical schedule convolution is invariant to facility layout; Model 3 overfits to local gate geometry. |
 
 ### Core Empirical Takeaways
 1. **Confirmation of Asymmetric Trade-Offs (Hypothesis 1)**: No single paradigm dominates all performance measures:
-   - **$M_5$ Decisively Wins Resilience** ($R_{\text{MASE}} = 1.05 \approx 1.00, \text{MASE}_{\text{shock}} = 0.694, \text{TTR} = 2.8\text{h}$), but **Decisively Fails Generalizability** ($\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$) due to decision tree terminal geometry overfitting.
-   - **$M_1^*$ Decisively Wins Generalizability** ($\text{RTR} = 1.04 \approx 1.00, \Delta\text{MASE} = +4.0\% \le 10.0\%$), because physical schedule convolution is invariant across terminal buildings.
-   - **$M_3$ Wins Routine Pareto Efficiency** by achieving the $\text{MASE} < 0.70$ target with zero online compute overhead and near-zero latency.
+   - **Model 3 Decisively Wins Resilience** ($R_{\text{MASE}} = 1.05 \approx 1.00, \text{MASE}_{\text{shock}} = 0.694, \text{TTR} = 2.8\text{h}$), but **Decisively Fails Generalizability** ($\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$) due to decision tree terminal geometry overfitting.
+   - **Model 1 Decisively Wins Generalizability** ($\text{RTR} = 1.04 \approx 1.00, \Delta\text{MASE} = +4.0\% \le 10.0\%$), because physical schedule convolution is invariant across terminal buildings.
+   - **Model 2 Wins Routine Pareto Efficiency** by achieving the $\text{MASE} < 0.70$ target with zero online compute overhead and near-zero latency.
 2. **Values versus Volatility Paradigm**: For multi-day rolling volatility ($\sigma_{\text{TSA, 7d}}$), static feature levels fail completely ($R^2 = -0.269$), while feature volatility metrics succeed ($R^2 = +0.311$), confirming that second-order dispersion must be modeled with second-order predictors.
 3. **Delay Volatility Transmission**: Checkpoint throughput volatility is strongly driven by flight departure delay volatility ($CV_{\text{delay}}: r = +0.4373, p = 0.0288$), while raw delay minutes show zero linear correlation ($r = -0.0620, p = 0.769$).
-4. **Regime-Switched Gated Inference Engine & Conformal Buffers**: Operational deployment combines fast ML ($M_3$) during calm periods ($T(h) < 0.75$) with closed-loop hybrid tracking ($M_5$) during acute storms ($T(h) \ge 0.75$), with conformal prediction quantile buffers ($c(t) = \lceil (\hat{\mu}_t + 1.036 \cdot \hat{\sigma}_t) / \mu_{\text{lane}} \rceil$) dynamically sizing lane staffing. Standalone CSV matrices are published at `results/manuscript_tables/master_asymmetric_trade_off_matrix.csv` and `results/manuscript_tables/dual_track_model_selection_policy.csv`.
+4. **Regime-Switched Gated Inference Engine & Conformal Buffers**: Operational deployment combines fast machine learning (Model 2) during calm periods ($T(h) < 0.75$) with closed-loop hybrid tracking (Model 3) during acute storms ($T(h) \ge 0.75$), with conformal prediction quantile buffers ($c(t) = \lceil (\hat{\mu}_t + 1.036 \cdot \hat{\sigma}_t) / \mu_{\text{lane}} \rceil$) dynamically sizing lane staffing. Standalone CSV matrices are published at `results/manuscript_tables/master_asymmetric_trade_off_matrix.csv` and `results/manuscript_tables/dual_track_model_selection_policy.csv`.
 
 ---
 
@@ -225,6 +225,6 @@ All automated AI coding agents, subagents, and LLM assistants operating in this 
 3. **Continuous Version Control & Provenance**: Every modification must update `results/00_VERSION_CONTROL_AND_PROVENANCE.md`.
 4. **Synchronize All Tables (CSV & Excel)**: All metric or parameter changes must be synchronized across both CSV tables (`results/manuscript_tables/`) and multi-tab Excel workbooks (`results/`) via `src/analysis/sync_manuscript_tables.py`.
 5. **Research Target Integrity**: The primary dependent variable is **TSA Throughput Volatility** ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$), never raw passenger volume ($y_t$).
-6. **The 4 Canonical Models**: Evaluation is restricted to $M_0$ (Control), $M_1^*$ (Deterministic Schedule Bank Volatility), $M_3$ (Supervised GBR), and $M_5$ (Sequential SARIMA-Tree Hybrid), preserving asymmetric trade-offs ($M_5$ is not universally best).
+6. **The Candidate Models**: Evaluation is restricted to the **Baseline Control** (Daily Persistence Benchmark), **Model 1** (Deterministic Flight Schedule Model), **Model 2** (Supervised Machine Learning Model), and **Model 3** (Dynamic Two-Stage Hybrid Model), preserving asymmetric trade-offs (Model 3 is not universally best).
 7. **Strict Aviation Terminology Filter**: Strict adherence to genuine commercial aviation operations terms (*Nominal On-Time Baseline*, *Routine Daily Operations*, *Irregular Operations / IROPS*, *Carrier Checkpoint Isolation*), with zero tolerance for physics, biology, or lab-science jargon.
 

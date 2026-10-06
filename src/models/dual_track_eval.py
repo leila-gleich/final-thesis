@@ -4,11 +4,11 @@ src/models/dual_track_eval.py
 Dual-Track Model Selection Framework (REC-05).
 
 Evaluates operational tradeoffs across:
-1. Track A: In-Sample Hub Operations & Facility AOCs (Winner: M5 Hybrid)
+1. Track A: In-Sample Hub Operations & Facility AOCs (Winner: Model 3 Dynamic Hybrid)
    - Goal: Minimize routine MASE (<= 0.85) and shock recovery time (TTR <= 3.5h)
      using dynamic 1-step residual error feedback.
-2. Track B: Zero-Shot Spatial Transfer & Regional Rollouts (Winner: M3 Tweedie ML)
-   - Goal: Maximize cross-airport transferability (RTR <= 1.08, penalty <= 8%)
+2. Track B: Zero-Shot Spatial Transfer & Regional Rollouts (Winner: Model 1 Deterministic Schedule)
+   - Goal: Maximize cross-airport transferability (RTR <= 1.05, penalty <= 10%)
      without terminal-specific overfitting.
 """
 
@@ -18,7 +18,8 @@ from typing import Dict, List
 
 def run_dual_track_evaluation(model_metrics: Dict[str, Dict] = None) -> pd.DataFrame:
     """
-    Executes the Dual-Track Model Selection Framework evaluation comparing M0, M1*, M3, and M5.
+    Executes the Dual-Track Model Selection Framework evaluation comparing
+    Baseline Control, Model 1 (Deterministic), Model 2 (Machine Learning), and Model 3 (Dynamic Hybrid).
     Evaluates asymmetric trade-offs across:
       - Robustness Target: Lowest RMSE under routine conditions & MASE_routine < 0.70
       - Resilience Target: Recovery RMSE multiplier R ≈ 1.00 & lowest MASE_shock (TTR < 4.0h)
@@ -27,19 +28,19 @@ def run_dual_track_evaluation(model_metrics: Dict[str, Dict] = None) -> pd.DataF
     if model_metrics is None:
         # Default empirical holdout benchmark metrics across 4 canonical models from 9-airport cohort
         model_metrics = {
-            "M0: Diurnal Volatility Naive Benchmark": {
+            "Baseline Control: Daily Persistence Benchmark": {
                 "routine_mase": 1.000, "routine_rmse": 253.6, "shock_multiplier": 1.00,
                 "ttr_hours": 8.4, "rtr": 1.00, "delta_mase_pct": 0.0, "transfer_penalty_pct": 0.0
             },
-            "M1*: Deterministic Sched Bank Volatility": {
+            "Model 1: Deterministic Schedule Model": {
                 "routine_mase": 0.945, "routine_rmse": 313.4, "shock_multiplier": 1.32,
                 "ttr_hours": 7.8, "rtr": 1.04, "delta_mase_pct": 4.0, "transfer_penalty_pct": 4.2
             },
-            "M3: Supervised Volatility GBR (Combined)": {
+            "Model 2: Supervised Machine Learning Model": {
                 "routine_mase": 0.700, "routine_rmse": 273.5, "shock_multiplier": 2.14,
                 "ttr_hours": 5.4, "rtr": 1.08, "delta_mase_pct": 8.3, "transfer_penalty_pct": 7.9
             },
-            "M5: Sequential SARIMA-Tree Volatility Hybrid": {
+            "Model 3: Dynamic Two-Stage Hybrid Model": {
                 "routine_mase": 0.662, "routine_rmse": 222.1, "shock_multiplier": 1.05,
                 "ttr_hours": 2.8, "rtr": 1.19, "delta_mase_pct": 21.5, "transfer_penalty_pct": 19.0
             }
@@ -69,11 +70,11 @@ def run_dual_track_evaluation(model_metrics: Dict[str, Dict] = None) -> pd.DataF
         delta_mase = m.get("delta_mase_pct", 10.0)
         penalty = m.get("transfer_penalty_pct", 10.0)
         
-        # Winner for Track B is M1* (near-zero transfer penalty and RTR ≈ 1.00)
-        track_b_winner = (rtr <= 1.05 and delta_mase <= 10.0 and "M1*" in name)
+        # Winner for Track B is Model 1 (near-zero transfer penalty and RTR ≈ 1.00)
+        track_b_winner = (rtr <= 1.05 and delta_mase <= 10.0 and ("Model 1" in name or "M1*" in name))
         status_b = "DEPLOYED FOR TRACK B (Zero-Shot Generalizability Champion: RTR ≈ 1.00)" if track_b_winner else (
-            "Viable Portable ML (Passes Delta MASE <= 10%)" if ("M3" in name and delta_mase <= 10.0) else (
-                "Unusable Baseline Accuracy" if "M0" in name else "Overfitting Risk on Zero-Shot Transfer (FAILS RTR & Delta MASE)"
+            "Viable Portable ML (Passes Delta MASE <= 10%)" if (("Model 2" in name or "M3" in name) and delta_mase <= 10.0) else (
+                "Unusable Baseline Accuracy" if ("Baseline" in name or "M0" in name) else "Overfitting Risk on Zero-Shot Transfer (FAILS RTR & Delta MASE)"
             )
         )
         

@@ -187,32 +187,32 @@ $$\text{Demand}_{\text{convolved}, t} = \sum_{h=1}^{3} w_h \cdot \left[ \sum_{f 
 ### 3.9 Master Model Benchmark Matrix for Throughput Volatility (2025 Holdout)
 * **Sample Size**: **72,053** hourly complex observations (3,222 airport-days) across the 12 dedicated screening complexes of the 9-airport experimental cohort.
 
-| Paradigm | Model ID | Model Architecture | Validation $R^2$ | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Forecast Bias (pax/hr) | Academic Target Status |
-| :--- | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Baseline Control** | **$M_0$** | Diurnal Volatility Naive ($y_{t-24}$) | 0.4412 | 0.6719 | 253.6 | 179.3 | 1.000 | -0.7 | Baseline Reference |
-| **Deterministic Baseline** | **$M_1^*$**| Deterministic Schedule Bank Volatility Baseline | 0.4912 | 0.4980 | 313.4 | 215.9 | 0.945 | -42.1 | Passed Target ($\text{MASE} < 1.0$) |
-| **Probabilistic / ML** | **$M_3$** | Supervised Volatility GBR (Combined Values + Vol) | 0.5455 | 0.6178 | 273.5 | 178.0 | 0.779 | -18.4 | Passed Target ($\text{MASE} < 0.850$) |
-| **Sequential Hybrid** | **$M_5$** | Sequential SARIMA-Tree Volatility Hybrid | **0.7120** | **0.7483** | **222.1** | **142.8** | **0.662** | -8.5 | High-Accuracy In-Sample Fit |
+| Paradigm | Model Name | Operational Description | Validation $R^2$ | Test $R^2$ | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Forecast Bias (pax/hr) | Academic Target Status |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Baseline Control** | **Baseline Control** | Diurnal Volatility Naive ($y_{t-24}$) | 0.4412 | 0.6719 | 253.6 | 179.3 | 1.000 | -0.7 | Baseline Reference |
+| **Deterministic Baseline** | **Model 1** | Deterministic Flight Schedule Model | 0.4912 | 0.4980 | 313.4 | 215.9 | 0.945 | -42.1 | Passed Target ($\text{MASE} < 1.0$) |
+| **Machine Learning** | **Model 2** | Supervised Machine Learning Model | 0.5455 | 0.6178 | 273.5 | 178.0 | 0.779 | -18.4 | Passed Target ($\text{MASE} < 0.850$) |
+| **Dynamic Hybrid** | **Model 3** | Dynamic Two-Stage Hybrid Model | **0.7120** | **0.7483** | **222.1** | **142.8** | **0.662** | -8.5 | High-Accuracy In-Sample Fit |
 
-* **Statistical Significance (Diebold-Mariano Test vs. Deterministic $M_1^*$)**:
-  - Model $M_3$ (HistGBR): $DM = 42.15, p < 0.0001$.
-  - Model $M_5$ (Sequential Hybrid): $DM = 48.72, p < 0.0001$.
+* **Statistical Significance (Diebold-Mariano Test vs. Model 1)**:
+  - Model 2 (Machine Learning): $DM = 42.15, p < 0.0001$.
+  - Model 3 (Dynamic Hybrid): $DM = 48.72, p < 0.0001$.
 
 ### 3.10 Master Multi-Pillar Hypothesis Evaluation Matrix Across the Three Dimensions
 
-| Dimension | Metric | Definition | Stated Academic Target | Deterministic ($M_1^*$) | Probabilistic ML ($M_3$) | Dynamic Hybrid ($M_5$) | Hypothesis Confirmation & Winner |
+| Dimension | Metric | Definition | Stated Academic Target | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Hypothesis Confirmation & Winner |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **1: Robustness** | $\text{RMSE}_{\text{routine}}$ | Delay $< 15$m; 0 Cancels | Lowest Routine RMSE | 313.4 pax/hr | 273.5 pax/hr | **222.1 pax/hr** | **$M_5$ achieves lowest RMSE**; $M_3$ delivers low-compute routine Pareto fit. |
-| **1: Robustness** | $\text{MASE}_{\text{routine}}$ | Relative Routine Error | **$\text{MASE} < 0.700$** | 0.945 | **0.680\text{--}0.700** | **0.662** | **Target Met by $M_3$ and $M_5$**; confirms H1(a) (ML/Hybrids fit routine rhythms). |
-| **1: Robustness** | $DM$ Test Stat | Loss Differential vs. $M_1^*$ | $p < 0.001$ | Control | $DM = 42.15$ ($p < 0.0001$) | **$DM = 48.72$ ($p < 0.0001$)** | Statistically proves ML and Hybrid gains over deterministic scheduling are genuine. |
-| **2: Resilience** | $\text{RMSE}_{\text{shock}}$ | Delay $\ge 45$m or Cancels $\ge 5$| Lowest Shock RMSE | 412.8 pax/hr | 318.4 pax/hr | **254.2 pax/hr** | **$M_5$ minimizes absolute error** during acute convective storm shocks. |
-| **2: Resilience** | $\text{MASE}_{\text{shock}}$ | Relative Disruption Error | Lowest Shock MASE | 1.082 | 0.812 | **0.694 (LOWEST)** | **$M_5$ performs 30.6% better** than naive persistence during airport ground stops. |
-| **2: Resilience** | $R_{\text{MASE}}$ | $\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$ | **$R \approx 1.00$** (Fragile $\ge 2.0$) | 1.32 (Blind to Delays) | 2.14 (Fragile Collapse) | **1.05 (RESILIENT)** | **$M_5$ DECISIVE WINNER (Target Met)**; recursive feedback prevents collapse. |
-| **2: Resilience** | $\text{TTR}_{\text{shock}}$ | Survival to $\pm 2\sigma$ error | **$\text{TTR} < 4.0$ hours** | 7.8 hours | 5.4 hours | **2.8 hours (FASTEST)** | **$M_5$ returns to normal error bounds** 5.0 hrs faster than $M_1^*$ and 2.6 hrs faster than $M_3$. |
+| **1: Robustness** | $\text{RMSE}_{\text{routine}}$ | Delay $< 15$m; 0 Cancels | Lowest Routine RMSE | 313.4 pax/hr | 273.5 pax/hr | **222.1 pax/hr** | **Model 3 achieves lowest RMSE**; Model 2 delivers low-compute routine Pareto fit. |
+| **1: Robustness** | $\text{MASE}_{\text{routine}}$ | Relative Routine Error | **$\text{MASE} < 0.700$** | 0.945 | **0.680\text{--}0.700** | **0.662** | **Target Met by Model 2 and Model 3**; confirms H1(a) (ML/Hybrids fit routine rhythms). |
+| **1: Robustness** | $DM$ Test Stat | Loss Differential vs. Model 1 | $p < 0.001$ | Control | $DM = 42.15$ ($p < 0.0001$) | **$DM = 48.72$ ($p < 0.0001$)** | Statistically proves ML and Hybrid gains over deterministic scheduling are genuine. |
+| **2: Resilience** | $\text{RMSE}_{\text{shock}}$ | Delay $\ge 45$m or Cancels $\ge 5$| Lowest Shock RMSE | 412.8 pax/hr | 318.4 pax/hr | **254.2 pax/hr** | **Model 3 minimizes absolute error** during acute convective storm shocks. |
+| **2: Resilience** | $\text{MASE}_{\text{shock}}$ | Relative Disruption Error | Lowest Shock MASE | 1.082 | 0.812 | **0.694 (LOWEST)** | **Model 3 performs 30.6% better** than naive persistence during airport ground stops. |
+| **2: Resilience** | $R_{\text{MASE}}$ | $\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$ | **$R \approx 1.00$** (Fragile $\ge 2.0$) | 1.32 (Blind to Delays) | 2.14 (Fragile Collapse) | **1.05 (RESILIENT)** | **Model 3 DECISIVE WINNER (Target Met)**; recursive feedback prevents collapse. |
+| **2: Resilience** | $\text{TTR}_{\text{shock}}$ | Survival to $\pm 2\sigma$ error | **$\text{TTR} < 4.0$ hours** | 7.8 hours | 5.4 hours | **2.8 hours (FASTEST)** | **Model 3 returns to normal error bounds** 5.0 hrs faster than Model 1 and 2.6 hrs faster than Model 2. |
 | **3: Generalizability**| Zero-Shot $\text{RMSE}_{\text{transfer}}$ | EWR to LGA Zero-Shot | Minimize Transfer RMSE | 326.5 pax/hr | 295.1 pax/hr | 264.3 pax/hr | Out-of-the-box accuracy when deploying model to an unfamiliar airport facility. |
-| **3: Generalizability**| $\text{RTR}$ | $\text{RMSE}_{\text{trans}} / \text{RMSE}_{\text{in}}$ | **$\text{RTR} = 1.00$** | **1.04 (TARGET MET)** | 1.08 | **1.19 (FAILS TARGET)** | **$M_1^*$ DECISIVE WINNER**; $M_5$ suffers heavy penalty due to terminal overfitting. |
+| **3: Generalizability**| $\text{RTR}$ | $\text{RMSE}_{\text{trans}} / \text{RMSE}_{\text{in}}$ | **$\text{RTR} = 1.00$** | **1.04 (TARGET MET)** | 1.08 | **1.19 (FAILS TARGET)** | **Model 1 DECISIVE WINNER**; Model 3 suffers heavy penalty due to terminal overfitting. |
 | **3: Generalizability**| $\Delta_{\text{transfer}}$ | $((\text{RMSE}_{\text{trans}} - \text{RMSE}_{\text{in}}) / \text{RMSE}_{\text{in}}) \times 100$ | Minimal Penalty ($\le 10\%$) | **+4.2% (MINIMAL)** | +7.9% (LOW) | **+19.0% (ELEVATED)** | Deterministic physical rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%. |
-| **3: Generalizability**| $\Delta\text{MASE}$ | $\text{MASE}_{\text{trans}} - \text{MASE}_{\text{in}}$ | **$\Delta\text{MASE} \le 10.0\%$** | **+4.0% (TARGET MET)** | +8.3% (PASSES) | **+21.5% (FAILS TARGET)** | **$M_1^*$ passes target with +4.0% shift** ($+0.038$); $M_5$ fails target with +21.5% shift ($+0.142$). |
+| **3: Generalizability**| $\Delta\text{MASE}$ | $\text{MASE}_{\text{trans}} - \text{MASE}_{\text{in}}$ | **$\Delta\text{MASE} \le 10.0\%$** | **+4.0% (TARGET MET)** | +8.3% (PASSES) | **+21.5% (FAILS TARGET)** | **Model 1 passes target with +4.0% shift** ($+0.038$); Model 3 fails target with +21.5% shift ($+0.142$). |
 
 ---
 
@@ -260,7 +260,7 @@ All prose in Chapter IV strictly follows the **Academic & Operational Guide: Rep
   - Section 4.1 validates the multi-source data extraction pipeline and 84-cell interaction tensor defined in Section 3.8.
   - Section 4.2 provides the empirical proof of the four-phase filtering pipeline conceptualized in Section 3.9.
   - Section 4.3 operationalizes the ACRP Report 40 lead-lag passenger arrival kernels defined in Section 3.10.
-  - Section 4.4 tests the model suite (M0 through M5) against the 2025 out-of-time holdout protocol defined in Section 3.12.
+  - Section 4.4 tests the candidate model suite against the 2025 out-of-time holdout protocol defined in Section 3.12.
 * **Handoff to Chapter V (Analysis & Discussion)**:
   - Chapter IV provides the unvarnished factual numbers; Chapter V interprets why those numbers occur.
   - Section 5.1 analyzes the physical and behavioral mechanics behind the Hub Disconnect.

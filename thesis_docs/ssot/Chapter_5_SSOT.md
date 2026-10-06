@@ -32,29 +32,29 @@ CHAPTER V: ANALYSIS & IN-DEPTH DISCUSSION
 │   ├── Flight Delay Information Causality (t - 1 Proxy)
 │   └── 5.2.1 The Lead-Lag Asynchrony Mechanism (Morning 05:00–08:00 vs. Evening 14:00–22:00)
 ├── 5.3 Deep-Dive: Evaluation Dimension 1 – Robustness (Routine Operational Accuracy)
-│   ├── Benchmark Matrix: M1 (1.083 MASE) vs. M3 (0.890 MASE) vs. M5 (0.834 MASE, DM = 79.12)
+│   ├── Benchmark Matrix: Model 1 (0.945 MASE) vs. Model 2 (0.680–0.700 MASE) vs. Model 3 (0.662 MASE, DM = 48.72)
 │   ├── Evaluation of Hypothesis H_1a (Routine Non-Linear Accuracy)
 │   └── 5.3.1 Robustness Across the 84-Cell Grid & Prevention of Weather Delay Distortion
 ├── 5.4 Deep-Dive: Evaluation Dimension 2 – Resilience Under Disruption
-│   ├── Benchmark Matrix: M1 (0.89 R_MASE) vs. M3 (0.87 R_MASE) vs. M5 (0.737 MASE, 0.88 R_MASE)
-│   ├── Severe Disruption Degradation (Winter Storm Elliott: Pure ML R_MASE = 2.14 vs. Hybrid = 1.28)
-│   ├── Kaplan-Meier Time-to-Recovery (Hybrid TTR = 3.2h vs. ML = 6.7h vs. SARIMA = 8.4h)
+│   ├── Benchmark Matrix: Model 1 (1.32 R_MASE) vs. Model 2 (2.14 R_MASE) vs. Model 3 (0.694 MASE, 1.05 R_MASE)
+│   ├── Severe Disruption Degradation (Pure ML R_MASE = 2.14 vs. Hybrid = 1.05)
+│   ├── Kaplan-Meier Time-to-Recovery (Hybrid TTR = 2.8h vs. ML = 5.4h vs. Deterministic = 7.8h)
 │   ├── Evaluation of Hypothesis H_1b (Hybrid Resilience Under Shock)
-│   └── 5.4.1 Resilience Mechanics and the "Empty Checkpoint Fallacy" vs. State-Space Innovation
+│   └── 5.4.1 Resilience Mechanics and the "Empty Checkpoint Fallacy" vs. Live Innovation Feedback
 ├── 5.5 Deep-Dive: Evaluation Dimension 3 – Generalizability (Cross-Airport Transferability)
-│   ├── Benchmark Matrix: M1 (+4.4%, RTR = 1.04) vs. M3 (+7.9%, RTR = 1.08) vs. M5 (+18.7%, RTR = 1.19)
-│   ├── Deep Neural Network Overfitting & Failure (Δ = +48.2%)
-│   ├── Project 3 State-Space Zero-Shot Stability (EWR → LGA: Δ = 0.0%, RTR = 1.00; DTW → PHL: RTR = 0.86)
+│   ├── Benchmark Matrix: Model 1 (+4.2%, RTR = 1.04) vs. Model 2 (+7.9%, RTR = 1.08) vs. Model 3 (+19.0%, RTR = 1.19)
+│   ├── Decision Tree Overfitting & Failure (Δ = +21.5%)
+│   ├── Zero-Shot Facility Portability (EWR → LGA: Model 1 RTR = 1.04; DTW → PHL: RTR = 1.003)
 │   ├── Evaluation of Hypothesis H_1c (Structural Portability)
-│   └── 5.5.1 Generalizability via Standardized Volatility Archetypes
+│   └── 5.5.1 Generalizability via Standardized Flight Schedules
 ├── 5.6 Master Synthesis and Operational Recommendations
 │   ├── Cross-Dimensional Paradigm Evaluation Matrix
 │   ├── 5.6.1 The Regime-Switched Gated Inference Engine (CVI < 30 vs. CVI ≥ 35)
 │   └── 5.6.2 Strategic Implications for TSA and Airport Authorities
-└── 5.7 Empirical Cross-Project Synthesis (Projects 1, 2, and 3)
-    ├── Project 1 (Supervised ML): Out-of-Time Accuracy & Holdout Evaluation (M5 R^2 = 0.6270, MASE = 0.846)
-    ├── Project 2 (Queuing Simulation): Dynamic Allocation Slashes Delays by 80.1% (5,514 vs 27,763 pax-hrs)
-    └── Project 3 (State-Space Modeling): Recursive Innovation Tracking & Perfect Portability (RTR = 1.00)
+└── 5.7 The Values versus Volatility Paradigm Across Temporal Horizons
+    ├── Rolling Multi-Day Volatility (Feature Values R^2 < 0 vs. Feature Volatility R^2 > 0.31)
+    ├── Flight Departure Delay Volatility Transmission (CV_delay r = +0.4373, p = 0.0288)
+    └── Master Factor Importance Hierarchy (Schedule 64.5%, Cancels 16.5%, Buffers 7.9%, Delays 7.0%)
 ```
 
 ---
@@ -63,29 +63,29 @@ CHAPTER V: ANALYSIS & IN-DEPTH DISCUSSION
 
 ### 3.1 Evaluation of Overarching Thesis Hypothesis ($H_1$ - Master Asymmetric Trade-Off Matrix)
 
-> **Core Hypothesis ($H_1$)**: Across the four canonical forecasting paradigms evaluated following four-tiered purposive filtering (baseline control, deterministic flight schedule physics, supervised machine learning, and dynamic cyber-physical hybrid), **no individual architecture will prove universally superior across all three evaluation dimensions**. Rather, inherent mathematical properties establish stark, asymmetric trade-offs across robustness, resilience, and generalizability.
+> **Core Hypothesis ($H_1$)**: Across the candidate forecasting paradigms evaluated following four-tiered purposive filtering (baseline control, deterministic flight schedule baseline, supervised machine learning, and dynamic two-stage hybrid), **no individual architecture will prove universally superior across all three evaluation dimensions**. Rather, inherent operational properties establish stark, asymmetric trade-offs across robustness, resilience, and generalizability.
 
 The empirical findings **decisively confirm** $H_1$, as summarized in the master asymmetric trade-off matrix:
 
-| Evaluation Dimension | Stated Academic Target | Baseline Control ($M_0$) | Deterministic Baseline ($M_1^*$) | Probabilistic / ML ($M_3$) | Dynamic Hybrid ($M_5$) | Dimension Winner & Justification |
+| Evaluation Dimension | Stated Academic Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Dimension Winner & Justification |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Dimension 1: Robustness** (Routine: Delay $< 15$m, 0 Cancels) | Lowest $\text{RMSE}_{\text{routine}}$; $\text{MASE}_{\text{routine}} < 0.70$ | $\text{RMSE} = 253.6$, $\text{MASE} = 1.000$ (Fails) | $\text{RMSE} = 313.4$, $\text{MASE} = 0.945$ (Fails) | $\text{RMSE} = 273.5$, $\text{MASE} = 0.680\text{--}0.700$ (**Target Met**) | $\text{RMSE} = \mathbf{222.1}$ (Lowest), $\text{MASE} = \mathbf{0.662}$ (**Target Met**) | **$M_5$ achieves lowest RMSE**; **$M_3$ wins Routine Pareto Efficiency** (meets target with zero online compute overhead). |
-| **Dimension 2: Resilience** (Disruption: Delay $\ge 45$m or Cancels $\ge 5$) | $R_{\text{RMSE}} \approx 1.00$; Lowest $\text{MASE}_{\text{shock}}$; $\text{TTR} < 4.0\text{h}$ | $R = 1.00$, $\text{MASE} = 1.000$, $\text{TTR} = 8.4\text{h}$ | $R = 1.32$, $\text{MASE} = 1.082$, $\text{TTR} = 7.8\text{h}$ | $R = 2.14$ (Fragile), $\text{MASE} = 0.812$, $\text{TTR} = 5.4\text{h}$ | $R = \mathbf{1.05}$ (**Target Met**), $\text{MASE} = \mathbf{0.694}$ (Lowest), $\text{TTR} = \mathbf{2.8\text{h}}$ (**Target Met**) | **$M_5$ DECISIVE WINNER**: Closed-loop recursive feedback ($e_{t-1}$) prevents empty-checkpoint collapse and recovers in 2.8h. |
-| **Dimension 3: Generalizability** (Zero-Shot Transfer: EWR $\to$ LGA) | $\text{RTR} = 1.00$; $\Delta\text{MASE} \le 10.0\%$ | $\text{RTR} = 1.00$, $\Delta\text{MASE} = 0.0\%$ (Static Ref) | $\text{RTR} = \mathbf{1.04}$ (**Target Met**), $\Delta\text{MASE} = \mathbf{+4.0\%}$ (**Target Met**) | $\text{RTR} = 1.08$, $\Delta\text{MASE} = +8.3\%$ (Passes) | $\text{RTR} = \mathbf{1.19}$ (**FAILS TARGET**), $\Delta\text{MASE} = \mathbf{+21.5\%}$ (**FAILS TARGET**) | **$M_1^*$ DECISIVE WINNER**: Physical schedule convolution is invariant to facility layout; $M_5$ overfits to local gate geometry. |
+| **Dimension 1: Robustness** (Routine: Delay $< 15$m, 0 Cancels) | Lowest $\text{RMSE}_{\text{routine}}$; $\text{MASE}_{\text{routine}} < 0.70$ | $\text{RMSE} = 253.6$, $\text{MASE} = 1.000$ (Fails) | $\text{RMSE} = 313.4$, $\text{MASE} = 0.945$ (Fails) | $\text{RMSE} = 273.5$, $\text{MASE} = 0.680\text{--}0.700$ (**Target Met**) | $\text{RMSE} = \mathbf{222.1}$ (Lowest), $\text{MASE} = \mathbf{0.662}$ (**Target Met**) | **Model 3 achieves lowest RMSE**; **Model 2 wins Routine Pareto Efficiency** (meets target with zero online compute overhead). |
+| **Dimension 2: Resilience** (Disruption: Delay $\ge 45$m or Cancels $\ge 5$) | $R_{\text{RMSE}} \approx 1.00$; Lowest $\text{MASE}_{\text{shock}}$; $\text{TTR} < 4.0\text{h}$ | $R = 1.00$, $\text{MASE} = 1.000$, $\text{TTR} = 8.4\text{h}$ | $R = 1.32$, $\text{MASE} = 1.082$, $\text{TTR} = 7.8\text{h}$ | $R = 2.14$ (Fragile), $\text{MASE} = 0.812$, $\text{TTR} = 5.4\text{h}$ | $R = \mathbf{1.05}$ (**Target Met**), $\text{MASE} = \mathbf{0.694}$ (Lowest), $\text{TTR} = \mathbf{2.8\text{h}}$ (**Target Met**) | **Model 3 DECISIVE WINNER**: Closed-loop live feedback ($e_{t-1}$) prevents empty-checkpoint collapse and recovers in 2.8h. |
+| **Dimension 3: Generalizability** (Zero-Shot Transfer: EWR $\to$ LGA) | $\text{RTR} = 1.00$; $\Delta\text{MASE} \le 10.0\%$ | $\text{RTR} = 1.00$, $\Delta\text{MASE} = 0.0\%$ (Static Ref) | $\text{RTR} = \mathbf{1.04}$ (**Target Met**), $\Delta\text{MASE} = \mathbf{+4.0\%}$ (**Target Met**) | $\text{RTR} = 1.08$, $\Delta\text{MASE} = +8.3\%$ (Passes) | $\text{RTR} = \mathbf{1.19}$ (**FAILS TARGET**), $\Delta\text{MASE} = \mathbf{+21.5\%}$ (**FAILS TARGET**) | **Model 1 DECISIVE WINNER**: Physical schedule convolution is invariant to facility layout; Model 3 overfits to local gate geometry. |
 
 ### 3.2 Sub-Hypothesis Verification Proofs
 
 1. **Sub-Hypothesis $H_{1a}$ (Robustness Target: Lowest $\text{RMSE}_{\text{routine}}$ and $\text{MASE}_{\text{routine}} < 0.700$)**:
-   - *Hypothesis Statement*: Non-linear machine learning models ($M_3$) and cyber-physical hybrids ($M_5$) will achieve the robustness target ($\text{MASE}_{\text{routine}} < 0.700$), outperforming linear and persistence baselines ($M_0, M_1^*$).
-   - *Empirical Proof*: Confirmed. $M_5$ achieves $\text{MASE}_{\text{routine}} = 0.662$ ($\text{RMSE} = 222.1\text{ pax/hr}$), and $M_3$ achieves $\text{MASE}_{\text{routine}} = 0.680\text{--}0.700$ ($\text{RMSE} = 273.5\text{ pax/hr}$), compared to $M_1^*$ at $\text{MASE} = 0.945$ and $M_0$ at $\text{MASE} = 1.000$. Diebold-Mariano tests confirm statistical significance ($DM = 48.72, p < 0.0001$ for $M_5$; $DM = 42.15, p < 0.0001$ for $M_3$). $M_3$ provides the optimal Routine Pareto solution.
+   - *Hypothesis Statement*: Non-linear machine learning models (Model 2) and two-stage hybrids (Model 3) will achieve the robustness target ($\text{MASE}_{\text{routine}} < 0.700$), outperforming linear and persistence baselines.
+   - *Empirical Proof*: Confirmed. Model 3 achieves $\text{MASE}_{\text{routine}} = 0.662$ ($\text{RMSE} = 222.1\text{ pax/hr}$), and Model 2 achieves $\text{MASE}_{\text{routine}} = 0.680\text{--}0.700$ ($\text{RMSE} = 273.5\text{ pax/hr}$), compared to Model 1 at $\text{MASE} = 0.945$ and Baseline Control at $\text{MASE} = 1.000$. Diebold-Mariano tests confirm statistical significance ($DM = 48.72, p < 0.0001$ for Model 3; $DM = 42.15, p < 0.0001$ for Model 2). Model 2 provides the optimal Routine Pareto solution.
 
 2. **Sub-Hypothesis $H_{1b}$ (Resilience Target: $R \approx 1.00$, Lowest $\text{MASE}_{\text{shock}}$, and $\text{TTR} < 4.0\text{ hours}$)**:
-   - *Hypothesis Statement*: The Dynamic Cyber-Physical Hybrid ($M_5$) will be the sole architecture to satisfy the resilience target ($R \approx 1.00, \text{TTR} < 4.0\text{h}$), resisting the "empty checkpoint fallacy" that degrades pure machine learning during flight delay cascades.
-   - *Empirical Proof*: Confirmed. Under acute disruption ($\text{Delay} \ge 45\text{m}$ or $\text{Cancels} \ge 5$), pure ML ($M_3$) collapses into fragility ($R = 2.14, \text{TTR} = 5.4\text{ hours}$). The Dynamic Hybrid maintains $R_{\text{MASE}} = 1.05 \approx 1.00$, lowest shock error ($\text{MASE}_{\text{shock}} = 0.694$), and recovers in **2.8 hours** ($\le 4.0\text{ hours}$), driven by recursive 1-step error innovation feedback ($e_t = y_t - C\hat{x}_{t|t-1}$).
+   - *Hypothesis Statement*: The Dynamic Two-Stage Hybrid (Model 3) will be the sole architecture to satisfy the resilience target ($R \approx 1.00, \text{TTR} < 4.0\text{h}$), resisting the "empty checkpoint fallacy" that degrades pure machine learning during flight delay cascades.
+   - *Empirical Proof*: Confirmed. Under acute disruption ($\text{Delay} \ge 45\text{m}$ or $\text{Cancels} \ge 5$), pure ML (Model 2) collapses into fragility ($R = 2.14, \text{TTR} = 5.4\text{ hours}$). The Dynamic Hybrid maintains $R_{\text{MASE}} = 1.05 \approx 1.00$, lowest shock error ($\text{MASE}_{\text{shock}} = 0.694$), and recovers in **2.8 hours** ($\le 4.0\text{ hours}$), driven by recursive 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$).
 
 3. **Sub-Hypothesis $H_{1c}$ (Generalizability Target: $\text{RTR} \approx 1.00$ and $\Delta\text{MASE}_{\text{transfer}} \le 10.0\%$)**:
-   - *Hypothesis Statement*: The Deterministic Convolved Schedule Baseline ($M_1^*$) will decisively satisfy the generalizability target, whereas the Cyber-Physical Hybrid ($M_5$) will decisively fail the target due to terminal geometry overfitting.
-   - *Empirical Proof*: Confirmed. Zero-shot transfer from EWR Terminal C to LGA Terminal C shows $M_1^*$ achieving $\text{RTR} = 1.04 \approx 1.00$ and $\Delta\text{MASE} = +4.0\% \le 10.0\%$ (penalty $+4.2\%$). In sharp contrast, $M_5$ fails both targets ($\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$, penalty $+19.0\%$) because decision tree residual splits overfit to Newark's terminal geometry and carrier bank timings. This proves that $M_5$ does not universally dominate and confirms the asymmetric trade-off thesis.
+   - *Hypothesis Statement*: The Deterministic Flight Schedule Model (Model 1) will decisively satisfy the generalizability target, whereas the Dynamic Hybrid (Model 3) will decisively fail the target due to terminal geometry overfitting.
+   - *Empirical Proof*: Confirmed. Zero-shot transfer from EWR Terminal C to LGA Terminal C shows Model 1 achieving $\text{RTR} = 1.04 \approx 1.00$ and $\Delta\text{MASE} = +4.0\% \le 10.0\%$ (penalty $+4.2\%$). In sharp contrast, Model 3 fails both targets ($\text{RTR} = 1.19 > 1.00, \Delta\text{MASE} = +21.5\% > 10.0\%$, penalty $+19.0\%$) because decision tree residual splits overfit to Newark's terminal geometry and carrier bank timings. This proves that Model 3 does not universally dominate and confirms the asymmetric trade-off thesis.
 
 ---
 
@@ -117,64 +117,62 @@ A fundamental finding of this thesis is the empirical decoupling of passenger sc
 * A pure machine learning model relying on shifted flight departures predicts that the screening checkpoint will be empty at 16:30.
 * In reality, passengers arrived at the terminal according to their original flight schedules. The terminal lobby experiences extreme passenger dwell, gate-change re-screening, and crowding.
 * Pure ML suffers severe under-prediction ($R_{\text{MASE}} = 2.14$).
-* The Two-Stage State-Space Hybrid ($M_5$) resolves this fallacy through recursive innovation tracking ($e_t = y_t - C\hat{x}_{t|t-1}$), updating the latent queue state using live prior-hour throughput ($y_{t-1}$).
+* The Dynamic Two-Stage Hybrid Model (Model 3) resolves this fallacy through live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$), updating the forecast using live prior-hour throughput from the checkpoint floor.
 
 ---
 
 ## 5. MASTER OPERATIONAL DECISION ARCHITECTURE
 
-### 5.1 The Regime-Switched Gated Inference Engine
+### 5.1 The Regime-Switched Gated Inference Engine: The Airport Operator's Playbook
 
-To operationalize the findings, airport operations centers should implement dynamic inference switching governed by the Coupled Volatility Index ($\text{CVI}_d = CV_{\text{TSA}, d} \times \sigma_{\text{Delay}, d}$):
+To operationalize the findings, airport operations centers should implement dynamic inference switching governed by the Turbulence Shock Index $T(h)$ or Coupled Volatility:
 
 ```
                        [ INCOMING HOURLY INFERENCE REQUEST ]
                                          │
                  ┌───────────────────────┴───────────────────────┐
                  ▼                                               ▼
-     [ Coupled Volatility < 30 ]                     [ Coupled Volatility ≥ 35 ]
+     [ Turbulence Shock Index T(h) < 0.75 ]          [ Turbulence Shock Index T(h) ≥ 0.75 ]
      • 1_OFF_PEAK Seasons                            • 3_PEAK Summer Convective Storms
      • Midweek (Tue / Wed) Baseline                  • Monday Outbound / Sunday Return
-     • Midday Steady Plateau (08:00–13:00)           • Dual Turbulence Peaks (05:00, 17:00)
+     • Midday Steady Plateau (08:00–13:00)           • Acute Flight Delays (σ_Delay > 45 min)
                  │                                               │
                  ▼                                               ▼
        ┌───────────────────┐                           ┌───────────────────┐
-       │   HistGBM (M3)    │                           │ Hybrid EKF (M5)   │
-       │  Fast, Automated  │                           │ Dynamic Feedback  │
-       │    MASE ≈ 0.60    │                           │  R_MASE ≤ 1.28    │
+       │      Model 2      │                           │      Model 3      │
+       │ Supervised ML Tree│                           │ Dynamic Hybrid    │
+       │  Fast, Automated  │                           │ Live Innovation   │
+       │  MASE = 0.68-0.70 │                           │  R_MASE = 1.05    │
        └───────────────────┘                           └───────────────────┘
 ```
 
-1. **Gate 1: Routine Regime ($\text{CVI} < 30$)**:
-   - Routes inference to the Gradient-Boosted Count Regressor ($M_3$).
-   - Provides superior point accuracy ($\text{MASE} \approx 0.60$) with sub-second execution overhead and full transparency.
-2. **Gate 2: Disruption Regime ($\text{CVI} \ge 35$)**:
-   - Routes inference to the Sequential Two-Stage State-Space Hybrid ($M_5$).
-   - Activates recursive Kalman queue innovations using live throughput ($y_{t-1}$), suppressing the "empty checkpoint fallacy" and maintaining $R_{\text{MASE}} \le 1.28$.
-3. **Hysteresis Band ($30 \le \text{CVI} < 35$)**:
-   - Preserves the previous hour's operational state to prevent rapid toggling between model architectures.
+1. **Gate 1: Routine Flow Track ($T(h) < 0.75$)**:
+   - Routes inference to the **Supervised Machine Learning Model (Model 2)**.
+   - Provides superior point accuracy ($\text{MASE} = 0.680\text{--}0.700$) with near-zero computational overhead and high spatial portability ($RTR = 1.08$).
+2. **Gate 2: Tactical Shock Track ($T(h) \ge 0.75$)**:
+   - Routes inference to the **Dynamic Two-Stage Hybrid Model (Model 3)**.
+   - Activates live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) from the checkpoint screening floor, resolving the "empty checkpoint fallacy" and maintaining resilient performance ($R_{\text{MASE}} = 1.05, \text{TTR} = 2.8\text{h}$).
 
 ---
 
-## 6. EMPIRICAL CROSS-PROJECT SYNTHESIS (PROJECTS 1, 2, AND 3)
+## 6. EMPIRICAL VALIDATION ACROSS RESEARCH PILLARS
 
-The graduate research portfolio integrates three complementary computational paradigms to achieve robust tri-modal validation:
+The thesis findings demonstrate cohesive empirical validation across three foundational analytical pillars:
 
-### 6.1 Project 1: Supervised Machine Learning & Conformed Warehouse
-* Evaluated six candidate architectures ($M_0$ through $M_5$) across 270,460 modeled observations.
-* Proved that incorporating ACRP Report 40 distributed passenger show-up curves elevates explanatory power from $R^2 = 0.5293$ (contemporaneous) to $R^2 = 0.7081$ (lead-lag).
-* Demonstrated that Champion Model $M_5$ achieves $R^2 = 0.6270, \text{RMSE} = 1135.0, \text{MASE} = 0.846$ on the untouched 2025 out-of-time holdout dataset.
+### 6.1 Pillar 1: Empirical Volatility Forecasting & Holdout Evaluation
+* Benchmarked candidate model architectures across 72,053 complex-level observations on the untouched 2025 out-of-time holdout dataset.
+* Proved that incorporating ACRP Report 40 distributed passenger show-up curves ($t+1, t+2, t+3$) elevates explanatory power from $R^2 = 0.1158$ (unshifted schedule) to $R^2 = 0.4985$ (convolved load-factor weighted schedule).
+* Demonstrated that Champion Model 3 achieves $R^2 = 0.7483, \text{RMSE} = 222.1\text{ pax/hr}, \text{MASE} = 0.662$ on holdout data, beating daily persistence by 33.8%.
 
-### 6.2 Project 2: First-Principles Queuing Simulation & Dynamic Lane Allocation
-* Simulated queuing dynamics across 955 screening lanes at Detroit Metropolitan (DTW McNamara Terminal).
-* Proved that under nominal operations, matching active lanes to incoming passenger banks maintains low average wait times ($\mu_{\text{wait}} = 0.9\text{ min}, P_{95} \le 7.7\text{ min}$).
-* Exposed the failure of static lane allocations during severe disruptions (50% lane outage combined with flight surge), where wait times capped at 60 minutes and delay reached 27,763 passenger-hours.
-* Proved that the **Dynamic Hybrid Allocation Model** slashes cumulative passenger delay by **80.1%** (reducing delay to 5,514 passenger-hours and capping 95th-percentile wait times at 11.5 minutes) by dynamically mobilizing reserve screening capacity.
+### 6.2 Pillar 2: Heavy-Traffic Queuing Physics & Conformal Staffing Buffers
+* Grounded checkpoint congestion in Kingman's heavy-traffic formula ($W_q \propto C_a^2$).
+* Proved that as screening lanes approach capacity ($\rho \to 0.90$), arrival volatility generates exponential queue spikes.
+* Operationalized conformal quantile bounds ($\hat{y}_{0.85}$) to size dynamic staffing buffers ($c(t) = \lceil (\hat{\mu}_t + 1.036 \cdot \hat{\sigma}_t) / \mu_{\text{lane}} \rceil$), capping lane utilization below runaway tipping points.
 
-### 6.3 Project 3: Dynamic State-Space Modeling & Spatial Generalizability
-* Deployed recursive state-space tracking (Extended Kalman Filter) across matched airport pairs sharing identical airspace (EWR $\to$ LGA in New York TRACON).
-* Demonstrated that while naive moving horizon baselines degraded by +86.7% ($\text{RTR} = 1.86$) and probabilistic sequence models degraded by +43.8% ($\text{RTR} = 1.44$), the **Extended Kalman Filter State-Space Hybrid achieved absolute transfer stability ($\Delta = 0.0\%, \text{RTR} = 1.00$ on EWR $\to$ LGA; $\text{RTR} = 0.86$ on DTW $\to$ PHL)**.
-* Validated that recursive innovation feedback ($e_t = y_t - C\hat{x}_{t|t-1}$) enables seamless cross-airport portability without site-specific retraining.
+### 6.3 Pillar 3: Cross-Airport Spatial Generalizability
+* Deployed models zero-shot without local retraining from Newark Liberty (EWR Terminal C) to New York LaGuardia (LGA Terminal C), holding TRACON regional airspace constant.
+* Confirmed that the **Deterministic Flight Schedule Model (Model 1)** achieves near-perfect spatial transfer ($\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$), and $\text{RTR} = 1.003$ on DTW $\to$ PHL, proving that physical flight schedule convolution is invariant across airport geometries.
+* Confirmed that the **Dynamic Hybrid (Model 3)** fails zero-shot transfer ($\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$) due to decision tree terminal geometry overfitting, proving Hypothesis $H_{1c}$.
 
 ---
 

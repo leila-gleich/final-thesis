@@ -57,4 +57,4 @@ def compute_airside_interactions(df: pd.DataFrame) -> pd.DataFrame:
 
 - [ ] `taxi_congestion_interaction` active for Cluster 3 airports (EWR, LGA).
 - [ ] Correlation $r \ge 0.60$ between TSA CV and departure delay CV verified in dedicated carrier lanes.
-- [ ] Interaction terms integrated into tree-based model feature sets (M3, M4, M5).
+- [ ] Interaction terms integrated into tree-based model feature sets (Model 2 and Model 3).

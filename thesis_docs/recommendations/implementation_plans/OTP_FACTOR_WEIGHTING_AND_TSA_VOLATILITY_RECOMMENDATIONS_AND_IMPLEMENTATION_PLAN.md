@@ -34,14 +34,14 @@ It updates all previous recommendation briefs by formally integrating:
 │                               MASTER ARCHITECTURAL HIERARCHY FOR THESIS IMPLEMENTATION                           │
 ├──────────────────────────┬──────────────────────────┬──────────────────────────┬─────────────────────────────────┤
 │   1. DATA FILTERING      │  2. FEATURE CONVOLUTION  │   3. VOLATILITY DUALITY  │   4. HYBRID MODEL PIPELINE      │
-│   (Regime Quarantine)    │   (Tri-Modal Coupling)   │   (Values vs Volatility) │   (Dynamic SARIMA-Tree M5)      │
+│   (Regime Quarantine)    │   (Tri-Modal Coupling)   │   (Values vs Volatility) │   (Dynamic Hybrid Model 3)      │
 ├──────────────────────────┼──────────────────────────┼──────────────────────────┼─────────────────────────────────┤
-│ • Quarantine Mar 2020 –  │ • Convolve forward flight│ • Diurnal Spread (pax/hr)│ • Stage 1: Contemporaneous      │
-│   Apr 2022 (Ghost Flights│   departures (t+1,t+2,t+3│   anchored by values     │   SARIMAX seasonal baseline     │
-│   cut pax/flt to 22.7).  │ • Empirical lognormal wts│ • Multi-Day Drift (7d std│ • Stage 2: Convolved Lead       │
-│ • Adopt Candidate B:     │   (0.25, 0.55, 0.20).    │   captured by volatility │   Tweedie LightGBM (p=1.3)      │
-│   May 1, 2022 – Dec 2025 │ • Weight by BTS T-100    │ • Combined Dual Model for│ • Stage 3: Sequential residual  │
-│   (1.71B pax / 4.78M flt)│   segment load factor.   │   scale-free CV (R²=0.22)│   error feedback loop (M5)      │
+│ • Quarantine Mar 2020 –  │ • Convolve forward flight│ • Diurnal Spread (pax/hr)│ • Stage 1: Schedule-based       │
+│   Apr 2022 (Ghost Flights│   departures (t+1,t+2,t+3│   anchored by values     │   recurring baseline            │
+│   cut pax/flt to 22.7).  │ • Empirical lognormal wts│ • Multi-Day Drift (7d std│ • Stage 2: Decision-Tree        │
+│ • Adopt Candidate B:     │   (0.25, 0.55, 0.20).    │   captured by volatility │   residual shock model          │
+│   May 1, 2022 – Dec 2025 │ • Weight by BTS T-100    │ • Combined Dual Model for│ • Stage 3: Live recursive       │
+│   (1.71B pax / 4.78M flt)│   segment load factor.   │   scale-free CV (R²=0.22)│   error feedback loop (Model 3) │
 └──────────────────────────┴──────────────────────────┴──────────────────────────┴─────────────────────────────────┘
 ```
 
@@ -135,7 +135,7 @@ flowchart TD
     subgraph Step3["Step 3: Modeling & Evaluation Execution"]
         C1["Chronological Split: Train (2022-05 to 2023-12), Val (2024), Test (2025)"]
         C2["Fit Standard Scaler Strictly on Training Partition (Zero Leakage)"]
-        C3["Train Baseline M1 (Rebuilt 2-Hr Lead), ML M3 (Tweedie), Dynamic M5 (SARIMA-Tree)"]
+        C3["Train Baseline Control, Model 1 (Deterministic), Model 2 (Supervised ML), Model 3 (Dynamic Hybrid)"]
         C4["Evaluate Test R², RMSE, MAE, MASE on 2025 Holdout (215,562 obs)"]
     end
 
@@ -244,73 +244,35 @@ flowchart TD
 
 ---
 
-### Stage 3: Supervised Model Training & Evaluation (M0 to M5)
+### Stage 3: Supervised Model Training & Evaluation (Candidate Models)
 
 #### Implementation Steps:
-1. **Update Baseline M1 in `src/models/baselines.py`**:
-   * Replace contemporaneous scheduled departures ($t$) with the **rebuilt 2-hour pre-departure shift ($t+2$)**:
-     ```python
-     class RebuiltDeterministicFixedLeadBaseline:
-         """M1 Rebuilt: 2-hour pre-departure shift reflecting airport operational reality."""
-         def __init__(self, lead_offset_hours=2):
-             self.lead_offset_hours = lead_offset_hours
-             
-         def predict(self, df_hourly):
-             df_shifted = df_hourly.groupby(['Airport', 'Date'])['Scheduled_Departures'].shift(-self.lead_offset_hours).fillna(0)
-             # Scale by average seat gauge and load factor
-             return df_shifted * 165.0 * 0.847
-     ```
+1. **Update Baseline Control & Model 1 in `src/models/baselines.py`**:
+   * Baseline Control: Diurnal Naive Persistence ($y_{t-24}$).
+   * Model 1: Convolved lead-lag pre-departure schedule shift ($t+1, t+2, t+3$) based on ACRP Report 40 passenger arrival curves.
 
-2. **Implement Probabilistic ML M3 (LightGBM/XGBoost Tweedie Regressor) in `src/models/machine_learning.py`**:
-   * Use Tweedie loss ($p = 1.30$) to handle zero-bounded, positively skewed passenger arrival counts:
-     ```python
-     import lightgbm as lgb
-     
-     class TweedieLightGBMForecaster:
-         def __init__(self, tweedie_variance_power=1.3, learning_rate=0.05, n_estimators=500):
-             self.model = lgb.LGBMRegressor(
-                 objective='tweedie',
-                 tweedie_variance_power=tweedie_variance_power,
-                 learning_rate=learning_rate,
-                 n_estimators=n_estimators,
-                 num_leaves=63,
-                 max_depth=8,
-                 subsample=0.8,
-                 colsample_bytree=0.8,
-                 random_state=42
-             )
-             
-         def fit(self, X_train, y_train, X_val, y_val):
-             self.model.fit(
-                 X_train, y_train,
-                 eval_set=[(X_val, y_val)],
-                 callbacks=[lgb.early_stopping(stopping_rounds=30, verbose=False)]
-             )
-             
-         def predict(self, X):
-             return np.maximum(0.0, self.model.predict(X))
-     ```
+2. **Implement Model 2 (Supervised Machine Learning Model) in `src/models/machine_learning.py`**:
+   * Decision-tree regressor trained across convolved flight arrivals and 24 BTS OTP operational features.
 
-3. **Implement Dynamic Hybrid M5 (Sequential SARIMA-Tree Hybrid) in `src/models/hybrid_sarima_tree.py`**:
-   * **Stage A**: Estimate contemporaneous diurnal SARIMA component on linear seasonal patterns.
-   * **Stage B**: Calculate residual errors ($e_t = Y_t - \hat{Y}_{\text{SARIMA}, t}$).
-   * **Stage C**: Train LightGBM Tweedie regressor on residuals using convolved lead flights, OTP delay volatility, and weather features.
-   * **Stage D**: Final prediction is the additive dynamic synthesis: $\hat{Y}_{M5, t} = \hat{Y}_{\text{SARIMA}, t} + \hat{e}_{\text{LightGBM}, t}$.
+3. **Implement Model 3 (Dynamic Two-Stage Hybrid Model) in `src/models/hybrid_sarima_tree.py`**:
+   * Stage 1: Recurring flight schedule cycles.
+   * Stage 2: Decision-tree residual model with live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$).
+   * Final prediction: $\hat{Y}_{3, t} = \hat{Y}_{\text{Schedule}, t} + \hat{e}_{\text{Tree}, t}$.
 
 ---
 
 ## Part III: Verification, Test Benchmarks & Acceptance Criteria
 
-When these updates are implemented, verify the empirical pipeline against the target performance benchmarks on the **2025 out-of-time holdout partition (215,562 hourly records)**:
+When these updates are implemented, verify the empirical pipeline against the target performance benchmarks on the **2025 out-of-time holdout partition (72,053 complex-level records)**:
 
 ### Target Benchmark Matrix:
 
-| Model ID | Model Paradigm & Architecture | Target Test $R^2$ | Target Test RMSE | Target Test MAE | Target Test MASE | Acceptance Threshold |
+| Candidate Model | Model Paradigm & Architecture | Target Test $R^2$ | Target Test RMSE | Target Test MAE | Target Test MASE | Acceptance Threshold |
 | :---: | :--- | :---: | :---: | :---: | :---: | :--- |
-| **M0** | Diurnal Seasonal Naive ($y_{t-24}$) | 0.4508 | 1377.3 | 939.8 | 1.000 | Control Benchmark |
-| **M1** | Rebuilt Fixed 2-Hr Lead Baseline | 0.5293 | 1265.4 | 884.2 | 0.942 | Deterministic Target |
-| **M3** | LightGBM Tweedie (Convolved + OTP) | 0.5880 | 1192.9 | 855.1 | 0.910 | High-Accuracy Target |
-| **M5** | **Sequential SARIMA-Tree Dynamic Hybrid** | **0.6270** | **1135.0** | **795.0** | **0.846** | **THESIS WINNER TARGET** |
+| **Baseline Control** | Daily Persistence Benchmark ($y_{t-24}$) | 0.6719 | 253.6 | 179.3 | 1.000 | Control Benchmark |
+| **Model 1** | Deterministic Flight Schedule Model (Convolved) | 0.4980 | 313.4 | 215.9 | 0.945 | Deterministic Target |
+| **Model 2** | Supervised Machine Learning Model (Trees + OTP) | 0.6178 | 273.5 | 178.0 | 0.779 | High-Accuracy Routine Target |
+| **Model 3** | **Dynamic Two-Stage Hybrid Model (Feedback)** | **0.7483** | **222.1** | **142.8** | **0.662** | **THESIS WINNER TARGET** |
 
 ### Execution Test Suite:
 Run the repository test suite to verify pipeline integrity:

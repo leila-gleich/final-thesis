@@ -2,8 +2,8 @@
 src/models/baselines.py
 -----------------------
 Deterministic Baseline Models:
-- M0: Diurnal Seasonal Naive (y(t - 24))
-- M1: Rebuilt Deterministic 2-Hour Static Lead Baseline (Static 1.5 - 2.5 hr arrival assumption)
+- Baseline Control: Diurnal Seasonal Naive (y(t - 24))
+- Model 1: Deterministic 2-Hour Static Lead Baseline / Convolved Schedule Baseline
 """
 
 import numpy as np
@@ -12,7 +12,7 @@ from typing import Optional
 
 class DiurnalSeasonalNaive:
     """
-    M0: Diurnal Seasonal Naive Persistence Baseline for Throughput Volatility.
+    Baseline Control: Diurnal Seasonal Naive Persistence Baseline for Throughput Volatility.
     Predicts checkpoint throughput volatility at time t using observed volatility at t - lag.
     Supports within-day hourly volatility (tsa_hourly_cv, tsa_hourly_std) and multi-day rolling volatility.
     """

@@ -28,6 +28,6 @@ Choosing a single model class (pure deterministic point estimators or pure proba
 
 ## 3. Verification & Acceptance Criteria
 
-- [x] Deterministic (M1), Probabilistic / Tweedie ML (M3), and Hybrid (M5) paradigms evaluated on holdout dataset (`run_pipeline.py`).
-- [x] Quantile upper bounds ($\hat{q}_{0.85}$) calculated for off-peak intervals (`predict_quantiles` in M5).
+- [x] Deterministic (Model 1), Probabilistic ML (Model 2), and Dynamic Hybrid (Model 3) paradigms evaluated on holdout dataset (`run_pipeline.py`).
+- [x] Quantile upper bounds ($\hat{q}_{0.85}$) calculated for off-peak intervals (`predict_quantiles` in Model 3).
 - [x] Performance tradeoffs documented in Chapter 5.

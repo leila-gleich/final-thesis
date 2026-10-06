@@ -170,6 +170,8 @@ def clean_markdown_cell(t: str) -> str:
     t = re.sub(r"\\Delta_\{?\\text\{([^}]+)\}?\}?", r"Delta_\1", t)
     t = re.sub(r"\\Delta", "Delta", t)
     t = re.sub(r"\\text\{([^}]+)\}", r"\1", t)
+    t = re.sub(r"\\widehat\{([^}]+)\}", r"\1_hat", t)
+    t = re.sub(r"\\widehat\s*", "", t)
     t = re.sub(r"\\hat\{([^}]+)\}", r"\1_hat", t)
     t = re.sub(r"\\sqrt\{([^}]+)\}", r"sqrt(\1)", t)
     
@@ -299,8 +301,8 @@ def export_all_tables_to_csv():
     # Explicitly write dual_track_model_selection_policy.csv to both directories
     dual_track_headers = ["Operational_Track", "Operating_Regime", "Assigned_Canonical_Architecture", "Target_Thresholds", "Empirical_Holdout_Performance", "Operational_Rationale"]
     dual_track_rows = [
-        ["Gate 1: Routine Flow Track (T(h) < 0.75)", "Calm seasonal periods (1_OFF_PEAK), midweek baseline days (Tue/Wed), steady midday hours (08:00-13:00)", "M3: Supervised Volatility GBR (Combined Values + Vol)", "Lowest RMSE under routine conditions & MASE_routine < 0.70", "RMSE = 273.5 pax/hr; MASE = 0.680-0.700; RTR = 1.08; Transfer Delta = +7.9%", "Fast automated execution delivering superior routine accuracy with zero online compute overhead and high spatial portability across diverse terminal layouts."],
-        ["Gate 2: Tactical Shock Track (T(h) >= 0.75)", "Summer convective thunderstorms (3_PEAK), peak holiday rushes, ground stops (Delay >= 45m or Cancels >= 5)", "M5: Sequential SARIMA-Tree Volatility Hybrid", "Recovery RMSE Multiplier R ≈ 1.00 & Lowest MASE_shock (TTR < 4.0h)", "RMSE = 254.2 pax/hr; MASE = 0.694; R_MASE = 1.05; TTR = 2.8 hrs", "Closed-loop 1-step recursive error innovation feedback (e_{t-1}) actively tracks live queue accumulation, preventing empty-checkpoint forecast collapse and recovering in 2.8 hours."]
+        ["Gate 1: Routine Flow Track (T(h) < 0.75)", "Calm seasonal periods (1_OFF_PEAK), midweek baseline days (Tue/Wed), steady midday hours (08:00-13:00)", "Model 2: Supervised Machine Learning Model", "Lowest RMSE under routine conditions & MASE_routine < 0.70", "RMSE = 273.5 pax/hr; MASE = 0.680-0.700; RTR = 1.08; Transfer Delta = +7.9%", "Fast automated execution delivering superior routine accuracy with zero online compute overhead and high spatial portability across diverse terminal layouts."],
+        ["Gate 2: Tactical Shock Track (T(h) >= 0.75)", "Summer convective thunderstorms (3_PEAK), peak holiday rushes, ground stops (Delay >= 45m or Cancels >= 5)", "Model 3: Dynamic Two-Stage Hybrid Model", "Recovery RMSE Multiplier R ≈ 1.00 & Lowest MASE_shock (TTR < 4.0h)", "RMSE = 254.2 pax/hr; MASE = 0.694; R_MASE = 1.05; TTR = 2.8 hrs", "Closed-loop 1-step recursive error innovation feedback (e_{t-1}) actively tracks live queue accumulation, preventing empty-checkpoint forecast collapse and recovering in 2.8 hours."]
     ]
     for target_dir in [MANUSCRIPT_TABLES_DIR, TABLES_DIR]:
         with open(target_dir / "dual_track_model_selection_policy.csv", "w", newline="", encoding="utf-8") as f:
@@ -328,10 +330,10 @@ def update_excel_workbooks():
                 ws04.delete_rows(2)
                 
             data_rows = [
-                ['M0', 'Baseline Control', 'Diurnal Volatility Naive (y_{t-24})', 685.2, 310.4, -0.7, 179.3, 253.6, 1.000, 0.6719],
-                ['M1*', 'Deterministic Baseline', 'Deterministic Schedule Bank Volatility Baseline', 643.0, 298.1, -42.1, 215.9, 313.4, 0.945, 0.4980],
-                ['M3', 'Probabilistic / ML', 'Supervised Volatility GBR (Combined Values + Vol)', 668.2, 312.8, -18.4, 178.0, 273.5, 0.779, 0.6178],
-                ['M5', 'Dynamic Hybrid', 'Sequential SARIMA-Tree Volatility Hybrid', 678.1, 318.5, -8.5, 142.8, 222.1, 0.662, 0.7483],
+                ['Baseline Control', 'Baseline Control', 'Daily Persistence Benchmark (y_{t-24})', 685.2, 310.4, -0.7, 179.3, 253.6, 1.000, 0.6719],
+                ['Model 1', 'Deterministic Schedule', 'Deterministic Flight Schedule Model (convolved show-up curve)', 643.0, 298.1, -42.1, 215.9, 313.4, 0.945, 0.4980],
+                ['Model 2', 'Machine Learning', 'Supervised Machine Learning Model (Decision Trees & OTP)', 668.2, 312.8, -18.4, 178.0, 273.5, 0.779, 0.6178],
+                ['Model 3', 'Dynamic Hybrid', 'Dynamic Two-Stage Hybrid Model (Schedule + Real-time feedback)', 678.1, 318.5, -8.5, 142.8, 222.1, 0.662, 0.7483],
             ]
             for row in data_rows:
                 ws04.append(row)
@@ -342,7 +344,7 @@ def update_excel_workbooks():
                 ws_toc["D5"] = len(data_rows)
                 
             wb04.save(wb_04_path)
-            print("  -> Updated 04_model_execution_2025_holdout.xlsx (volatility metrics for 4 canonical models M0, M1*, M3, M5).")
+            print("  -> Updated 04_model_execution_2025_holdout.xlsx (volatility metrics across candidate models).")
 
     # 2. Update 03_lead_lag_deconvolution.xlsx
     wb_03_path = RESULTS_DIR / "03_lead_lag_deconvolution" / "03_lead_lag_deconvolution.xlsx"
@@ -375,41 +377,41 @@ def update_excel_workbooks():
     # 3. Update 05_robustness_resilience_generalizability.xlsx
     wb_05_path = RESULTS_DIR / "05_robustness_resilience_generalizability" / "05_robustness_resilience_generalizability.xlsx"
     eval_metrics_rows = [
-        ['Overall 2025 Holdout Fit', 'Test R2 (Coefficient of Determination)', '1 - (SS_res / SS_tot)', '> 0.600', '0.6719', '0.4980', '0.6178', '0.7483 (CHAMPION)', 'M5 Champion', 'M5 captures 74.8% of all volatility variance on unobserved 2025 holdout.'],
-        ['Overall 2025 Holdout Fit', 'Test RMSE (Root Mean Squared Error)', 'sqrt(mean((Vol - Vol_hat)^2))', '< 300 pax/hr', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'M5 Lowest Error', 'M5 slashes volatility prediction errors to 222.1 pax/hr (-91.3 pax/hr vs M1*).'],
-        ['Overall 2025 Holdout Fit', 'Test MAE (Mean Absolute Error)', 'mean(|Vol - Vol_hat|)', '< 200 pax/hr', '179.3 pax/hr', '215.9 pax/hr', '178.0 pax/hr', '142.8 pax/hr (LOWEST)', 'M5 Lowest MAE', 'M5 achieves exceptional precision with MAE of 142.8 pax/hr across dedicated complexes.'],
-        ['Overall 2025 Holdout Fit', 'Test MASE (Mean Absolute Scaled Error)', 'MAE_model / MAE_naive_persistence', '< 1.000 (Target < 0.70)', '1.000', '0.945', '0.779', '0.662 (CHAMPION)', 'M5 Champion', 'M5 achieves 0.662, delivering a 33.8% error reduction over daily persistence.'],
-        ['Overall 2025 Holdout Fit', 'Mean Bias', 'mean(Vol_hat - Vol)', '~ 0 pax/hr', '-0.7 pax/hr', '-42.1 pax/hr', '-18.4 pax/hr', '-8.5 pax/hr', 'M0 / M5 Minimal Bias', 'All models exhibit slight negative bias during peak surges; M5 exhibits -8.5 pax/hr.'],
-        ['Dimension 1: Robustness', 'RMSE_routine (Delay < 15m; 0 Cancels)', 'sqrt(mean((Vol - Vol_hat)^2 | routine))', 'Lowest Routine RMSE', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'M5 Lowest RMSE', 'M5 achieves lowest RMSE; M3 wins Routine Pareto Efficiency (low-compute, zero-feedback).'],
-        ['Dimension 1: Robustness', 'MASE_routine (Relative Error in Routine Hours)', 'MAE_routine / MAE_naive_routine', 'MASE < 0.700', '1.000', '0.945', '0.680-0.700 (TARGET MET)', '0.662 (TARGET MET)', 'Target Met by M3 & M5', 'Confirms H1(a): Both M3 and M5 meet the < 0.70 target under calm operations.'],
-        ['Dimension 1: Robustness', 'Diebold-Mariano (DM) Stat & p-value', 'DM Test vs. M1* Control', 'p < 0.001', 'Reference', 'Control Baseline', 'DM = 42.15 (p < 0.0001)', 'DM = 48.72 (p < 0.0001)', 'Extreme Significance', 'Mathematically proves ML and Hybrid improvements over deterministic planning are genuine.'],
-        ['Dimension 2: Resilience', 'RMSE_shock (Delay >= 45m or Cancels >= 5)', 'sqrt(mean((Vol - Vol_hat)^2 | shock))', 'Lowest Shock RMSE', '398.2 pax/hr', '412.8 pax/hr', '318.4 pax/hr', '254.2 pax/hr (LOWEST)', 'M5 Lowest Shock RMSE', 'M5 minimizes absolute error during acute convective storms and ground stops.'],
-        ['Dimension 2: Resilience', 'MASE_shock (Relative Error in Shock Hours)', 'MAE_shock / MAE_naive_shock', 'Lowest Shock MASE', '1.000', '1.082', '0.812', '0.694 (LOWEST)', 'M5 Lowest Shock MASE', 'During chaotic delay cascades M5 performs 30.6% better than naive persistence.'],
-        ['Dimension 2: Resilience', 'Resilience Error Multiplier (R_MASE)', 'MASE_shock / MASE_routine', 'R ≈ 1.00 (Fragile >= 2.0)', '1.00 (Static)', '1.32 (Blind)', '2.14 (Fragile Collapse)', '1.05 (TARGET MET / WINNER)', 'M5 DECISIVE WINNER', 'M5 recursive feedback (e_{t-1}) prevents empty checkpoint collapse; M3 collapses (R=2.14).'],
-        ['Dimension 2: Resilience', 'Time-to-Recovery (TTR_shock)', 'Kaplan-Meier survival to +/- 2 sigma error band', 'TTR < 4.0 hours', '8.4 hours', '7.8 hours', '5.4 hours', '2.8 hours (TARGET MET / FASTEST)', 'M5 DECISIVE WINNER', 'M5 returns to normal bounds 5.0 hrs faster than M1* and 2.6 hrs faster than M3.'],
+        ['Overall 2025 Holdout Fit', 'Test R2 (Coefficient of Determination)', '1 - (SS_res / SS_tot)', '> 0.600', '0.6719', '0.4980', '0.6178', '0.7483 (CHAMPION)', 'Model 3 Champion', 'Model 3 captures 74.8% of all volatility variance on unobserved 2025 holdout.'],
+        ['Overall 2025 Holdout Fit', 'Test RMSE (Root Mean Squared Error)', 'sqrt(mean((Vol - Vol_hat)^2))', '< 300 pax/hr', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'Model 3 Lowest Error', 'Model 3 slashes volatility prediction errors to 222.1 pax/hr (-91.3 pax/hr vs Model 1).'],
+        ['Overall 2025 Holdout Fit', 'Test MAE (Mean Absolute Error)', 'mean(|Vol - Vol_hat|)', '< 200 pax/hr', '179.3 pax/hr', '215.9 pax/hr', '178.0 pax/hr', '142.8 pax/hr (LOWEST)', 'Model 3 Lowest MAE', 'Model 3 achieves exceptional precision with MAE of 142.8 pax/hr across dedicated complexes.'],
+        ['Overall 2025 Holdout Fit', 'Test MASE (Mean Absolute Scaled Error)', 'MAE_model / MAE_naive_persistence', '< 1.000 (Target < 0.70)', '1.000', '0.945', '0.779', '0.662 (CHAMPION)', 'Model 3 Champion', 'Model 3 achieves 0.662, delivering a 33.8% error reduction over daily persistence.'],
+        ['Overall 2025 Holdout Fit', 'Mean Bias', 'mean(Vol_hat - Vol)', '~ 0 pax/hr', '-0.7 pax/hr', '-42.1 pax/hr', '-18.4 pax/hr', '-8.5 pax/hr', 'Baseline / Model 3 Minimal Bias', 'All models exhibit slight negative bias during peak surges; Model 3 exhibits -8.5 pax/hr.'],
+        ['Dimension 1: Robustness', 'RMSE_routine (Delay < 15m; 0 Cancels)', 'sqrt(mean((Vol - Vol_hat)^2 | routine))', 'Lowest Routine RMSE', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'Model 3 Lowest RMSE', 'Model 3 achieves lowest RMSE; Model 2 wins Routine Pareto Efficiency (low-compute, zero-feedback).'],
+        ['Dimension 1: Robustness', 'MASE_routine (Relative Error in Routine Hours)', 'MAE_routine / MAE_naive_routine', 'MASE < 0.700', '1.000', '0.945', '0.680-0.700 (TARGET MET)', '0.662 (TARGET MET)', 'Target Met by Model 2 & Model 3', 'Confirms H1(a): Both Model 2 and Model 3 meet the < 0.70 target under calm operations.'],
+        ['Dimension 1: Robustness', 'Diebold-Mariano (DM) Stat & p-value', 'DM Test vs. Model 1 Control', 'p < 0.001', 'Reference', 'Control Baseline', 'DM = 42.15 (p < 0.0001)', 'DM = 48.72 (p < 0.0001)', 'Extreme Significance', 'Mathematically proves ML and Hybrid improvements over deterministic planning are genuine.'],
+        ['Dimension 2: Resilience', 'RMSE_shock (Delay >= 45m or Cancels >= 5)', 'sqrt(mean((Vol - Vol_hat)^2 | shock))', 'Lowest Shock RMSE', '398.2 pax/hr', '412.8 pax/hr', '318.4 pax/hr', '254.2 pax/hr (LOWEST)', 'Model 3 Lowest Shock RMSE', 'Model 3 minimizes absolute error during acute convective storms and ground stops.'],
+        ['Dimension 2: Resilience', 'MASE_shock (Relative Error in Shock Hours)', 'MAE_shock / MAE_naive_shock', 'Lowest Shock MASE', '1.000', '1.082', '0.812', '0.694 (LOWEST)', 'Model 3 Lowest Shock MASE', 'During chaotic delay cascades Model 3 performs 30.6% better than naive persistence.'],
+        ['Dimension 2: Resilience', 'Resilience Error Multiplier (R_MASE)', 'MASE_shock / MASE_routine', 'R ≈ 1.00 (Fragile >= 2.0)', '1.00 (Static)', '1.32 (Blind)', '2.14 (Fragile Collapse)', '1.05 (TARGET MET / WINNER)', 'Model 3 DECISIVE WINNER', 'Model 3 recursive feedback (e_{t-1}) prevents empty checkpoint collapse; Model 2 collapses (R=2.14).'],
+        ['Dimension 2: Resilience', 'Time-to-Recovery (TTR_shock)', 'Kaplan-Meier survival to +/- 2 sigma error band', 'TTR < 4.0 hours', '8.4 hours', '7.8 hours', '5.4 hours', '2.8 hours (TARGET MET / FASTEST)', 'Model 3 DECISIVE WINNER', 'Model 3 returns to normal bounds 5.0 hrs faster than Model 1 and 2.6 hrs faster than Model 2.'],
         ['Dimension 3: Generalizability', 'Zero-Shot Transfer RMSE_transfer', 'sqrt(mean((Vol - Vol_hat_zero_shot)^2))', 'Minimize Transfer RMSE', '253.6 pax/hr', '326.5 pax/hr', '295.1 pax/hr', '264.3 pax/hr', 'Spatial Transfer EWR->LGA', 'Deploying model zero-shot from Newark to LaGuardia holding TRACON airspace constant.'],
-        ['Dimension 3: Generalizability', 'Relative Transfer Ratio (RTR)', 'RMSE_transfer / RMSE_in_sample', 'RTR = 1.00', '1.00 (Ref)', '1.04 (TARGET MET / WINNER)', '1.08 (Passes)', '1.19 (FAILS TARGET)', 'M1* DECISIVE WINNER', 'M1* physical schedule rules generalize (RTR=1.04); M5 overfits to local gate layout (RTR=1.19).'],
-        ['Dimension 3: Generalizability', 'Transfer Degradation (Delta %)', '((RMSE_transfer - RMSE_in) / RMSE_in) * 100', 'Minimal Penalty (<= 10%)', '0.0%', '+4.2% (MINIMAL)', '+7.9% (LOW)', '+19.0% (ELEVATED)', 'M1* Minimal Penalty', 'Physical schedule convolution loses only 4.2%; hybrid decision trees lose 19.0%.'],
-        ['Dimension 3: Generalizability', 'Change in MASE on Transfer (Delta_MASE)', 'Delta MASE on transfer', 'Delta MASE <= 10.0%', '0.0%', '+4.0% (+0.038, TARGET MET)', '+8.3% (+0.065, PASSES)', '+21.5% (+0.142, FAILS TARGET)', 'M1* DECISIVE WINNER', 'M1* passes target (+4.0%); M5 decisively fails target (+21.5%) due to tree overfitting.'],
+        ['Dimension 3: Generalizability', 'Relative Transfer Ratio (RTR)', 'RMSE_transfer / RMSE_in_sample', 'RTR = 1.00', '1.00 (Ref)', '1.04 (TARGET MET / WINNER)', '1.08 (Passes)', '1.19 (FAILS TARGET)', 'Model 1 DECISIVE WINNER', 'Model 1 physical schedule rules generalize (RTR=1.04); Model 3 overfits to local gate layout (RTR=1.19).'],
+        ['Dimension 3: Generalizability', 'Transfer Degradation (Delta %)', '((RMSE_transfer - RMSE_in) / RMSE_in) * 100', 'Minimal Penalty (<= 10%)', '0.0%', '+4.2% (MINIMAL)', '+7.9% (LOW)', '+19.0% (ELEVATED)', 'Model 1 Minimal Penalty', 'Physical schedule convolution loses only 4.2%; hybrid decision trees lose 19.0%.'],
+        ['Dimension 3: Generalizability', 'Change in MASE on Transfer (Delta_MASE)', 'Delta MASE on transfer', 'Delta MASE <= 10.0%', '0.0%', '+4.0% (+0.038, TARGET MET)', '+8.3% (+0.065, PASSES)', '+21.5% (+0.142, FAILS TARGET)', 'Model 1 DECISIVE WINNER', 'Model 1 passes target (+4.0%); Model 3 decisively fails target (+21.5%) due to tree overfitting.'],
     ]
 
     summary_rows = [
-        ['2025 Fit', 'Test R^2', '> 0.600', '0.6719', '0.4980', '0.6178', '0.7483 (CHAMPION)', 'M5 captures 74.8% of all throughput volatility variance on unseen future data.'],
-        ['2025 Fit', 'Test RMSE', '< 300 pax/hr', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'Slashes large prediction errors by 91.3 pax/hr vs. M1*.'],
+        ['2025 Fit', 'Test R^2', '> 0.600', '0.6719', '0.4980', '0.6178', '0.7483 (CHAMPION)', 'Model 3 captures 74.8% of all throughput volatility variance on unseen future data.'],
+        ['2025 Fit', 'Test RMSE', '< 300 pax/hr', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'Slashes large prediction errors by 91.3 pax/hr vs. Model 1.'],
         ['2025 Fit', 'Test MAE', '< 200 pax/hr', '179.3 pax/hr', '215.9 pax/hr', '178.0 pax/hr', '142.8 pax/hr (LOWEST)', 'Average hourly volatility error is just 142.8 passengers across terminal complexes.'],
-        ['2025 Fit', 'Test MASE', '< 0.700', '1.000', '0.945', '0.779', '0.662 (CHAMPION)', 'M5 achieves the academic stretch target, beating daily persistence by 33.8%.'],
-        ['2025 Fit', 'Mean Bias', '~ 0 pax/hr', '-0.7 pax/hr', '-42.1 pax/hr', '-18.4 pax/hr', '-8.5 pax/hr', 'M5 exhibits negligible bias of -8.5 pax/hr.'],
-        ['Robustness', 'RMSE_routine', 'Lowest Routine RMSE', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'M5 lowest RMSE; M3 wins Routine Pareto Efficiency (low-compute, zero-feedback).'],
-        ['Robustness', 'MASE_routine', 'MASE < 0.700', '1.000', '0.945', '0.680-0.700 (MET)', '0.662 (MET)', 'Confirms H1(a): Both M3 and M5 meet target under nominal conditions.'],
-        ['Robustness', 'Diebold-Mariano Stat', 'p < 0.001', 'Reference', 'Control Baseline (M1*)', 'DM = 42.15 (p < 0.0001)', 'DM = 48.72 (p < 0.0001)', 'Mathematically proves that ML and Hybrid gains are genuine (p < 0.0001).'],
-        ['Resilience', 'RMSE_shock', 'Lowest Shock RMSE', '398.2 pax/hr', '412.8 pax/hr', '318.4 pax/hr', '254.2 pax/hr (LOWEST)', 'M5 maintains tight error bounds during severe weather storms and airport ground stops.'],
-        ['Resilience', 'MASE_shock', 'Lowest Shock MASE', '1.000', '1.082', '0.812', '0.694 (LOWEST)', 'M5 performs 30.6% better than naive guessing during disruptions.'],
-        ['Resilience', 'Resilience Multiplier (R_MASE)', 'R ≈ 1.00', '1.00 (Static)', '1.32 (Blind)', '2.14 (Fragile)', '1.05 (MET / WINNER)', 'M5 DECISIVE WINNER: Innovation feedback prevents empty checkpoint collapse.'],
-        ['Resilience', 'Time-to-Recovery (TTR)', 'TTR < 4.0 hours', '8.4 hours', '7.8 hours', '5.4 hours', '2.8 hours (MET / WINNER)', 'M5 returns to normal error bounds 5.0 hrs faster than M1* and 2.6 hrs faster than M3.'],
+        ['2025 Fit', 'Test MASE', '< 0.700', '1.000', '0.945', '0.779', '0.662 (CHAMPION)', 'Model 3 achieves the academic stretch target, beating daily persistence by 33.8%.'],
+        ['2025 Fit', 'Mean Bias', '~ 0 pax/hr', '-0.7 pax/hr', '-42.1 pax/hr', '-18.4 pax/hr', '-8.5 pax/hr', 'Model 3 exhibits negligible bias of -8.5 pax/hr.'],
+        ['Robustness', 'RMSE_routine', 'Lowest Routine RMSE', '253.6 pax/hr', '313.4 pax/hr', '273.5 pax/hr', '222.1 pax/hr (LOWEST)', 'Model 3 lowest RMSE; Model 2 wins Routine Pareto Efficiency (low-compute, zero-feedback).'],
+        ['Robustness', 'MASE_routine', 'MASE < 0.700', '1.000', '0.945', '0.680-0.700 (MET)', '0.662 (MET)', 'Confirms H1(a): Both Model 2 and Model 3 meet target under nominal conditions.'],
+        ['Robustness', 'Diebold-Mariano Stat', 'p < 0.001', 'Reference', 'Control Baseline (Model 1)', 'DM = 42.15 (p < 0.0001)', 'DM = 48.72 (p < 0.0001)', 'Mathematically proves that ML and Hybrid gains are genuine (p < 0.0001).'],
+        ['Resilience', 'RMSE_shock', 'Lowest Shock RMSE', '398.2 pax/hr', '412.8 pax/hr', '318.4 pax/hr', '254.2 pax/hr (LOWEST)', 'Model 3 maintains tight error bounds during severe weather storms and airport ground stops.'],
+        ['Resilience', 'MASE_shock', 'Lowest Shock MASE', '1.000', '1.082', '0.812', '0.694 (LOWEST)', 'Model 3 performs 30.6% better than naive guessing during disruptions.'],
+        ['Resilience', 'Resilience Multiplier (R_MASE)', 'R ≈ 1.00', '1.00 (Static)', '1.32 (Blind)', '2.14 (Fragile)', '1.05 (MET / WINNER)', 'Model 3 DECISIVE WINNER: Innovation feedback prevents empty checkpoint collapse.'],
+        ['Resilience', 'Time-to-Recovery (TTR)', 'TTR < 4.0 hours', '8.4 hours', '7.8 hours', '5.4 hours', '2.8 hours (MET / WINNER)', 'Model 3 returns to normal error bounds 5.0 hrs faster than Model 1 and 2.6 hrs faster than Model 2.'],
         ['Generalizability', 'Zero-Shot RMSE_transfer', 'Minimize Transfer RMSE', '253.6 pax/hr', '326.5 pax/hr', '295.1 pax/hr', '264.3 pax/hr', 'Prediction error deploying model zero-shot from EWR to LGA without retraining.'],
-        ['Generalizability', 'Relative Transfer Ratio (RTR)', 'RTR = 1.00', '1.00', '1.04 (MET / WINNER)', '1.08 (Passes)', '1.19 (FAILS TARGET)', 'M1* DECISIVE WINNER: Invariant schedule rules generalize; M5 overfits to local gates.'],
+        ['Generalizability', 'Relative Transfer Ratio (RTR)', 'RTR = 1.00', '1.00', '1.04 (MET / WINNER)', '1.08 (Passes)', '1.19 (FAILS TARGET)', 'Model 1 DECISIVE WINNER: Invariant schedule rules generalize; Model 3 overfits to local gates.'],
         ['Generalizability', 'Transfer Degradation (Delta %)', '<= 10.0%', '0.0%', '+4.2% (MINIMAL)', '+7.9% (LOW)', '+19.0% (ELEVATED)', 'Physical rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%.'],
-        ['Generalizability', 'Delta MASE on Transfer', 'Delta MASE <= 10.0%', '0.0%', '+4.0% (MET / WINNER)', '+8.3% (Passes)', '+21.5% (FAILS TARGET)', 'M1* passes target with +4.0% shift; M5 fails target with +21.5% shift.']
+        ['Generalizability', 'Delta MASE on Transfer', 'Delta MASE <= 10.0%', '0.0%', '+4.0% (MET / WINNER)', '+8.3% (Passes)', '+21.5% (FAILS TARGET)', 'Model 1 passes target with +4.0% shift; Model 3 fails target with +21.5% shift.']
     ]
 
     if wb_05_path.exists():
@@ -420,7 +422,7 @@ def update_excel_workbooks():
             while ws05.max_row > 1:
                 ws05.delete_rows(2)
             # Update header row
-            header_05 = ['Eval Dimension', 'Performance Metric', 'Formula_or_Definition', 'Academic Target', 'Baseline Control (M0)', 'Deterministic Baseline (M1*)', 'Probabilistic (M3)', 'Dynamic Hybrid (M5)', 'Dimension Winner & Status', 'Analysis']
+            header_05 = ['Eval Dimension', 'Performance Metric', 'Formula_or_Definition', 'Academic Target', 'Baseline Control', 'Model 1 (Deterministic)', 'Model 2 (Machine Learning)', 'Model 3 (Dynamic Hybrid)', 'Dimension Winner & Status', 'Analysis']
             for col_idx, col_name in enumerate(header_05, start=1):
                 ws05.cell(1, col_idx, col_name)
             for row in eval_metrics_rows:
@@ -430,14 +432,14 @@ def update_excel_workbooks():
             ws_sum = wb05["Summary"]
             while ws_sum.max_row > 1:
                 ws_sum.delete_rows(2)
-            header_sum = ['Evaluation Dimension', 'Performance Metric', 'Academic Target', 'Baseline Control (M0)', 'Deterministic Baseline (M1*)', 'Probabilistic (M3)', 'Dynamic Hybrid (M5)', 'Operational Significance']
+            header_sum = ['Evaluation Dimension', 'Performance Metric', 'Academic Target', 'Baseline Control', 'Model 1 (Deterministic)', 'Model 2 (Machine Learning)', 'Model 3 (Dynamic Hybrid)', 'Operational Significance']
             for col_idx, col_name in enumerate(header_sum, start=1):
                 ws_sum.cell(1, col_idx, col_name)
             for row in summary_rows:
                 ws_sum.append(row)
 
         wb05.save(wb_05_path)
-        print("  -> Updated 05_robustness_resilience_generalizability.xlsx (volatility metrics across 4 canonical models M0, M1*, M3, M5).")
+        print("  -> Updated 05_robustness_resilience_generalizability.xlsx (volatility metrics across candidate models).")
 
     # 4. Update 02_top9_cohort_comprehensive_analysis.xlsx
     wb_02_path = RESULTS_DIR / "02_4tier_filtering" / "02_top9_cohort_comprehensive_analysis.xlsx"
@@ -454,14 +456,14 @@ def update_excel_workbooks():
     master_csv_path = TABLES_DIR / "master_model_evaluation_metrics_and_targets.csv"
     with open(master_csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["Evaluation_Dimension", "Performance_Metric", "Formula_or_Definition", "Academic_Target_Benchmark", "Baseline_Control_M0", "Deterministic_Baseline_M1_Star", "Probabilistic_ML_M3", "Dynamic_Hybrid_M5", "Dimension_Winner_and_Status", "Operational_Significance"])
+        writer.writerow(["Evaluation_Dimension", "Performance_Metric", "Formula_or_Definition", "Academic_Target_Benchmark", "Baseline_Control", "Model_1_Deterministic", "Model_2_Machine_Learning", "Model_3_Dynamic_Hybrid", "Dimension_Winner_and_Status", "Operational_Significance"])
         writer.writerows(eval_metrics_rows)
     print("  -> Synchronized results/tables/master_model_evaluation_metrics_and_targets.csv with volatility metrics.")
 
     summary_csv_path = TABLES_DIR / "model_evaluation_metrics_summary.csv"
     with open(summary_csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["Evaluation Dimension", "Performance Metric", "Academic Target", "Baseline Control (M0)", "Deterministic Baseline (M1*)", "Probabilistic (M3)", "Dynamic Hybrid (M5)", "Operational Significance"])
+        writer.writerow(["Evaluation Dimension", "Performance Metric", "Academic Target", "Baseline Control", "Model 1 (Deterministic)", "Model 2 (Machine Learning)", "Model 3 (Dynamic Hybrid)", "Operational Significance"])
         writer.writerows(summary_rows)
     print("  -> Synchronized results/tables/model_evaluation_metrics_summary.csv with volatility metrics.")
 
@@ -554,16 +556,16 @@ def generate_manuscript_tables_readme(table_records):
         "    - *Companion Workbook*: `results/03_lead_lag_deconvolution/03_lead_lag_deconvolution.xlsx` (Sheet: `Section_4B_Lead_Lag_Arrival_Dec`).",
         "",
         "11. **Table 4.10: Master Model Benchmark Matrix (2025 Holdout)** (`table_4_10_master_model_benchmark_matrix.csv`)",
-        "    - *Scope*: Master benchmark matrix across the Four Canonical Models ($M_0, M_1^*, M_3, M_5$) on 72,053 holdout observations.",
+        "    - *Scope*: Master benchmark matrix across the candidate predictive models and baseline control (Model 1, Model 2, Model 3, and Baseline Control) on 72,053 holdout observations.",
         "    - *Companion Workbook*: `results/04_model_execution_2025_holdout/04_model_execution_2025_holdout.xlsx` (Sheet: `Section_5A_Master_Model_Executi`).",
         "",
         "12. **Table 4.11: Master Multi-Pillar Hypothesis Evaluation Matrix** (`table_4_11_master_multi_pillar_hypothesis_evaluation_matrix.csv`)",
-        "    - *Scope*: Formal empirical hypothesis test matrix across Robustness, Resilience, and Generalizability with explicit academic targets benchmarking $M_0, M_1^*, M_3, M_5$.",
+        "    - *Scope*: Formal empirical hypothesis test matrix across Robustness, Resilience, and Generalizability with explicit academic targets benchmarking candidate models against baseline control.",
         "    - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `master_model_evaluation_metrics`).",
         "",
         "### Chapter 5: Analysis and Discussion",
         "",
-        "13. **Table 5.1: Routine Operational Accuracy Across the Four Canonical Models** (`table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv`)",
+        "13. **Table 5.1: Routine Operational Accuracy Across the Candidate Models** (`table_5_1_evaluation_dimension_1_routine_operational_accuracy.csv`)",
         "    - *Scope*: Robustness evaluation under nominal flight conditions (RMSE, MASE, stated target $\\text{MASE} < 0.70$, and Diebold-Mariano significance testing).",
         "    - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `Summary`).",
         "",
@@ -575,17 +577,17 @@ def generate_manuscript_tables_readme(table_records):
         "    - *Scope*: Zero-shot spatial transfer evaluation from EWR to LGA without retraining (RMSE, RTR $= 1.00$, $\\Delta\\text{MASE} \\le 10.0\\%$).",
         "    - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `Summary`).",
         "",
-        "16. **Table 5.4: Master Asymmetric Trade-Off Matrix Across the Four Canonical Models** (`table_5_4_master_asymmetric_trade_off_matrix.csv` / `master_asymmetric_trade_off_matrix.csv`)",
+        "16. **Table 5.4: Master Asymmetric Trade-Off Matrix Across the Candidate Models** (`table_5_4_master_asymmetric_trade_off_matrix.csv` / `master_asymmetric_trade_off_matrix.csv`)",
         "    - *Scope*: Synthesis of architectural trade-offs demonstrating asymmetric performance strengths across the three modeling families and confirming Hypothesis 1.",
         "    - *Companion Workbook*: `results/05_robustness_resilience_generalizability/05_robustness_resilience_generalizability.xlsx` (Sheet: `Summary`).",
         "",
         "### Companion Operational Decision Matrices",
         "",
         "17. **Master Asymmetric Trade-Off Matrix** (`master_asymmetric_trade_off_matrix.csv`)",
-        "    - *Scope*: Standalone conformed export of the Master Asymmetric Trade-Off Matrix with explicit academic targets, canonical models, and dimension winners.",
+        "    - *Scope*: Standalone conformed export of the Master Asymmetric Trade-Off Matrix with explicit academic targets, candidate models, and dimension winners.",
         "",
         "18. **Dual-Track Model Selection Policy** (`dual_track_model_selection_policy.csv`)",
-        "    - *Scope*: Gated operational deployment rules for Gate 1 (Routine Flow Track $\\to M_3$) and Gate 2 (Tactical Shock Track $\\to M_5$).",
+        "    - *Scope*: Gated operational deployment rules for Gate 1 (Routine Flow Track $\\to$ Model 2) and Gate 2 (Tactical Shock Track $\\to$ Model 3).",
         "",
         "---",
         "",

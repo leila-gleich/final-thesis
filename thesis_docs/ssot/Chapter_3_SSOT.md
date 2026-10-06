@@ -13,7 +13,7 @@ COMPANION DRAFT: thesis_docs/manuscripts/Chapter_3_Methodology.md
 
 This document serves as the **definitive, immutable Single Source of Truth (SSOT)** for Chapter III (Methodology) of the graduate thesis.
 
-It defines all mathematical formulations, the four-tiered filtering pipeline, the 84-cell interaction tensor ($\mathcal{S} \times \mathcal{D} \times \mathcal{H}$), Candidate B dataset partitioning, degrees-of-freedom proofs, model architectural specifications ($M_0$ through $M_5$), and the formal evaluation metrics for the three operational dimensions (Robustness, Resilience, Generalizability). Every equation, filter rule, and sample size certified here is binding across the thesis.
+It defines all mathematical formulations, the four-tiered filtering pipeline, the 84-cell interaction tensor ($\mathcal{S} \times \mathcal{D} \times \mathcal{H}$), Candidate B dataset partitioning, degrees-of-freedom proofs, model architectural specifications (Baseline Control, Model 1, Model 2, and Model 3), and the formal evaluation metrics for the three operational dimensions (Robustness, Resilience, Generalizability). Every equation, filter rule, and sample size certified here is binding across the thesis.
 
 ---
 
@@ -58,7 +58,7 @@ CHAPTER III: METHODOLOGY
 │   ├── 3.8.1 Dataset Partitioning (Candidate B: 122,847 Train / 72,723 Val / 72,053 Test)
 │   └── 3.8.2 Degrees-of-Freedom Compliance (83/84 Cells N_train ≥ 50; 70/84 N_test ≥ 30)
 └── 3.9 Comparative Evaluation Framework and Model Architectures
-    ├── 3.9.1 Model Benchmark Suite (M0 through M5 Specifications)
+    ├── 3.9.1 The Candidate Predictive Models and Baseline Control
     └── 3.9.2 Evaluation Metrics (RMSE, MAE, MASE, R_MASE, RTR, Diebold-Mariano)
 ```
 
@@ -124,21 +124,16 @@ $$\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H} \quad (4 \time
 
 ---
 
-## 4. THE 4-MODEL CANONICAL EVALUATION SUITE FOR THROUGHPUT VOLATILITY
+## 4. THE CANDIDATE PREDICTIVE MODELS AND BASELINE CONTROL
 
-Following the Phase 2 Four-Tiered Purposive Filtering pipeline (Macro congestion, Meso airspace invariance, Micro checkpoint exclusivity, and balanced factorial design), the candidate model space was consolidated into **exactly four canonical models** (one per paradigm plus baseline control):
+Following the Phase 2 Four-Tiered Purposive Filtering pipeline (Macro congestion, Meso airspace invariance, Micro checkpoint exclusivity, and balanced factorial design), the research evaluates **three candidate predictive models representing distinct operational paradigms**, benchmarked against an empirical baseline control:
 
 | Model ID | Paradigm | Formal Nomenclature | Algorithmic Formulation | Primary Explanatory Features & Role |
 | :--- | :--- | :--- | :--- | :--- |
-| **$M_0$** | **Baseline Control** | Diurnal Volatility Naive Persistence | $\widehat{\text{Vol}}_{M0, t} = \text{Vol}_{t-24}$ | Historical lagged checkpoint volatility 24 hours prior; scale-free MASE denominator. |
-| **$M_1^*$** | **Deterministic Baseline** | Deterministic Schedule Bank Volatility Baseline | $\widehat{\text{Vol}}_{M1^*, t} = \beta_0 + \beta_1 \cdot \text{Vol}_{\text{sched\_conv}, t}$ | Scheduled flight bank departure dispersion convolved with lognormal passenger show-up physics; **Generalizability Winner**. |
-| **$M_3$** | **Probabilistic / ML** | Supervised Volatility Gradient Boosted Trees | $\widehat{\text{Vol}}_{M3, t} = f_{\text{GBR}}(\mathbf{x}_t^{\text{convolved}}, \mathbf{x}_t^{\text{Values}}, \mathbf{x}_t^{\text{Volatilities}})$ | Convolved arrivals + 24 OTP feature attributes (14 values, 10 volatilities); **Routine Pareto Winner**. |
-| **$M_5$** | **Dynamic Hybrid** | Sequential SARIMA-Tree Volatility Hybrid | $\widehat{\text{Vol}}_{M5, t} = \widehat{\text{Vol}}_{\text{SARIMA}, t} + g_{\text{Tree}}(\mathbf{x}_t^{\text{airside}}, e_{t-1})$ | Stage 1 linear diurnal SARIMA + Stage 2 gradient boosted residual tree with **1-step error innovation feedback ($e_{t-1}$)**; **Resilience Winner**. |
-
-### Pruned Intermediate Exploratory Variations
-* **Model $M_1$ (Unshifted Flight Schedule Dispersion)**: Pruned due to phase distortion ($r=0.12$) from omitting the 105-minute mean passenger show-up lag.
-* **Model $M_2$ (Lead Flights Only Baseline)**: Pruned due to truncation bias during afternoon secondary delay cascades.
-* **Model $M_4$ (Load-Factor Scaled Linear Regression)**: Pruned because linear capacity scaling is redundant with non-linear tree interactions learned by $M_3$ and $M_5$.
+| **Baseline Control** | **Baseline Control** | Diurnal Volatility Naive Persistence | $\widehat{\text{Vol}}_{\text{Base}, t} = \text{Vol}_{t-24}$ | Historical lagged checkpoint volatility 24 hours prior; scale-free MASE denominator. |
+| **Model 1** | **Deterministic Baseline** | Deterministic Flight Schedule Model | $\widehat{\text{Vol}}_{1, t} = \beta_0 + \beta_1 \cdot \text{Vol}_{\text{sched\_conv}, t}$ | Scheduled flight bank departure dispersion convolved with ACRP Report 40 passenger arrival curves; **Generalizability Winner**. |
+| **Model 2** | **Machine Learning** | Supervised Machine Learning Model | $\widehat{\text{Vol}}_{2, t} = f_{\text{Tree}}(\mathbf{x}_t^{\text{convolved}}, \mathbf{x}_t^{\text{Values}}, \mathbf{x}_t^{\text{Volatilities}})$ | Convolved arrivals + 24 OTP feature attributes (14 values, 10 volatilities); **Routine Pareto Winner**. |
+| **Model 3** | **Dynamic Hybrid** | Dynamic Two-Stage Hybrid Model | $\widehat{\text{Vol}}_{3, t} = \widehat{\text{Vol}}_{\text{Schedule}, t} + g_{\text{Tree}}(\mathbf{x}_t^{\text{airside}}, e_{t-1})$ | Stage 1 schedule cycles + Stage 2 decision tree with **live 1-step error innovation feedback ($e_{t-1}$)**; **Resilience Winner**. |
 
 ---
 
@@ -199,7 +194,7 @@ Strictly enforce `thesis_docs/notes/provenance_and_standards/Jargon_and_Buzzword
 ## 9. CROSS-CHAPTER INTEGRATION ROADMAP
 
 * **Handoff from Chapter I & II**: Chapter I provides the research questions and delimitations; Chapter II provides the theoretical foundation and literature gap; Chapter III provides the mathematical formulations and execution pipeline.
-* **Handoff to Chapter IV (Findings)**: Chapter III defines the 84-cell interaction tensor, the Candidate B partition counts, and the $M_0$--$M_5$ models; Chapter IV reports the empirical results (descriptive stats, filtering yield, model error tables, Diebold-Mariano tests).
+* **Handoff to Chapter IV (Findings)**: Chapter III defines the 84-cell interaction grid, the Candidate B partition counts, and the candidate model suite; Chapter IV reports the empirical results (descriptive stats, filtering yield, model error tables, Diebold-Mariano tests).
 * **Handoff to Chapter V (Discussion)**: Chapter III specifies the three evaluation metrics ($RMSE, R_{\text{MASE}}, RTR$); Chapter V evaluates $H_{1a}, H_{1b}, H_{1c}$ against these metrics to synthesize the Regime-Switched Gated Inference Engine.
 
 ====================================================================================================

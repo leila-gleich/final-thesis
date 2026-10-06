@@ -30,15 +30,15 @@ When presenting Chapter IV in manuscript or defense slides, prioritize these cor
 ### 3.1 Structure Analysis Around the Three Core Evaluation Dimensions
 
 #### Dimension 1: Robustness (Routine Operational Accuracy)
-* **Finding**: Supervised Machine Learning (M3) and Sequential Hybrids (M5) achieved $\text{MASE}_{\text{routine}} = 0.890$ and $0.834$ under nominal operational conditions, significantly outperforming the Rebuilt Deterministic Baseline (M1: $\text{MASE} = 0.942$; Diebold-Mariano $DM = 74.25$ and $79.12, p < 0.0001$).
+* **Finding**: Supervised Machine Learning (Model 2) and Dynamic Two-Stage Hybrids (Model 3) achieved $\text{MASE}_{\text{routine}} \le 0.700$ and $0.662$ under nominal operational conditions, significantly outperforming the Deterministic Flight Schedule Model (Model 1: $\text{MASE} = 0.945$; Diebold-Mariano $DM = 42.15$ and $48.72, p < 0.0001$).
 * **Interpretation**: Non-parametric tree models excel at capturing complex diurnal seasonality, day-of-week interactions, and non-linear aircraft seating capacity distributions without rigid parametric distributional assumptions.
 
 #### Dimension 2: Resilience Under Disruption (Shock Absorption & Dynamic Recovery)
-* **Finding**: During severe operational disruptions (Winter Storm Elliott in December 2022), pure ML models suffered acute degradation ($R_{\text{MASE}} = 2.14$). In contrast, the **Two-Stage Hybrid Framework** maintained resilience ($R_{\text{MASE}} = 1.28$).
-* **Interpretation**: When flights are delayed past midnight, pure ML models falsely predict empty checkpoints because future gate push-backs vanish from the schedule. Dynamic state-space models and queue feedback loops ($t-1$) correct for latent passenger dwell, reducing recovery time from 8.4 hours to 3.2 hours.
+* **Finding**: During severe operational disruptions (severe convective storms and ground delay programs), pure ML models suffered acute degradation ($R_{\text{MASE}} = 2.14$). In contrast, the **Dynamic Two-Stage Hybrid Framework (Model 3)** maintained resilience ($R_{\text{MASE}} = 1.05$).
+* **Interpretation**: When flights are delayed past midnight, pure ML models falsely predict empty checkpoints because future gate push-backs vanish from the schedule. Live error innovation feedback ($t-1$) corrects for latent passenger dwell, reducing recovery time to 2.8 hours.
 
 #### Dimension 3: Generalizability (Cross-Airport Transferability)
-* **Finding**: Deep neural networks suffered a +48.2% error surge on zero-shot transfer across terminal layouts. Rebuilt Deterministic baselines (+4.4%, $\text{RTR} = 1.04$) and Probabilistic ML (+7.9%, $\text{RTR} = 1.08$) maintained high transferability, while state-space filtering achieved near-perfect invariance ($\text{RTR} = 1.00$).
+* **Finding**: Complex tree models suffered error surges on zero-shot transfer across terminal layouts. Deterministic flight schedule baselines (Model 1: +4.0%, $\text{RTR} = 1.04$) and Supervised ML (Model 2: +8.3%, $\text{RTR} = 1.08$) maintained high transferability, while the Dynamic Hybrid (Model 3) experienced elevated transfer degradation (+21.5%, $\text{RTR} = 1.19$) due to terminal geometry overfitting.
 * **Interpretation**: Over-parameterized models overfit to terminal-specific gate topologies and local carrier departure bank timing. Grounding demand in empirical passenger show-up curves decouples terminal layout specifics from macro schedule dynamics.
 
 ---
