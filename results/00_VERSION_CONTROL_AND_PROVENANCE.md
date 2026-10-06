@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.13 (Appendix Standard Literature Equations & Formulas Audit)
+RELEASE VERSION: v4.14 (Master thesis_tables.xlsx APA 7th Edition Reformatting & Zero-Filter Harmonization)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -209,6 +209,20 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Authored thesis_docs/recommendations/PROPOSED_EDITS_ELIMINATE_ORIGINAL_   |
 |         |            |   FORMULAS.md outlining location-by-location text replacements to eliminate|
 |         |            |   the 2 original formulas (T(h) and CVI) in favor of standard equivalents. |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.14   | 2026-10-06 | Master thesis_tables.xlsx APA 7th Edition Reformatting & Zero Filters:     |
+|         |            | - Reformatted master multi-tab workbook thesis_tables.xlsx across all       |
+|         |            |   worksheets to strictly conform with APA Style (7th ed.) matching         |
+|         |            |   results/sample-tables.docx and the reference template tab table-format.   |
+|         |            | - Eliminated all Excel table objects (ListObjects) and auto-filter dropdown |
+|         |            |   arrows across all 19 worksheets.                                          |
+|         |            | - Removed all colored fills and zebra shading, establishing clean white    |
+|         |            |   backgrounds.                                                              |
+|         |            | - Applied APA horizontal boundary rules: thin black rules above and below  |
+|         |            |   header rows, thin black rule on terminal data rows, and zero internal     |
+|         |            |   horizontal or vertical cell borders.                                      |
+|         |            | - Preserved table-format reference template tab and maintained two-way     |
+|         |            |   interactive navigation hyperlinks on Contents and all table sheets.       |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
