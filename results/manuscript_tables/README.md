@@ -124,6 +124,17 @@ This registry ensures complete transparency, auditability, and mathematical repr
 
 ---
 
+## Master Multi-Tab Excel Workbook (`thesis_tables.xlsx`)
+
+All 16 empirical manuscript tables and companion operational policies are consolidated into an executive multi-tab Excel workbook:
+- **Master Location**: [`thesis_tables.xlsx`](thesis_tables.xlsx) (also mirrored to `results/thesis_tables.xlsx`)
+- **Architecture**:
+  1. `Contents`: Interactive Table of Contents with active two-way clickable hyperlinks.
+  2. `table_4_1` through `table_5_4`: Dedicated worksheets using short table identifiers, formatted as native Excel Table objects (`ListObject`) with auto-filters, APA 7th headers, and return links (`⬅ Return to Table of Contents`).
+  3. `dual_track_policy`: Operational decision matrix tab defining dual-track deployment rules.
+
+---
+
 ## Referential Integrity & Audit Rule
 
 All table numbers, column names, and decimal precisions in these CSV files are guaranteed to match the thesis manuscript chapters and the master pipeline output with **zero drift**.

@@ -14,6 +14,7 @@ companion Excel workbooks.
 """
 
 import os
+import sys
 import re
 import csv
 from pathlib import Path
@@ -22,6 +23,9 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
 # Path resolution
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
 RESULTS_DIR = BASE_DIR / "results"
 MANUSCRIPTS_DIR = BASE_DIR / "thesis_docs" / "manuscripts"
 MANUSCRIPT_TABLES_DIR = RESULTS_DIR / "manuscript_tables"
@@ -591,6 +595,17 @@ def generate_manuscript_tables_readme(table_records):
         "",
         "---",
         "",
+        "## Master Multi-Tab Excel Workbook (`thesis_tables.xlsx`)",
+        "",
+        "All 16 empirical manuscript tables and companion operational policies are consolidated into an executive multi-tab Excel workbook:",
+        "- **Master Location**: [`thesis_tables.xlsx`](thesis_tables.xlsx) (also mirrored to `results/thesis_tables.xlsx`)",
+        "- **Architecture**:",
+        "  1. `Contents`: Interactive Table of Contents with active two-way clickable hyperlinks.",
+        "  2. `table_4_1` through `table_5_4`: Dedicated worksheets using short table identifiers, formatted as native Excel Table objects (`ListObject`) with auto-filters, APA 7th headers, and return links (`⬅ Return to Table of Contents`).",
+        "  3. `dual_track_policy`: Operational decision matrix tab defining dual-track deployment rules.",
+        "",
+        "---",
+        "",
         "## Referential Integrity & Audit Rule",
         "",
         "All table numbers, column names, and decimal precisions in these CSV files are guaranteed to match the thesis manuscript chapters and the master pipeline output with **zero drift**.",
@@ -617,9 +632,14 @@ def sync_all():
     # Step 3: Generate master README in results/manuscript_tables/
     generate_manuscript_tables_readme(records)
     
+    # Step 4: Build master consolidated multi-tab thesis_tables.xlsx
+    from src.analysis.generate_thesis_tables_excel import build_thesis_tables_workbook
+    build_thesis_tables_workbook()
+    
     print("\nManuscript tables and results workbooks successfully synchronized.")
     return records
 
 
 if __name__ == "__main__":
     sync_all()
+

@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.11 (Chapter IV Introduction and Architecture Roadmap Standalone Manuscript)
+RELEASE VERSION: v4.12 (Consolidated Master Multi-Tab Excel Workbook thesis_tables.xlsx)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -185,6 +185,19 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Synthesized core empirical findings: throughput volatility targeting,     |
 |         |            |   asymmetric performance trade-offs across 3 candidate models, and the     |
 |         |            |   values versus volatility paradigm (H1, H2).                               |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.12   | 2026-10-06 | Consolidated Master Multi-Tab Excel Workbook (thesis_tables.xlsx):          |
+|         |            | - Authored src/analysis/generate_thesis_tables_excel.py compiling all 16   |
+|         |            |   empirical manuscript tables (Table 4.1 to Table 5.4) plus the Dual-Track  |
+|         |            |   Operational Model Selection Policy into a unified multi-tab workbook.     |
+|         |            | - Configured worksheet tabs using standardized short names (table_4_1       |
+|         |            |   through table_5_4, dual_track_policy).                                    |
+|         |            | - Established 'Contents' interactive master navigation sheet with two-way   |
+|         |            |   clickable hyperlinks (Table ID/Tab -> Sheet A1 and Back -> Contents A1).  |
+|         |            | - Formatted all data sheets as native Excel Table objects (ListObject) with |
+|         |            |   APA 7th headers, cell notes, auto-filters, and auto-adjusted widths.      |
+|         |            | - Integrated workbook compilation into src/analysis/sync_manuscript_tables.py|
+|         |            |   and deployed thesis_tables.xlsx to results/ and results/manuscript_tables/.|
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
