@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.14 (Master thesis_tables.xlsx APA 7th Edition Reformatting & Zero-Filter Harmonization)
+RELEASE VERSION: v4.15 (Operational Metric Framework Defense Documentation Deployment)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -224,6 +224,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Preserved table-format reference template tab and maintained two-way     |
 |         |            |   interactive navigation hyperlinks on Contents and all table sheets.       |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.15   | 2026-10-06 | Operational Metric Framework Defense Documentation Deployment:              |
+|         |            | - Authored thesis_docs/manuscripts/operational-metric-framework.md          |
+|         |            |   providing comprehensive statistical formulations, Kingman queuing        |
+|         |            |   interpretations, and checkpoint floor operational translations for the    |
+|         |            |   5 primary holdout evaluation metrics: R^2, RMSE, MAE, MASE, and Bias.    |
+|         |            | - Embedded Table 4.10 certified 2025 holdout benchmarks across the 4 models.|
+|         |            | - Synthesized committee defense talking points, addressing MAPE invalidity, |
+|         |            |   diurnal persistence MASE scaling, and asymmetric trade-offs (H1).        |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -315,6 +324,7 @@ The foundational analysis suite (housed in `results/foundational_analysis/`) is 
    - 06_Nine_Airport_Filtered_Cohort/: 4-Tier filtering pipeline, factorial grid, Table C summary, Table D census, 4Tier-Filtering-Stats.xlsx, and top9-desc-stats.xlsx.
 
 04_Reports_and_Walkthroughs/
+   - operational-metric-framework.md: Statistical formulations, queuing theory dynamics, and committee defense guide.
    - Thesis_Results_and_Discussion_Comprehensive_Draft.md: Full draft of Chapter IV Results and Empirical Findings.
    - Approach1_Results_and_Analysis_Summary.txt: Detailed econometric walkthrough of Approach 1 modeling results.
    - Section_1_Intro_and_Post_ETL_Descriptive_Statistics.txt: Comprehensive Section 1 outline and descriptive statistics.
