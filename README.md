@@ -5,7 +5,7 @@
 **Institution**: Embry-Riddle Aeronautical University (ERAU)  
 **Degree Program**: Master of Science in Aeronautics / Aviation Data Analytics  
 **Course Milestone**: MSAA / Gleich 700B Graduate Thesis  
-**Repository Version**: v4.3 (Publication-Grade Consolidated Release — `final-thesis`)  
+**Repository Version**: v4.7 (Candidate Model Suite Streamlining & Multi-Pillar Harmonization — `final-thesis`)  
 
 ---
 
