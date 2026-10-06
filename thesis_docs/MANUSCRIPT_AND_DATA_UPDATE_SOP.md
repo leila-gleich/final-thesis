@@ -52,7 +52,7 @@ Before making any change, ensure strict compliance with the following rules:
    * Microsoft Word files are reserved exclusively for the author's manual committee review drafts.
    * All editing is performed exclusively in Markdown (`.md`), Python (`.py`), CSV (`.csv`), or Excel (`.xlsx`).
 2. **Primary Target is Throughput Volatility (NOT Volume)**:
-   * The dependent variable is **TSA Throughput Volatility** ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$), grounded in Kingman's heavy-traffic queuing physics ($W_q \propto C_a^2$). Never re-frame the core task as predicting raw passenger volume ($y_t$).
+   * The dependent variable is **TSA Throughput Volatility** ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$), grounded in Kingman's heavy-traffic queuing principles ($W_q \propto C_a^2$). Never re-frame the core task as predicting raw passenger volume ($y_t$).
 3. **The 3-Model Candidate Evaluation Suite & Baseline Control**:
    * Evaluation is strictly restricted to:
      * **Baseline Control**: Daily Persistence Benchmark ($y_{t-24}$, non-parametric $\text{MASE} \equiv 1.000$).

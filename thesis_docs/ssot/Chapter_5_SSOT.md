@@ -164,14 +164,14 @@ The thesis findings demonstrate cohesive empirical validation across three found
 * Proved that incorporating ACRP Report 40 distributed passenger show-up curves ($t+1, t+2, t+3$) elevates explanatory power from $R^2 = 0.1158$ (unshifted schedule) to $R^2 = 0.4985$ (convolved load-factor weighted schedule).
 * Demonstrated that Champion Model 3 achieves $R^2 = 0.7483, \text{RMSE} = 222.1\text{ pax/hr}, \text{MASE} = 0.662$ on holdout data, beating daily persistence by 33.8%.
 
-### 6.2 Pillar 2: Heavy-Traffic Queuing Physics & Conformal Staffing Buffers
+### 6.2 Pillar 2: Heavy-Traffic Queuing Dynamics & Conformal Staffing Buffers
 * Grounded checkpoint congestion in Kingman's heavy-traffic formula ($W_q \propto C_a^2$).
 * Proved that as screening lanes approach capacity ($\rho \to 0.90$), arrival volatility generates exponential queue spikes.
 * Operationalized conformal quantile bounds ($\hat{y}_{0.85}$) to size dynamic staffing buffers ($c(t) = \lceil (\hat{\mu}_t + 1.036 \cdot \hat{\sigma}_t) / \mu_{\text{lane}} \rceil$), capping lane utilization below runaway tipping points.
 
 ### 6.3 Pillar 3: Cross-Airport Spatial Generalizability
 * Deployed models zero-shot without local retraining from Newark Liberty (EWR Terminal C) to New York LaGuardia (LGA Terminal C), holding TRACON regional airspace constant.
-* Confirmed that the **Deterministic Flight Schedule Model (Model 1)** achieves near-perfect spatial transfer ($\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$), and $\text{RTR} = 1.003$ on DTW $\to$ PHL, proving that physical flight schedule convolution is invariant across airport geometries.
+* Confirmed that the **Deterministic Flight Schedule Model (Model 1)** achieves near-perfect spatial transfer ($\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$), and $\text{RTR} = 1.003$ on DTW $\to$ PHL, proving that deterministic flight schedule convolution is invariant across airport geometries.
 * Confirmed that the **Dynamic Hybrid (Model 3)** fails zero-shot transfer ($\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$) due to decision tree terminal geometry overfitting, proving Hypothesis $H_{1c}$.
 
 ---

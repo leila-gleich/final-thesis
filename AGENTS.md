@@ -33,7 +33,7 @@
 
 ### Policy 2.1: Primary Dependent Target is Throughput Volatility (NOT Volume)
 * **Core Research Objective**: This thesis models and forecasts the **volatility of TSA passenger screening throughput** ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$), **NOT raw passenger volume ($y_t$)**.
-* **Queuing Physics Rationale**: Under Kingman's heavy-traffic queuing formula ($W_q \approx \frac{\rho}{1-\rho} \frac{C_a^2 + C_s^2}{2} \frac{1}{\mu}$), checkpoint queues and passenger delays scale quadratically with arrival volatility ($C_a^2$) as checkpoint utilization approaches capacity ($\rho \to 1.0$).
+* **Queuing Principles Rationale**: Under Kingman's heavy-traffic queuing formula ($W_q \approx \frac{\rho}{1-\rho} \frac{C_a^2 + C_s^2}{2} \frac{1}{\mu}$), checkpoint queues and passenger delays scale quadratically with arrival volatility ($C_a^2$) as checkpoint utilization approaches capacity ($\rho \to 1.0$).
 * **Primary Targets Evaluated**:
   1. **Intraday Diurnal Absolute Volatility ($\sigma_{\text{TSA, hr}}$, pax/hr dispersion)**: Standard deviation across the 24 hours of day $d$.
   2. **Intraday Scale-Free Relative Volatility ($CV_{\text{TSA, hr}} = \sigma / \mu$, dimensionless)**: Scale-free arrival burstiness normalized across small vs. mega checkpoints.
@@ -47,7 +47,7 @@
 ### Policy 3.1: Exactly Three Candidate Models Plus Baseline Control
 Following the 4-tier filtering pipeline (which established the 9-airport experimental cohort across 12 carrier-exclusive complexes), the evaluation suite is restricted to **exactly three candidate models representing distinct operational paradigms**, benchmarked against an empirical baseline control:
 1. **Baseline Control**: Diurnal Volatility Naive Persistence Benchmark ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$, non-parametric $\text{MASE} \equiv 1.000$).
-2. **Model 1 (Deterministic Flight Schedule Model)**: Deterministic Physical Baseline convolving scheduled airline flight banks across empirical ACRP Report 40 passenger show-up curves ($t+1, t+2, t+3$).
+2. **Model 1 (Deterministic Flight Schedule Model)**: Deterministic Operational Baseline convolving scheduled airline flight banks across empirical ACRP Report 40 passenger show-up curves ($t+1, t+2, t+3$).
 3. **Model 2 (Supervised Machine Learning Model)**: Automated decision-tree regressor incorporating flight schedule dispersion and 24 BTS OTP operational attributes (delays, cancellations, taxi queues).
 4. **Model 3 (Dynamic Two-Stage Hybrid Model)**: Sequential two-stage model coupling recurring schedule cycles with live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) from the checkpoint floor.
 

@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.7 (Candidate Model Suite Streamlining, Plain-Language Calibration & Multi-Pillar Harmonization)
+RELEASE VERSION: v4.8 (Excision of 'Physics' & Theoretical Jargon for Qualitative Audience Calibration)
 DATE: October 5, 2026
 ====================================================================================================
 
@@ -147,10 +147,18 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   (Regime-Switched Gated Engine), and "The Empty Checkpoint Fallacy".       |
 |         |            | - Excised orphaned draft fragments and dead links in Chapter 5 and glossary.|
 |         |            | - Synchronized all 16 manuscript tables across CSV and companion Excel      |
-|         |            |   workbooks (02, 03, 04, 05) via sync_manuscript_tables.py.                 |
-|         |            | - Authored thesis_docs/MANUSCRIPT_AND_DATA_UPDATE_SOP.md establishing       |
-|         |            |   turn-key instructions for updating manuscripts, tables, and spreadsheets. |
-|         |            | - Preserved zero edits to Microsoft Word documents (.docx); 38/38 tests OK. |
+| v4.8    | 2026-10-05 | Excision of 'Physics' & Theoretical Jargon for Qualitative Audience:       |
+|         |            | - Replaced "queuing physics" with "queuing principles", "queuing theory",  |
+|         |            |   or "queuing dynamics" across Chapters I, II, III, IV, V, Glossary, and   |
+|         |            |   SSOT to eliminate the pseudo-physics trap for qualitative ERAU readers.  |
+|         |            | - Replaced "physical baseline" and "physical rules" with "operational       |
+|         |            |   baseline" and "deterministic operational rules".                         |
+|         |            | - Replaced "cyber-physical" with "two-stage hybrid" or "sequential hybrid".|
+|         |            | - Replaced "quiescent" / "quiescence" with "minimal" / "curfew period".     |
+|         |            | - Replaced "econometric deconvolution" with "mathematical separation".      |
+|         |            | - Re-synchronized all 16 manuscript tables across CSV and Excel workbooks   |
+|         |            |   (02, 03, 04, 05) via sync_manuscript_tables.py.                          |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); clean tests.   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

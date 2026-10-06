@@ -75,7 +75,7 @@ To support airport Federal Security Directors (FSDs), operational planners, and 
 | [Mean Absolute Percentage Error (MAPE)](#mean-absolute-percentage-error-mape) | Evaluation & Statistics |
 | [Mean Absolute Scaled Error (MASE)](#mean-absolute-scaled-error-mase) | Evaluation & Statistics |
 | [Mean Forecast Bias](#mean-forecast-bias) | Evaluation & Statistics |
-| [Model 1: Deterministic Flight Schedule Model](#model-1-deterministic-flight-schedule-model-physical-baseline) | Predictive Modeling |
+| [Model 1: Deterministic Flight Schedule Model](#model-1-deterministic-flight-schedule-model-operational-baseline) | Predictive Modeling |
 | [Model 2: Supervised Machine Learning Model](#model-2-supervised-machine-learning-model-flight-operations--delays) | Predictive Modeling |
 | [Model 3: Dynamic Two-Stage Hybrid Model](#model-3-dynamic-two-stage-hybrid-model-schedule--real-time-feedback) | Predictive Modeling |
 | [Multi-Carrier Schedule Collinearity](#multi-carrier-schedule-collinearity) | Queuing & Passenger Dynamics |
@@ -226,7 +226,7 @@ A flight cancellation enacted within two hours of scheduled departure. These fli
 
 ## Category 3: Terminal Queuing Dynamics and Passenger Arrival Behavior
 
-*This category details the physical, temporal, and behavioral dynamics of passenger movement through airport terminals, including passenger arrival show-up curves, airline flight bank waves, connecting passenger transfers, and queuing bottlenecks.*
+*This category details the operational, temporal, and behavioral dynamics of passenger movement through airport terminals, including passenger arrival show-up curves, airline flight bank waves, connecting passenger transfers, and queuing bottlenecks.*
 
 ### Airport Cooperative Research Program (ACRP) Report 40
 A foundational airport planning guidebook titled *Airport Passenger Terminal Planning and Design*, published by the Transportation Research Board (2010). It provides empirical guidelines for passenger terminal planning, including the standard observation that domestic airline passengers typically arrive at security checkpoints 90 to 120 minutes before their scheduled flight departure time.
@@ -370,7 +370,7 @@ The central methodological comparison evaluating whether forecasting TSA through
 
 ## Category 5: Predictive Modeling Paradigms and Architectures
 
-*This category covers the benchmark forecasting models, decision-tree machine learning algorithms, time-series baselines, and dynamic cyber-physical hybrid methods evaluated for forecasting passenger throughput volatility across Chapters III, IV, and V.*
+*This category covers the benchmark forecasting models, decision-tree machine learning algorithms, time-series baselines, and dynamic two-stage hybrid methods evaluated for forecasting passenger throughput volatility across Chapters III, IV, and V.*
 
 ### The Candidate Predictive Models and Baseline Control
 The definitive suite of three candidate forecasting models representing distinct operational paradigms, evaluated against an empirical daily persistence baseline control:
@@ -400,8 +400,8 @@ A real-time error-correction tracking method. In volatility forecasting, it func
 ### Long Short-Term Memory (LSTM)
 A specialized neural network architecture designed to learn long sequences of time-series data. Although widely used in computer science research, it requires massive amounts of training data, functions as an opaque "black box," and often memorizes airport-specific terminal layouts rather than general travel patterns.
 
-### Model 1: Deterministic Flight Schedule Model (Physical Baseline)
-Derives predicted passenger screening volatility directly from published airline flight departure banks convolved across empirical ACRP Report 40 passenger arrival curves ($t+1, t+2, t+3$). It operates as a deterministic physical baseline without requiring statistical machine learning or airside delay telemetry, proving highly portable across airports.
+### Model 1: Deterministic Flight Schedule Model (Operational Baseline)
+Derives predicted passenger screening volatility directly from published airline flight departure banks convolved across empirical ACRP Report 40 passenger arrival curves ($t+1, t+2, t+3$). It operates as a deterministic operational baseline without requiring statistical machine learning or airside delay telemetry, proving highly portable across airports.
 
 ### Model 2: Supervised Machine Learning Model (Flight Operations & Delays)
 A supervised decision-tree regressor trained on convolved flight departures and 24 Bureau of Transportation Statistics (BTS) On-Time Performance (OTP) attributes (incorporating schedule dispersion, tactical flight cancellations, prior-hour delay turbulence, and taxi-out queues). Achieves optimal routine operational efficiency ($\text{MASE} \le 0.70$) with zero real-time feedback latency.

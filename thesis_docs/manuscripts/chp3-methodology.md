@@ -5,7 +5,7 @@
 ## Overview and Research Approach
 This chapter details the methodological architecture and empirical framework developed to model, forecast, and optimize passenger security screening throughput volatility at commercial airports. Traditional airport passenger flow modeling has historically focused on predicting mean passenger volume through static time-of-day profile tables or direct deterministic scaling of published airline flight schedules. However, airport terminal subsystems—specifically check-in halls, passenger security screening checkpoints, and departure concourses—constitute a tightly coupled, stochastic queueing network subject to severe non-linear queuing friction and arrival burstiness (De Neufville & Odoni, 2014).
 
-Under heavy-traffic queuing physics (Kingman, 1961; Whitt, 1993; Allen-Cunneen formula for $G/G/s$ queue facilities), expected queue wait time ($W_q$) and queue backlogs escalate not with average passenger arrivals ($\lambda$), but linearly with the **squared coefficient of variation of arrival times ($C_a^2$)**:
+Under heavy-traffic queuing principles (Kingman, 1961; Whitt, 1993; Allen-Cunneen formula for $G/G/s$ queue facilities), expected queue wait time ($W_q$) and queue backlogs escalate not with average passenger arrivals ($\lambda$), but linearly with the **squared coefficient of variation of arrival times ($C_a^2$)**:
 $$W_q \approx \left( \frac{\rho^{\sqrt{2(s+1)}-1}}{s(1-\rho)} \right) \left( \frac{C_a^2 + C_s^2}{2} \right) \frac{1}{\mu}$$
 where $\rho = \frac{\lambda}{s \mu}$ represents checkpoint utilization. As screening lanes approach saturation ($\rho \to 1.0$), arrival volatility ($C_a^2$) generates acute queue spikes, lane starvation, and severe passenger processing delays that propagate downline into delayed aircraft boarding and gate pushback holds ($r = +0.4375, p < 0.05$).
 
@@ -131,7 +131,7 @@ The Coupled Volatility Index serves as an econometric measure of systemic operat
 To identify diurnal regimes conditioned on Day of Week ($DOW \in [1, 7]$) without arbitrary step boundaries, the Operational Turbulence Shock Index $T_{dow}(h)$ is defined for each hour $h \in [0, 23]$:
 $$T_{dow}(h) = \max\left( \frac{\sigma_{\text{TSA}, dow}(h)}{\max_{k} \sigma_{\text{TSA}, dow}(k)}, \; \frac{[\sigma_{\text{intra}, dow}(h) + \sigma_{\text{inter}, dow}(h)] \cdot \mathbb{I}(\bar{F}_{dow}(h) \ge 20)}{\max_{k} [(\sigma_{\text{intra}, dow}(k) + \sigma_{\text{inter}, dow}(k)) \cdot \mathbb{I}(\bar{F}_{dow}(k) \ge 20)]} \right)$$
 Applying 1D K-Means clustering ($k = 3$) on $T_{dow}(h)$ establishes three diurnal regimes:
-* **1_OFF_PEAK**: Low Volatility / Overnight Curfew Quiescence ($T < 0.35$).
+* **1_OFF_PEAK**: Low Volatility / Overnight Curfew Period ($T < 0.35$).
 * **2_MID_PEAK**: Moderate Volatility / Midday Steady Flow ($0.35 \le T < 0.75$).
 * **3_PEAK**: High Volatility / Queuing Turbulence ($T \ge 0.75$).
 
@@ -143,9 +143,9 @@ To determine how to best forecast passenger arrival volatility at airport screen
 * **Operational Logic**: Assumes that checkpoint arrival volatility today will exactly mirror the volatility observed at the exact same hour yesterday ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$).
 * **Evaluation Role**: Serves as the non-parametric reference standard ($\text{MASE} \equiv 1.000$). Any operational model worth deploying must prove that it beats this simple historical benchmark.
 
-### Model 1: Deterministic Flight Schedule Model (Physical Baseline)
+### Model 1: Deterministic Flight Schedule Model (Operational Baseline)
 * **Operational Logic**: Uses published airline flight schedules, shifted forward in time using empirical passenger show-up distributions from ACRP Report 40 (*Airport Passenger Terminal Planning and Design*). 
-* **Mechanics**: Because passengers arrive 90 to 120 minutes before takeoff, scheduled flight departure banks are convolved across lead arrival horizons ($t+1, t+2, t+3$). This captures the physical ebb and flow of scheduled flight waves without requiring real-time delay telemetry or statistical machine learning.
+* **Mechanics**: Because passengers arrive 90 to 120 minutes before takeoff, scheduled flight departure banks are convolved across lead arrival horizons ($t+1, t+2, t+3$). This captures the operational ebb and flow of scheduled flight waves without requiring real-time delay telemetry or statistical machine learning.
 
 ### Model 2: Supervised Machine Learning Model (Flight Operations & Delays)
 * **Operational Logic**: Uses an automated decision-tree algorithm trained across the convolved flight schedule and 24 Bureau of Transportation Statistics (BTS) On-Time Performance (OTP) operational features.
