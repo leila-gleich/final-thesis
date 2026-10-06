@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.9 (Table-Free Text Manuscripts & Master Full Thesis Compilation in manuscripts-only/)
+RELEASE VERSION: v4.10 (Methodology Architecture Harmonization with Committee Draft)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -167,6 +167,16 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   (## Table X.Y: Title) for clear text-only review and print layout.       |
 |         |            | - Compiled full-thesis.md containing sequential text across all 5 chapters. |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); 100% sync.     |
+| v4.10   | 2026-10-06 | Chapter III Methodology Architecture Harmonization with Committee Draft:    |
+|         |            | - Restructured Chapter III manuscripts (chp3-methodology.md in both main   |
+|         |            |   and manuscripts-only/ folders, plus full-thesis.md) into 5 main headers: |
+|         |            |   Research Approach, Sample, Sources of Data, Validity, Treatment of Data. |
+|         |            | - Integrated structural descriptions, figure callouts (Figures 1–5), macro  |
+|         |            |   archetypes, micro checkpoint isolation, and ETL lists from committee     |
+|         |            |   draft while preserving queuing theory rigor, volatility targets, 3-model |
+|         |            |   suite, and asymmetric trade-offs.                                        |
+|         |            | - Updated Section 2 outline in thesis_docs/ssot/Chapter_3_SSOT.md.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

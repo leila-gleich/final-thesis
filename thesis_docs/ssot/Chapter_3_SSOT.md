@@ -19,47 +19,36 @@ It defines all mathematical formulations, the four-tiered filtering pipeline, th
 
 ## 2. CANONICAL CHAPTER III OUTLINE ARCHITECTURE
 
-Chapter III is structured into nine core methodological sections:
+Chapter III is structured into five core methodological components matching the authorized committee manuscript architecture:
 
 ```
 CHAPTER III: METHODOLOGY
-├── 3.1 Overview and Research Approach
-│   ├── The Landside Bottleneck & Stochastic Queuing Problem
-│   ├── Three Forecasting Paradigms (Deterministic, ML, Two-Stage Hybrid)
-│   ├── 3.1.1 Core Research Hypotheses (H1, H1a, H1b, H1c)
-│   └── 3.1.2 Four Sequential Methodological Execution Phases
-├── 3.2 Four-Tiered Purposive Filtering and Experimental Design
-│   ├── 3.2.1 Macro Filter: Scale and Congestion Regimes (Top 25, Traffic Intensity ρ(t) → 1.0)
-│   ├── 3.2.2 Meso Filter: Airspace Shock Invariance (δ_t) and Southwest (WN) Exclusion
-│   ├── 3.2.3 Micro Filter: Carrier Checkpoint Isolation (P = 1.0, κ < 25)
-│   └── 3.2.4 Balanced Factorial Cohort (9 Airfields, 3 Carriers, 12 Screening Complexes)
-├── 3.3 Data Sources and Warehouse Conformance
-│   ├── 3.3.1 TSA FOIA Security Screening Checkpoint Logs (6,434,732 lane-hours)
-│   ├── 3.3.2 BTS On-Time Performance Form 234 (13,153,654 departures)
-│   ├── 3.3.3 BTS Form 41 Schedule T-100 Domestic Segment Capacity (422,096 route-months)
-│   └── 3.3.4 BTS DB1B / DB1C Origin & Destination Ticket Surveys (22,051,557 coupons)
-├── 3.4 Threats to Validity and Remediation Protocols
-│   ├── 3.4.1 Connecting Passenger Bias (The Hub Disconnect & DB1B Deflator)
-│   ├── 3.4.2 Checkpoint Heterogeneity and Administrative Staffing Shifts (Lane Complex Aggregation)
-│   ├── 3.4.3 Overnight Checkpoint Closures vs. Missing Data (Structural Zeros)
-│   └── 3.4.4 Tactical vs. Advance Cancellations (Information Causality)
-├── 3.5 Coupled Volatility and Variance Formulations
-│   ├── 3.5.1 Within-Day TSA Screening Volatility (CV_TSA,d)
-│   ├── 3.5.2 Checkpoint Peak Surge Shock Ratio (S_TSA,d)
-│   ├── 3.5.3 Flight Departure Delay Dispersion (σ_Delay,d)
-│   └── 3.5.4 The Coupled Volatility Index (CVI_d)
-├── 3.6 Diurnal Operational Turbulence Shock Index (T_dow(h))
-│   ├── Mathematical Formulation & Upper-Bound Normalization
-│   ├── 1D K-Means Clustering (k = 3 Regimes)
-│   └── Dual Non-Consecutive Turbulence Peaks (Morning 05:00–08:00 vs. Evening 14:00–22:00)
-├── 3.7 Hierarchical Cross-Classification Architecture
-│   └── The 84-Cell Interaction Tensor: S (4 Regimes) × D (7 DOW) × H (3 Diurnal Regimes)
-├── 3.8 Statistical Power and Sample Size Sufficiency Proofs
-│   ├── 3.8.1 Dataset Partitioning (Candidate B: 122,847 Train / 72,723 Val / 72,053 Test)
-│   └── 3.8.2 Degrees-of-Freedom Compliance (83/84 Cells N_train ≥ 50; 70/84 N_test ≥ 30)
-└── 3.9 Comparative Evaluation Framework and Model Architectures
-    ├── 3.9.1 The Candidate Predictive Models and Baseline Control
-    └── 3.9.2 Evaluation Metrics (RMSE, MAE, MASE, R_MASE, RTR, Diebold-Mariano)
+├── 3.1 Research Approach
+│   ├── Theoretical Framework & Stochastic Queuing Principles (Kingman Formula, Ca^2)
+│   ├── Core Research Variables (Independent, Dependent Volatility Targets, Performance)
+│   ├── Research Hypotheses (H1 Master Asymmetric Trade-Off, H1A, H1B, H1C, H2 Feature Paradigm)
+│   ├── Design and Procedures (Phases 1–4, Model Suite, Partitioning, Evaluation Regimes)
+│   └── Apparatus and Materials (Google Antigravity & Python, Excel/Power BI, Vega HPC Cluster)
+├── 3.2 Sample
+│   ├── Macro Categorization: Terminal-to-Airline Distribution (Four Structural Archetypes)
+│   ├── Micro-Level Refinement: Checkpoint Co-Location & Isolation (Centralized vs. Decentralized)
+│   ├── Four-Tiered Purposive Filtering Pipeline & Southwest Exclusion
+│   ├── Balanced Factorial Cohort (9 Airfields, 3 Carriers, 12 Screening Complexes)
+│   └── Temporal Scope and Boundary Definition (Pre-Pandemic Baseline, Candidate B Demarcation)
+├── 3.3 Sources of Data
+│   ├── TSA FOIA Security Screening Checkpoint Logs (6,434,732 lane-hours, 2.70B pax)
+│   ├── BTS On-Time Flight Performance Form 234 (13,153,654 departures)
+│   ├── BTS Form 41 Schedule T-100 Domestic Segment Capacity (422,096 route-months)
+│   └── BTS DB1B Origin & Destination Ticket Surveys and Airport Reports (22,051,557 coupons)
+├── 3.4 Validity
+│   ├── Internal Validity Threats & Remediation (Connecting Passenger Hub Disconnect, Partition Buffers, Airspace Shocks)
+│   ├── Construct Validity Threats & Remediation (Screening Lane Heterogeneity, Scale-Free CV)
+│   └── Mathematical Formulation of Volatility Targets (σ_TSA,hr, CV_TSA,hr, σ_TSA,7d, σ_Delay, CVI, T_dow)
+└── 3.5 Treatment of Data
+    ├── Sequential Extract Pipeline (FOIA PDFs, Tabular CSVs, BTS Feeds, Longitudinal Audits)
+    ├── Sequential Transform Pipeline (Clock Normalization, Spatial Key Resolution, Structural Zeros, ACRP-40 Convolution)
+    ├── Feature Space Engineering (Values vs. Volatility: 14 Values, 10 Volatilities, 24 Combined)
+    └── Sequential Load Pipeline (Master Warehouses, Analytic Lookup Tensors, Verification Audits)
 ```
 
 ---
