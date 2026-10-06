@@ -148,6 +148,8 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Excised orphaned draft fragments and dead links in Chapter 5 and glossary.|
 |         |            | - Synchronized all 16 manuscript tables across CSV and companion Excel      |
 |         |            |   workbooks (02, 03, 04, 05) via sync_manuscript_tables.py.                 |
+|         |            | - Authored thesis_docs/MANUSCRIPT_AND_DATA_UPDATE_SOP.md establishing       |
+|         |            |   turn-key instructions for updating manuscripts, tables, and spreadsheets. |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); 38/38 tests OK. |
 +---------+------------+----------------------------------------------------------------------------+
 

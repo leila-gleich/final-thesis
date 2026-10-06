@@ -32,6 +32,7 @@ final-thesis/
 │
 ├── thesis_docs/                        <-- Master Thesis Manuscripts, Recommendations & Notes
 │   ├── README.md                       <-- Guide & sitemap to manuscripts, recs & notes
+│   ├── MANUSCRIPT_AND_DATA_UPDATE_SOP.md <-- Step-by-step SOP for updating manuscripts & spreadsheets
 │   ├── manuscripts/                    <-- Production manuscript chapters (.docx & .md) + Figures
 │   │   ├── chp1-intro.md               # Chapter 1: Introduction & Research Problem
 │   │   ├── chp2-litreview.md           # Chapter 2: Literature Review & Heavy-Traffic Physics
@@ -209,6 +210,7 @@ python3 -m unittest discover tests
 * Chapter IV Empirical Results: [chp4-results.md](thesis_docs/manuscripts/chp4-results.md)
 * Chapter V Analysis & Discussion: [chp5-discussion.md](thesis_docs/manuscripts/chp5-discussion.md)
 * Master Terminology & Mathematical Glossary: [glossary.md](thesis_docs/manuscripts/glossary.md)
+* Standard Operating Procedure (Updating Manuscripts & Data): [MANUSCRIPT_AND_DATA_UPDATE_SOP.md](thesis_docs/MANUSCRIPT_AND_DATA_UPDATE_SOP.md)
 * Master Manuscript Tables Registry: [results/manuscript_tables/README.md](results/manuscript_tables/README.md)
 * Comprehensive Master Draft: [Master_Results_and_Discussion_Comprehensive_Draft.md](thesis_docs/manuscripts/archive/Master_Results_and_Discussion_Comprehensive_Draft.md)
 * OTP Factor Weighting & Volatility Module: [OTP_FACTOR_WEIGHTING_AND_VOLATILITY_ANALYSIS.md](otp_volatility_analysis/OTP_FACTOR_WEIGHTING_AND_VOLATILITY_ANALYSIS.md)

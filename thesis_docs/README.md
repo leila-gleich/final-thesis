@@ -14,6 +14,7 @@ Welcome to the `thesis_docs/` directory of the repository. This folder is organi
 ```
 thesis_docs/
 ├── README.md                           <-- Master directory guide (this file)
+├── MANUSCRIPT_AND_DATA_UPDATE_SOP.md   <-- Step-by-Step SOP: Updating Manuscripts, Tables & Spreadsheets
 │
 ├── ssot/                               <-- Master Single Source of Truth (SSOT) Specifications
 │   ├── README.md                       (SSOT directory overview, governance & cross-chapter map)
