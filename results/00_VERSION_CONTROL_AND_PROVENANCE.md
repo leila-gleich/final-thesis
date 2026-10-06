@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.10 (Methodology Architecture Harmonization with Committee Draft)
+RELEASE VERSION: v4.11 (Chapter IV Introduction and Architecture Roadmap Standalone Manuscript)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -176,6 +176,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   draft while preserving queuing theory rigor, volatility targets, 3-model |
 |         |            |   suite, and asymmetric trade-offs.                                        |
 |         |            | - Updated Section 2 outline in thesis_docs/ssot/Chapter_3_SSOT.md.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.11   | 2026-10-06 | Chapter IV Introduction and Architecture Roadmap Standalone Deployment:     |
+|         |            | - Authored thesis_docs/manuscripts/chp4-intro.md establishing the standalone |
+|         |            |   introductory section for Chapter IV: Results.                             |
+|         |            | - Provided dual formats: a structured 4-section roadmap (matching Chapter   |
+|         |            |   III style) and a continuous-flow academic prose paragraph.                |
+|         |            | - Synthesized core empirical findings: throughput volatility targeting,     |
+|         |            |   asymmetric performance trade-offs across 3 candidate models, and the     |
+|         |            |   values versus volatility paradigm (H1, H2).                               |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 

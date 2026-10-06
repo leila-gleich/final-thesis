@@ -28,6 +28,7 @@ thesis_docs/
 │   ├── chp1-intro.md                   (Chapter I: Introduction & Scope)
 │   ├── chp2-litreview.md               (Chapter II: Literature Review)
 │   ├── chp3-methodology.md             (Chapter III: Methodology)
+│   ├── chp4-intro.md                   (Chapter IV: Standalone Introduction & 4-Section Roadmap)
 │   ├── chp4-results.md                 (Chapter IV: Empirical Findings & Results)
 │   ├── chp5-discussion.md              (Chapter V: Analysis & Discussion)
 │   ├── manuscripts-only/               <-- Table-Free Text Manuscripts & Master Full Thesis
