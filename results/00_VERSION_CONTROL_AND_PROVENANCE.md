@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.8 (Excision of 'Physics' & Theoretical Jargon for Qualitative Audience Calibration)
-DATE: October 5, 2026
+RELEASE VERSION: v4.9 (Table-Free Text Manuscripts & Master Full Thesis Compilation in manuscripts-only/)
+DATE: October 6, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -159,6 +159,14 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Re-synchronized all 16 manuscript tables across CSV and Excel workbooks   |
 |         |            |   (02, 03, 04, 05) via sync_manuscript_tables.py.                          |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); clean tests.   |
+| v4.9    | 2026-10-06 | Table-Free Text Manuscripts & Master Full Thesis in manuscripts-only/:      |
+|         |            | - Created thesis_docs/manuscripts/manuscripts-only/ containing individual  |
+|         |            |   chapter markdown files (chp1-intro.md through chp5-discussion.md).       |
+|         |            | - Replaced all embedded markdown tables with APA callout blocks: Table      |
+|         |            |   number, italicized table title, and prominent large-font heading         |
+|         |            |   (## Table X.Y: Title) for clear text-only review and print layout.       |
+|         |            | - Compiled full-thesis.md containing sequential text across all 5 chapters. |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); 100% sync.     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

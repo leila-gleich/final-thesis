@@ -30,6 +30,9 @@ thesis_docs/
 │   ├── chp3-methodology.md             (Chapter III: Methodology)
 │   ├── chp4-results.md                 (Chapter IV: Empirical Findings & Results)
 │   ├── chp5-discussion.md              (Chapter V: Analysis & Discussion)
+│   ├── manuscripts-only/               <-- Table-Free Text Manuscripts & Master Full Thesis
+│   │   ├── chp1-intro.md through chp5-discussion.md
+│   │   └── full-thesis.md              (Master Full Thesis Text Compilation)
 │   ├── glossary.md                     (Operational Terminology & Mathematical Glossary)
 │   ├── Gleich_700B_Proposal.docx       (Graduate Thesis Proposal Document)
 │   ├── Master_References_APA7.docx     (Master APA 7th Edition Reference Suite)
