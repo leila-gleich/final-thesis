@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.27 (Master Table & Figure Recommendations Guide Deployment in figures/)
+RELEASE VERSION: v4.29 (Manuscript Appendix Expansion to 24 Dedicated Lettered Appendices A-X)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -457,6 +457,32 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Formalized V1 Figures 2 & 3 into APA 7 Table 2.1 (Paradigm Taxonomy).     |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); synchronized tables and workbooks.                    |
+| v4.29   | 2026-10-06 | Manuscript Appendix Expansion to 24 Dedicated Lettered Appendices (A-X):   |
+|         |            | - Fully expanded the appendix architecture from 8 bundled appendices into  |
+|         |            |   24 dedicated, lettered appendices (Appendix A through Appendix X),       |
+|         |            |   establishing a 1:1 mapping with every individual topic and section from   |
+|         |            |   the author committee review draft Appendix v1.docx.                      |
+|         |            | - Programmatically extracted and integrated all 281 body paragraphs        |
+|         |            |   directly from Appendix v1.docx (read-only) with 100% textual fidelity,   |
+|         |            |   zero omissions, and converted OMML equations to KaTeX markup.            |
+|         |            | - Embedded explicit 'Note on Thesis Cross-References' in all 24 appendices |
+|         |            |   citing specific thesis chapters and sections referencing each appendix.  |
+|         |            | - Reordered appendices into a coherent operational and academic sequence:  |
+|         |            |   Delimitations (A) -> Limitations (B) -> Diebold-Mariano Derivation (C)   |
+|         |            |   -> Equation Registry (D) -> Data Ingestion & Census (E) -> ETL Pipeline  |
+|         |            |   (F) -> COVID Demarcation (G) -> 4-Tier Filtering (H) -> Top 25 Census    |
+|         |            |   (I) -> Econometric Validation (J) -> Airport Contrasts (K) ->            |
+|         |            |   Seasonality & DOW Dynamics (L) -> Diurnal Turbulence & Collinearity (M)  |
+|         |            |   -> Construct Validity Targets (N) -> Evaluation Metrics (O) -> Feature   |
+|         |            |   Engineering (P) -> Candidate Models (Q) -> Holdout Benchmarks (R) ->     |
+|         |            |   Resilience Mechanics (S) -> Lead-Lag Asynchrony (T) -> Values vs.        |
+|         |            |   Volatility (U) -> Operational Playbook (V) -> Dynamic Lane Staffing (W)  |
+|         |            |   -> Archival Storage & Screenshot Catalog (X).                            |
+|         |            | - Upgraded src/analysis/generate_appendix_md.py using direct docx paragraph|
+|         |            |   extraction and token replacement, eliminating f-string syntax issues.    |
+|         |            | - Formatted all 15 APA 7th edition tables and 2 figures cleanly.           |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); synchronized tables and workbooks (39/39 tests ok).   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
