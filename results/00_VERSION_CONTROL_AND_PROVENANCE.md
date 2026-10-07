@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.21 (Comprehensive Academic Terminology Harmonization, 40-Item CSV Suite & Expanded Defense Guide)
+RELEASE VERSION: v4.23 (Implementation Plans Archive Relocation & Active Recommendations Audit)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -352,6 +352,19 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |     Figure H.2 (Diagrams & Screenshot Layout Catalog).                      |
 |         |            | - Authored automated compiler script src/analysis/generate_appendix_md.py.  |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.23   | 2026-10-06 | Implementation Plans Archive Relocation & Active Recommendations Audit:     |
+|         |            | - Relocated 17 completed recommendation files from implementation_plans/   |
+|         |            |   into thesis_docs/recommendations/archive/completed_implementation_plans/ |
+|         |            |   including REC-01 to REC-14, recs-to-implement.md, Updated_Thesis_Project_|
+|         |            |   and_Structure_Recommendation.md, and Recommendations_Results_and_        |
+|         |            |   Discussion.md.                                                           |
+|         |            | - Updated all cross-references in recommendations/README.md, archive/      |
+|         |            |   README.md, recs-to-implement.md, and thesis_docs/README.md.              |
+|         |            | - Preserved active/pending recommendation files: OTP_FACTOR_WEIGHTING_AND_  |
+|         |            |   TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md (live JOC       |
+|         |            |   operational telemetry) and PROPOSED_EDITS_ELIMINATE_ORIGINAL_FORMULAS.md |
+|         |            |   (elimination of author-invented T(h) and CVI in favor of standard methods)|
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); 38/38 tests ok.|
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

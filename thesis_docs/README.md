@@ -53,18 +53,14 @@ thesis_docs/
 │       └── 04_sample_sufficiency_distribution.png
 │
 ├── recommendations/                    <-- Actionable guides & technical implementation plans
-│   ├── chapter_updates/                <-- Turn-key chapter update guides & defense Q&A
-│   │   ├── 00_README_AND_ROADMAP.md    (Master update execution checklist)
-│   │   ├── 01_CHAPTER_3_METHODOLOGY_GUIDE.md
-│   │   ├── 02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md
-│   │   ├── 03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md
+│   ├── PROPOSED_EDITS_ELIMINATE_ORIGINAL_FORMULAS.md   (Proposal to replace T(h) & CVI with standard literature methods)
+│   ├── implementation_plans/           <-- Active / Pending implementation plans
+│   │   └── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
+│   ├── chapter_updates/                <-- Active presentation & defense guides
 │   │   └── 04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md
-│   └── implementation_plans/           <-- Master implementation blueprints & roadmaps
-│       ├── recs-to-implement.md        (Master Blueprint for Future Execution)
-│       ├── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
-│       ├── EXECUTION_PLAN_NOTES_AND_RECOMMENDATIONS_UPDATES.md
-│       ├── Updated_Thesis_Project_and_Structure_Recommendation.md
-│       └── Recommendations_Results_and_Discussion.md
+│   └── archive/                        <-- Completed guides & implemented recommendation suites
+│       ├── completed_chapter_updates/  (Completed Chapter 3-5 update guides: 00 to 03)
+│       └── completed_implementation_plans/ (100% Implemented technical plans: recs-to-implement.md, REC-01 to REC-14, etc.)
 │
 └── notes/                              <-- Research notes, working memos & audit trail
     ├── methodology_memos/              <-- Methodological justifications & technical specs
