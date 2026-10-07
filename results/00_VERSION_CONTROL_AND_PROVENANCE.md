@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.30 (Two-Pillar Manuscript Exhibits & Results Architecture Reorganization)
+RELEASE VERSION: v4.31 (Chapter II Literature Review Synthesis, Docx Generation & LaTeX Reconciliation)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -502,6 +502,20 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx).                                                       |
 |         |            | - Preserved strict user constraint: 100% zero edits to any appendix files.  |
+|         |            | - Synchronized all 16 manuscript tables and Excel workbooks (39/39 tests ok)|
+| v4.31   | 2026-10-06 | Chapter II Literature Review Synthesis, Word Draft & LaTeX Reconciliation:  |
+|         |            | - Generated thesis_docs/manuscripts/ChpII v3.docx synthesizing content from |
+|         |            |   author drafts Chp2 v1.docx (3,894 w) and ChpII v2.docx (1,764 w) into an  |
+|         |            |   authoritative, publication-grade 4,060-word manuscript.                   |
+|         |            | - Incorporated 100% census of all 101 peer-reviewed literature citations     |
+|         |            |   across both drafts with zero omissions, verified via programmatic audit.  |
+|         |            | - Matched exact Word formatting of ChpII v2.docx: Times New Roman 12 pt,   |
+|         |            |   double spacing (2.0), 1.0-inch margins, 0.5-inch paragraph indents, flush-|
+|         |            |   left bold headings, APA 7 Table 2.1, and native OMML math equation.       |
+|         |            | - Reconciled all LaTeX parsing errors in chp2-litreview.md and              |
+|         |            |   manuscripts-only/chp2-litreview.md (clean KaTeX syntax and display math). |
+|         |            | - Explicit user authorization granted for ChpII v3.docx generation;        |
+|         |            |   preserved ChpII v2.docx and all existing .docx files untouched.           |
 |         |            | - Synchronized all 16 manuscript tables and Excel workbooks (39/39 tests ok)|
 +---------+------------+----------------------------------------------------------------------------+
 
