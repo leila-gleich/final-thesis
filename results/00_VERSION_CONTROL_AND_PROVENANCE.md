@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.15 (Operational Metric Framework Defense Documentation Deployment)
+RELEASE VERSION: v4.16 (Academic Terminology Clarification and Replacement Guide Deployment)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -232,6 +232,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Embedded Table 4.10 certified 2025 holdout benchmarks across the 4 models.|
 |         |            | - Synthesized committee defense talking points, addressing MAPE invalidity, |
 |         |            |   diurnal persistence MASE scaling, and asymmetric trade-offs (H1).        |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.16   | 2026-10-06 | Academic Terminology Clarification and Replacement Guide Deployment:        |
+|         |            | - Authored thesis_docs/notes/terminology_clarifications_and_replacements.md |
+|         |            |   synthesizing terminology clarifications across 4 core areas:              |
+|         |            |   1. Coupled Volatility Index -> Landside-Airside Volatility Interaction    |
+|         |            |   2. Diurnal Dual Turbulence Peaks -> Bimodal Intraday Operational Peaks    |
+|         |            |   3. 1-Step Error Innovation Feedback -> Real-Time Prior-Hour Error Correct |
+|         |            |   4. Zero Feedback Latency -> Requires No Real-Time Checkpoint Data Feeds.  |
+|         |            | - Formulated defense Q&A talking points for committee examination.          |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
