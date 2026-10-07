@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.26 (Manuscript Appendix Overhaul, Clean Table Rendering, Full Text Integration & Cross-Reference Mapping)
+RELEASE VERSION: v4.27 (Master Table & Figure Recommendations Guide Deployment in figures/)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -427,6 +427,17 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Reordered appendices into logical A through H sequence.                  |
 |         |            | - Rewrote src/analysis/generate_appendix_md.py using token substitution    |
 |         |            |   and automated dual deployment.                                           |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); synchronized tables and workbooks (39/39 tests ok).   |
+| v4.27   | 2026-10-06 | Master Table & Figure Recommendations Guide Deployment in figures/:        |
+|         |            | - Authored comprehensive master visual and tabular guide in                |
+|         |            |   figures/TABLE_AND_FIGURE_RECOMMENDATIONS.md mapping all recommended      |
+|         |            |   tables and figures across Chapters 1 through 5.                          |
+|         |            | - Provided theoretical rationales (queuing theory, Kingman's law, H1, H2),  |
+|         |            |   exact narrative insertion points, and source asset paths in figures/,    |
+|         |            |   results/manuscript_tables/, and companion Excel workbooks.               |
+|         |            | - Provided actionable copy-paste prompt options for next-session execution |
+|         |            |   (Options A through D).                                                   |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); synchronized tables and workbooks (39/39 tests ok).   |
 +---------+------------+----------------------------------------------------------------------------+
