@@ -11,7 +11,7 @@ This appendix provides the foundational econometric derivations, data engineerin
 * **Appendix A**: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
 * **Appendix B**: Peer-Reviewed Literature Equation Registry and Mathematical Formulations
 * **Appendix C**: Methodological Foundations, 4-Tier Filtering Pipeline, and Cohort Econometric Validation
-* **Appendix D**: Aviation Data Engineering, Warehouse Architecture, and Data Hygiene Protocols
+* **Appendix D**: Aviation Data Engineering, Warehouse Architecture, and Hygiene Protocols
 * **Appendix E**: Seasonal Volatility Regimes, Operational Taxonomies, and Diurnal Queue Dynamics
 * **Appendix F**: Model Evaluation Benchmarks, Resilience Mechanics, and the Values vs. Volatility Paradigm
 * **Appendix G**: Real-World Operational Decision Playbook and Dynamic Checkpoint Lane Staffing
@@ -20,6 +20,8 @@ This appendix provides the foundational econometric derivations, data engineerin
 ---
 
 # Appendix A: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
+
+> *Note on Thesis Cross-References*: This appendix provides the formal mathematical derivations, asymptotic theory, and degrees-of-freedom audits for the statistical significance tests operationalized throughout the thesis. It is referenced in **Chapter III (Methodology)**, Section *Dataset Partitioning and Validation Protocol* and Section *Apparatus and Materials (Evaluation Metric Definition)*; and in **Chapter IV (Results)**, Section *Model Performance in the Context of the Thesis (Asymmetric Hypothesis Testing)* and Section *Empirical Confirmation of Asymmetric Trade-Offs (Hypothesis 1 Verified)*.
 
 ## A.1 The Methodological Dilemma: Why a Standard $p$-Value from a Paired $t$-Test Fails in Time-Series Forecasting
 
@@ -30,17 +32,17 @@ To answer this question rigorously, one must first clarify the relationship betw
 In standard cross-sectional data analysis, researchers routinely evaluate differences in model error using a standard paired Student's $t$-test on the loss differentials ($d_t = L(e_{1,t}) - L(e_{2,t})$). In the context of commercial aviation time series, however, standard paired tests are statistically invalid because they violate the foundational **independent and identically distributed (i.i.d.)** assumption.
 
 ### The Autocorrelation Problem in Airport Security Operations
-Hourly passenger throughput at Transportation Security Administration (TSA) security checkpoints and its associated volatility ($\sigma_{\\text{TSA}}$ and $CV_{\\text{TSA}}$) are characterized by strong **serial autocorrelation**:
+Hourly passenger throughput at Transportation Security Administration (TSA) security checkpoints and its associated volatility ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$) are characterized by strong **serial autocorrelation**:
 1. **Diurnal Schedule Waves**: Airlines coordinate departure banks in tightly synchronized waves (e.g., morning 06:00–08:30 and afternoon 16:00–18:30). If a predictive model underpredicts passenger arrivals at 07:00, the physical accumulation of queuing passengers and lingering terminal lobby congestion ensures that the model's error at 08:00 is not independent of its error at 07:00.
 2. **Propagating Flight Delays**: During convective weather disruptions or Air Traffic Control (ATC) ground delay programs, departure delays cascade across connecting aircraft turnarounds throughout the operating day. Consequently, forecast errors exhibit persistent temporal dependency over multi-hour operational horizons.
-3. **Multi-Step Forecast Horizons**: When forecasting over an $h$-step horizon ($h > 1$), forecast errors are mathematically guaranteed to follow at least a moving average process of order $h - 1$ ($\\text{MA}(h-1)$), directly violating the independence assumption of classical tests.
+3. **Multi-Step Forecast Horizons**: When forecasting over an $h$-step horizon ($h > 1$), forecast errors are mathematically guaranteed to follow at least a moving average process of order $h - 1$ ($\text{MA}(h-1)$), directly violating the independence assumption of classical tests.
 
 ### The Spurious Statistical Significance Hazard
 When standard paired $t$-tests are applied to positively autocorrelated loss differentials, the standard sample variance formula:
 
-$$\\widehat{\\text{Var}}_{\\text{iid}}(\\bar{d}) = \\frac{s_d^2}{N} = \\frac{\\frac{1}{N-1}\\sum_{t=1}^N (d_t - \\bar{d})^2}{N}$$
+$$\widehat{\text{Var}}_{\text{iid}}(\bar{d}) = \frac{s_d^2}{N} = \frac{\frac{1}{N-1}\sum_{t=1}^N (d_t - \bar{d})^2}{N}$$
 
-**severely underestimates the true variance of the mean loss differential.** Because the standard error in the denominator is artificially deflated, the resulting test statistic ($t = \\bar{d} / \\text{SE}$) is artificially inflated. Consequently, the resulting textbook $p$-value collapses toward zero, producing **spurious statistical significance** (a massive escalation in Type I error rates). A standard paired $t$-test will routinely declare minor, random fluctuations between two models to be "statistically significant at $p < 0.001$" simply because it fails to account for temporal persistence in the underlying flight data.
+**severely underestimates the true variance of the mean loss differential.** Because the standard error in the denominator is artificially deflated, the resulting test statistic ($t = \bar{d} / \text{SE}$) is artificially inflated. Consequently, the resulting textbook $p$-value collapses toward zero, producing **spurious statistical significance** (a massive escalation in Type I error rates). A standard paired $t$-test will routinely declare minor, random fluctuations between two models to be "statistically significant at $p < 0.001$" simply because it fails to account for temporal persistence in the underlying flight data.
 
 Furthermore, airport passenger volumes display pronounced **heteroskedasticity** (variance during midday and evening peaks is orders of magnitude greater than variance during overnight curfew hours) and non-Gaussian error tails. The **Diebold-Mariano ($DM$) test** (Diebold & Mariano, 1995) was explicitly formulated to overcome these exact econometric hurdles.
 
@@ -51,13 +53,13 @@ Furthermore, airport passenger volumes display pronounced **heteroskedasticity**
 The Diebold-Mariano procedure tests the null hypothesis that two competing forecasting models possess equal predictive accuracy over a given out-of-time evaluation sample, while explicitly correcting for serial correlation and heteroskedasticity in the forecast error differentials.
 
 ### Step 1: Formulation of the Loss Differential Series
-Let $y_t$ denote the observed passenger throughput volatility at hour $t$ ($t = 1, 2, \\dots, N$). Let $\\hat{y}_{1,t}$ and $\\hat{y}_{2,t}$ denote the forecasts generated by Model 1 and Model 2, respectively, producing forecast errors:
+Let $y_t$ denote the observed passenger throughput volatility at hour $t$ ($t = 1, 2, \dots, N$). Let $\hat{y}_{1,t}$ and $\hat{y}_{2,t}$ denote the forecasts generated by Model 1 and Model 2, respectively, producing forecast errors:
 
-$$e_{1,t} = y_t - \\hat{y}_{1,t}, \\quad e_{2,t} = y_t - \\hat{y}_{2,t}$$
+$$e_{1,t} = y_t - \hat{y}_{1,t}, \quad e_{2,t} = y_t - \hat{y}_{2,t}$$
 
 The operational loss associated with each forecast error is determined by a specified loss function $g(e_t)$. While classical regression assumes quadratic loss ($g(e_t) = e_t^2$), the Diebold-Mariano framework permits arbitrary, asymmetric, or scale-free loss functions, such as linear absolute loss ($g(e_t) = |e_t|$) or scaled error loss:
 
-$$g(e_t) = \\frac{|e_t|}{\\frac{1}{N-24}\\sum_{i=25}^N |y_i - y_{i-24}|}$$
+$$g(e_t) = \frac{|e_t|}{\frac{1}{N-24}\sum_{i=25}^N |y_i - y_{i-24}|}$$
 
 The **loss differential** at each observation hour $t$ is defined as:
 
@@ -65,55 +67,55 @@ $$d_t = g(e_{1,t}) - g(e_{2,t})$$
 
 The null hypothesis of equal expected predictive accuracy and the alternative hypothesis of divergent predictive accuracy are stated as:
 
-$$H_0: E[d_t] = 0 \\quad \\text{versus} \\quad H_1: E[d_t] \\neq 0$$
+$$H_0: E[d_t] = 0 \quad \text{versus} \quad H_1: E[d_t] \neq 0$$
 
 ### Step 2: The Sample Mean Loss Differential
 The sample mean of the loss differential sequence across the holdout sample of size $N$ is calculated as:
 
-$$\\bar{d} = \\frac{1}{N} \\sum_{t=1}^N d_t$$
+$$\bar{d} = \frac{1}{N} \sum_{t=1}^N d_t$$
 
-Under the null hypothesis, $E[\\bar{d}] = 0$. However, to construct a standardized test statistic, one must accurately estimate the asymptotic variance of $\\bar{d}$ without imposing independence assumptions across $t$.
+Under the null hypothesis, $E[\bar{d}] = 0$. However, to construct a standardized test statistic, one must accurately estimate the asymptotic variance of $\bar{d}$ without imposing independence assumptions across $t$.
 
 ### Step 3: The Long-Run Covariance Estimator (HAC Adjustment)
 Because the loss differential series $\{d_t\}$ is serially correlated up to lag $h-1$, the true variance of the sample mean depends on both the contemporaneous variance and all autocovariances:
 
-$$\\text{Var}(\\bar{d}) = \\frac{1}{N^2} \\sum_{t=1}^N \\sum_{s=1}^N \\text{Cov}(d_t, d_s) = \\frac{1}{N} \\left[ \\gamma_0 + 2 \\sum_{k=1}^{N-1} \\left(1 - \\frac{k}{N}\\right) \\gamma_k \\right]$$
+$$\text{Var}(\bar{d}) = \frac{1}{N^2} \sum_{t=1}^N \sum_{s=1}^N \text{Cov}(d_t, d_s) = \frac{1}{N} \left[ \gamma_0 + 2 \sum_{k=1}^{N-1} \left(1 - \frac{k}{N}\right) \gamma_k \right]$$
 
-where $\\gamma_k = \\text{Cov}(d_t, d_{t-k})$ represents the autocovariance of the loss differential at lag $k$. For an $h$-step-ahead forecast, autocovariances beyond lag $h-1$ are theoretically zero under optimal forecasts. The **Heteroskedasticity and Autocorrelation Consistent (HAC)** long-run variance estimator (equivalent to the spectral density of $d_t$ at frequency zero) is defined as:
+where $\gamma_k = \text{Cov}(d_t, d_{t-k})$ represents the autocovariance of the loss differential at lag $k$. For an $h$-step-ahead forecast, autocovariances beyond lag $h-1$ are theoretically zero under optimal forecasts. The **Heteroskedasticity and Autocorrelation Consistent (HAC)** long-run variance estimator (equivalent to the spectral density of $d_t$ at frequency zero) is defined as:
 
-$$\\hat{V}(\\bar{d}) = \\hat{\\gamma}_0 + 2 \\sum_{k=1}^{h-1} w_k \\hat{\\gamma}_k$$
+$$\hat{V}(\bar{d}) = \hat{\gamma}_0 + 2 \sum_{k=1}^{h-1} w_k \hat{\gamma}_k$$
 
 where:
-* $\\hat{\\gamma}_0 = \\frac{1}{N} \\sum_{t=1}^N (d_t - \\bar{d})^2$ is the sample variance.
-* $\\hat{\\gamma}_k = \\frac{1}{N} \\sum_{t=k+1}^N (d_t - \\bar{d})(d_{t-k} - \\bar{d})$ is the sample autocovariance at lag $k$.
-* $w_k$ is a lag kernel weighting factor. In standard $h$-step forecasting, a uniform rectangular lag window is applied ($w_k = 1$ for $k = 1, \\dots, h-1$), or a Bartlett triangular kernel ($w_k = 1 - \\frac{k}{h}$) to guarantee positive semi-definiteness in finite samples.
+* $\hat{\gamma}_0 = \frac{1}{N} \sum_{t=1}^N (d_t - \bar{d})^2$ is the sample variance.
+* $\hat{\gamma}_k = \frac{1}{N} \sum_{t=k+1}^N (d_t - \bar{d})(d_{t-k} - \bar{d})$ is the sample autocovariance at lag $k$.
+* $w_k$ is a lag kernel weighting factor. In standard $h$-step forecasting, a uniform rectangular lag window is applied ($w_k = 1$ for $k = 1, \dots, h-1$), or a Bartlett triangular kernel ($w_k = 1 - \frac{k}{h}$) to guarantee positive semi-definiteness in finite samples.
 
 The estimated variance of the sample mean is therefore:
 
-$$\\widehat{\\text{Var}}(\\bar{d}) = \\frac{\\hat{V}(\\bar{d})}{N}$$
+$$\widehat{\text{Var}}(\bar{d}) = \frac{\hat{V}(\bar{d})}{N}$$
 
 ### Step 4: The Asymptotic Test Statistic and $p$-Value Derivation
 Applying the Central Limit Theorem for weakly dependent, stationary time series, the standardized Diebold-Mariano test statistic converges asymptotically to a standard normal distribution:
 
-$$DM = \\frac{\\bar{d}}{\\sqrt{\\widehat{\\text{Var}}(\\bar{d})}} = \\frac{\\bar{d}}{\\sqrt{\\frac{1}{N}\\left(\\hat{\\gamma}_0 + 2\\sum_{k=1}^{h-1} w_k \\hat{\\gamma}_k\\right)}} \\xrightarrow{d} \\mathcal{N}(0, 1)$$
+$$DM = \frac{\bar{d}}{\sqrt{\widehat{\text{Var}}(\bar{d})}} = \frac{\bar{d}}{\sqrt{\frac{1}{N}\left(\hat{\gamma}_0 + 2\sum_{k=1}^{h-1} w_k \hat{\gamma}_k\right)}} \xrightarrow{d} \mathcal{N}(0, 1)$$
 
-Under the two-sided alternative hypothesis ($H_1: E[d_t] \\neq 0$), the exact asymptotic $p$-value is calculated directly from the standard normal cumulative distribution function $\\Phi(\\cdot)$:
+Under the two-sided alternative hypothesis ($H_1: E[d_t] \neq 0$), the exact asymptotic $p$-value is calculated directly from the standard normal cumulative distribution function $\Phi(\cdot)$:
 
-$$p = 2 \\left[ 1 - \\Phi(|DM|) \\right]$$
+$$p = 2 \left[ 1 - \Phi(|DM|) \right]$$
 
-*Decision Rule*: If $|DM| > z_{\\alpha/2}$ (e.g., $|DM| > 3.291$ for $\\alpha = 0.001$), the null hypothesis of equal predictive accuracy is rejected. A positive statistic ($DM > 0$) indicates that Model 1 generates significantly higher loss than Model 2 (proving Model 2's empirical superiority), whereas a negative statistic indicates Model 1 superiority.
+*Decision Rule*: If $|DM| > z_{\alpha/2}$ (e.g., $|DM| > 3.291$ for $\alpha = 0.001$), the null hypothesis of equal predictive accuracy is rejected. A positive statistic ($DM > 0$) indicates that Model 1 generates significantly higher loss than Model 2 (proving Model 2's empirical superiority), whereas a negative statistic indicates Model 1 superiority.
 
 ---
 
 ## A.3 Empirical Implementation Across the 2025 Holdout Evaluation Suite
 
-In this thesis research, the candidate predictive modeling suite was tested on the certified **2025 full-year out-of-time holdout dataset** across 12 carrier-exclusive screening complexes within the 9-airport experimental cohort (BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL), representing $N = 72,053$ hourly observations.
+In this thesis research, the candidate predictive modeling suite was tested on the certified **2025 full-year out-of-time holdout dataset** across 12 carrier-exclusive screening complexes within the 9-airport experimental cohort (BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL), representing $N = 72,053$ hourly observations across 3,222 complex-days.
 
 The candidate evaluation suite encompasses three primary modeling paradigms benchmarked against an empirical baseline control:
-1. **Baseline Control**: Diurnal Volatility Naive Persistence Benchmark ($\\widehat{\\text{Vol}}_t = \\text{Vol}_{t-24}$, non-parametric $\\text{MASE} \\equiv 1.000$).
+1. **Baseline Control**: Diurnal Volatility Naive Persistence Benchmark ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$, non-parametric $\text{MASE} \equiv 1.000$).
 2. **Model 1 (Deterministic Flight Schedule Model)**: Deterministic Operational Baseline convolving scheduled airline flight banks across empirical ACRP Report 40 passenger show-up curves ($t+1, t+2, t+3$).
 3. **Model 2 (Supervised Machine Learning Model)**: Automated decision-tree regressor incorporating flight schedule dispersion and 24 BTS OTP operational attributes (delays, cancellations, taxi queues).
-4. **Model 3 (Dynamic Two-Stage Hybrid Model)**: Sequential two-stage model coupling recurring schedule cycles with live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \\hat{y}_{t-1}$) from the checkpoint floor.
+4. **Model 3 (Dynamic Two-Stage Hybrid Model)**: Sequential two-stage model coupling recurring schedule cycles with live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$) from the checkpoint floor.
 
 ### Table A.1
 *Diebold-Mariano Pairwise Statistical Significance Matrix (2025 Holdout Benchmark, $N = 72,053$)*
@@ -125,12 +127,12 @@ The candidate evaluation suite encompasses three primary modeling paradigms benc
 | **Model 3 vs. Model 2** | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Absolute Scaled Loss | **+12.84** | **$p < 0.0001$** | Model 3 error reduction over Model 2 is statistically significant in-sample. |
 | **Model 1 vs. Baseline** | Baseline Control | Model 1 (Deterministic) | Absolute Scaled Loss | **+8.42** | **$p < 0.0001$** | Model 1 schedule convolution significantly outperforms naive diurnal persistence. |
 
-*Note.* $N = 72,053$ hourly observations across 12 carrier-exclusive checkpoint complexes. Positive $DM$ indicates that Model $B$ yields lower forecast loss than Model $A$. Standard errors estimated using Newey-West Bartlett kernel HAC estimator with lag length $h = 1$. All tests reject the null hypothesis of equal predictive accuracy at $\\alpha = 0.0001$.
+*Note.* $N = 72,053$ hourly observations across 12 carrier-exclusive checkpoint complexes. Positive $DM$ indicates that Model $B$ yields lower forecast loss than Model $A$. Standard errors estimated using Newey-West Bartlett kernel HAC estimator with lag length $h = 1$. All tests reject the null hypothesis of equal predictive accuracy at $\alpha = 0.0001$.
 
 ### Sample Size Sufficiency and Degrees of Freedom
 The evaluation sample size ($N = 72,053$) vastly exceeds standard econometric thresholds, satisfying Central Limit Theorem requirements for the asymptotic normality of $DM$:
-* Across the **84-Cell Operational Condition Matrix** ($\\mathcal{G} = \\mathcal{S} \\times \\mathcal{D} \\times \\mathcal{H}$), 70 of 84 testing cells (83.3%) maintain $N_{\\text{test}} \\ge 30$ (median $N_{\\text{test}} = 76$).
-* For the remaining 14 low-sample cells (e.g., overnight curfew hours during holiday off-peak periods, with $18 \\le N_{\\text{test}} \\le 24$), non-parametric **Wilcoxon signed-rank tests** were executed as a secondary robustness check. In all cases, the non-parametric tests confirmed the Diebold-Mariano conclusions at $p < 0.001$, proving that statistical significance is not an artifact of sample size inflation or distributional distortion.
+* Across the **84-Cell Operational Condition Matrix** ($\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H}$), 70 of 84 testing cells (83.3%) maintain $N_{\text{test}} \ge 30$ (median $N_{\text{test}} = 76$).
+* For the remaining 14 low-sample cells (e.g., overnight curfew hours during holiday off-peak periods, with $18 \le N_{\text{test}} \le 24$), non-parametric **Wilcoxon signed-rank tests** were executed as a secondary robustness check. In all cases, the non-parametric tests confirmed the Diebold-Mariano conclusions at $p < 0.001$, proving that statistical significance is not an artifact of sample size inflation or distributional distortion.
 
 ---
 
@@ -143,11 +145,15 @@ A vital distinction for academic committees and airport operational leadership i
 2. **Operational Realities Dictate Asymmetric Trade-Offs ($H_1$)**:  
    On the airport checkpoint floor, Model 3 achieves its statistical superiority by requiring live, uninterrupted 1-step error innovation feedback ($e_{t-1}$) from automated screening sensors. If an Airport Operations Center (AOC) lacks real-time sensor integration or experiences network latency, Model 3 cannot operate.
 3. **The Routine Pareto Choice**:  
-   Model 2 delivers an operational holdout accuracy of $\\text{MASE}_{\\text{routine}} = 0.680\\text{--}0.700$—fully meeting the TSA operational target ($\\text{MASE} < 0.700$)—while relying exclusively on published flight schedules and BTS operational data available hours in advance. Consequently, while Model 3 is statistically superior ($p < 0.0001$), **Model 2 represents the optimal practical strategy for routine, day-to-day checkpoint lane staffing.**
+   Model 2 delivers an operational holdout accuracy of $\text{MASE}_{\text{routine}} = 0.680\text{--}0.700$—fully meeting the TSA operational target ($\text{MASE} < 0.700$)—while relying exclusively on published flight schedules and BTS operational data available hours in advance. Consequently, while Model 3 is statistically superior ($p < 0.0001$), **Model 2 represents the optimal practical strategy for routine, day-to-day checkpoint lane staffing.**
 
 ---
 
 # Appendix B: Peer-Reviewed Equation Registry and Mathematical Formulations
+
+> *Note on Thesis Cross-References*: This appendix establishes the comprehensive mathematical foundations, queuing theorems, and statistical metric definitions utilized throughout the study. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Classical Queuing Theory: First Moment (Volume) vs. Second Moment (Volatility)* and Section *The "Values versus Volatility" Paradigm in Transportation Demand*; in **Chapter III (Methodology)**, Section *Predictive Modeling Frameworks and Baseline Control* and Section *Construct Validity Threats and Operational Formulations*; and in **Chapter V (Discussion)**, Section *Connecting Queuing Principles to Dynamic Lane Staffing: The Staffing Safety Cushion*.
+
+## B.1 Comprehensive Peer-Reviewed Mathematical Formulations & Queuing Registry
 
 Table B.1 compiles the complete inventory of 20 peer-reviewed mathematical formulations, queuing theory equations, and econometric tests operationalized throughout this thesis.
 
@@ -156,32 +162,85 @@ Table B.1 compiles the complete inventory of 20 peer-reviewed mathematical formu
 
 | Equation ID | Operational Domain | Formal Equation Name | Mathematical Formulation (KaTeX) | Parameters and Variables | Peer-Reviewed Citation | Thesis Operational Role |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **EQ-01** | Stochastic Queuing Theory | Kingman's Heavy-Traffic Approximation | $W_q \\approx \\left(\\frac{\\rho}{1-\\rho}\\right) \\left(\\frac{C_a^2 + C_s^2}{2}\\right) \\frac{1}{\\mu}$ | $W_q$: Queue wait; $\\rho$: Utilization; $C_a$: Arrival CV; $C_s$: Service CV; $\\mu$: Service rate | Kingman (1961, 1962) | Theoretical foundation ($H_2$): wait times scale quadratically with arrival volatility ($C_a^2$) as $\\rho \\to 1.0$. |
-| **EQ-02** | Stochastic Queuing Theory | Kingman-Whitt Multi-Server Approximation | $W_q \\approx \\left( \\frac{\\rho^{\\sqrt{2(s+1)}-1}}{s(1-\\rho)} \\right) \\left( \\frac{C_a^2 + C_s^2}{2} \\right) \\frac{1}{\\mu}$ | $s$: Active lanes; $\\rho$: Multi-server traffic intensity; $C_a, C_s$: CVs; $\\mu$: Processing rate | Whitt (1993); Marchal (1976) | Extends queuing principles to multi-lane airport checkpoints with parallel screening lines. |
-| **EQ-03** | Stochastic Queuing Theory | Traffic Intensity Ratio | $\\rho(t) = \\frac{\\lambda(t)}{c(t) \\cdot \\mu}$ | $\\rho(t)$: Intensity at hour $t$; $\\lambda(t)$: Hourly demand; $c(t)$: Open lanes; $\\mu$: Lane rate | Kendall (1953); Erlang (1909) | Checkpoint saturation index: hubs hit $\\rho \\to 1.0$ during peak morning and afternoon departure banks. |
-| **EQ-04** | Passenger Arrival Timing | Lognormal Passenger Show-Up Curve | $\\tau \\sim \\text{Lognormal}(\\mu, \\sigma^2), \\ E[\\tau] \\approx 105 \\text{ min}$ | $\\tau$: Arrival lead time; $\\mu, \\sigma$: Log-scale moments; $E[\\tau]$: Mean lead time (~105 min) | ACRP Report 40 (TRB, 2010) | Empirical passenger arrival distribution convolving scheduled flight departures into checkpoint arrival curves. |
-| **EQ-05** | Passenger Arrival Timing | Gaussian Mixture Boarding Distribution | $\\tau_{\\text{WN}} \\sim w_1 \\mathcal{N}(\\mu_1, \\sigma_1^2) + (1 - w_1) \\mathcal{N}(\\mu_2, \\sigma_2^2)$ | $\\tau_{\\text{WN}}$: Southwest arrival lead time; $w_1$: Boarding position maximizer weight | ACRP Report 40 (TRB, 2010); Pearson (1894) | Proves unassigned seating creates bimodal arrival timing, justifying Southwest exclusion under Meso filtering. |
-| **EQ-06** | Operational Accounting | Local Originating Passenger Demand Identity | $\\text{Demand}_{\\text{orig}, t} = \\sum_{f \\in \\mathcal{F}_t} \\text{Seats}_f \\cdot \\text{LF}_f \\cdot (1 - \\text{ConnRatio})$ | $\\text{Seats}_f$: Aircraft seats; $\\text{LF}_f$: Route load factor; $\\text{ConnRatio}$: Airport transfer ratio | BTS Form 41 / DB1B (2024) | Resolves the Hub Disconnect: subtracts transferring passengers who never enter landside security screening. |
-| **EQ-07** | Passenger Arrival Timing | Discrete Empirical Show-Up Convolution | $\\text{Demand}_{\\text{convolved}, t} = \\sum_{h=1}^{3} w_h \\cdot \\text{Demand}_{\\text{orig}, t+h}$ | $w_1 = 0.52$ ($t+1$), $w_2 = 0.38$ ($t+2$), $w_3 = 0.10$ ($t+3$); $\\sum w_h = 1.0$ | ACRP Report 40; Oppenheim & Schafer (2009) | Operational engine of Model 1 (Deterministic Flight Schedule Model), convolving flight schedules into arrivals. |
-| **EQ-08** | Statistical Volatility | Intraday Absolute Volatility (Dispersion) | $\\sigma_{\\text{TSA, hr}}(d) = \\sqrt{\\frac{1}{23} \\sum_{h=0}^{23} (y_{d, h} - \\bar{y}_d)^2}$ | $\\sigma_{\\text{TSA, hr}}$: Diurnal standard deviation (pax/hr); $y_{d,h}$: Hourly throughput | Pearson (1894) | Primary dependent target 1: captures absolute within-day demand dispersion and departure bank surge heights. |
-| **EQ-09** | Statistical Volatility | Intraday Relative Volatility (CV) | $CV_{\\text{TSA, hr}}(d) = \\frac{\\sigma_{\\text{TSA, hr}}(d)}{\\bar{y}_d}$ | $CV_{\\text{TSA, hr}}$: Dimensionless ratio of standard deviation to daily mean volume | Pearson (1895) | Primary dependent target 2: normalizes facility scale to quantify pure arrival burstiness and queue spikiness. |
-| **EQ-10** | Statistical Volatility | Multi-Day Rolling Volatility | $\\sigma_{\\text{TSA, 7d}}(d) = \\sqrt{\\frac{1}{6} \\sum_{k=0}^{6} (Y_{d-k} - \\bar{Y}_{7d})^2}$ | $\\sigma_{\\text{TSA, 7d}}$: Rolling 7-day volume standard deviation (pax/day); $Y_d$: Daily volume | Box, Jenkins, et al. (2015) | Primary dependent target 3: captures medium-term network turbulence caused by winter storms and delay cascades. |
-| **EQ-11** | Statistical Volatility | Daily Flight Departure Delay Dispersion | $\\sigma_{\\text{Delay}, d} = \\sqrt{\\frac{1}{N_d - 1}\\sum_{i=1}^{N_d} (\\text{DepDelay}_{d,i} - \\bar{\\text{DepDelay}}_d)^2}$ | $\\sigma_{\\text{Delay}, d}$: Standard deviation of flight departure delays (minutes) | BTS Technical Directives (2024) | Airside volatility metric: strongly coupled with checkpoint volatility ($r = +0.4373, p < 0.05$; raw delays $r = -0.062$). |
-| **EQ-12** | Forecasting Error Metric | Root Mean Squared Error (RMSE) | $\\text{RMSE} = \\sqrt{\\frac{1}{N}\\sum_{t=1}^N (y_t - \\hat{y}_t)^2}$ | $y_t$: Observed volatility; $\\hat{y}_t$: Forecasted volatility; $N$: Sample hours | Standard Quadratic Loss Metric | Governing metric for Robustness: Model 3 achieves lowest RMSE (222.1 pax/hr) on the 2025 holdout dataset. |
-| **EQ-13** | Forecasting Error Metric | Mean Absolute Error (MAE) | $\\text{MAE} = \\frac{1}{N} \\sum_{t=1}^N |y_t - \\hat{y}_t|$ | $y_t$: Observed volatility; $\\hat{y}_t$: Predicted volatility (pax/hr) | Standard Linear Loss Metric | Captures typical magnitude of forecast errors without quadratic penalty; Model 3 achieves 142.8 pax/hr. |
-| **EQ-14** | Forecasting Error Metric | Mean Forecast Bias | $\\text{Bias} = \\frac{1}{N} \\sum_{t=1}^N (\\hat{y}_t - y_t)$ | Positive: Over-prediction; Negative: Systematic under-prediction | Standard Bias Metric | Evaluates systematic under-prediction: Model 1 displays -42.1 pax/hr; Model 3 maintains -8.5 pax/hr. |
-| **EQ-15** | Forecasting Error Metric | Mean Absolute Scaled Error (MASE) | $\\text{MASE} = \\frac{\\frac{1}{N}\\sum_{t=1}^N |y_t - \\hat{y}_t|}{\\frac{1}{N-24}\\sum_{t=25}^N |y_t - y_{t-24}|}$ | Numerator: Model MAE; Denominator: Diurnal 24-hr persistence MAE | Hyndman & Koehler (2006) | Primary benchmark metric across regimes: Baseline Control = 1.000; Model 2 = 0.779; Model 3 = 0.662. |
-| **EQ-16** | Significance Testing | Diebold-Mariano Test Statistic | $DM = \\frac{\\bar{d}}{\\sqrt{\\hat{V}(\\bar{d}) / N}} \\sim \\mathcal{N}(0, 1)$ | $\\bar{d}$: Mean loss differential; $\\hat{V}(\\bar{d})$: HAC long-run variance of loss differential | Diebold & Mariano (1995) | Formally proves Model 2 ($DM = 42.15$) and Model 3 ($DM = 48.72$) gains over Model 1 are genuine ($p < 0.0001$). |
-| **EQ-17** | Structural Stability | Chow Test for Regression Breakpoints | $F = \\frac{(RSS_C - (RSS_1 + RSS_2)) / k}{(RSS_1 + RSS_2) / (N_1 + N_2 - 2k)} \\sim F$ | $RSS$: Residual sums of squares; $k$: Regressors; $N_1, N_2$: Subsample sizes | Chow (1960) | Statistically justifies Candidate B demarcation (May 1, 2022 post-mask mandate; stability confirmed at $p \\ge 0.15$). |
-| **EQ-18** | Structural Stability | CUSUM Test for Parameter Constancy | $W_t = \\sum_{r=k+1}^t \\frac{w_r}{\\hat{\\sigma}_w}$ | $W_t$: Standardized cumulative recursive residuals; $\\hat{\\sigma}_w$: Standard error | Brown, Durbin, & Evans (1975) | Confirms cumulative residuals stay within 95% confidence bounds from May 2022 to Dec 2025. |
-| **EQ-19** | Statistical Volatility | Peak-to-Average Ratio (PAR) | $\\text{PAR}_d = \\frac{\\max_{h \\in [0,23]} y_{d,h}}{\\frac{1}{24}\\sum_{h=0}^{23} y_{d,h}}$ | $\\text{PAR}_d$: Ratio of daily peak hourly volume to average hourly volume | Standard Crest Factor Metric | Quantifies surge concentration into acute departure bank peaks across diurnal screening cycles. |
-| **EQ-20** | Checkpoint Staffing | Volatility-Buffered Lane Dimensioning Rule | $c(t) = \\left\\lceil \\frac{\\hat{\\mu}_t + z_q \\cdot \\hat{\\sigma}_{\\text{TSA}, t}}{\\mu_{\\text{lane}}} \\right\\rceil$ | $c(t)$: Open lanes; $\\hat{\\mu}_t$: Mean volume; $\\hat{\\sigma}$: Volatility; $z_q$: Quantile buffer; $\\mu_{\\text{lane}}$: Capacity | Erlang (1917); Kolesar & Green (1998) | Translates volatility forecasts into dynamic lane staffing buffers, preventing queue collapse under Kingman's formula. |
+| **EQ-01** | Stochastic Queuing & Congestion Theory | Kingman's Heavy-Traffic Queuing Approximation (Single-Server) | $W_q \approx \left(\frac{\rho}{1-\rho}\right) \left(\frac{C_a^2 + C_s^2}{2}\right) \frac{1}{\mu}$ | W_q = Mean waiting time in queue; rho = Server utilization (traffic intensity); C_a = Coefficient of variation of inter-arrival times; C_s = Coefficient of variation of service times; mu = Mean service rate. | Kingman, J. F. C. (1961). The single server queue in heavy traffic. Mathematical Proceedings of the Cambridge Philosophical Society, 57(4), 902–904; Kingman, J. F. C. (1962). On queues in heavy traffic. Journal of the Royal Statistical Society: Series B, 24(2), 383–392. | Establishes the fundamental theoretical queuing foundation of the thesis (H2): checkpoint queues scale quadratically with arrival volatility (C_a^2) as checkpoint utilization approaches capacity (rho -> 1.0), proving why predicting throughput volatility is operationally superior to predicting raw mean volume. |
+| **EQ-02** | Stochastic Queuing & Congestion Theory | Kingman-Whitt Multi-Server Heavy-Traffic Approximation (G/G/s Queue) | $W_q \approx \left( \frac{\rho^{\sqrt{2(s+1)}-1}}{s(1-\rho)} \right) \left( \frac{C_a^2 + C_s^2}{2} \right) \frac{1}{\mu}$ | W_q = Expected queue wait time; s = Number of active parallel screening lanes; rho = Multi-server utilization (lambda / (s*mu)); C_a = Arrival CV; C_s = Service time CV; mu = Lane processing rate. | Whitt, W. (1993). Approximations for the GI/G/m queue. Production and Operations Management, 2(2), 114–161; Marchal, W. G. (1976). An approximate formula for waiting time in GI/G/1. Operations Research, 24(3), 473–474. | Extends Kingman queuing principles to multi-lane airport security screening checkpoints (s parallel lanes), demonstrating buffer depletion under high lane utilization across Top 25 commercial airfields. |
+| **EQ-03** | Stochastic Queuing & Congestion Theory | Traffic Intensity / Checkpoint Utilization Ratio | $\rho(t) = \frac{\lambda(t)}{c(t) \cdot \mu}$ | rho(t) = Instantaneous traffic intensity at hour t; lambda(t) = Hourly passenger arrival demand rate; c(t) = Number of open screening lanes at hour t; mu = Nominal screening throughput rate per lane (pax/lane-hr). | Kendall, D. G. (1953). Stochastic processes occurring in the theory of queues and their analysis by the method of the imbedded Markov chain. The Annals of Mathematical Statistics, 24(3), 338–354; Erlang, A. K. (1909). | Operationalized in Chapter III Macro Filtering (§3.4): small regional airfields operate at rho << 0.30 (preventing queue formation), whereas Top 25 hubs routinely hit rho -> 1.0 during bank surges (05:00–08:30 and 16:00–18:30). |
+| **EQ-04** | Passenger Lead-Time & Arrival Curves | Lognormal Passenger Show-Up Lead-Time Distribution | $\tau \sim \text{Lognormal}(\mu, \sigma^2), \quad E[\tau] \approx 105 \text{ min}$ | tau = Lead time (minutes before scheduled departure) that ticketed passengers present at security; mu = Log-scale mean; sigma = Log-scale dispersion; E[tau] = Expected show-up lead time (~105 minutes for domestic legacy flights). | Airport Cooperative Research Program (ACRP). (2010). ACRP Report 40: Airport Curbside and Terminal Area Planning. Transportation Research Board, National Academies of Sciences, Engineering, and Medicine. | Governs the empirical lead-lag passenger arrival distribution convolving scheduled flight banks into landside security arrival curves across American Airlines, Delta Air Lines, and United Airlines. |
+| **EQ-05** | Passenger Lead-Time & Arrival Curves | Gaussian Mixture Bimodal Boarding Arrival Distribution | $\tau_{\text{WN}} \sim w_1 \mathcal{N}(\mu_1, \sigma_1^2) + (1 - w_1) \mathcal{N}(\mu_2, \sigma_2^2)$ | tau_WN = Southwest passenger arrival lead time; w1 = Weight of boarding position maximizers (~135 min lead time); (1-w1) = Weight of carry-on business travelers (~65 min lead time). | ACRP Report 40 (TRB, 2010); Pearson, K. (1894). Contributions to the mathematical theory of evolution. Philosophical Transactions of the Royal Society of London, 185, 71–110. | Empirically demonstrates that unassigned boarding produces bimodal arrival distributions, justifying Southwest Airlines exclusion under Meso Filtering to prevent passenger show-up heterogeneity. |
+| **EQ-06** | Operational Accounting & Filtering | Local Originating Passenger Demand Accounting Identity | $\text{Demand}_{\text{orig}, t} = \sum_{f \in \mathcal{F}_t} \text{Seats}_f \cdot \text{LoadFactor}_f \cdot (1 - \text{ConnectingRatio}_{\text{airport}})$ | Demand_orig,t = True originating passenger demand entering landside screening at hour t; Seats_f = Aircraft seat capacity for flight f; LoadFactor_f = Route-level passenger load factor; ConnectingRatio = Quarterly airport connecting percentage from DB1B. | Bureau of Transportation Statistics (BTS). (2024). Form 41 Schedule T-100 Segment Data and DB1B Airline Origin and Destination Survey. U.S. Department of Transportation. | Resolves the Hub Disconnect: subtracts transferring passengers who never enter landside security queues, increasing explained schedule-to-checkpoint variance from 20.9% to 44.9% across the Top 25 airfields. |
+| **EQ-07** | Passenger Lead-Time & Arrival Curves | Discrete Empirical Lead-Time Convolution (Finite Impulse Response) | $\text{Demand}_{\text{convolved}, t} = \sum_{h=1}^{3} w_h \cdot \left[ \sum_{f \in \mathcal{F}_{t+h}} \text{Seats}_f \cdot \text{LoadFactor}_f \cdot (1 - \text{ConnectingRatio}) \right]$ | w_h = Empirical ACRP arrival weights: w_1 (t+1 hr lead) = 0.52, w_2 (t+2 hr lead) = 0.38, w_3 (t+3 hr lead) = 0.10, where sum(w_h) = 1.0; F_{t+h} = Set of scheduled departures at hours t+1, t+2, t+3. | ACRP Report 40 (TRB, 2010); Oppenheim, A. V., & Schafer, R. W. (2009). Discrete-Time Signal Processing (3rd ed.). Prentice Hall. | The physical operational engine of Model 1 (Deterministic Flight Schedule Model), convolving scheduled departure banks into landside arrival hours to forecast baseline passenger demand. |
+| **EQ-08** | Statistical Moments & Volatility Targets | Intraday Diurnal Absolute Volume Volatility (Dispersion) | $\sigma_{\text{TSA, hr}}(d) = \sqrt{\frac{1}{23} \sum_{h=0}^{23} (y_{d, h} - \bar{y}_d)^2}$ | sigma_TSA,hr(d) = Diurnal standard deviation of hourly passenger screening throughput on day d (pax/hr); y_{d,h} = Hourly TSA throughput at hour h; y_bar_d = Daily mean hourly throughput. | Pearson, K. (1894). Contributions to the mathematical theory of evolution. Philosophical Transactions of the Royal Society of London, 185, 71–110. | Primary dependent modeling target 1: captures within-day absolute demand dispersion across the 24 hours of each day (in pax/hr), isolating bank surge amplitudes. |
+| **EQ-09** | Statistical Moments & Volatility Targets | Intraday Scale-Free Relative Arrival Volatility (Coefficient of Variation) | $CV_{\text{TSA, hr}}(d) = \frac{\sigma_{\text{TSA, hr}}(d)}{\bar{y}_d} = \frac{\sqrt{\frac{1}{23}\sum_{h=0}^{23} (y_{d,h} - \bar{y}_d)^2}}{\frac{1}{24}\sum_{h=0}^{23} y_{d,h}}$ | CV_TSA,hr = Dimensionless ratio of hourly standard deviation to daily mean throughput. | Pearson, K. (1895). Notes on regression and inheritance in the case of two parents. Proceedings of the Royal Society of London, 58, 240–242. | Primary dependent modeling target 2: removes facility baseline scale to quantify pure arrival burstiness and queue surge spikiness across different checkpoint geometries. |
+| **EQ-10** | Statistical Moments & Volatility Targets | Multi-Day Temporal Rolling Volatility | $\sigma_{\text{TSA, 7d}}(d) = \sqrt{\frac{1}{6} \sum_{k=0}^{6} (Y_{d-k} - \bar{Y}_{7d})^2}$ | sigma_TSA,7d(d) = Rolling 7-day standard deviation of daily passenger volume (pax/day); Y_{d-k} = Total daily throughput on day d-k; Y_bar_7d = 7-day rolling mean daily throughput. | Box, G. E., Jenkins, G. M., Reinsel, G. C., & Ljung, G. M. (2015). Time Series Analysis: Forecasting and Control (5th ed.). John Wiley & Sons. | Primary dependent modeling target 3: captures medium-term multi-day network turbulence caused by severe winter storm systems, convective ground delay programs, and cancellation cascades. |
+| **EQ-11** | Statistical Moments & Volatility Targets | Daily Flight Departure Delay Dispersion | $\sigma_{\text{Delay}, d} = \sqrt{\frac{1}{N_d - 1}\sum_{i=1}^{N_d} (\text{DepDelay}_{d,i} - \bar{\text{DepDelay}}_d)^2}$ | sigma_Delay,d = Sample standard deviation of flight departure delays across all uncancelled domestic departures on day d (minutes); DepDelay_i = Actual minus scheduled departure time for flight i; N_d = Total domestic departures. | Standard sample variance; Bureau of Transportation Statistics (BTS). (2024). Airline On-Time Performance Data Technical Reporting Directives. | Primary airside explanatory volatility metric: exhibits strong operational coupling with landside checkpoint arrival volatility (r = +0.4373, p < 0.05), while raw delay minutes show zero correlation (r = -0.062). |
+| **EQ-12** | Time-Series Forecasting & Error Metrics | Root Mean Squared Error (RMSE) | $\text{RMSE} = \sqrt{\frac{1}{N}\sum_{t=1}^N (y_t - \hat{y}_t)^2}$ | RMSE = Quadratic loss forecast error (pax/hr); y_t = Actual observed volatility; y_hat_t = Model-predicted volatility; N = Sample evaluation hours. | Standard quadratic loss metric in statistical estimation and econometric forecasting. | Governing absolute error metric for Dimension 1 (Robustness): Model 3 achieves lowest RMSE (222.1 pax/hr) on the 2025 holdout dataset (-91.3 pax/hr vs Model 1). |
+| **EQ-13** | Time-Series Forecasting & Error Metrics | Mean Absolute Error (MAE) | $\text{MAE} = \frac{1}{N} \sum_{t=1}^N |y_t - \hat{y}_t|$ | MAE = Linear loss forecast error (pax/hr); absolute difference between observed and predicted values. | Standard linear loss metric in time-series forecasting and regression. | Measures typical magnitude of point forecast errors without quadratic penalty for outliers; Model 3 achieves 142.8 pax/hr across dedicated screening complexes. |
+| **EQ-14** | Time-Series Forecasting & Error Metrics | Mean Forecast Bias (Directional Systematic Error) | $\text{Bias} = \frac{1}{N} \sum_{t=1}^N (\hat{y}_t - y_t)$ | Bias = Mean directional error (pax/hr); negative values indicate systematic under-prediction; positive values indicate over-prediction. | Standard forecast bias metric in operations research and inventory management. | Evaluates systematic under-prediction during bank surges: Model 1 displays -42.1 pax/hr bias; Model 2 exhibits -18.4 pax/hr; Model 3 maintains near-zero bias (-8.5 pax/hr). |
+| **EQ-15** | Time-Series Forecasting & Error Metrics | Mean Absolute Scaled Error (MASE) | $\text{MASE} = \frac{\frac{1}{N}\sum_{t=1}^N |y_t - \hat{y}_t|}{\frac{1}{N-24}\sum_{t=25}^N |y_t - y_{t-24}|}$ | MASE = Scale-free relative forecast accuracy metric; numerator is candidate model MAE; denominator is in-sample mean absolute error of 24-hour diurnal naive persistence control. | Hyndman, R. J., & Koehler, A. B. (2006). Another look at measures of forecast accuracy. International Journal of Forecasting, 22(4), 679–688. | Primary scale-free benchmark metric across all models and regimes: Baseline Control is calibrated at MASE = 1.000; Model 2 achieves MASE = 0.779; Model 3 achieves champion MASE = 0.662. |
+| **EQ-16** | Hypothesis & Significance Testing | Diebold-Mariano Test Statistic for Equal Predictive Accuracy | $DM = \frac{\bar{d}}{\sqrt{\hat{V}(\bar{d}) / N}} \sim \mathcal{N}(0, 1)$ | d_t = e_{1,t}^2 - e_{2,t}^2 (Loss differential at time t); d_bar = Sample mean loss differential; Var_hat(d_bar) = Asymptotic long-run variance of loss differential. | Diebold, F. X., & Mariano, R. S. (1995). Comparing predictive accuracy. Journal of Business & Economic Statistics, 13(3), 253–263. | Formally proves that Model 2 (DM = 42.15, p < 0.0001) and Model 3 (DM = 48.72, p < 0.0001) error reductions over Model 1 are genuine statistical improvements rather than random chance. |
+| **EQ-17** | Hypothesis & Significance Testing | Chow Test Statistic for Structural Breaks in Linear Regressions | $F = \frac{(RSS_C - (RSS_1 + RSS_2)) / k}{(RSS_1 + RSS_2) / (N_1 + N_2 - 2k)} \sim F(k, N_1 + N_2 - 2k)$ | RSS_C = Residual sum of squares of pooled model; RSS_1, RSS_2 = Residual sums of squares of pre- and post-break sub-periods; k = Number of parameters; N_1, N_2 = Sample sizes. | Chow, G. C. (1960). Tests of equality between sets of coefficients in two linear regressions. Econometrica, 28(3), 591–605. | Statistically justified the Candidate B temporal demarcation point (May 1, 2022 post-mask mandate): Chow test confirms structural stability (p >= 0.15) for the post-mandate modern operational regime. |
+| **EQ-18** | Hypothesis & Significance Testing | CUSUM Test for Structural Parameter Stability | $W_t = \sum_{r=k+1}^t \frac{w_r}{\hat{\sigma}_w}$ | W_t = Cumulative sum of standardized recursive residuals w_r; sigma_hat_w = Sample standard deviation of recursive residuals; k = Number of regression regressors. | Brown, R. L., Durbin, J., & Evans, J. M. (1975). Techniques for testing the constancy of regression relationships over time. Journal of the Royal Statistical Society: Series B, 37(2), 149–163. | Demonstrates that cumulative recursive residuals stay strictly within the 95% confidence bands from May 2022 through Dec 2025, validating model training data integrity. |
+| **EQ-19** | Statistical Moments & Volatility Targets | Peak-to-Average Ratio (PAR / Crest Factor) | $\text{PAR}_d = \frac{\max_{h \in [0,23]} y_{d,h}}{\frac{1}{24}\sum_{h=0}^{23} y_{d,h}}$ | PAR_d = Ratio of maximum hourly throughput on day d to that day's average hourly volume; measures acute demand concentration into a single peak hour. | Standard engineering and operational metrics (Crest Factor / Peak-to-Average Ratio); Oppenheim & Schafer (2009). | Standard literature replacement for S_TSA: identifies days where checkpoint queues experience extreme surge concentration into an acute morning or evening rush hour. |
+| **EQ-20** | Operational Dimensioning & Staffing | Volatility-Buffered Safety Capacity Lane Dimensioning Rule | $c(t) = \left\lceil \frac{\hat{\mu}_t + z_q \cdot \hat{\sigma}_{\text{TSA}, t}}{\mu_{\text{lane}}} \right\rceil$ | c(t) = Recommended integer number of open screening lanes at hour t; mu_hat_t = Expected hourly passenger arrivals; sigma_hat_t = Forecasted arrival volatility; z_q = Normal service quantile (e.g., 1.645 for 95% service level); mu_lane = Lane throughput capacity (pax/lane-hr). | Erlang, A. K. (1917); Kolesar, P., & Green, L. (1998). Insights on capacity planning using a queuing model. Management Science; Whitt, W. (1992). Understanding the efficiency of multi-server service systems. Management Science, 38(5), 708–723. | Translates volatility forecasts into actionable security checkpoint lane dimensioning in Chapter V (§5.2), proving that buffering for volatility (sigma) prevents heavy-traffic queue collapse under Kingman's formula. |
 
 *Note.* Adapted from `results/manuscript_tables/appendix_standard_literature_equations.csv`. Statistical notation conforms to APA Style (7th ed.).
 
 ---
 
+## B.2 Detailed Derivations of Primary Volatility Targets and Operational Indices
+
+To establish rigorous construct validity, the thesis explicitly departs from traditional static volume modeling and formulates mathematical representations for throughput volatility and operational turbulence:
+
+### 1. Intraday Diurnal Absolute Volatility ($\sigma_{\text{TSA, hr}}$)
+Measures the absolute dispersion of hourly screening counts across the 24 hours of calendar day $d$ (in passengers per hour dispersion):
+
+$$\sigma_{\text{TSA, hr}}(d) = \sqrt{\frac{1}{23} \sum_{h=0}^{23} (y_{d, h} - \bar{y}_d)^2}$$
+
+where $y_{d, h}$ represents hourly screened passengers and $\bar{y}_d = \frac{1}{24}\sum_{h=0}^{23} y_{d,h}$ is the daily mean hourly throughput. This target reflects the absolute peak-to-trough amplitude of passenger arrival waves.
+
+### 2. Intraday Scale-Free Relative Volatility ($CV_{\text{TSA, hr}}$)
+Normalizes intraday dispersion by average daily throughput:
+
+$$CV_{\text{TSA, hr}}(d) = \frac{\sigma_{\text{TSA, hr}}(d)}{\bar{y}_d} = \frac{\sqrt{\frac{1}{23} \sum_{h=0}^{23} (y_{d, h} - \bar{y}_d)^2}}{\frac{1}{24} \sum_{h=0}^{23} y_{d, h}}$$
+
+By removing baseline airport scale, this scale-free metric measures arrival burstiness and queue surge spikiness independent of facility size, enabling equitable comparisons between medium hubs and mega-connecting facilities.
+
+### 3. Multi-Day Temporal Rolling Volatility ($\sigma_{\text{TSA, 7d}}$)
+Measures the 7-day rolling standard deviation of daily passenger volume (in passengers per day):
+
+$$\sigma_{\text{TSA, 7d}}(d) = \sqrt{\frac{1}{6} \sum_{k=0}^6 (Y_{d-k} - \bar{Y}_{7d})^2}$$
+
+where $Y_d$ is total daily passenger volume and $\bar{Y}_{7d} = \frac{1}{7}\sum_{k=0}^6 Y_{d-k}$. This target captures medium-term multi-day passenger flow turbulence induced by convective storms, winter blizzards, and cascading cancellation shocks across the National Airspace System.
+
+### 4. Daily Flight Departure Delay Dispersion ($\sigma_{\text{Delay}, d}$)
+Measures the sample standard deviation of departure delays across uncancelled domestic flights on day $d$:
+
+$$\sigma_{\text{Delay}, d} = \sqrt{\frac{1}{N_d - 1}\sum_{i=1}^{N_d} (\text{DepDelay}_{d,i} - \overline{\text{DepDelay}}_d)^2}$$
+
+where $N_d$ is the number of uncancelled departures on day $d$.
+
+### 5. The Coupled Volatility Index ($CVI_d$)
+Quantifies the joint interaction between landside arrival variation and airside delay dispersion:
+
+$$CVI_d = CV_{\text{TSA}, d} \times \sigma_{\text{Delay}, d}$$
+
+Systemic queue breakdown is driven by the coupled volatility mismatch between landside passenger arrivals and airside flight departures.
+
+### 6. Diurnal Operational Turbulence Shock Index ($T_{dow}(h)$)
+For each hour $h \in [0, 23]$ conditioned on day of week ($dow$):
+
+$$T_{dow}(h) = \max\left( \frac{\sigma_{\text{TSA}, dow}(h)}{\max_k \sigma_{\text{TSA}, dow}(k)}, \frac{\sigma_{\text{intra}, dow}(h) + \sigma_{\text{inter}, dow}(h) \cdot \mathbb{I}(F_{dow}(h) \ge 20)}{\max_k (\sigma_{\text{intra}, dow}(k) + \sigma_{\text{inter}, dow}(k) \cdot \mathbb{I}(F_{dow}(h) \ge 20))} \right)$$
+
+Applying 1D K-Means clustering ($k = 3$) establishes three operational diurnal regimes:
+* `1_OFF_PEAK` ($T < 0.35$): Overnight curfew valley characterized by minimal activity.
+* `2_MID_PEAK` ($0.35 \le T < 0.75$): Midday steady flow with balanced throughput.
+* `3_PEAK` ($T \ge 0.75$): Queuing turbulence driven by acute arrival surges or delay cascades.
+
+---
+
 # Appendix C: Methodological Foundations, 4-Tier Filtering Pipeline, and Cohort Econometric Validation
+
+> *Note on Thesis Cross-References*: This appendix details the sampling strategy, 4-tier filtering rationale, threat remediation protocols, and econometric validation of single-carrier checkpoint isolation. It is referenced in **Chapter III (Methodology)**, Section *Sample (Macro Categorization & Micro-Level Refinement)*, Section *Four-Tiered Purposive Filtering Pipeline*, and Section *Internal Validity Threats and Remediation Protocols*; and in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection (Four-Phase Filtering Pipeline & Pipeline Results)*, Section *Key Airport Selection Contrasts*, Section *Econometric Validation of Carrier Checkpoint Isolation*, and Section *Local Seasonal and Day-of-Week Differences Across the Nine Selected Airports*.
 
 ## C.1 Methodological Assumptions and Threat Remediation Protocols
 
@@ -190,7 +249,7 @@ To ensure rigorous internal and external construct validity across all downstrea
 ### Table C.1
 *Methodological Assumptions and Failure Mode Prevention Matrix*
 
-r| level | key_assumption | mathematical_operational_justification | failure_mode_prevented |
+| Analysis Level | Key Methodological Assumption | Mathematical & Operational Justification | Critical Failure Mode Prevented |
 | :--- | :--- | :--- | :--- |
 | Terminal Flow | Non-traveler exits are negligible | Gate passes / aborted boardings are << 1% of peak bank volume | Over-parameterized noise modeling; false uncoupling |
 | Terminal Flow | Connecting passengers bypass security | Sterile area transfers never enter landside security screening | Throughput paradoxes (e.g., CLT 76% connecting traffic) |
@@ -218,40 +277,47 @@ Figure C.1
 
 *Note.* Diagrammatic layout of the 14-point threat remediation architecture establishing boundary controls from flight dispatch through checkpoint lanes.
 
+### Specific Validity Threats and Operational Formulations
+1. **Internal Validity Threats and Remediation Protocols**:  
+   A primary threat to internal model validity is the presence of connecting passengers who remain airside and do not pass through a public checkpoint in load factor data. Including them in checkpoint demand estimates inflates predicted originating demand (the "Hub Disconnect"). To reduce this bias, origin-and-destination survey data (BTS DB1B) and airport-specific O&D ratios are used to estimate and remove connecting traffic from passenger flow calculations, isolating true originating landside checkpoint demand.
+2. **Construct Validity Threats and Operational Formulations**:  
+   Construct validity is affected by checkpoint heterogeneity, as raw lane counts obtained from TSA throughput data combine different screening modes, such as TSA PreCheck, with standard screening lanes, each exhibiting disparate processing rates ($\approx 250\text{--}300$ pax/lane-hr for PreCheck vs. $\approx 150\text{--}180$ pax/lane-hr for standard). To resolve this heterogeneity threat, the methodology constructs scale-free relative volatility metrics ($CV_{\text{TSA}}$) and standardized lane measures rather than unadjusted raw totals.
+
 ---
 
 ## C.2 Four-Tier Purposive Filtering Pipeline Architecture and Rationale
 
-The selection of the final 9-airport experimental cohort followed a systematic 4-tier filtering pipeline designed to eliminate exogenous noise, cross-carrier schedule collinearity, and unassigned-seating behavioral distortion:
+To systematically evaluate forecasting performance across deterministic baselines, probabilistic architectures, and hybrid queuing models, a multi-tiered, purposive sampling framework was employed to select nine target airfields (BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, PHL). Candidate airports were filtered according to four sequential operational criteria:
 
 ### Phase 1: Macro Filter (Heavy-Traffic Scale and Checkpoint Congestion)
-* **Criteria**: Restrict the national candidate universe of 450+ commercial airports to the Top 25 airfields ranked by domestic passenger enplanements, capturing 67.2% of nationwide domestic flight movements.
-* **Methodological Justification**: Under Kingman's queuing theorem, passenger waiting times are non-linear and scale sharply only as checkpoint utilization approaches capacity ($\\rho_t \\to 1.0$). At small regional airfields, traffic intensity is low ($\\rho_t \\ll 0.3$), preventing queue formation and causing passenger throughput to passively mirror unconstrained arrivals. In contrast, Top 25 hub airfields reach saturation ($\\rho_t \\to 1.0$) during morning (06:00–08:30) and evening (16:00–18:30) departure banks, generating the empirical queue congestion dynamics required to evaluate predictive models.
-* **Correlation Evolution**: Across all 450+ airports, the correlation between scheduled flights and checkpoint throughput is weak ($r \\approx 0.35, R^2 \\approx 12.25\%$). At the Top 25 scale, correlation rises to $r = 0.4572$ ($R^2 = 20.90\%$) for raw volume, and $r = 0.6704$ ($R^2 = 44.94\%$) when deflated by DB1B connecting ratios.
+* **Filtering Criteria**: Restrict the national candidate universe of 450+ commercial airports to the Top 25 commercial airfields ranked by domestic passenger enplanements, capturing 67.2% of nationwide domestic flight movements.
+* **Methodological Justification**: In airport queuing dynamics, traffic intensity $\rho_t = \frac{\lambda_t}{c_t \cdot \mu}$ determines queue behavior. Under Kingman's heavy-traffic approximation ($W_q \approx \frac{\rho}{1-\rho}\frac{C_a^2+C_s^2}{2}\frac{1}{\mu}$), passenger delays scale non-linearly only as checkpoint utilization approaches capacity ($\rho_t \to 1.0$). At small regional airports, passenger flow is sparse ($\rho_t \ll 0.3$), preventing queue accumulation and causing throughput to passively mirror unconstrained arrivals without boundary friction. In contrast, Top 25 hub airports reach peak-hour saturation ($\rho_t \to 1.0$) during morning (06:00–08:30) and evening (16:00–18:30) departure banks, generating the empirical queue delays and non-linear dynamics required to train and evaluate congestion-aware models.
+* **TSA-OTP Relationship Evolution**: Across the nationwide universe of all commercial airfields, the linear correlation between scheduled flight departures and TSA throughput is low ($r \approx 0.35, R^2 \approx 12.25\%$). At the Top 25 macro scale, this relationship strengthens to $r = 0.4572$ ($R^2 = 20.90\%$) for raw volume, and $r = 0.6704$ ($R^2 = 44.94\%$) when deflated by DB1B connecting ratios.
 
 ### Phase 2: Meso Filter (Operational Homogeneity and Southwest Exclusion)
-* **Criteria**: Require concurrent domestic mainline operations by American Airlines, Delta Air Lines, and United Airlines ($>10\\%$ seat share each), while systematically excluding Southwest Airlines (WN) and Ultra-Low-Cost Carriers (ULCCs). This reduced the pool from 25 to 14 candidate hub airfields.
-* **Methodological Justification**: Concurrent legacy carrier operations ensure that cross-carrier comparisons evaluate under identical airspace shock conditions ($\\delta_t$), canceling common weather ground delay programs and FAA flow management initiatives. Furthermore, Southwest Airlines was excluded due to passenger arrival behavior: legacy carrier passengers display consistent, unimodal lognormal arrival timing ($\\tau \\sim \\text{Lognormal}, E[\\tau] \\approx 105\\text{ min}$), whereas Southwest's historical open-seating boarding structure and two-free-checked-bags policy generate a bimodal arrival mixture ($\\mu_1 \\approx 135\\text{ min}$ for boarding group maximizers; $\\mu_2 \\approx 65\\text{ min}$ for carry-on business travelers; Pearson, 1894), violating arrival distribution exchangeability ($f_j(\\tau) \\neq f(\\tau)$).
-* **Correlation Evolution**: In the 14-airfield Meso cohort, scheduled flight coupling to checkpoint throughput strengthened to $r = 0.5015$ ($R^2 = 25.15\%$).
+* **Filtering Criteria**: Require concurrent domestic mainline operations by American Airlines, Delta Air Lines, and United Airlines ($>10\%$ market share each), while systematically excluding Southwest Airlines (WN) and Ultra-Low-Cost Carriers (ULCCs). This reduced the pool from 25 to 14 candidate hub airfields.
+* **Methodological Justification**: Concurrent legacy carrier operations ensure that cross-carrier comparisons evaluate under identical exogenous airspace conditions ($\delta_t$), canceling common weather ground delay programs and FAA flow management initiatives. Furthermore, Southwest Airlines was excluded due to its passenger arrival behavior: legacy carrier passengers display consistent, unimodal lognormal arrival timing ($\tau \sim \text{Lognormal}, E[\tau] \approx 105\text{ min}$), whereas Southwest's historical open-seating boarding structure and two-free-checked-bags policy generate a bimodal arrival mixture ($\mu_1 \approx 135\text{ min}$ for boarding group maximizers; $\mu_2 \approx 65\text{ min}$ for carry-on business travelers; Pearson, 1894), violating arrival distribution exchangeability ($f_j(\tau) \neq f(\tau)$).
+* **TSA-OTP Relationship Evolution**: In the 14-airfield Meso cohort, eliminating Southwest and ULCC scheduling volatility elevated the scheduled flight to TSA throughput correlation to $r = 0.5015$ ($R^2 = 25.15\%$).
 
 ### Phase 3: Micro Filter (Carrier Checkpoint Exclusivity)
-* **Criteria**: Require strict single-carrier dedicated screening checkpoint complexes ($P(\\text{Carrier} = j^* \\mid \\text{Checkpoint}) = 1.0$). Airfields with shared multi-carrier central screening checkpoints were excluded. This filtered the 14 candidate hubs down to 9 selected airfields.
-* **Methodological Justification**: In shared terminal facilities (e.g., Salt Lake City or Phoenix), multiple airlines funnel passengers into shared security queues. Because hub carriers coordinate flight banks, carrier departure schedules are collinear ($\\text{Corr}(S_j, S_{j'}) \\ge 0.88$, condition number $\\kappa > 10^4$), preventing mathematical separation of individual carrier demand. Restricting analysis to dedicated checkpoint complexes collapses collinearity ($\\kappa < 25$), directly mapping carrier flight banks to landside checkpoint queues.
-* **Correlation Evolution**: For the 9 selected airfields, scheduled flights versus total TSA passengers reach $r = 0.5453$ ($R^2 = 29.74\%$), while scheduled flights versus true local originating TSA demand (DB1B adjusted) reaches $r = 0.6466$ ($R^2 = 41.81\%$). At the dedicated checkpoint complex level, carrier-filtered departing seats explain $70.80\\%$ to $77.40\\%$ ($R^2$) of checkpoint throughput variance.
+* **Filtering Criteria**: Require strict single-carrier dedicated screening checkpoint complexes ($P(\text{Carrier} = j^* \mid \text{Checkpoint}_k) = 1.0$). Airfields with shared multi-carrier central screening checkpoints were excluded. This filtered the 14 candidate hubs down to 9 selected airfields.
+* **Methodological Justification**: In shared terminal facilities (e.g., Salt Lake City or Phoenix), multiple airlines funnel passengers into shared security queues. Because hub carriers coordinate flight banks, carrier departure schedules are collinear ($\text{Corr}(S_j, S_{j'}) \ge 0.88$, condition number $\kappa > 10^4$), preventing mathematical separation of individual carrier demand. Restricting analysis to dedicated checkpoint complexes collapses collinearity ($\kappa < 25$), directly mapping carrier flight banks to landside checkpoint queues.
+* **TSA-OTP Relationship Evolution**: At the airport-wide level for the 9 selected airfields, scheduled flights versus total TSA passengers achieve $r = 0.5453$ ($R^2 = 29.74\%$), while scheduled flights versus true local originating TSA demand (DB1B adjusted) reaches $r = 0.6466$ ($R^2 = 41.81\%$). Furthermore, when evaluated at the dedicated checkpoint complex level, carrier-filtered departing seats explain $70.80\%$ to $77.40\%$ ($R^2$) of checkpoint throughput variance.
 
 ### Phase 4: Factorial Cohort (Factorial Matrix Balance)
-* **Criteria**: Construct a balanced factorial matrix across legacy carriers and operational archetypes, retaining the **9-Airport Experimental Cohort** comprising **12 Dedicated Checkpoint Complexes** across BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, and PHL.
-* **Methodological Justification**: Complete factorial symmetry requires exactly 4 dedicated terminal screening complexes per legacy carrier (American: 4, Delta: 4, United: 4) spanning all four operational clusters, ensuring unconfounded cross-carrier and cross-airport transfer evaluation.
+* **Filtering Criteria**: Construct a balanced factorial matrix across legacy carriers and operational archetypes, retaining the **9-Airport Experimental Cohort** comprising **12 Dedicated Checkpoint Complexes** across BOS, DFW, DTW, EWR, IAH, LAX, LGA, ORD, and PHL.
+* **Methodological Justification**: Complete factorial symmetry requires exactly 4 dedicated terminal screening complexes per legacy carrier (American: 4, Delta: 4, United: 4) spanning all four operational clusters (Mega-Connecting Gateways, High-Density O&D Focus, High-Reliability Fortress Hubs, and Congested Coastal Originators) and all four terminal physical archetypes (Decentralized, Linear Mega-Concourse, Multi-Terminal Ring, and Satellite). This orthogonal variation is structurally required to evaluate zero-shot Generalizability across diverse spatial configurations.
+* **Crucial Methodological Distinction**: These evolving correlations and seasonal dynamics serve exclusively to justify the four-tier filtering rationale and confirm data validity. **These relationships and dynamics are not used in training the downstream predictive models**, preserving strict econometric separation and preventing data leakage. Furthermore, the analysis at this stage evaluates the 9 selected airports as complete facilities, rather than premature facility checkpoints.
 
 ### Table C.2
 *Four-Tier Purposive Filtering Pipeline Architecture and Progression Rationale*
 
 | Filtering Tier | Candidate Universe | Inclusion & Exclusion Criteria | Methodological & Queuing Rationale | Scheduled Flight Coupling ($r$) | Throughput Variance Explained ($R^2$) |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| **Phase 1: Macro Filter** | $N = 450+ \\to 25$ Hubs | Top 25 airfields by commercial enplanements; captures 67.2% of domestic departures | Enforces heavy-traffic queuing limit ($\\rho_t \\to 1.0$); eliminates regional light-traffic triviality | $r = 0.4572$ (Raw)<br>$r = 0.6704$ (DB1B) | $R^2 = 20.90\\%$ (Raw)<br>$R^2 = 44.94\\%$ (DB1B) |
-| **Phase 2: Meso Filter** | $N = 25 \\to 14$ Hubs | Concurrent Big 3 legacy presence (>10% share); excludes Southwest (WN) and ULCCs | Exogenous airspace shock differencing; eliminates bimodal open-seating arrival mixture ($\\mu_1 \\approx 135$m, $\\mu_2 \\approx 65$m) | $r = 0.5015$ | $R^2 = 25.15\\%$ |
-| **Phase 3: Micro Filter** | $N = 14 \\to 9$ Hubs | Dedicated single-carrier checkpoint complexes ($P(j^* \\mid \\text{Checkpoint}) = 1.0$) | Collapses cross-carrier schedule collinearity ($\\kappa > 10^4 \\to \\kappa < 25$); eliminates shared-lane dilution | $r = 0.5453$ (Raw)<br>$r = 0.6466$ (DB1B) | $R^2 = 29.74\\%$ (Raw)<br>$R^2 = 41.81\\%$ (DB1B) |
-| **Phase 4: Factorial Cohort** | $N = 9$ Hubs (12 Complexes) | Balanced $4 \\times 4$ matrix: exactly 4 exclusive complexes per carrier across 4 clusters | Unconfounded ANOVA variance structure; enables zero-shot spatial transferability | $r = 0.8414\\text{--}0.8798$ | $R^2 = 70.80\\%\\text{--}77.40\\%$ |
+| **Phase 1: Macro Filter** | $N = 450+ \to 25$ Hubs | Top 25 airfields by commercial enplanements; captures 67.2% of domestic departures | Enforces heavy-traffic queuing limit ($\rho_t \to 1.0$); eliminates regional light-traffic triviality | $r = 0.4572$ (Raw)<br>$r = 0.6704$ (DB1B) | $R^2 = 20.90\%$ (Raw)<br>$R^2 = 44.94\%$ (DB1B) |
+| **Phase 2: Meso Filter** | $N = 25 \to 14$ Hubs | Concurrent Big 3 legacy presence (>10% share); excludes Southwest (WN) and ULCCs | Exogenous airspace shock differencing; eliminates bimodal open-seating arrival mixture ($\mu_1 \approx 135$m, $\mu_2 \approx 65$m) | $r = 0.5015$ | $R^2 = 25.15\%$ |
+| **Phase 3: Micro Filter** | $N = 14 \to 9$ Hubs | Dedicated single-carrier checkpoint complexes ($P(j^* \mid \text{Checkpoint}) = 1.0$) | Collapses cross-carrier schedule collinearity ($\kappa > 10^4 \to \kappa < 25$); eliminates shared-lane dilution | $r = 0.5453$ (Raw)<br>$r = 0.6466$ (DB1B) | $R^2 = 29.74\%$ (Raw)<br>$R^2 = 41.81\%$ (DB1B) |
+| **Phase 4: Factorial Cohort** | $N = 9$ Hubs (12 Complexes) | Balanced $4 \times 4$ matrix: exactly 4 exclusive complexes per carrier across 4 clusters | Unconfounded ANOVA variance structure; enables zero-shot spatial transferability | $r = 0.8414\text{--}0.8798$ | $R^2 = 70.80\%\text{--}77.40\%$ |
 
 *Note.* Evolving correlations reflect progressive noise elimination across macro, meso, micro, and factorial sample specifications.
 
@@ -262,28 +328,28 @@ Figure C.2
 
 ![Figure C.2: Four-Cluster Carrier Matrix and Spatial Transferability](../../figures/01_Sample_and_Airport_Selection/Power%20of%209%20airports.png)
 
-*Note.* Adapted from `figures/01_Sample_and_Airport_Selection/power_of_9_airports.csv`. Visualizes the orthogonal 4-cluster $\\times$ 3-carrier factorial design enabling intra-cluster transfer testing (e.g., EWR $\\to$ LGA within Cluster 3).
+*Note.* Adapted from `figures/01_Sample_and_Airport_Selection/power_of_9_airports.csv`. Visualizes the orthogonal 4-cluster $\times$ 3-carrier factorial design enabling intra-cluster transfer testing (e.g., EWR $\to$ LGA within Cluster 3).
 
 ---
 
 ## C.3 Econometric Validation of Carrier Checkpoint Isolation
 
-To verify mathematically that dedicated checkpoints isolate single-carrier demand without unobserved leakage from adjacent airline operations, four formal econometric tests were conducted:
+To mathematically verify that dedicated checkpoints isolate single-carrier demand without unobserved leakage from adjacent airline operations, four formal econometric tests were conducted:
 
-1. **Volume Conservation Test**: Total daily checkpoint throughput tracks carrier ticketed boardings with slope $\\rho = 1.00 \\pm 0.04$ ($R^2 > 0.95$), proving mass conservation between landside entries and aircraft boardings.
-2. **Zero-Flight Intercept Test**: Checkpoint demand when zero carrier flights are scheduled is statistically indistinguishable from zero ($\\beta_0 = 12.4\\text{ pax/hr}, p = 0.40$), proving that non-carrier passengers do not cross into dedicated lanes.
-3. **Cross-Carrier Perpendicularity Test**: Regressing dedicated checkpoint throughput against concurrent departures by other airlines operating in adjacent terminals yields non-significant coefficients ($\\beta_{\\text{other}} = 0.002, p = 0.62$), confirming zero cross-carrier schedule leakage.
-4. **Terminal Layout Invariance Test**: A two-sample Kolmogorov-Smirnov test comparing physically separate terminals (e.g., LGA Terminal C, DTW McNamara) against walkway-connected terminals (e.g., DFW Terminal E, LAX Terminal 4) yielded $D = 0.032$ ($p = 0.28$), confirming that airside walkway connections do not induce statistically significant cross-terminal throughput distortion.
+1. **Volume Conservation Test**: Total daily checkpoint throughput tracks carrier ticketed boardings with slope $\rho = 1.00 \pm 0.04$ ($R^2 > 0.95$), proving mass conservation between landside entries and aircraft boardings.
+2. **Zero-Flight Intercept Test**: Checkpoint demand when zero carrier flights are scheduled is statistically indistinguishable from zero ($\beta_0 = 12.4\text{ pax/hr}, p = 0.40$), proving that non-carrier passengers do not cross into dedicated lanes.
+3. **Cross-Carrier Perpendicularity Test**: Regressing dedicated checkpoint throughput against concurrent departures by other airlines operating in adjacent terminals yields non-significant coefficients ($\beta_{\text{other}} = 0.002, p = 0.62$), confirming zero cross-carrier schedule leakage.
+4. **Terminal Layout Invariance Test**: A two-sample Kolmogorov-Smirnov test comparing physically separate terminals (e.g., LGA Terminal C, DTW McNamara) against walkway-connected terminals (e.g., DFW Terminal E, LAX Terminal 4) yielded $D = 0.032$ ($p = 0.28$), confirming that airside walkway connections do not induce statistically significant cross-terminal throughput leakage.
 
 ### Table C.3
 *Econometric Tests for Carrier Checkpoint Demand Isolation*
 
 | Econometric Validation Test | Econometric Specification / Statistic | Null Hypothesis ($H_0$) | Test Result & Statistical Significance | Operational Interpretation & Integrity Verdict |
 | :--- | :--- | :--- | :--- | :--- |
-| **1. Volume Conservation Test** | Regress daily TSA throughput on carrier ticketed enplanements | $\\beta_1 = 1.00$ (Slope unity) | $\\hat{\\beta}_1 = 1.00 \\pm 0.04, R^2 > 0.95$ | **Passed**: Checkpoint volume precisely accounts for boarded passenger inventory. |
-| **2. Zero-Flight Intercept Test** | Estimated throughput when scheduled departing flights $= 0$ | $\\beta_0 = 0$ (Zero base load) | $\\hat{\\beta}_0 = 12.4\\text{ pax/hr}, p = 0.40$ | **Passed**: No phantom or unassigned passenger flow enters dedicated screening lines. |
-| **3. Cross-Carrier Perpendicularity** | Partial correlation with competing airline flight departures | $\\beta_{\\text{competing}} = 0$ | $\\hat{\\beta}_{\\text{other}} = 0.002, p = 0.62$ | **Passed**: Adjacent terminal schedule waves do not spill over into dedicated screening queues. |
-| **4. Terminal Layout Invariance** | Two-sample Kolmogorov-Smirnov test: Separate vs. Connected | $F_{\\text{separate}}(y) = F_{\\text{connected}}(y)$ | $D = 0.032, p = 0.28$ | **Passed**: Airside walkways do not induce statistically significant throughput distortion. |
+| **1. Volume Conservation Test** | Regress daily TSA throughput on carrier ticketed enplanements | $\beta_1 = 1.00$ (Slope unity) | $\hat{\beta}_1 = 1.00 \pm 0.04, R^2 > 0.95$ | **Passed**: Checkpoint volume precisely accounts for boarded passenger inventory. |
+| **2. Zero-Flight Intercept Test** | Estimated throughput when scheduled departing flights $= 0$ | $\beta_0 = 0$ (Zero base load) | $\hat{\beta}_0 = 12.4\text{ pax/hr}, p = 0.40$ | **Passed**: No phantom or unassigned passenger flow enters dedicated screening lines. |
+| **3. Cross-Carrier Perpendicularity** | Partial correlation with competing airline flight departures | $\beta_{\text{competing}} = 0$ | $\hat{\beta}_{\text{other}} = 0.002, p = 0.62$ | **Passed**: Adjacent terminal schedule waves do not spill over into dedicated screening queues. |
+| **4. Terminal Layout Invariance** | Two-sample Kolmogorov-Smirnov test: Separate vs. Connected | $F_{\text{separate}}(y) = F_{\text{connected}}(y)$ | $D = 0.032, p = 0.28$ | **Passed**: Airside walkways do not induce statistically significant throughput distortion. |
 
 *Note.* Confirms mathematical separation of carrier demand across the 12 dedicated screening complexes.
 
@@ -292,13 +358,13 @@ To verify mathematically that dedicated checkpoints isolate single-carrier deman
 ## C.4 Key Airport Selection Contrasts and Cohort Density Profiles
 
 ### Structural Facility Contrasts
-* **LGA vs. JFK Selection**: United Airlines permanently ceased operations at JFK in October 2022 (failing Meso multi-carrier continuity). In contrast, LGA opened Delta's consolidated Terminal C in June 2022, providing unconfounded screening lanes with 100% carrier exclusivity.
+* **LGA vs. JFK Selection**: United Airlines permanently ceased operations at JFK in October 2022 (failing Meso multi-carrier continuity). In contrast, LGA opened Delta's state-of-the-art consolidated Terminal C in June 2022, providing unconfounded screening lanes with 100% carrier exclusivity.
 * **PHL vs. SLC Selection**: Salt Lake City International (SLC) channels all airlines through a single consolidated central screening checkpoint, making carrier isolation structurally impossible. Philadelphia International (PHL) provides dedicated American Airlines checkpoints in Terminals B and C, ensuring clean carrier isolation within Cluster 2.
 
 ### Table C.4
 *Summary Descriptive Statistics: Nine-Airport Experimental Cohort vs. Top 25 Airfield Network Profile*
 
-r| Metric Category | Operational Metric | Unit | 9-Airport Mean | 9-Airport Std Dev | 9-Airport Median | 9-Airport Min (Airport) | 9-Airport Max (Airport) | Top 25 Mean | Delta (%) |
+| Metric Category | Operational Metric | Unit | 9-Airport Mean | 9-Airport Std Dev | 9-Airport Median | 9-Airport Min (Airport) | 9-Airport Max (Airport) | Top 25 Mean | Delta (%) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | BTS OTP Operations | Scheduled Domestic Flights | flights | 224,576 | 78,441 | 206,024 | 138,372 (PHL) | 360,571 (ORD) | 192,160 | +16.9% |
 | BTS OTP Operations | Cancelled Flights | flights | 3,623 | 1,599 | 2,920 | 1,777 (DTW) | 6,515 (DFW) | 2,738 | +32.3% |
@@ -322,7 +388,7 @@ r| Metric Category | Operational Metric | Unit | 9-Airport Mean | 9-Airport Std 
 ### Table C.5
 *Day-of-Week Mean Daily Passenger Throughput and Ratio Profiles Across the Nine Selected Airports*
 
-r| Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday | Weekly Peak Day | Weekly Trough Day | Peak/Trough Ratio | Dominant Demand Profile |
+| Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday | Weekly Peak Day | Weekly Trough Day | Peak/Trough Ratio | Dominant Demand Profile |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | BOS | 48,480 | 42,606 | 45,175 | 50,464 | 52,244 | 44,552 | 49,359 | Friday | Tuesday | 1.23 | Business & Weekend Getaway |
 | DFW | 69,808 | 60,600 | 65,285 | 73,310 | 73,625 | 60,733 | 68,963 | Friday | Tuesday | 1.21 | Connecting Bank Synchronization |
@@ -334,24 +400,29 @@ r| Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | 
 | ORD | 49,381 | 43,406 | 45,713 | 50,706 | 50,620 | 42,697 | 49,468 | Thursday | Saturday | 1.19 | Dual Hub Synchronized Banks |
 | PHL | 31,519 | 26,716 | 28,626 | 32,740 | 32,812 | 27,675 | 31,112 | Friday | Tuesday | 1.23 | Mid-Atlantic Fortress Outbound |
 
-*Note.* Adapted from `results/manuscript_tables/table_4_8.csv`. Documents local weekly profiles across the 9 airports: LGA displays a Pure Corporate profile (DOW ratio = 2.30, Monday peak of 49,002 pax vs. Friday drop to 21,310 pax); BOS, EWR, PHL, DTW, and DFW display Corporate-to-Weekend profiles (Friday peaks, Tuesday troughs); and IAH and ORD display Energy/Midweek profiles (Thursday peaks).
+*Note.* Adapted from `results/manuscript_tables/table_4_8.csv`. Documents local weekly profiles across the 9 airports:
+* **The Pure Corporate Profile (LGA)**: LaGuardia exhibits an extreme day-of-week ratio of 2.30. Throughput peaks on Monday (49,002 pax) and Sunday (48,000 pax) driven by corporate business travel in the Northeast corridor, while Friday drops to 21,310 pax due to business travelers returning home early and leisure travelers avoiding slot-constrained short-haul airfields.
+* **The Corporate-to-Weekend Profile (BOS, EWR, PHL, DTW, DFW)**: These facilities peak on Friday (52,244 at BOS; 73,625 at DFW; 69,206 at EWR) as business travelers depart for weekend destinations and leisure getaways overlap, with Tuesday serving as the weekly volume trough (Peak/Trough ratio = 1.14 to 1.23).
+* **The Energy Sector & Midweek Profile (IAH, ORD)**: Houston Bush and Chicago O'Hare experience Thursday peaks (53,351 at IAH; 50,706 at ORD) driven by consulting, engineering, and corporate travel schedules, followed by steep Saturday troughs (ratio = 1.19 to 1.26).
 
 ---
 
 # Appendix D: Aviation Data Engineering, Warehouse Architecture, and Hygiene Protocols
 
+> *Note on Thesis Cross-References*: This appendix documents the multi-source data feeds, conformed Star Schema staging pipeline, ETL transformations, and feature engineering protocols. It is referenced in **Chapter III (Methodology)**, Section *Temporal Scope and Boundary Definition*, Section *Sources of Data (TSA FOIA, BTS OTP, BTS Form 41 T-100, BTS DB1B)*, Section *Treatment of Data (Extract, Transform, Load)*, and Section *Feature Engineering*; and in **Chapter IV (Results)**, Section *TSA and OTP Throughput Data* and Section *Descriptive Statistics*.
+
 ## D.1 Multi-Source Aviation Data Foundation Census and Base Feeds
 
 The analytical data warehouse unifies four authoritative federal aviation feeds spanning the post-pandemic operational era (May 1, 2022 to December 31, 2025):
-1. **TSA FOIA Checkpoint Logs**: Hourly passenger throughput records disaggregated by physical screening lane across commercial airfields ($19,500,286$ raw records). Following conformed extraction, the warehouse retains $6,434,732$ lane-hour records across 955 screening lanes at the Top 25 airfields, tracking $2.70$ billion screened passengers.
-2. **BTS On-Time Flight Performance (OTP, Form 234)**: Individual domestic flight movements ($45,777,091$ raw records) capturing scheduled and actual departure times, taxi-out durations, departure delays, and cancellation attributions across 17 reporting carriers ($13,153,654$ domestic departures post-ETL).
-3. **BTS Form 41 Schedule T-100 Domestic Segment Data**: Monthly carrier-route-equipment capacity ($1,945,451$ raw records; $422,096$ cleaned observations), providing departing seats, transported passengers, and route load factors.
-4. **BTS Origin-Destination Ticket Surveys (DB1B/DB1C)**: A 10% randomized sample of airline ticket itineraries ($12,910,384$ raw coupons; $22,051,557$ conformed coupon records), supplemented by authorized airport traffic statistics, used to calibrate quarterly connecting passenger deflators.
+1. **TSA FOIA Checkpoint Logs**: Obtained via Freedom of Information Act (FOIA) disclosures and cross-referenced with public archival repositories, this feed records hourly passenger screening counts per physical lane across all commercial airports ($19,500,286$ raw records). Following conformed extraction, the warehouse preserves $6,434,732$ lane-hour records across 955 screening lanes at the Top 25 airfields, tracking $2.70$ billion screened passengers.
+2. **BTS On-Time Flight Performance (OTP, Form 234)**: Maintained by the Bureau of Transportation Statistics, this feed records individual domestic flight movements ($45,777,091$ raw records). The post-ETL warehouse retains $13,153,654$ domestic departures across 17 reporting carriers, capturing departure delays, taxi-out times, tactical cancellations, and delay cause decompositions.
+3. **BTS Form 41 Schedule T-100 Domestic Segment Data**: Published by the BTS Office of Airline Information, Form 41 captures monthly carrier-route-equipment capacity ($1,945,451$ raw records; $422,096$ cleaned observations), providing departing seats, transported passengers, and route load factors.
+4. **BTS Origin-Destination Ticket Surveys (DB1B/DB1C)**: A 10% randomized sample of airline ticket itineraries ($12,910,384$ raw coupons; $22,051,557$ conformed coupon records), supplemented by authorized monthly airport traffic reports (such as LAX Air Traffic Statistics). These feeds are utilized to extract quarterly connecting passenger ratios across airport pairs to support originating passenger flow estimation.
 
 ### Table D.1
 *Master Multi-Source Aviation Data Foundation Census & Base Feed Profiles*
 
-r| metric | tsa_throughput_tsav0_csv | on_time_performance_otpv0_csv | t100_segment_statistics_t100v0_csv |
+| Metric / Characteristic | TSA FOIA Checkpoint Logs (TSA-V0) | BTS Flight Performance (OTP-V0) | BTS T-100 Segment Statistics (T100-V0) |
 | :--- | :--- | :--- | :--- |
 | File Size on Disk | 542 MB | 6.5 GB | 81 MB |
 | Total Record Count | 19,500,286 | 45,777,091 | 1,945,451 |
@@ -382,7 +453,7 @@ Figure D.1
 ### Table D.2
 *Conformed Feature Store Parquet Dataset Breakdown*
 
-r| dataset_file | data_grain | rows | columns | storage_size_parquet | uncompressed_ram_approx | operational_notes |
+| Dataset / File | Analytical Grain | Record Count (Rows) | Attribute Count (Cols) | Storage Size (Parquet) | Uncompressed RAM (Approx.) | Operational Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | otpv1.parquet | Individual Flight Leg | 8,351,307 | 37 | 166.2 MB | ~750 MB | Deduplicated BTS flight records with zero key nulls. |
 | tsav1.parquet | Checkpoint Hour | 6,880,725 | 7 | 31.6 MB | ~110 MB | Cleaned TSA hourly screening throughput. |
@@ -397,7 +468,7 @@ r| dataset_file | data_grain | rows | columns | storage_size_parquet | uncompres
 ### Table D.3
 *Filtered Nine-Airport Target Research Cohort Parquet File Profiles*
 
-r| dataset_name | parquet_file_path | record_count | compression_format | description |
+| Dataset Entity | Partition Parquet File Path | Record Count | Compression Format | Operational Description |
 | :--- | :--- | :--- | :--- | :--- |
 | TSA Throughput | data/processed/tsa-top9v1.parquet | 3,127,078 | Zstandard (ZSTD) | Hourly passenger screening counts filtered strictly to checkpoints at the 9 target airports (100% NOT NULL). |
 | On-Time Performance (OTP) | data/processed/otp-top9v1.parquet | 1,368,142 | Zstandard (ZSTD) | Big 3 commercial flights across the closed 9-airport city-pair network, with minute-of-day encodings and cyclical sin/cos features. |
@@ -436,13 +507,13 @@ The BTS DB1B database is structured into three hierarchical tiers:
 ### Table D.4
 *Bureau of Transportation Statistics DB1B Ticket Survey Data Hierarchy*
 
-r| bts_table_level | table_acronym | unit_or_grain | example_itinerary_representation_bos_ord_lax | contains_connecting_itineraries |
+| BTS Table Level | Table Acronym | Analytical Unit / Grain | Itinerary Representation Example (BOS to LAX) | Contains Connecting Itineraries? |
 | :--- | :--- | :--- | :--- | :--- |
 | 1. DB1BTicket | DB1BTicket | Whole Itinerary | 1 row for the entire round-trip ticket purchase ($520 total fare, 2 round-trip components). | Yes (all legs) |
 | 2. DB1BMarket | DB1BMarket | Directional Market (O&D) | 2 rows: Outbound Market (BOS -> LAX) and Return Market (LAX -> BOS). | Yes (a market can combine 2+ connecting flight legs) |
 | 3. DB1BCoupon (DB1C) | DB1BCoupon | Individual Flight Segment | 3 rows (physical takeoff-to-landing flight legs): Leg 1: BOS -> ORD; Leg 2: ORD -> LAX; Leg 3: LAX -> BOS | No (pure single nonstop flight segments) |
 
-*Note.* Adapted from `figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv`. Details the itinerary representation across ticket, market, and coupon grains used to compute airport-specific connecting deflators: $\\text{Demand}_{\\text{orig}, t} = \\sum \\text{Seats}_f \\cdot \\text{LF}_f \\cdot (1 - \\text{ConnRatio})$.
+*Note.* Adapted from `figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv`. Details the itinerary representation across ticket, market, and coupon grains used to compute airport-specific connecting deflators: $\text{Demand}_{\text{orig}, t} = \sum \text{Seats}_f \cdot \text{LF}_f \cdot (1 - \text{ConnRatio})$.
 
 Figure D.4 illustrates the structural coupon hierarchy and connecting passenger deflator workflow.
 
@@ -455,13 +526,44 @@ Figure D.4
 
 ---
 
-## D.4 Staging Data Hygiene, Causality, and Operational Zero Protocols
+## D.4 Comprehensive Staging ETL Pipeline and Data Hygiene Protocols
 
-Three rigorous data hygiene protocols were enforced during warehouse staging:
+The execution of data preparation follows a rigorous, sequential Extract, Transform, Load (ETL) pipeline designed to ingest, clean, standardize, and align the aviation datasets:
 
-1. **Spatial Entity Resolution**: Raw TSA FOIA checkpoint strings frequently suffer from inconsistent lane naming (e.g., `CP-1`, `CHECKPOINT 1`, `TERM A SEC`). An automated spatial resolution mapping resolved upstream corrupted strings. Truly unidentifiable strings were assigned to a dedicated null surrogate key (`airportId = 0`, `airportMissing = 1`), preventing the fabrication of an artificial 9.71-million passenger "phantom airport."
-2. **Preserving Scheduled Checkpoint Closures as True Operational Zeros**: Across the warehouse, 450,973 records (2.31%) reported zero passengers. Cross-referencing flight movements proved that 98.6% of zero values occur between 00:00 and 03:59 local time during scheduled overnight terminal curfews. Rather than applying spline or moving-average imputations—which would fabricate fictitious passenger volume during scheduled lane closures—these intervals were preserved as true operational structural zeros and modeled through zero-bounded count regression (a Tweedie compound Poisson distribution, $p = 1.3$).
-3. **Information Causality and Cancellation Handling**: Across 13,153,654 domestic departures, cancellations averaged 2.03% (267,019 operations). To prevent lookahead leakage (using information unavailable to an airport operator in real time), advance cancellations (>24 hours prior) were purged from departing seat supply curves, while tactical cancellations (<2 hours prior) were retained, reflecting the operational reality that booked passengers had already completed landside security screening before the flight was cancelled.
+### Extract Protocol
+1. Download TSA Throughput files from the FOIA reading room (PDFs) spanning 2019 to 2026.
+2. Parse PDFs into standardized tabular format (CSV).
+3. Download TSA Throughput PDFs and CSVs (2022–2025) from public repository archives (e.g., `https://github.com/mikelor/TsaThroughput`).
+4. Cross-reference TSA datapoints to identify temporal gaps, duplicates, and reporting inconsistencies.
+5. Download On-Time Flight Performance data (CSVs) spanning 2019 to 2026 for all domestic flights in the United States.
+6. Download BTS Form 41 Schedule T-100 Segment Airline Traffic Data and calculate monthly route load factors.
+7. Download BTS DB1B ticket survey coupon files and airport-specific origin-and-destination summary statistics.
+8. Perform an audit across the 7-year sequence to identify missing data and reporting discontinuities.
+
+### Transform Protocol
+1. Standardize timestamps across all feeds to a uniform operational clock (local airport solar operational time).
+2. Map and resolve typographical errors, airport names, data mismatches, and checkpoint naming variations.
+3. Normalize airport codes, checkpoint prefixes, and common terms (e.g., `Checkpoint` $\to$ `CKPT`).
+4. **Spatial Key Resolution and Unidentified Airport Isolation**: Upstream raw TSA logs contained 35,809 records with missing or corrupted airport strings. An automated checkpoint fingerprinting algorithm successfully mapped 7,489 records by identifying unique physical checkpoint string signatures (`dim_checkpoint`). The remaining 22,190 unresolvable records were assigned to a dedicated null surrogate key (`airportId = 0`, flagged with `airportMissing = 1`), preventing the creation of an artificial 9.71-million passenger "phantom airport" that would have distorted econometric demand baselines. All downstream analyses strictly enforce `airportMissing = 0` and `airportId > 0`.
+5. **Preserving Scheduled Checkpoint Closures as True Operational Zeros**: A critical operational feature of airport checkpoints is zero throughput during overnight curfews. Across the warehouse, 450,973 records (2.31%) reported zero passengers. Cross-referencing flight movements established that 98.6% of zero values occur between 00:00 and 03:59 local time. Rather than applying moving-average or spline imputations—which would fabricate passenger volume during scheduled overnight lane closures—these intervals were preserved as true operational structural zeros and modeled through zero-bounded count regression (a Tweedie compound Poisson distribution, $p = 1.3$, which naturally accommodates real zero counts without producing impossible negative passenger estimates or requiring artificial data smoothing).
+6. **Advance vs. Tactical Cancellation Causality**: Across the 13,153,654 domestic departures, flight cancellations averaged 2.03% (267,019 operations), with 99.4% of unassigned aircraft tail numbers occurring on cancelled flights. To prevent lookahead bias in passenger forecasting (the error of using future information that an airport operations manager would not possess in real time), advance cancellations (>24 hours prior to scheduled departure) were purged from departing seat supply curves, while tactical cancellations (<2 hours prior) were retained, reflecting the operational reality that booked passengers had already completed landside security screening before the carrier issued the cancellation.
+7. Separate scheduled flights from actual operated flights to distinguish planned bank structures from tactical executions.
+8. Estimate aircraft seat capacities using flight distance, carrier identity, and aircraft equipment/tail-number characteristics.
+9. Scale seat counts using route-level load factor data to estimate departing passenger volume.
+10. Merge datasets to determine terminal-specific connecting passengers within target complexes using DB1B ticket survey deflators.
+11. **Empirical Passenger Show-Up Curve Convolution**: Convolve scheduled flight departure banks across empirical lead-time distributions ($t+1, t+2, t+3$ from ACRP Report 40) and align them with hourly TSA throughput intervals to produce the final conformed modeling dataset.
+12. Construct the Values versus Volatility feature representation space:
+    * *Feature Values (Levels, 14 Attributes)*: Schedule Scale (`sched_daily_total`, `actual_daily_total`, `sched_hourly_mean`, `sched_rolling_7d_mean`), Cancellations (`daily_cancellations`, `daily_cancel_rate`, `cancel_rolling_7d_mean`, `cancel_rate_rolling_7d_mean`), Delays (`avg_dep_delay_minutes`, `flights_delayed_15min_pct`), Surface Queues (`avg_taxi_out_minutes`), and Network Buffers (`aircraft_gauge_seats`, `route_load_factor_pct`, `connecting_passenger_share_pct`).
+    * *Feature Volatilities (Dispersion, 10 Attributes)*: Schedule Dispersion (`sched_hourly_std`, `sched_hourly_cv`, `actual_hourly_std`, `actual_hourly_cv`, `sched_rolling_7d_std`, `sched_rolling_7d_cv`), Cancellation Dispersion (`cancel_rolling_7d_std`, `cancel_rate_rolling_7d_std`, `otp_cancellation_volatility_cv`), and Delay Dispersion (`otp_departure_delay_volatility_cv`).
+    * *Combined Dual Paradigm (24 Attributes)*: Interacts both feature spaces to test predictive complementarity.
+
+### Load Protocol
+1. Load master conformed data copies to secure persistent cloud storage (OneDrive) and local data warehouse directories.
+2. Build relational analytics tables, lookup dimensions, and multidimensional interaction grids.
+3. Automate verification audits for schema validity, referential integrity, and row preservation across the 7-year sequence.
+
+### Descriptive Statistics for Post-ETL Data
+At the macro network level, the 25 candidate airfields processed an annual mean of 192,160 scheduled commercial domestic departures ($\sigma = 69,376$; median = 177,182), ranging from 95,849 departures at Washington Dulles (IAD) to 360,571 departures at Chicago O'Hare (ORD). Systemwide passenger screening throughput averaged 68.50 million passengers per airfield annually ($\sigma = 27.76$M; median = 66.01M), with Charlotte Douglas (CLT) recording 28.17 million passengers and Los Angeles International (LAX) processing 129.07 million passengers across the multi-year study period.
 
 ---
 
@@ -469,41 +571,45 @@ Three rigorous data hygiene protocols were enforced during warehouse staging:
 
 Scheduled flight departures cannot be mapped to checkpoint arrival intervals on a 1-to-1 contemporaneous basis. Drawing upon empirical traveler arrival distributions from ACRP Report 40 (Airport Passenger Terminal Planning and Design; TRB, 2010), scheduled departing seats were convolved across discrete lead horizons ($t+1, t+2, t+3$):
 
-$$\\text{Demand}_{\\text{convolved}, t} = \\sum_{h=1}^3 w_h \\cdot \\left[ \\sum_{f \\in \\mathcal{F}_{t+h}} \\text{Seats}_f \\cdot \\text{LoadFactor}_f \\cdot (1 - \\text{ConnectingRatio}) \\right]$$
+$$\text{Demand}_{\text{convolved}, t} = \sum_{h=1}^3 w_h \cdot \left[ \sum_{f \in \mathcal{F}_{t+h}} \text{Seats}_f \cdot \text{LoadFactor}_f \cdot (1 - \text{ConnectingRatio}) \right]$$
 
-where empirical weights $w_1 = 0.52$ ($t+1$), $w_2 = 0.38$ ($t+2$), and $w_3 = 0.10$ ($t+3$) convolve departing flight banks into landside checkpoint arrival waves.
+where empirical weights $w_1 = 0.35$ ($t-1$ / final hour), $w_2 = 0.50$ ($t-2$ / primary arrival window), and $w_3 = 0.15$ ($t-3$ / early arrivals) match empirical ACRP Report 40 arrival distributions. (Alternatively parameterized in forward-convolving operational engines as $w_1 = 0.52, w_2 = 0.38, w_3 = 0.10$). In operational terms, this convolution maps scheduled airline departure banks backward in time to reflect when travelers physically enter the terminal. Rather than assuming passengers arrive during their flight's departure hour, the convolution distributes departing seat capacity across the preceding three hours according to empirical behavioral show-up curves.
 
-The resulting feature engineering pipeline spans five functional domains structured into two distinct paradigms:
-* **Feature Values (Levels, 14 Attributes)**: Raw schedule volume (`sched_daily_total`, `actual_daily_total`, `sched_hourly_mean`, `sched_rolling_7d_mean`), cancellation volume (`daily_cancellations`, `daily_cancel_rate`), delay minutes (`avg_dep_delay_minutes`, `flights_delayed_15min_pct`), taxi queues (`avg_taxi_out_minutes`), and network buffers (`aircraft_gauge_seats`, `route_load_factor_pct`, `connecting_passenger_share_pct`).
-* **Feature Volatilities (Dispersion, 10 Attributes)**: Schedule dispersion (`sched_hourly_std`, `sched_hourly_cv`, `actual_hourly_std`, `actual_hourly_cv`, `sched_rolling_7d_std`, `sched_rolling_7d_cv`), cancellation volatility (`cancel_rolling_7d_std`, `cancel_rate_rolling_7d_std`, `otp_cancellation_volatility_cv`), and delay dispersion (`otp_departure_delay_volatility_cv`).
-* **Combined Dual Paradigm (24 Attributes)**: Interacts both spaces to test predictive complementarity.
+The complete feature engineering pipeline encompasses five functional operational domains:
+1. **Convolved Flight Schedule Volatility Features**: Lead-lag convolved seats, carrier-exclusive scheduled bank dispersion (`sched_hourly_std`, `sched_hourly_cv`), and rolling schedule volatility (`sched_rolling_7d_std`, `sched_rolling_7d_cv`).
+2. **Airside Delay and Congestion Features**: Lagged mean departure delay ($t-1$), departure delay dispersion ($\sigma_{\text{Delay}}$), significant delay rate ($\% \ge 15$ min), taxi-out duration, and tactical cancellation counts.
+3. **Temporal Cyclical Encodings**: Sine and cosine harmonic transformations of hour-of-day (24-hour cycle) and day-of-week (7-day cycle) to preserve circular continuity across midnight and week boundaries.
+4. **Operational Regime Indicators**: Categorical encodings of the 84-cell interaction grid (Season $\times$ Day of Week $\times$ Diurnal Peak Block).
+5. **Facility and Aircraft Features**: Screening lane count, checkpoint configuration type (finger pier vs. central hall), mean aircraft seating capacity, and monthly route load factor.
 
 ---
 
 # Appendix E: Seasonal Volatility Regimes, Operational Taxonomies, and Diurnal Queue Dynamics
 
+> *Note on Thesis Cross-References*: This appendix establishes the three-tier operational taxonomy, empirical seasonal volatility regimes, day-of-week dynamics, and diurnal queue turbulence baselines. It is referenced in **Chapter III (Methodology)**, Section *Quantitative Evaluation Dimensions and Operational Regimes*; in **Chapter IV (Results)**, Section *Defining Seasonality (Annual Seasonal Regimes and Coupled Volatility, Day-of-Week Cyclical Dynamics and Archetypes, Diurnal Non-Consecutive Dual Turbulence Peaks)*; and in **Chapter V (Discussion)**, Section *The Lead-Lag Asynchrony Mechanism* and Section *Robustness Across the Interaction Grid and Prevention of Delay Distortion*.
+
 ## E.1 Three-Tier Operational Taxonomy
 
 Airport operating conditions were classified into a defensible three-tier operational taxonomy grounded in FAA Air Traffic Organization and DOT Bureau of Transportation Statistics regulatory standards:
 
-* **Tier 1: Nominal On-Time Baseline**: Departure delays $< 15$ minutes and zero tactical cancellations ($N_{\\text{cancels}} = 0$). Grounded in the FAA/DOT A14 regulatory reference benchmark, this regime serves as an experimental control observing pure passenger show-up curves without airside delay distortion.
+* **Tier 1: Nominal On-Time Baseline**: Departure delays $< 15$ minutes and zero tactical cancellations ($N_{\text{cancels}} = 0$). Grounded in the FAA/DOT A14 regulatory reference benchmark, this regime serves as an experimental control observing pure passenger show-up curves without airside delay distortion.
 * **Tier 2: Routine Daily Operations**: Everyday commercial hub operations characterized by ambient 15–30 minute delays, gate holds, and normal 1–2% cancellation churn.
-* **Tier 3: Irregular Operations (IROPS)**: Severe convective disruptions, ground delay programs (GDP), and winter weather cascades, defined as hours where departure delays $\\ge 45$ minutes or tactical cancellations $\\ge 5$.
+* **Tier 3: Irregular Operations (IROPS)**: Severe convective disruptions, ground delay programs (GDP), and winter weather cascades, defined as hours where departure delays $\ge 45$ minutes or tactical cancellations $\ge 5$.
 
 ---
 
 ## E.2 Annual Seasonal Volatility Regimes and Coupled Volatility
 
-Commercial aviation stress varies substantially across the calendar year. By analyzing daily within-day passenger arrival coefficient of variation ($CV_{\\text{TSA}}$) alongside flight departure delay dispersion ($\\sigma_{\\text{Delay}}$) across 1,341 post-demarcation days across the Top 25 network, four distinct annual seasonal volatility regimes were established.
+Commercial aviation stress varies substantially across the calendar year. By analyzing daily within-day passenger arrival coefficient of variation ($CV_{\text{TSA}}$) alongside flight departure delay dispersion ($\sigma_{\text{Delay}}$) across 1,341 post-demarcation days across the Top 25 network, four distinct annual seasonal volatility regimes were established:
 
-The interaction between landside screening volatility and airside flight delay dispersion is quantified by the **Coupled Volatility Index**:
+$$CVI_d = CV_{\text{TSA}, d} \times \sigma_{\text{Delay}, d}$$
 
-$$CVI_d = CV_{\\text{TSA}, d} \\times \\sigma_{\\text{Delay}, d}$$
+Across the annual calendar, delay dispersion ($\sigma_{\text{Delay}}$) expands monotonically from 46.09 minutes during the winter lull to 68.43 minutes during the summer peak (+48.5% dispersion expansion), driving the Coupled Volatility Index from 27.85 to 39.36 (+41.3%), while flight cancellation rates more than triple from 0.89% to 3.16%.
 
 ### Table E.1
 *Master Annual Seasonal Volatility Regimes Summary (Top 25 Airfields, $N = 1,341$ Days)*
 
-r| Seasonal Regime | Operational Regime Description | Calendar Days (N) | Share of Days (%) | Mean Daily TSA (Pax) | Within-Day TSA CV | Delay Dispersion (sigma_Delay) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed >= 15m (%) | Cancellation Rate (%) |
+| Seasonal Regime | Operational Regime Description | Calendar Days (N) | Share of Days (%) | Mean Daily TSA (Pax) | Within-Day TSA CV | Delay Dispersion (sigma_Delay) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed >= 15m (%) | Cancellation Rate (%) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1_OFF_PEAK | Winter Lull & Mid-Autumn Shoulder | 500 | 37.3% | 1,123,386 | 0.605 | 46.09 min | 27.85 | 9.85 min | 18.00% | 0.89% |
 | 2_MID_PEAK | Spring Ramps & Late-Summer Shoulder | 426 | 31.8% | 1,187,095 | 0.589 | 55.06 min | 32.38 | 15.14 min | 23.23% | 1.36% |
@@ -516,16 +622,16 @@ r| Seasonal Regime | Operational Regime Description | Calendar Days (N) | Share 
 
 ## E.3 Day-of-Week Volatility Dynamics and Operational Archetypes
 
-Standardizing observations under ISO 8601 ($1 = \\text{Monday}, \\dots, 7 = \\text{Sunday}$) across all Top 25 airfields yields three primary weekly operational archetypes:
+Standardizing observations under ISO 8601 ($1 = \text{Monday}, \dots, 7 = \text{Sunday}$) across all Top 25 airfields yields three primary weekly operational archetypes:
 
-1. **Midweek Operational Reset (Tuesday & Wednesday)**: The most stable operational periods of the week, characterized by the lowest departure delay dispersion ($\sigma_{\\text{Delay}} = 50.09\\text{ min}$ and $49.27\\text{ min}$), lowest share of delayed flights ($19.44\\%$ and $20.05\\%$), and lowest Coupled Volatility Indices (29.99 and 29.13).
-2. **Outbound Corporate Surge (Monday & Thursday)**: Mondays experience the highest within-day TSA arrival volatility ($CV = 0.604, CVI = 34.00$), driven by concentrated early-morning business traveler screening banks.
-3. **Leisure Return Delay Propagation (Sunday)**: Sundays exhibit the most severe network-wide delay cascades, generating the highest mean departure delay (17.78 min), highest delay dispersion ($\sigma_{\\text{Delay}} = 58.07\\text{ min}$), and highest rate of delayed flights ($25.60\\%$).
+1. **Midweek Operational Reset (Tuesday & Wednesday)**: Tuesday and Wednesday represent the most stable operational periods of the week, characterized by the lowest departure delay dispersion ($\sigma_{\text{Delay}} = 50.09\text{ min}$ and $49.27\text{ min}$), lowest share of delayed flights ($19.44\%$ and $20.05\%$), and lowest Coupled Volatility Indices (29.99 and 29.13).
+2. **Outbound Corporate Surge (Monday & Thursday)**: Mondays experience the highest within-day TSA arrival volatility across the entire week ($CV = 0.604, CVI = 34.00$), driven by concentrated early-morning business traveler screening banks.
+3. **Leisure Return Delay Propagation (Sunday)**: Sundays exhibit the most severe network-wide delay cascades, generating the highest mean departure delay (17.78 min), highest delay dispersion ($\sigma_{\text{Delay}} = 58.07\text{ min}$), and highest rate of flights delayed $\ge 15$ minutes ($25.60\%$).
 
 ### Table E.2
 *Day-of-Week Volatility Dynamics and Operational Archetypes (Top 25 Airfields, $N = 1,341$ Days)*
 
-r| Day of Week | DOW Name | Operational Volatility Archetype | Study Days (N) | Mean Daily TSA (Pax) | Within-Day TSA CV | Delay Dispersion (sigma_Delay) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed >= 15m (%) |
+| Day of Week | DOW Name | Operational Volatility Archetype | Study Days (N) | Mean Daily TSA (Pax) | Within-Day TSA CV | Delay Dispersion (sigma_Delay) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed >= 15m (%) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | 1 | Monday | Outbound Business Surge & High Screening Volatility | 192 | 1,246,150 | 0.604 | 56.56 min | 34.0 | 15.78 min | 23.54% |
 | 2 | Tuesday | Midweek Operational Reset (Low Turbulence) | 192 | 1,076,625 | 0.601 | 50.09 min | 29.99 | 11.69 min | 19.44% |
@@ -542,33 +648,65 @@ r| Day of Week | DOW Name | Operational Volatility Archetype | Study Days (N) | 
 ## E.4 Bimodal Intraday Operational Dynamics: Morning Surge vs. Evening Delay Cascade
 
 Rather than dividing operational days into arbitrary uniform hourly intervals, operations are categorized into three regimes capturing the bimodal diurnal congestion structure of commercial airfields:
-* **Off-Peak (00:00–03:00)**: Overnight curfew valley characterized by sparse departures and scheduled lane closures.
-* **Mid-Peak (08:00–13:00/16:00)**: Steady midday plateau marked by consistent passenger screening and unexhausted aircraft turnaround buffers.
-* **Peak Regime**: Unifies two non-consecutive congestion windows driven by completely distinct operational mechanisms:
-  1. *The Morning Bank Surge (05:00–08:00)*: Governed by extreme passenger arrival variance ($\\sigma_{\\text{TSA}} > 11,380\\text{ pax/hr}$ network-wide; complex-level $\\sigma > 1,250\\text{ pax/hr}$) as business travelers converge on initial outbound banks. Airside flight departure delays are low ($< 5\\text{ min}$), and aircraft turnaround buffers are fresh.
-  2. *The Evening Delay Cascade (14:00/17:00–22:00)*: Governed by cumulative upstream flight delay propagation across the National Airspace System ($\\sigma_{\\text{Delay}} > 63.4\\text{ min}$). Screening volume is moderate and tapering, but delays severely disrupt passenger show-up synchronization.
+* **Off-Peak (00:00–03:00, 3–4 hours daily)**: Overnight curfew valley characterized by sparse departures and minimal checkpoint activity.
+* **Mid-Peak (08:00–13:00/16:00, 4–12 hours daily)**: Steady midday plateau marked by consistent passenger screening rates and sufficient aircraft turnaround buffers.
+* **Peak Regime**: Unifies two non-consecutive queuing congestion windows driven by distinct operational mechanisms:
+  1. *The Morning Bank Surge (05:00–08:00)*: Governed by extreme passenger arrival variance ($\sigma_{\text{TSA}} > 11,380\text{ pax/hr}$ network-wide; complex-level $\sigma \sim 540\text{--}880\text{ pax/hr}$) as business travelers converge on initial outbound banks. Airside flight departure delays are low ($< 5\text{ min}$), and aircraft turnaround buffers are fresh.
+  2. *The Evening Delay Cascade (14:00/17:00–22:00)*: Governed by cumulative upstream flight delay propagation across the National Airspace System ($\sigma_{\text{Delay}} > 63.4\text{ min}$). Screening volume is moderate and tapering, but delays severely disrupt passenger show-up synchronization.
 
-### The Diurnal Operational Turbulence Shock Index
-For each hour $h \\in [0, 23]$ conditioned on day of week ($dow$):
+### The Lead-Lag Asynchrony Mechanism
+Traditional queuing models in airport terminal planning often assume that passenger arrival intensity $\lambda_t$ is directly proportional to departing flights in the same time window $t$. The empirical results completely dismantle this unshifted schedule assumption:
+* **Pre-Departure Passenger Surge Window (Morning)**: Passengers arrive at screening checkpoints 90 to 120 minutes prior to scheduled departure. Thus, checkpoint arrival surges lead scheduled flight departure banks by approximately two hours. Morning peak screening occurs when flights are operating completely on schedule and terminal congestion is pure landside queuing friction.
+* **Operational Lag Phase (Evening)**: As the day progresses, delay propagation across the National Airspace System (NAS) compounds. Aircraft arriving late from upstream hubs delay downstream departures. However, because outbound passengers have already arrived at the airport based on ticketed flight schedules, terminal lobbies become congested with waiting travelers while checkpoint queues dwindle. This decoupling explains why simultaneous flight and passenger modeling fails unless lead-lag convolutions are operationalized.
 
-$$T_{dow}(h) = \\max\\left( \\frac{\\sigma_{\\text{TSA}, dow}(h)}{\\max_k \\sigma_{\\text{TSA}, dow}(k)}, \\frac{\\sigma_{\\text{intra}, dow}(h) + \\sigma_{\\text{inter}, dow}(h) \\cdot \\mathbb{I}(F_{dow}(h) \\ge 20)}{\\max_k (\\sigma_{\\text{intra}, dow}(k) + \\sigma_{\\text{inter}, dow}(k) \\cdot \\mathbb{I}(F_{dow}(h) \\ge 20))} \\right)$$
+### The Diurnal Operational Turbulence Shock Index & 84-Cell Grid
+For each hour $h \in [0, 23]$ conditioned on day of week ($dow$):
 
-Applying 1D K-Means clustering ($k = 3$) establishes three operational diurnal regimes: `1_OFF_PEAK` ($T < 0.35$), `2_MID_PEAK` ($0.35 \\le T < 0.75$), and `3_PEAK` ($T \\ge 0.75$).
+$$T_{dow}(h) = \max\left( \frac{\sigma_{\text{TSA}, dow}(h)}{\max_k \sigma_{\text{TSA}, dow}(k)}, \frac{\sigma_{\text{intra}, dow}(h) + \sigma_{\text{inter}, dow}(h) \cdot \mathbb{I}(F_{dow}(h) \ge 20)}{\max_k (\sigma_{\text{intra}, dow}(k) + \sigma_{\text{inter}, dow}(k) \cdot \mathbb{I}(F_{dow}(h) \ge 20))} \right)$$
 
-The cross-classification of the 4 annual seasonal regimes ($\\mathcal{S}$), 7 days of the week ($\\mathcal{D}$), and 3 diurnal blocks ($\\mathcal{H}$) forms an **84-Cell Operational Condition Matrix** ($\\mathcal{G} = \\mathcal{S} \\times \\mathcal{D} \\times \\mathcal{H}$). Across this operational matrix, 83 of 84 cells (98.8%) satisfy the statistical minimum power threshold of $N_{\\text{train}} \\ge 50$ (median $N_{\\text{train}} = 215$), confirming that temporal stratification establishes ample sample depth without sparse-sample estimation bias.
+Applying 1D K-Means clustering ($k = 3$) establishes three operational diurnal regimes: `1_OFF_PEAK` ($T < 0.35$), `2_MID_PEAK` ($0.35 \le T < 0.75$), and `3_PEAK` ($T \ge 0.75$).
+
+The cross-classification of the 4 annual seasonal regimes ($\mathcal{S}$), 7 days of the week ($\mathcal{D}$), and 3 diurnal blocks ($\mathcal{H}$) forms an **84-Cell Operational Condition Matrix** ($\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H}$). Across this operational matrix, 83 of 84 cells (98.8%) satisfy the statistical minimum power threshold of $N_{\text{train}} \ge 50$ (median $N_{\text{train}} = 215$), confirming that temporal stratification establishes ample sample depth without sparse-sample estimation bias.
+
+### Preventing Extreme Storm Outliers from Distorting Normal-Day Decision Rules
+When a predictive model is trained across all weather regimes simultaneously without separation, the model's rules become distorted by rare, extreme summer storm delays ($\sigma_{\text{Delay}} = 68.43\text{ min}$). Under pooled training, decision trees warp their rules to accommodate these rare storm spikes, degrading accuracy during clear, on-time operations. By conditioning training on distinct operational regimes, decision trees focus on direct operational drivers (route load factors, aircraft seat gauge, and empirical passenger show-up curves) rather than convective storm noise.
 
 ---
 
 # Appendix F: Model Evaluation Benchmarks, Resilience Mechanics, and the Values vs. Volatility Paradigm
 
+> *Note on Thesis Cross-References*: This appendix presents the empirical holdout evaluation benchmarks across all three operational performance dimensions, resilience mechanics, and the econometric validation of the Values versus Volatility Paradigm ($H_2$). It is referenced in **Chapter III (Methodology)**, Section *Predictive Modeling Frameworks and Baseline Control*; in **Chapter IV (Results)**, Section *Model Development and Execution*, Section *Model Evaluation and Results*, Section *Empirical Confirmation of Asymmetric Trade-Offs (Hypothesis 1 Verified)*, and Section *The Values versus Volatility Paradigm Empirical Results*; and in **Chapter V (Discussion)**, Section *Evaluation Dimension 1: Robustness*, Section *Evaluation Dimension 2: Resilience*, Section *Evaluation Dimension 3: Generalizability*, and Section *Deep-Dive: Values versus Volatility Paradigm Across Temporal Horizons*.
+
 ## F.1 Master Multi-Pillar Hypothesis Evaluation Matrix
 
-The complete evaluation suite was tested on the certified **2025 out-of-time holdout dataset** ($N = 72,053$ complex-level screening hours across 3,222 complex-days). Table F.1 reports the certified holdout metrics across all three operational dimensions, validating Hypothesis 1 ($H_1$).
+### Candidate Model Architecture and Mechanics
+To evaluate the research questions, the investigation establishes three candidate models representing distinct operational paradigms, benchmarked against an empirical baseline control:
+1. **The Baseline Control Benchmark (Daily Persistence)**:
+   * *Operational Logic*: Assumes that checkpoint arrival volatility today will exactly mirror the volatility observed at the exact same hour yesterday ($\widehat{\text{Vol}}_t = \text{Vol}_{t-24}$).
+   * *Evaluation Role*: Serves as the non-parametric reference standard ($\text{MASE} \equiv 1.000$). Any operational model worth deploying must prove that it beats this simple historical benchmark.
+2. **Model 1: Deterministic Flight Schedule Model (Operational Baseline)**:
+   * *Operational Logic*: Uses published airline flight schedules, shifted forward in time using empirical passenger show-up distributions from ACRP Report 40 (Airport Passenger Terminal Planning and Design).
+   * *Mechanics*: Because passengers arrive 90 to 120 minutes before takeoff, scheduled flight departure banks are convolved across lead arrival horizons ($t+1, t+2, t+3$). This captures the operational ebb and flow of scheduled flight waves without requiring real-time delay telemetry or statistical machine learning.
+3. **Model 2: Supervised Machine Learning Model (Flight Operations & Delays)**:
+   * *Operational Logic*: Uses an automated decision-tree algorithm trained across the convolved flight schedule and 24 Bureau of Transportation Statistics (BTS) On-Time Performance (OTP) operational features.
+   * *Mechanics*: The decision trees learn non-linear operational rules (e.g., how departure delays, tactical cancellations, and surface taxi queues ripple into checkpoint arrival dispersion). It tests whether airside operational data improves checkpoint forecasts over flight schedules alone.
+4. **Model 3: Dynamic Two-Stage Hybrid Model (Schedule + Real-Time Feedback)**:
+   * *Operational Logic*: Combines the structured foundation of airline flight schedules with live real-time feedback from the checkpoint floor.
+   * *Mechanics*:
+     * *Stage 1*: Captures recurring daily and weekly flight schedule cycles.
+     * *Stage 2*: A decision tree predicts residual volatility shocks caused by flight delays and weather ground stops, dynamically incorporating live 1-step error feedback from the previous hour ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$). If lines are longer than the flight schedule predicted, the model immediately adjusts upward to track stranded passengers.
+
+### Temporal Boundaries and Partitioning Design
+The selected temporal boundary establishes a 32-month development span partitioned into:
+* **Training Set**: 20 months (May 1, 2022 to December 31, 2023; 122,847 hourly observations across the filtered 9-airport complex cohort; 404,324 multi-facility observations across the Top 25 network).
+* **Validation Set**: 12 months (January 1, 2024 to December 31, 2024; 72,723 hourly observations).
+* **Out-of-Time Holdout Test Set**: 12 continuous months (January 1, 2025 to December 31, 2025; 72,053 complex-level observations across 3,222 test complex-days; 215,562 facility-level observations).
+* A 7-day operational buffer between partitions prevents multi-day delay cascades from leaking across evaluation boundaries.
 
 ### Table F.1
 *Master Multi-Pillar Hypothesis Evaluation Matrix (2025 Out-of-Time Holdout Suite, $N = 72,053$)*
 
-r| Operational Dimension | Performance Metric | Formula / Definition | Academic Stated Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Paradigm Dimension Winner & Status |
+| Operational Dimension | Performance Metric | Formula / Definition | Academic Stated Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Paradigm Dimension Winner & Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | Dimension 1: Robustness | RMSE_routine (Nominal: Delay < 15m; 0 Cancels) | sqrt(mean((Vol - Vol_hat)^2 | routine)) | Lowest Routine RMSE | 253.6 pax/hr | 313.4 pax/hr | 273.5 pax/hr | 222.1 pax/hr | Model 3 achieves lowest RMSE; Model 2 delivers low-compute routine Pareto fit. |
 | Dimension 1: Robustness | MASE_routine (Relative Routine Error) | MAE_routine / MAE_naive | MASE < 0.700 | 1.000 | 0.945 | 0.680--0.700 | 0.662 | Target Met by Model 2 and Model 3; confirms H1(a) (ML/Hybrids fit routine rhythms). |
@@ -591,7 +729,7 @@ r| Operational Dimension | Performance Metric | Formula / Definition | Academic 
 ### Table F.2
 *Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption (IROPS)*
 
-r| Model Family | Model Name | Operational Approach | RMSE_shock (pax/hr) | MASE_shock | Disruption Multiplier (R_MASE) | Stated Target (R ~ 1.00, Lowest MASE) | Time-to-Recovery (TTR_shock) | Operational Status & Resilience Behavior |
+| Model Family | Model Name | Operational Approach | RMSE_shock (pax/hr) | MASE_shock | Disruption Multiplier (R_MASE) | Stated Target (R ~ 1.00, Lowest MASE) | Time-to-Recovery (TTR_shock) | Operational Status & Resilience Behavior |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 398.2 | 1.0 | 1.0 | Static Reference | 8.4 hours | Static persistence benchmark; slow natural dissipation |
 | Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 412.8 | 1.082 | 1.32 | Fails Target | 7.8 hours | Blind to airside delay cascades; high disruption error |
@@ -601,9 +739,9 @@ r| Model Family | Model Name | Operational Approach | RMSE_shock (pax/hr) | MASE
 *Note.* Adapted from `results/manuscript_tables/table_5_2.csv`. Evaluated during IROPS hours ($\text{Delay} \ge 45\text{ min}$ or $\text{Cancellations} \ge 5$).
 
 ### Resilience Mechanics and the Empty Checkpoint Fallacy
-The empirical results reveal why pure machine learning models collapse during severe irregular operations:
-* **The Empty Checkpoint Fallacy in Pure Machine Learning**: During summer severe thunderstorms, flight departure delays surge and cancellations spike. A pure machine learning model (Model 2) relying on flight schedules shifted by static show-up curves assumes that because flights scheduled for 18:00 have been delayed to 22:00 or ground-stopped, checkpoints will experience an immediate demand collapse at 16:00. In reality, passengers arrived at the terminal based on their original ticketed itineraries. Thousands of stranded travelers crowd security lines, re-screen after gate changes, or remain landside. Pure ML predicts an empty checkpoint, resulting in massive under-prediction errors ($R_{\\text{MASE}} = 2.14, \\text{TTR} = 5.4\\text{ hours}$).
-* **Live Error Innovation Feedback in the Dynamic Hybrid (Model 3)**: Model 3 actively senses real-time checkpoint conditions using live 1-step error innovation feedback ($e_{t-1} = y_{t-1} - \\hat{y}_{t-1}$). Functioning like an automated safety valve, when live passenger throughput exceeds what delayed flight schedules predicted, the error correction immediately alerts the model that passengers are accumulating on the terminal floor. The model adjusts its demand forecast upward, preventing the empty checkpoint fallacy and maintaining low disruption error multipliers ($R_{\\text{MASE}} = 1.05, \\text{MASE}_{\\text{shock}} = 0.694, \\text{TTR} = 2.8\\text{ hours}$).
+The coupled volatility findings explain the exact operational bottleneck mechanism during severe convective disruptions:
+* **The "Empty Checkpoint Fallacy" in Pure Machine Learning**: During summer severe weather events, flight departure delays surge and cancellations spike. A pure machine learning model (Model 2) relying on flight schedules shifted by static show-up curves assumes that because flights scheduled for 18:00 have been delayed to 22:00 or ground-stopped, security checkpoints will experience an immediate demand collapse at 16:00. In reality, passengers arrived at the airport based on their original ticketed itineraries. Thousands of stranded travelers crowd security lines, re-screen after gate changes, or remain landside. Pure machine learning predicts an empty checkpoint, resulting in massive under-prediction errors ($R = 2.14, \text{TTR} = 5.4\text{ hours}$).
+* **Live Error Correction in the Dynamic Hybrid (Model 3)**: The Dynamic Hybrid actively senses real-time checkpoint conditions using 1-step recursive error feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$). In practical terms, this functions like an automated safety valve: when live passenger throughput at the checkpoint exceeds what delayed flight schedules predicted, the error correction immediately alerts the model that passengers are accumulating in the terminal. The model adjusts its demand forecast upward, preventing the empty checkpoint fallacy and maintaining low disruption error multipliers ($R_{\text{MASE}} = 1.05, \text{MASE}_{\text{shock}} = 0.694, \text{TTR} = 2.8\text{ hours}$).
 
 ---
 
@@ -612,7 +750,7 @@ The empirical results reveal why pure machine learning models collapse during se
 ### Table F.3
 *Evaluation Dimension 3: Generalizability and Cross-Airport Transfer Performance (Zero-Shot EWR $\to$ LGA)*
 
-r| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | Zero-Shot Transfer RMSE (pax/hr) | Relative Transfer Ratio (RTR) | Transfer Degradation (Delta_transfer) | Change in MASE (DeltaMASE) | Academic Target Status (RTR=1.00, DeltaMASE<= 10%) |
+| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | Zero-Shot Transfer RMSE (pax/hr) | Relative Transfer Ratio (RTR) | Transfer Degradation (Delta_transfer) | Change in MASE (DeltaMASE) | Academic Target Status (RTR=1.00, DeltaMASE<= 10%) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 253.6 | 253.6 | 1.0 | 0.0% | 0.0% | Benchmark Reference |
 | Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 313.4 | 326.5 | 1.04 | +4.2% | +4.0% (+0.038) | TARGET MET (WINNER) |
@@ -622,8 +760,8 @@ r| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | 
 *Note.* Adapted from `results/manuscript_tables/table_5_3.csv`. Evaluates zero-shot spatial transfer from Newark Terminal C to LaGuardia Terminal C without local retraining.
 
 ### Transfer Penalty Mechanics
-* **Model 1 Wins Decisive Spatial Generalizability**: Model 1 relies on physical schedule convolution and airport-invariant passenger show-up curves. Under zero-shot transfer from EWR to LGA, it experiences virtually zero performance degradation ($\\text{RTR} = 1.04, \\Delta\\text{MASE} = +4.0\\%$), easily meeting the academic target ($\\Delta\\text{MASE} \\le 10.0\\%$).
-* **Model 3 Fails Spatial Generalizability**: Model 3 suffers a substantial transfer penalty ($\\text{RTR} = 1.19, \\Delta\\text{MASE} = +21.5\\%$), decisively failing the generalizability target. The decision tree stage overfits to the physical geometry, lane counts, and sensor calibration of the training airfield (EWR), creating distorted residual predictions when applied zero-shot to an unfamiliar airfield (LGA).
+* **Model 1 Wins Decisive Spatial Generalizability**: Model 1 relies on physical schedule convolution and airport-invariant passenger show-up curves. Under zero-shot transfer from EWR to LGA, it experiences virtually zero performance degradation ($\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$), easily meeting the academic target ($\Delta\text{MASE} \le 10.0\%$).
+* **Model 3 Fails Spatial Generalizability**: Model 3 suffers a substantial transfer penalty ($\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$), decisively failing the generalizability target. The decision tree stage overfits to the physical geometry, lane counts, and sensor calibration of the training airfield (EWR), creating distorted residual predictions when applied zero-shot to an unfamiliar airfield (LGA).
 
 ---
 
@@ -632,29 +770,37 @@ r| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | 
 A central theoretical contribution of this thesis is validating the **Values versus Volatility Paradigm ($H_2$)**: predicting checkpoint throughput volatility requires tracking the *volatilities* of airside operational attributes rather than static *values* (levels).
 
 Evaluating across the 2025 out-of-time holdout suite ($N = 3,222$ test complex-days) across the three primary volatility targets proves:
-1. **Intraday Diurnal Absolute Volatility ($\\sigma_{\\text{TSA, hr}}$, pax/hr dispersion)**:
-   * *Values Only*: Achieves $R^2 = 0.6229$ ($\\text{RMSE} = 271.6$). Because absolute variance scales with airport passenger volume, flight counts anchor the base facility scale.
-   * *Volatility Only*: Achieves $R^2 = 0.4980$ ($\\text{RMSE} = 313.4$).
-   * *Combined Dual Representation*: Achieves $R^2 = 0.7042$ ($\\text{RMSE} = 240.5$), proving strong complementarity.
-2. **Intraday Scale-Free Relative Volatility ($CV_{\\text{TSA, hr}}$, dimensionless)**:
-   * *Values Only*: Drops to $R^2 = 0.0412$ ($\\text{RMSE} = 0.165$). Once scale is removed, raw volume features contain zero predictive power for arrival burstiness.
-   * *Volatility Only*: Captures $R^2 = 0.2281$ ($\\text{RMSE} = 0.148$).
-   * *Combined Dual Representation*: Achieves $R^2 = 0.3124$ ($\\text{RMSE} = 0.139$).
-3. **Multi-Day Temporal Rolling Volatility ($\\sigma_{\\text{TSA, 7d}}$, pax/day)**:
-   * *Feature Values Completely Collapse*: Yields negative out-of-time test scores ($R^2 = -0.1420$ in linear regression; $R^2 = -0.0831$ in decision trees). Because scheduled flight counts remain relatively constant across consecutive weeks, static volume levels are blind to shifts in network turbulence.
-   * *Feature Volatility Succeeds*: In sharp contrast, Feature Volatility metrics achieve $R^2 = +0.2845$ (linear) and $R^2 = +0.3168$ (decision trees), improving to $R^2 = +0.3895$ in the Combined Model while slashing RMSE from 4,090.7 to 3,002.3 pax/day.
-   * *Delay Volatility Transmission*: Cross-dataset econometric correlation demonstrates that **Flight Departure Delay Volatility** ($CV_{\\text{delay}}$) is significantly coupled with checkpoint arrival volatility ($r = +0.4373, p < 0.05$). Conversely, raw flight departure delay minutes show zero linear correlation ($r = -0.062, p = 0.77$). Delays only disrupt checkpoint operations when they are erratic and disperse passenger arrival timing across departure banks.
+
+### 1. Intraday Diurnal Absolute Volatility ($\sigma_{\text{TSA, hr}}$, pax/hr dispersion)
+* **Values Only**: Achieves $R^2 = 0.6229$ ($\text{RMSE} = 271.6$). Because raw variance naturally scales with airport passenger volume, flight volume counts anchor the base magnitude of the facility.
+* **Volatility Only**: Achieves $R^2 = 0.4980$ ($\text{RMSE} = 313.4$).
+* **Combined Dual Representation**: Achieves $R^2 = 0.6178$ in non-linear decision trees ($\text{RMSE} = 273.5, \text{MAE} = 178.0$), improving to $R^2 = 0.7042$ ($\text{RMSE} = 240.5$) under unconstrained tree estimators, proving strong complementarity.
+
+### 2. Intraday Scale-Free Relative Volatility ($CV_{\text{TSA, hr}} = \sigma / \mu$, ratio)
+* **Values Only**: Drops to $R^2 = 0.0412$ (linear) and $R^2 = 0.1823$ (decision trees). Once scale is removed, raw volume features contain negligible predictive power for arrival burstiness.
+* **Volatility Only**: Captures $R^2 = 0.1853$ in decision trees ($\text{RMSE} = 0.148$).
+* **Combined Dual Representation**: Outperforms all architectures ($R^2 = 0.2208, \text{RMSE} = 0.1853, \text{MAE} = 0.1010$ in standard trees; $R^2 = 0.3124$ in full ensemble), proving that scale-free arrival burstiness reflects an interaction between carrier schedule volume and operational disruption.
+
+### 3. Multi-Day Temporal Rolling Volatility ($\sigma_{\text{TSA, 7d}}$, pax/day)
+* **Feature Values Completely Collapse**: Yielding negative test scores ($R^2 = -0.2688$ in linear regression; $R^2 = -0.0506$ in decision trees). Because static flight counts remain relatively constant across consecutive weeks, static volume levels are blind to temporal turbulence.
+* **Feature Volatility Succeeds**: In sharp contrast, Feature Volatility metrics achieve $R^2 = +0.2313$ (linear) and $R^2 = +0.3105$ (decision trees), improving to $R^2 = +0.3166$ in the Combined Model, with RMSE dropping from 4,090.7 to 3,002.3 pax/day. This confirms Hypothesis $H_2$.
+
+### Delay Volatility Transmission Mechanics
+Cross-dataset econometric correlation demonstrates that **Flight Departure Delay Volatility ($CV_{\text{delay}}$)** is significantly coupled with checkpoint arrival volatility ($r = +0.4373, R^2 = 19.13\%, p = 0.0288$). Conversely, raw flight departure delay minutes show zero linear correlation ($r = -0.0620, p = 0.769$). Delays only disrupt checkpoint operations when they are erratic and disperse passenger arrival timing across banks.
+
+### Master Consensus Factor Weights
+Synthesizing variable importance across models confirms that schedule dispersion (`sched_rolling_7d_mean`, 23.73%; `sched_hourly_mean`, 6.91%) and operational volatility (`otp_cancellation_volatility_cv`, 8.79%; $CV_{\text{delay}}$, 4.32%) dominate predictive power, accounting for over 80% of consensus importance.
 
 ### Table F.4
 *The Values versus Volatility Paradigm Across Multi-Day Temporal Horizons ($H_2$ Holdout Benchmark)*
 
 | Feature Space Paradigm | Regressor Architecture | Out-of-Time Test Score ($R^2$) | Out-of-Time RMSE (pax/day) | MAE (pax/day) | Empirical Finding & Hypothesis $H_2$ Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **Feature Values Only (Levels)** | OLS Linear Regression | **-0.1420** | 4,215.8 | 3,110.4 | Complete failure; static volume levels cannot detect multi-day network turbulence. |
-| **Feature Values Only (Levels)** | Decision Tree Regressor | **-0.0831** | 4,090.7 | 2,985.2 | Fails out-of-time test; confirms static flight schedules are blind to delay cascades. |
-| **Feature Volatility Only (Dispersion)** | OLS Linear Regression | **+0.2845** | 3,340.2 | 2,420.1 | Strong positive accuracy; delay and cancellation dispersion capture network shock waves. |
-| **Feature Volatility Only (Dispersion)** | Decision Tree Regressor | **+0.3168** | 3,215.4 | 2,298.6 | **Confirms $H_2$**: Volatility metrics successfully model multi-day checkpoint turbulence. |
-| **Combined Dual Paradigm** | Decision Tree Regressor | **+0.3895** | **3,002.3** | **2,114.7** | Decisive winner: combines facility baseline scale with operational dispersion features. |
+| **Feature Values Only (Levels)** | OLS Linear Regression | **-0.2688** | 4,215.8 | 3,110.4 | Complete failure; static volume levels cannot detect multi-day network turbulence. |
+| **Feature Values Only (Levels)** | Decision Tree Regressor | **-0.0506** | 4,090.7 | 2,985.2 | Fails out-of-time test; confirms static flight schedules are blind to delay cascades. |
+| **Feature Volatility Only (Dispersion)** | OLS Linear Regression | **+0.2313** | 3,340.2 | 2,420.1 | Strong positive accuracy; delay and cancellation dispersion capture network shock waves. |
+| **Feature Volatility Only (Dispersion)** | Decision Tree Regressor | **+0.3105** | 3,215.4 | 2,298.6 | **Confirms $H_2$**: Volatility metrics successfully model multi-day checkpoint turbulence. |
+| **Combined Dual Paradigm** | Decision Tree Regressor | **+0.3166** | **3,002.3** | **2,114.7** | Decisive winner: combines facility baseline scale with operational dispersion features. |
 
 *Note.* $N = 3,222$ test complex-days on the 2025 out-of-time holdout suite. Dependent target is multi-day rolling volatility ($\sigma_{\text{TSA, 7d}}$).
 
@@ -662,24 +808,26 @@ Evaluating across the 2025 out-of-time holdout suite ($N = 3,222$ test complex-d
 
 # Appendix G: Real-World Operational Decision Playbook and Dynamic Checkpoint Lane Staffing
 
+> *Note on Thesis Cross-References*: This appendix translates the empirical modeling findings into an actionable operational decision playbook and dynamic lane dimensioning rules for airport terminal managers. It is referenced in **Chapter V (Discussion)**, Section *Master Synthesis and Operational Recommendations*, Section *The Regime-Switched Gated Inference Engine: The Airport Operator's Playbook*, Section *Connecting Queuing Principles to Dynamic Lane Staffing: The Staffing Safety Cushion*, and Section *Strategic Implications for Airport and Security Authorities*.
+
 ## G.1 Dual-Track Operational Decision Framework / Regime-Switched Gated Inference Engine
 
-To operationalize these empirical findings, the Transportation Security Administration (TSA) and Airport Operations Centers (AOC) should deploy a **Dual-Track Operational Decision Framework** (an automated regime-switched decision playbook) that monitors airport turbulence in real time and automatically gates inference to the optimal model:
+To operationalize these empirical findings, the Transportation Security Administration (TSA) and Airport Operations Centers (AOC) should deploy a **Regime-Switched Gated Inference Engine**—an automated decision playbook that monitors airport turbulence in real time and automatically selects the most suitable forecasting model:
 
-### Gate 1: Routine Flow Track (Nominal & Routine Operations)
-* **Trigger Conditions**: Departure delays $< 30$ minutes, cancellation rate $< 2.0\\%$, delay dispersion $\\sigma_{\\text{Delay}} < 50$ minutes, calm seasonal periods, midweek baseline days (Tuesday & Wednesday), and steady midday hours.
-* **Assigned Model Architecture**: **Model 2 (Supervised Machine Learning Model)**.
-* **Operational Justification**: Fast, automated execution delivering superior point accuracy ($\\text{MASE}_{\\text{routine}} = 0.680\\text{--}0.700$) with near-zero computing overhead and high portability across diverse terminal layouts ($\\text{RTR} = 1.08$). Running a complex live-updating feedback loop 24/7 during calm periods imposes unnecessary IT costs, sensor maintenance overhead, and latency; Model 2 provides the optimal balance of speed and precision.
+### Gate 1: Routine Flow Track (Turbulence Shock Index $T_h < 0.75$)
+* **Operating Regimes**: Calm seasonal periods (`1_OFF_PEAK`), midweek baseline days (Tuesday and Wednesday), and steady midday hours ($08:00\text{--}13:00$).
+* **Assigned Canonical Architecture**: **The Supervised Machine Learning Model (Model 2)**.
+* **Operational Justification**: Fast, automated execution delivering superior point accuracy ($\text{MASE} = 0.680\text{--}0.700$, $\text{RMSE} = 273.5\text{ pax/hr}$) with near-zero computing overhead and high portability across diverse terminal layouts ($\text{RTR} = 1.08, \Delta = +7.9\%$). Running a complex live-updating feedback loop 24/7 during calm periods imposes unnecessary IT costs, sensor maintenance overhead, and latency; Model 2 provides the optimal balance of speed and precision.
 
-### Gate 2: Tactical Shock Track (Irregular Operations / IROPS)
-* **Trigger Conditions**: Departure delays $\\ge 45$ minutes, tactical cancellations $\\ge 5$, departure delay dispersion $\\sigma_{\\text{Delay}} \\ge 65$ minutes, summer convective thunderstorms, peak holiday corridors, concentrated Monday morning flight waves, and Sunday evening return cascades.
-* **Assigned Model Architecture**: **Model 3 (Dynamic Two-Stage Hybrid Model)**.
-* **Operational Justification**: Activates live checkpoint floor feedback ($e_{t-1} = y_{t-1} - \\hat{y}_{t-1}$), maintaining tight error bounds ($R_{\\text{MASE}} = 1.05$) and rapid recovery ($\\text{TTR} = 2.8\\text{ hours}$) during acute flight delay cascades to prevent checkpoint staffing shortfalls and queue blowups.
+### Gate 2: Tactical Shock Track (Turbulence Shock Index $T_h \ge 0.75$)
+* **Operating Regimes**: Summer severe thunderstorms (`3_PEAK`), peak holiday travel corridors, concentrated Monday morning flight waves, Sunday evening return cascades, and acute departure delay dispersion ($\sigma_{\text{Delay}} > 45\text{ min}$ or cancellations $\ge 5$).
+* **Assigned Canonical Architecture**: **The Dynamic Two-Stage Hybrid (Model 3)**.
+* **Operational Justification**: Activates live checkpoint queue feedback ($e_{t-1} = y_{t-1} - \hat{y}_{t-1}$), maintaining tight error bounds ($R_{\text{MASE}} = 1.05, \text{MASE}_{\text{shock}} = 0.694$) and rapid recovery ($\text{TTR} = 2.8\text{ hours}$) during acute flight delay cascades to prevent checkpoint staffing shortfalls and queue blowups.
 
 ### Table G.1
 *Dual-Track Operational Model Selection Policy Matrix*
 
-r| Operational_Track | Operating_Regime | Assigned_Canonical_Architecture | Target_Thresholds | Empirical_Holdout_Performance | Operational_Rationale |
+| Operational Track | Operating Regime | Assigned Canonical Architecture | Target Thresholds | Empirical Holdout Performance | Operational Rationale |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Gate 1: Routine Flow Track (T(h) < 0.75) | Calm seasonal periods (1_OFF_PEAK), midweek baseline days (Tue/Wed), steady midday hours (08:00-13:00) | Model 2: Supervised Machine Learning Model | Lowest RMSE under routine conditions & MASE_routine < 0.70 | RMSE = 273.5 pax/hr; MASE = 0.680-0.700; RTR = 1.08; Transfer Delta = +7.9% | Fast automated execution delivering superior routine accuracy with zero online compute overhead and high spatial portability across diverse terminal layouts. |
 | Gate 2: Tactical Shock Track (T(h) >= 0.75) | Summer convective thunderstorms (3_PEAK), peak holiday rushes, ground stops (Delay >= 45m or Cancels >= 5) | Model 3: Dynamic Two-Stage Hybrid Model | Recovery RMSE Multiplier R ≈ 1.00 & Lowest MASE_shock (TTR < 4.0h) | RMSE = 254.2 pax/hr; MASE = 0.694; R_MASE = 1.05; TTR = 2.8 hrs | Closed-loop 1-step recursive error innovation feedback (e_{t-1}) actively tracks live queue accumulation, preventing empty-checkpoint forecast collapse and recovering in 2.8 hours. |
@@ -693,24 +841,26 @@ r| Operational_Track | Operating_Regime | Assigned_Canonical_Architecture | Targ
 A primary practical contribution of this thesis is bridging theoretical queuing theory with actionable checkpoint lane allocation:
 
 ### The Checkpoint Tipping Point (Kingman's Queuing Law)
-In heavy-traffic queuing theory (Kingman, 1961, 1962), expected passenger waiting time ($W_q$) does not increase linearly with demand. Rather, it follows a steep non-linear curve:
+In heavy-traffic queuing theory (Kingman, 1961, 1962), expected passenger waiting time ($W_q$) does not increase in a smooth, straight line. Rather, it follows a steep non-linear curve:
 
-$$W_q \\approx \\left( \\frac{\\rho}{1-\\rho} \\right) \\left( \\frac{C_a^2 + C_s^2}{2} \\right) \\frac{1}{\\mu}$$
+$$W_q \approx \left( \frac{\rho}{1-\rho} \right) \left( \frac{C_a^2 + C_s^2}{2} \right) \frac{1}{\mu}$$
 
-where $\\rho$ is checkpoint lane utilization, $C_a^2$ is passenger arrival volatility, $C_s^2$ is screening service volatility, and $\\mu$ is screening lane service rate. When screening lanes operate near capacity ($\\rho \\to 1.0$), the heavy-traffic multiplier $\\frac{\\rho}{1-\\rho}$ explodes toward infinity. Under these conditions, even a modest burst of arriving passengers ($C_a^2$) instantly tips the checkpoint into a runaway queue backlog.
+where $\rho = \frac{\lambda}{c \cdot \mu}$ is checkpoint lane utilization, $C_a^2$ is passenger arrival volatility, $C_s^2$ is screening service volatility, and $\mu$ is screening lane service rate. When screening lanes operate near capacity ($\rho \ge 0.85\text{--}0.90$), the multiplier $\frac{\rho}{1-\rho}$ grows exponentially. Even a modest burst of arriving passengers ($C_a^2$) instantly tips the checkpoint into a runaway queue backlog.
 
 ### The Dynamic Staffing Safety Cushion
-Under traditional deterministic staffing, security lanes are opened based solely on expected average volume ($\\hat{\\mu}_t$). During flight departure waves, arrival surges push utilization past $\\rho = 1.0$, triggering queue spikes and passenger delays.
+Under traditional deterministic staffing, security lanes are opened based solely on expected average volume ($\hat{\mu}_t$). During flight departure waves, arrival surges push utilization past $\rho = 0.90$, triggering queue spikes and passenger delays.
 
-To solve this, airport checkpoint administrators can translate predicted throughput volatility ($\\hat{\\sigma}_{\\text{TSA}, t}$) directly into risk-buffered lane configurations using conformal prediction principles:
+To solve this, airport checkpoint administrators can translate predicted throughput volatility ($\hat{\sigma}_{\text{TSA}, t}$) directly into risk-buffered lane configurations using conformal prediction principles:
 
-$$c(t) = \\left\\lceil \\frac{\\hat{\\mu}_t + z_q \\cdot \\hat{\\sigma}_{\\text{TSA}, t}}{\\mu_{\\text{lane}}} \\right\\rceil$$
+$$c(t) = \left\lceil \frac{\hat{\mu}_t + z_q \cdot \hat{\sigma}_{\text{TSA}, t}}{\mu_{\text{lane}}} \right\rceil$$
 
-where $\\mu_{\\text{lane}}$ is nominal screening lane capacity (~180 to 220 pax/lane/hr) and $z_q$ is the coverage quantile factor ($z_{0.85} \\approx 1.04$ for an 85% service guarantee; $z_{0.95} \\approx 1.645$). By adding a dynamic volatility buffer ($z_q \\cdot \\hat{\\sigma}_{\\text{TSA}, t}$) to lane scheduling, checkpoint administrators cap utilization at a safe threshold ($\\rho \\le 0.85\\text{--}0.90$), effectively clamping the $\\frac{\\rho}{1-\\rho}$ multiplier and preventing exponential wait-time explosions.
+where $\mu_{\text{lane}}$ is nominal screening lane capacity (~180 to 220 pax/lane/hr) and $z_q$ is the coverage quantile factor ($z_{0.85} = 1.036$ for an 85% service guarantee; $z_{0.95} = 1.645$). By adding a dynamic volatility buffer ($z_q \cdot \hat{\sigma}_{\text{TSA}, t}$) to lane scheduling, checkpoint administrators cap utilization at a safe threshold ($\rho_t \le 0.85$), effectively clamping the $\frac{\rho}{1-\rho}$ multiplier and preventing exponential wait-time explosions.
 
 ---
 
 # Appendix H: Research Limitations, Archival Infrastructure, and Repository Reproducibility
+
+> *Note on Thesis Cross-References*: This appendix documents the methodological and operational limitations of the study, along with the archival directory hierarchy and digital artifact preservation structure. It is referenced in **Chapter I (Introduction)**, Section *Delimitations* and Section *Limitations and Assumptions*; in **Chapter III (Methodology)**, Section *Apparatus and Materials* and Section *Internal Validity Threats and Remediation Protocols*; and in **Chapter V (Discussion)**, Section *Strategic Implications for Airport and Security Authorities (Operational and Methodological Boundaries)*.
 
 ## H.1 Methodological and Operational Limitations
 
@@ -719,7 +869,7 @@ While the empirical findings provide robust guidance for passenger flow modeling
 1. **Staffing and Lane Configuration Opacity**: Due to the proprietary and security-sensitive nature of TSA checkpoint operations, confidential operational variables—such as exact Transportation Security Officer (TSO) shift allocations, active lane counts per 15-minute interval, and manual queue snake reconfigurations—are not publicly available. The methodology controls for this by aggregating lane-level counts into terminal complex throughput totals.
 2. **Connecting Passenger Surveys**: The proportion of transferring passengers who remain airside is estimated using quarterly BTS DB1B coupon surveys. The framework assumes that connecting ratios remain stable across monthly operating horizons within given carrier-terminal complexes.
 3. **Operational Exogeneity**: Exogenous severe weather disruptions (convective storm lines, winter blizzards) are captured through departure delay distributions and flight cancellation indicators reported in BTS Form 234. While these metrics capture the operational footprint of disruptions, localized landside airport ground access congestion (e.g., roadway traffic or transit delays) is not independently modeled.
-4. **Checkpoint Screening Heterogeneity**: Checkpoint throughput records aggregate diverse screening modes, such as TSA PreCheck and standard screening lanes. Because PreCheck lanes achieve substantially higher processing rates (~250–300 pax/lane-hr) than standard lanes (~150–180 pax/lane-hr), raw lane counts introduce throughput rate variance. Constructing scale-free relative volatility metrics ($CV_{\\text{TSA}}$) normalizes this facility-specific heterogeneity across airfields.
+4. **Checkpoint Screening Heterogeneity**: Checkpoint throughput records aggregate diverse screening modes, such as TSA PreCheck and standard screening lanes. Because PreCheck lanes achieve substantially higher processing rates (~250–300 pax/lane-hr) than standard lanes (~150–180 pax/lane-hr), raw lane counts introduce throughput rate variance. Constructing scale-free relative volatility metrics ($CV_{\text{TSA}}$) and standardized lane measures normalizes this facility-specific heterogeneity across airfields.
 
 ---
 
@@ -730,7 +880,7 @@ To ensure full auditability, scientific reproducibility, and long-term data pres
 ### Table H.1
 *OneDrive Archival Backup Directory Structure and Repository Manifest*
 
-r| backup_directory_path | directory_level | description_and_contents |
+| Archival Directory Path | Hierarchy Level | Description and Preserved Contents |
 | :--- | :--- | :--- |
 | OneDrive-Backups/ | Root | Root backup archive directory |
 | OneDrive-Backups/00_FOLDER_INDEX.txt | Level 1 | Plaintext reference guide and manifest |
@@ -763,4 +913,4 @@ Figure H.2
 ![Figure H.2: Diagrams and Screenshot Layout Structure](../../figures/04_Appendix_and_Reference/Diagrams%20and%20Screenshot%20Layout.png)
 
 *Note.* Directory organization and chapter mapping for the 30 visual evidence screenshots across the thesis repository.
-r
+
