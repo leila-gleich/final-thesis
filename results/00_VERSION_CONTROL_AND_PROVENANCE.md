@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.31 (Chapter II Literature Review Synthesis, Docx Generation & LaTeX Reconciliation)
+RELEASE VERSION: v4.32 (Sequential Chapter Order Realignment of 24 Manuscript Appendices)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -517,6 +517,24 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Explicit user authorization granted for ChpII v3.docx generation;        |
 |         |            |   preserved ChpII v2.docx and all existing .docx files untouched.           |
 |         |            | - Synchronized all 16 manuscript tables and Excel workbooks (39/39 tests ok)|
+| v4.32   | 2026-10-06 | Sequential Chapter Citation Reordering of 24 Manuscript Appendices:         |
+|         |            | - Reordered all 24 dedicated lettered appendices (Appendix A through X)    |
+|         |            |   in thesis_docs/manuscripts/appendix.md and manuscripts-only/appendix.md  |
+|         |            |   to match the exact sequential chronological order of citation across the  |
+|         |            |   thesis manuscript chapters: Chapter I -> Chapter II -> Chapter III       |
+|         |            |   -> Chapter IV -> Chapter V.                                              |
+|         |            | - Strictly guaranteed that no appendix referenced in later chapters        |
+|         |            |   precedes an appendix referenced in earlier chapters (e.g. Chapter II     |
+|         |            |   appendices C, D, E strictly precede all Chapter III appendices F-N).     |
+|         |            | - Verified 100% forensic mapping of all 270 content paragraphs from        |
+|         |            |   Appendix v1.docx with zero omissions and zero overlaps.                  |
+|         |            | - Re-labeled all 17 APA 7th edition tables and 2 figures to match new      |
+|         |            |   parent appendix lettering (Tables B.1, D.1, H.1, I.1, J.1-3, L.1,        |
+|         |            |   O.1-3, Q.1, R.1, T.1, U.1, W.1, X.1; Figures H.1 and H.2).               |
+|         |            | - Updated src/analysis/generate_appendix_md.py for automated generation;   |
+|         |            |   synchronized all 16 tables and workbooks via sync_manuscript_tables.py.  |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all 39 unit tests pass.                               |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

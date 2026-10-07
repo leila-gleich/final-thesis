@@ -3,7 +3,10 @@ r"""
 generate_appendix_md.py
 Compiles the comprehensive, publication-grade Appendix manuscript (appendix.md)
 combining all 24 individual lettered appendices (Appendix A through Appendix X),
-directly matching, extracting, and preserving 100% of the narrative, formulas,
+strictly ordered to match the chronological sequential appearance and citation order
+across the thesis manuscript chapters (Chapter I -> Chapter II -> Chapter III -> Chapter IV -> Chapter V).
+
+Directly maps, extracts, and preserves 100% of the narrative, formulas,
 and tables from Appendix v1.docx and the thesis empirical codebase.
 
 Adheres strictly to AGENTS.md:
@@ -102,23 +105,11 @@ def main():
     ref_db1b_hierarchy = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv"))
     ref_backups = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/backups_organization.csv"))
 
-    # Format tables
+    # Format all tables
     tbl_b1 = format_table(
         ref_assumptions,
         align=[":---", ":---", ":---", ":---"],
         column_names=["Analysis Level", "Key Methodological Assumption", "Mathematical & Operational Justification", "Failure Mode Prevented"]
-    )
-
-    dm_data = [
-        {"comp": "**Model 2 vs. Model 1**", "m1": "Model 1 (Deterministic)", "m2": "Model 2 (Machine Learning)", "eval": "2025 Holdout (All 9 Hubs)", "dm": "**42.15**", "p": "**< 0.0001**", "dec": "Reject $H_0$; ML significantly outperforms deterministic schedule."},
-        {"comp": "**Model 3 vs. Model 1**", "m1": "Model 1 (Deterministic)", "m2": "Model 3 (Dynamic Hybrid)", "eval": "2025 Holdout (All 9 Hubs)", "dm": "**48.72**", "p": "**< 0.0001**", "dec": "Reject $H_0$; Dynamic hybrid significantly outperforms deterministic schedule."},
-        {"comp": "**Model 3 vs. Model 2**", "m1": "Model 2 (Machine Learning)", "m2": "Model 3 (Dynamic Hybrid)", "eval": "2025 Holdout (All 9 Hubs)", "dm": "**18.94**", "p": "**< 0.0001**", "dec": "Reject $H_0$; Dynamic hybrid significantly outperforms pure ML."},
-        {"comp": "**Model 3 vs. Model 2 (IROPS)**", "m1": "Model 2 (Machine Learning)", "m2": "Model 3 (Dynamic Hybrid)", "eval": "Shock Regime (Delays $\\ge 45$m)", "dm": "**31.40**", "p": "**< 0.0001**", "dec": "Reject $H_0$; Hybrid decisively prevents ML empty checkpoint collapse."}
-    ]
-    tbl_c1 = format_table(
-        pd.DataFrame(dm_data),
-        align=[":---", ":---", ":---", ":---", ":---:", ":---:", ":---"],
-        column_names=["Model Comparison", "Baseline Model ($M_A$)", "Competing Model ($M_B$)", "Evaluation Sample", "Diebold-Mariano Stat ($DM$)", "$p$-Value", "Statistical Conclusion"]
     )
 
     tbl_d1 = format_table(
@@ -127,22 +118,10 @@ def main():
         column_names=["Equation ID", "Operational Domain", "Formal Equation Name", "Mathematical Formula", "Target Operational Construct", "Standard Aviation / Econometric Source", "Thesis Operational Context"]
     )
 
-    tbl_e1 = format_table(
-        ref_db_profiles,
-        align=[":---", ":---", ":---", ":---"],
-        column_names=["Metric / Characteristic", "TSA FOIA Checkpoint Logs (TSA-V0)", "BTS Flight Performance (OTP-V0)", "BTS T-100 Segment Data (T100-V0)"]
-    )
-
-    tbl_e2 = format_table(
-        ref_dataset_breakdown,
-        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Dataset / File", "Analytical Grain", "Record Count (Rows)", "Attribute Count (Columns)", "Parquet Compressed Size", "In-Memory Arrow Footprint", "Primary Operational Purpose"]
-    )
-
-    tbl_e3 = format_table(
-        ref_db1b_hierarchy,
-        align=[":---", ":---", ":---", ":---"],
-        column_names=["BTS Table Level", "Table Acronym", "Analytical Unit / Grain", "Itinerary Representation", "Thesis Operational Utility"]
+    tbl_h1 = format_table(
+        ref_backups,
+        align=[":---", ":---", ":---"],
+        column_names=["Archival Directory Path", "Hierarchy Level", "Description and Preserved Contents"]
     )
 
     pipeline_stages = [
@@ -151,16 +130,58 @@ def main():
         {"phase": "**Phase 3: Micro Filter**", "cand": "$N = 14 \\to 9$ Hubs", "crit": "Physical terminal layout isolation: single-carrier dedicated security checkpoints ($\\ge 85\\%$ carrier gate exclusivity).", "math": "Completely eliminates shared-terminal multi-carrier collinearity ($\\text{Corr}(S_j, S_k) \\ge 0.75, \\text{VIF} \\ge 4.0$); elevates coupling to $r = +0.7104$ (raw) and $r = +0.8412$ (connecting-deflated).", "threat": "Overcomes the fatal shared-terminal bottleneck where multi-airline schedules overlap in common lobbies.", "outcome": "**9 airfields retained** providing unconfounded single-carrier checkpoint isolation."},
         {"phase": "**Phase 4: Factorial Cohort**", "cand": "$N = 9$ Hubs / 12 Complexes", "crit": "Orthogonal $4 \\times 4$ factorial experimental design balancing 12 carrier-exclusive complexes across 4 operational cluster archetypes.", "math": "Exactly 4 complexes each for AA, DL, and UA; final dedicated checkpoint-to-flight correlation reaches $r = +0.880$ to $+0.940$.", "threat": "Guarantees zero-shot spatial transfer generalizability and eliminates carrier-specific geographic bias.", "outcome": "**Final 9-Airport Experimental Cohort established** across 12 dedicated carrier facilities."}
     ]
-    tbl_h1 = format_table(
+    tbl_i1 = format_table(
         pd.DataFrame(pipeline_stages),
         align=[":---", ":---", ":---", ":---", ":---", ":---"],
         column_names=["Filtering Tier", "Candidate Universe", "Inclusion & Exclusion Criteria", "Methodological & Queuing Rationale", "Threat Remediation Justification", "Empirical Filtering Outcome"]
     )
 
-    tbl_i1 = format_table(
-        table_4_7,
+    tbl_j1 = format_table(
+        ref_db_profiles,
+        align=[":---", ":---", ":---", ":---"],
+        column_names=["Metric / Characteristic", "TSA FOIA Checkpoint Logs (TSA-V0)", "BTS Flight Performance (OTP-V0)", "BTS T-100 Segment Data (T100-V0)"]
+    )
+
+    tbl_j2 = format_table(
+        ref_dataset_breakdown,
+        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---"],
+        column_names=["Dataset / File", "Analytical Grain", "Record Count (Rows)", "Attribute Count (Columns)", "Parquet Compressed Size", "In-Memory Arrow Footprint", "Primary Operational Purpose"]
+    )
+
+    tbl_j3 = format_table(
+        ref_db1b_hierarchy,
+        align=[":---", ":---", ":---", ":---"],
+        column_names=["BTS Table Level", "Table Acronym", "Analytical Unit / Grain", "Itinerary Representation", "Thesis Operational Utility"]
+    )
+
+    dm_data = [
+        {"comp": "**Model 2 vs. Model 1**", "m1": "Model 1 (Deterministic)", "m2": "Model 2 (Machine Learning)", "eval": "2025 Holdout (All 9 Hubs)", "dm": "**42.15**", "p": "**< 0.0001**", "dec": "Reject $H_0$; ML significantly outperforms deterministic schedule."},
+        {"comp": "**Model 3 vs. Model 1**", "m1": "Model 1 (Deterministic)", "m2": "Model 3 (Dynamic Hybrid)", "eval": "2025 Holdout (All 9 Hubs)", "dm": "**48.72**", "p": "**< 0.0001**", "dec": "Reject $H_0$; Dynamic hybrid significantly outperforms deterministic schedule."},
+        {"comp": "**Model 3 vs. Model 2**", "m1": "Model 2 (Machine Learning)", "m2": "Model 3 (Dynamic Hybrid)", "eval": "2025 Holdout (All 9 Hubs)", "dm": "**18.94**", "p": "**< 0.0001**", "dec": "Reject $H_0$; Dynamic hybrid significantly outperforms pure ML."},
+        {"comp": "**Model 3 vs. Model 2 (IROPS)**", "m1": "Model 2 (Machine Learning)", "m2": "Model 3 (Dynamic Hybrid)", "eval": "Shock Regime (Delays $\\ge 45$m)", "dm": "**31.40**", "p": "**< 0.0001**", "dec": "Reject $H_0$; Hybrid decisively prevents ML empty checkpoint collapse."}
+    ]
+    tbl_l1 = format_table(
+        pd.DataFrame(dm_data),
+        align=[":---", ":---", ":---", ":---", ":---:", ":---:", ":---"],
+        column_names=["Model Comparison", "Baseline Model ($M_A$)", "Competing Model ($M_B$)", "Evaluation Sample", "Diebold-Mariano Stat ($DM$)", "$p$-Value", "Statistical Conclusion"]
+    )
+
+    tbl_o1 = format_table(
+        table_4_3b,
         align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Metric Category", "Operational Metric", "Unit", "9-Airport Mean", "9-Airport Std Dev", "Top 25 Mean", "Top 25 Std Dev", "Relative Delta (%)", "Operational Interpretation", "Significance ($p$-Value)"]
+        column_names=["Seasonal Regime", "Operational Regime Description", "Calendar Days (N)", "Share of Sample", "Mean Daily Passengers", "Intraday Scale-Free Volatility ($CV_{\\text{TSA}}$)", "Departure Delay Volatility ($\\sigma_{\\text{Delay}}$)", "Coupled Volatility Index ($CVI$)", "Daily Cancellation Count", "Extreme Delay Exposure (>45m)", "Operational Regimes Classification"]
+    )
+
+    tbl_o2 = format_table(
+        table_4_4a,
+        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
+        column_names=["Day of Week", "DOW Name", "Operational Volatility Archetype", "Study Days (N)", "Mean Daily Passengers", "Intraday Volatility Ratio ($CV / \\overline{CV}$)", "Departure Delay Volatility ($\\sigma_{\\text{Delay}}$)", "Cancellation Exposure (%)", "Coupled Volatility Shock Rank", "Operational Staffing Rule"]
+    )
+
+    tbl_o3 = format_table(
+        table_4_8,
+        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
+        column_names=["Airport Code", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Peak Day", "Trough Day", "Weekend Surge Ratio"]
     )
 
     tests_data = [
@@ -169,45 +190,27 @@ def main():
         {"test": "**3. Cross-Carrier Perpendicularity Test**", "spec": "Regress carrier checkpoint throughput on competing carriers' concurrent flight banks: $Y_{j,t} = \\alpha + \\gamma \\cdot S_{k,t} + \\eta_t$", "null": "$H_0: \\gamma = 0$ (orthogonal demand)", "stat": "Partial $\\Delta R^2 < 0.02$, $t < 1.20$ ($p > 0.25$)", "valid": "Pass: Dedicated carrier checkpoints are completely unaffected by competing airline schedules."},
         {"test": "**4. Terminal Layout Invariance Test**", "spec": "Two-sample Kolmogorov-Smirnov test comparing forecast error distributions between physically separate and walkway-connected concourses", "null": "$H_0: F_{\\text{separate}}(e) = F_{\\text{connected}}(e)$", "stat": "KS statistic $D = 0.032$, $p = 0.28$", "valid": "Pass: Concourse connection geometry does not bias or distort checkpoint arrival models."}
     ]
-    tbl_j1 = format_table(
+    tbl_q1 = format_table(
         pd.DataFrame(tests_data),
         align=[":---", ":---", ":---", ":---", ":---"],
         column_names=["Econometric Validation Test", "Econometric Specification / Statistic", "Null Hypothesis ($H_0$)", "Empirical Statistic & Rejection Rule", "Construct Validity Determination"]
     )
 
-    tbl_l1 = format_table(
-        table_4_3b,
+    tbl_r1 = format_table(
+        table_4_7,
         align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Seasonal Regime", "Operational Regime Description", "Calendar Days (N)", "Share of Sample", "Mean Daily Passengers", "Intraday Scale-Free Volatility ($CV_{\\text{TSA}}$)", "Departure Delay Volatility ($\\sigma_{\\text{Delay}}$)", "Coupled Volatility Index ($CVI$)", "Daily Cancellation Count", "Extreme Delay Exposure (>45m)", "Operational Regimes Classification"]
+        column_names=["Metric Category", "Operational Metric", "Unit", "9-Airport Mean", "9-Airport Std Dev", "Top 25 Mean", "Top 25 Std Dev", "Relative Delta (%)", "Operational Interpretation", "Significance ($p$-Value)"]
     )
 
-    tbl_l2 = format_table(
-        table_4_4a,
-        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Day of Week", "DOW Name", "Operational Volatility Archetype", "Study Days (N)", "Mean Daily Passengers", "Intraday Volatility Ratio ($CV / \\overline{CV}$)", "Departure Delay Volatility ($\\sigma_{\\text{Delay}}$)", "Cancellation Exposure (%)", "Coupled Volatility Shock Rank", "Operational Staffing Rule"]
-    )
-
-    tbl_l3 = format_table(
-        table_4_8,
-        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Airport Code", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Peak Day", "Trough Day", "Weekend Surge Ratio"]
-    )
-
-    table_r1_content = [
+    table_t1_content = [
         {"dim": "Dimension 1: Robustness", "metric": "RMSE_routine (Nominal: Delay < 15m; 0 Cancels)", "form": "sqrt(mean((y - y_hat)^2))", "target": "Lowest RMSE; MASE < 0.700", "m0": "335.6 (MASE = 1.000)", "m1": "317.2 (MASE = 0.945)", "m2": "234.8 (MASE = 0.700)", "m3": "**222.1 (MASE = 0.662)**", "conc": "**Model 3 wins lowest RMSE**; Model 2 wins Routine Pareto Efficiency (zero feedback compute latency)."},
         {"dim": "Dimension 2: Resilience", "metric": "Disruption Error Multiplier (R_RMSE = RMSE_shock / RMSE_routine)", "form": "RMSE_shock / RMSE_routine", "target": "R_RMSE approx 1.00; Lowest MASE_shock; TTR < 4.0h", "m0": "R = 1.00 (MASE = 1.000, TTR = 8.4h)", "m1": "R = 1.32 (MASE = 1.248, TTR = 7.8h)", "m2": "R = 2.14 (MASE = 1.498, TTR = 5.4h)", "m3": "**R = 1.05 (MASE = 0.694, TTR = 2.8h)**", "conc": "**Model 3 DECISIVE WINNER**: R = 1.05, MASE_shock = 0.694, TTR = 2.8h. Pure ML (Model 2) collapses (R = 2.14) due to Empty Checkpoint Fallacy."},
         {"dim": "Dimension 3: Generalizability", "metric": "Relative Transfer Ratio (RTR = RMSE_target / RMSE_source)", "form": "RMSE_target / RMSE_source", "target": "RTR approx 1.00; Delta MASE <= 10.0%", "m0": "RTR = 1.00 (Delta MASE = 0.0%)", "m1": "**RTR = 1.04 (Delta MASE = +4.0%)**", "m2": "RTR = 1.08 (Delta MASE = +8.3%)", "m3": "RTR = 1.19 (Delta MASE = +21.5%)", "conc": "**Model 1 DECISIVE WINNER**: RTR = 1.04, Delta MASE = +4.0%. Dynamic Hybrid (Model 3) fails zero-shot transfer due to terminal geometry overfitting."}
     ]
-    tbl_r1 = format_table(
-        pd.DataFrame(table_r1_content),
+    tbl_t1 = format_table(
+        pd.DataFrame(table_t1_content),
         align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
         column_names=["Operational Dimension", "Performance Metric", "Formula / Definition", "Academic Stated Target", "Baseline Control (Daily Persistence)", "Model 1 (Deterministic Schedule)", "Model 2 (Supervised Machine Learning)", "Model 3 (Dynamic Two-Stage Hybrid)", "Strategic Operational Reality"]
-    )
-
-    tbl_s1 = format_table(
-        table_5_2,
-        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Model Family", "Model Name", "Operational Approach", "RMSE_shock (pax/hr)", "MASE_shock", "Disruption Multiplier ($R_{\\text{RMSE}}$)", "Time-to-Recovery (TTR)", "Empty Checkpoint Failure Mode", "Strategic Reality & Recommendation"]
     )
 
     tbl_u1 = format_table(
@@ -216,16 +219,16 @@ def main():
         column_names=["Feature Space Paradigm", "Regressor Architecture", "Out-of-Time Test Score ($R^2$)", "Holdout RMSE (pax/day)", "Holdout MAE (pax/day)", "Empirical Behavioral Interpretation"]
     )
 
-    tbl_v1 = format_table(
-        table_policy,
-        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---"],
-        column_names=["Operational Track", "Operating Regime", "Assigned Canonical Architecture", "Target Objective", "Latency / Telemetry Overhead", "Deployment Rationale"]
+    tbl_w1 = format_table(
+        table_5_2,
+        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---", ":---"],
+        column_names=["Model Family", "Model Name", "Operational Approach", "RMSE_shock (pax/hr)", "MASE_shock", "Disruption Multiplier ($R_{\\text{RMSE}}$)", "Time-to-Recovery (TTR)", "Empty Checkpoint Failure Mode", "Strategic Reality & Recommendation"]
     )
 
     tbl_x1 = format_table(
-        ref_backups,
-        align=[":---", ":---", ":---"],
-        column_names=["Archival Directory Path", "Hierarchy Level", "Description and Preserved Contents"]
+        table_policy,
+        align=[":---", ":---", ":---", ":---", ":---", ":---", ":---"],
+        column_names=["Operational Track", "Operating Regime", "Assigned Canonical Architecture", "Target Objective", "Latency / Telemetry Overhead", "Deployment Rationale"]
     )
 
     # Master document assembly across 24 dedicated Appendices
@@ -240,57 +243,79 @@ def main():
 
 ## Executive Overview and Structural Organization
 
-This appendix compiles the complete econometric derivations, data engineering profiles, sample filtering audits, empirical seasonal baselines, holdout evaluation benchmarks, and operational implementation frameworks supporting the thesis. To preserve full scientific transparency, comprehensive auditability, and immediate navigation for committee review, the appendix is organized across **twenty-four dedicated, lettered appendices (Appendix A through Appendix X)**:
+This appendix compiles the complete econometric derivations, data engineering profiles, sample filtering audits, empirical seasonal baselines, holdout evaluation benchmarks, and operational implementation frameworks supporting the thesis. To preserve full scientific transparency, comprehensive auditability, and immediate navigation for committee review, the appendix is organized across **twenty-four dedicated, lettered appendices (Appendix A through Appendix X)**, sequenced in the **exact chronological order in which they are introduced and referenced across the thesis manuscript chapters** (Chapter I $\to$ Chapter II $\to$ Chapter III $\to$ Chapter IV $\to$ Chapter V):
 
+### Chapter I Cross-References (Introduction & Scope)
 * **Appendix A**: Delimitations of the Study
 * **Appendix B**: Research Limitations and Methodological Assumptions
-* **Appendix C**: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
+
+### Chapter II Cross-References (Literature Review & Theoretical Foundations)
+* **Appendix C**: Connecting Queuing Principles to Dynamic Lane Staffing and Safety Cushion
 * **Appendix D**: Peer-Reviewed Literature Equation Registry and Mathematical Formulations
-* **Appendix E**: Multi-Source Aviation Data Ingestion and Post-ETL Descriptive Statistics
-* **Appendix F**: Treatment of Data: Extract, Transform, Load (ETL) Architecture and Hygiene Protocols
+* **Appendix E**: Construct Validity and Passenger Throughput Volatility Formulations
+
+### Chapter III Cross-References (Methodology, Data Engineering & Operational Apparatus)
+* **Appendix F**: Candidate Predictive Modeling Suite and Operational Regimes
 * **Appendix G**: Temporal Scope, Post-Pandemic Demarcation, and COVID-19 Boundary Definition
-* **Appendix H**: Four-Tier Purposive Filtering Pipeline Architecture and Progression
-* **Appendix I**: Top 25 Network Census vs. Nine-Airport Experimental Cohort
-* **Appendix J**: Econometric Validation of Carrier Checkpoint Demand Isolation
-* **Appendix K**: Key Airport Selection Contrasts (LGA vs. JFK, PHL vs. SLC)
-* **Appendix L**: Seasonal Volatility Regimes, Day-of-Week Archetypes, and Local Weekly Profiles
-* **Appendix M**: Diurnal Bimodal Turbulence Dynamics and Multi-Carrier Collinearity
-* **Appendix N**: Construct Validity and Passenger Throughput Volatility Formulations
-* **Appendix O**: Operational Evaluation Metrics and Performance Criteria Interpretation
-* **Appendix P**: Feature Engineering Pipeline Details and Empirical Arrival Convolution
-* **Appendix Q**: Candidate Predictive Modeling Suite and Operational Regimes
-* **Appendix R**: Master Multi-Pillar Hypothesis Evaluation Matrix and Holdout Benchmarks
-* **Appendix S**: Resilience Mechanics and the Empty Checkpoint Fallacy Under Severe Disruption
-* **Appendix T**: The Lead-Lag Asynchrony Mechanism and Shock Interaction Dynamics
+* **Appendix H**: Archival Data Storage Infrastructure, Directory Hierarchy, and Screenshot Catalog
+* **Appendix I**: Four-Tier Purposive Filtering Pipeline Architecture and Progression
+* **Appendix J**: Multi-Source Aviation Data Ingestion and Post-ETL Descriptive Statistics
+* **Appendix K**: Treatment of Data: Extract, Transform, Load (ETL) Architecture and Hygiene Protocols
+* **Appendix L**: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
+* **Appendix M**: Operational Evaluation Metrics and Performance Criteria Interpretation
+* **Appendix N**: Feature Engineering Pipeline Details and Empirical Arrival Convolution
+
+### Chapter IV Cross-References (Results, Empirical Filtering & Holdout Evaluation)
+* **Appendix O**: Seasonal Volatility Regimes, Day-of-Week Archetypes, and Local Weekly Profiles
+* **Appendix P**: Diurnal Bimodal Turbulence Dynamics and Multi-Carrier Collinearity
+* **Appendix Q**: Econometric Validation of Carrier Checkpoint Demand Isolation
+* **Appendix R**: Top 25 Network Census vs. Nine-Airport Experimental Cohort
+* **Appendix S**: Key Airport Selection Contrasts (LGA vs. JFK, PHL vs. SLC)
+* **Appendix T**: Master Multi-Pillar Hypothesis Evaluation Matrix and Holdout Benchmarks
 * **Appendix U**: The Values versus Volatility Paradigm Across Multi-Day Temporal Horizons
-* **Appendix V**: Dual-Track Operational Decision Playbook and Real-World Application
-* **Appendix W**: Connecting Queuing Principles to Dynamic Lane Staffing and Safety Cushion
-* **Appendix X**: Archival Data Storage Infrastructure, Directory Hierarchy, and Screenshot Catalog
+
+### Chapter V Cross-References (Discussion, Mechanism Analysis & Decision Playbook)
+* **Appendix V**: The Lead-Lag Asynchrony Mechanism and Shock Interaction Dynamics
+* **Appendix W**: Resilience Mechanics and the Empty Checkpoint Fallacy Under Severe Disruption
+* **Appendix X**: Dual-Track Operational Decision Playbook and Real-World Application
 
 ---
 """)
 
+    # =========================================================================
+    # CHAPTER I APPENDICES (A - B)
+    # =========================================================================
+
     # Appendix A
-    text_a = render_docx_block(docx_paras, range(2, 7))
     sec_a = r"""# Appendix A: Delimitations of the Study
 
 > *Note on Thesis Cross-References*: This appendix establishes the formal boundaries, geographic coverage, longitudinal timeline, and evaluation standards restricting the research scope. It is referenced in **Chapter I (Introduction)**, Section *Delimitations*.
 
-{{TEXT_A}}
+This study focuses on U.S. commercial airports and evaluates post-pandemic passenger throughput and flight operational performance data from 2019 to 2025. It excludes pre-pandemic and pandemic-period activity except where explicitly required to establish the post-pandemic recovery baseline. Dynamic queuing models and predictive estimation techniques are assessed using standard econometric and machine learning benchmarks, including $p$-values, $R^2$, Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), and Mean Absolute Scaled Error (MASE). These delimitations are defined below across four operational dimensions:
+
+* **Geographic Scope**: This study evaluates commercial air traffic and security screening operations within the contiguous United States, focusing on the Top 25 commercial airfields categorized under FAA hub classifications, capturing 67.2% of nationwide domestic flight departures.
+* **Temporal Scope**: The longitudinal dataset spans January 1, 2019 through December 31, 2025 ($N = 22,491$ airport-days; 42.06 million conformed fact records). Model training and operational calibration are focused on the verified post-pandemic operational regime starting May 1, 2022 (following the nationwide judicial vacatur of federal transportation mask mandates), reserving the full 12-month calendar year of 2025 (3,222 complex-days) as a strict out-of-time holdout evaluation window.
+* **Data Sources**: Analysis is delimited to publicly accessible and FOIA-disclosed federal aviation datasets, including Transportation Security Administration (TSA) Freedom of Information Act (FOIA) hourly screening logs per physical lane, Bureau of Transportation Statistics (BTS) Airline On-Time Performance (Form 41 Schedule P-5.2), BTS Form 41 Schedule T-100 Domestic Segment Data, and the BTS Origin and Destination Survey (DB1B) 10% ticket sample.
+* **Evaluation Standards**: Model comparisons are delimited to the 2025 holdout dataset across three distinct operational regimes: Nominal On-Time Baseline, Routine Daily Operations, and Irregular Operations (IROPS). Evaluation metrics strictly follow scale-free Mean Absolute Scaled Error (MASE), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and the Diebold-Mariano ($DM$) test of predictive accuracy. In accordance with queuing theory principles, Mean Absolute Percentage Error (MAPE) is formally invalidated and excluded due to mathematical instability during near-zero volume curfew hours.
 
 ---
-""".replace("{{TEXT_A}}", text_a)
+"""
     sections.append(sec_a)
 
     # Appendix B
-    text_b = render_docx_block(docx_paras, range(7, 19))
+    text_b1 = render_docx_block(docx_paras, range(1, 6))
+    text_b2 = render_docx_block(docx_paras, range(63, 66))
     sec_b = r"""# Appendix B: Research Limitations and Methodological Assumptions
 
 > *Note on Thesis Cross-References*: This appendix outlines the operational boundary constraints of public federal datasets and documents the 14-point methodological assumption matrix designed to protect internal and external construct validity. It is referenced in **Chapter I (Introduction)**, Section *Limitations and Assumptions*; in **Chapter III (Methodology)**, Section *Internal Validity Threats and Remediation Protocols*; and in **Chapter V (Discussion)**, Section *Strategic Implications for Airport and Security Authorities (Operational and Methodological Boundaries)*.
 
-{{TEXT_B}}
+## B.1 Operational and Data Source Limitations
+{{TEXT_B1}}
 
-## B.2 Methodological Assumptions and Threat Remediation Matrix
+## B.2 Internal Validity Threats and Remediation Protocols
+{{TEXT_B2}}
+
+## B.3 Methodological Assumptions and Threat Remediation Matrix
 To ensure rigorous internal and external construct validity across all downstream models, 14 foundational methodological assumptions were operationalized across the research design. Table B.1 documents these assumptions, their mathematical and operational justifications, and the critical failure modes prevented.
 
 ### Table B.1
@@ -301,15 +326,246 @@ To ensure rigorous internal and external construct validity across all downstrea
 *Note.* Adapted from `figures/04_Appendix_and_Reference/methodological_assumptions.csv`. Complete methodological and operational assumption framework governing the research design.
 
 ---
-""".replace("{{TEXT_B}}", text_b).replace("{{TBL_B1}}", tbl_b1)
+""".replace("{{TEXT_B1}}", text_b1).replace("{{TEXT_B2}}", text_b2).replace("{{TBL_B1}}", tbl_b1)
     sections.append(sec_b)
 
+    # =========================================================================
+    # CHAPTER II APPENDICES (C - E)
+    # =========================================================================
+
     # Appendix C
-    sec_c = r"""# Appendix C: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
+    text_c = render_docx_block(docx_paras, range(258, 267))
+    sec_c = r"""# Appendix C: Connecting Queuing Principles to Dynamic Lane Staffing and Safety Cushion
+
+> *Note on Thesis Cross-References*: This appendix connects heavy-traffic queuing theory with practical checkpoint lane dimensioning rules and the Staffing Safety Cushion. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Traditional Approaches and Operational Complexity (Second-Order Queuing Volatility: The Kingman and Allen-Cunneen Formulation)*; and in **Chapter V (Discussion)**, Section *Connecting Queuing Principles to Dynamic Lane Staffing: The Staffing Safety Cushion*.
+
+## C.1 Connecting Queuing Principles to Dynamic Lane Staffing
+{{TEXT_C}}
+
+---
+""".replace("{{TEXT_C}}", text_c)
+    sections.append(sec_c)
+
+    # Appendix D
+    sec_d = r"""# Appendix D: Peer-Reviewed Literature Equation Registry and Mathematical Formulations
+
+> *Note on Thesis Cross-References*: This appendix establishes the comprehensive mathematical foundations, queuing theorems, and statistical metric definitions utilized throughout the study. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Classical Queuing Theory: First Moment (Volume) vs. Second Moment (Volatility)*, Section *The "Values versus Volatility" Paradigm in Transportation Demand*, and Section *Comparative Modeling Paradigm Taxonomy for Airport Passenger Screening Throughput*; and in **Chapter III (Methodology)**, Section *Predictive Modeling Frameworks and Baseline Control*.
+
+## D.1 Comprehensive Peer-Reviewed Mathematical Formulations & Queuing Registry
+
+Table D.1 compiles the complete inventory of 20 peer-reviewed mathematical formulations, queuing theory equations, and econometric tests operationalized throughout this thesis.
+
+### Table D.1
+*Peer-Reviewed Literature Equations and Statistical Metric Registry*
+
+{{TBL_D1}}
+
+*Note.* Adapted from `results/manuscript_tables/appendix_standard_literature_equations.csv`. Compiles all 20 formal academic formulations, queuing approximations, capacity identities, error loss functions, and econometric hypothesis tests operationalized in the research design.
+
+---
+""".replace("{{TBL_D1}}", tbl_d1)
+    sections.append(sec_d)
+
+    # Appendix E
+    text_e1 = render_docx_block(docx_paras, range(40, 63))
+    text_e2 = render_docx_block(docx_paras, range(66, 68))
+    sec_e = r"""# Appendix E: Construct Validity and Passenger Throughput Volatility Formulations
+
+> *Note on Thesis Cross-References*: This appendix establishes the formal mathematical definitions of the primary dependent volatility targets and resolves construct validity threats. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Classical Queuing Theory: Volume Versus Volatility* and Section *The "Values versus Volatility" Paradigm in Transportation Demand*; and in **Chapter III (Methodology)**, Section *Core Research Variables* and Section *Construct Validity Threats and Operational Formulations*.
+
+## E.1 Establishing Construct Validity: Targets and Formulations
+{{TEXT_E1}}
+
+## E.2 Construct Validity Threats and Operational Formulations
+{{TEXT_E2}}
+
+---
+""".replace("{{TEXT_E1}}", text_e1).replace("{{TEXT_E2}}", text_e2)
+    sections.append(sec_e)
+
+    # =========================================================================
+    # CHAPTER III APPENDICES (F - N)
+    # =========================================================================
+
+    # Appendix F
+    text_f = render_docx_block(docx_paras, range(6, 27))
+    sec_f = r"""# Appendix F: Candidate Predictive Modeling Suite and Operational Regimes
+
+> *Note on Thesis Cross-References*: This appendix details the mathematical architectures and operational paradigms of the three candidate models and baseline control across the three evaluation dimensions and three operational regimes. It is referenced in **Chapter III (Methodology)**, Section *Predictive Modeling Frameworks and Baseline Control* and Section *Quantitative Evaluation Dimensions and Operational Regimes*.
+
+## F.1 Candidate Predictive Modeling Suite & Operational Architecture
+{{TEXT_F}}
+
+---
+""".replace("{{TEXT_F}}", text_f)
+    sections.append(sec_f)
+
+    # Appendix G
+    text_g1 = render_docx_block(docx_paras, range(28, 31))
+    text_g2 = render_docx_block(docx_paras, range(165, 171))
+    sec_g = r"""# Appendix G: Temporal Scope, Post-Pandemic Demarcation, and COVID-19 Boundary Definition
+
+> *Note on Thesis Cross-References*: This appendix establishes the empirical justification for excluding pandemic-period volatility and documents the post-pandemic demarcation and partitioning design. It is referenced in **Chapter III (Methodology)**, Section *Temporal Scope and Boundary Definition* and Section *Dataset Partitioning and Validation Protocol*; and in **Chapter IV (Results)**, Section *Initial Exploratory Data Analysis (Temporal Boundaries)*.
+
+## G.1 Temporal Scope and Boundary Definition
+{{TEXT_G1}}
+
+## G.2 Partitioning Design and Post-Pandemic Demarcation Verification
+{{TEXT_G2}}
+
+---
+""".replace("{{TEXT_G1}}", text_g1).replace("{{TEXT_G2}}", text_g2)
+    sections.append(sec_g)
+
+    # Appendix H
+    sec_h = r"""# Appendix H: Archival Data Storage Infrastructure, Directory Hierarchy, and Screenshot Catalog
+
+> *Note on Thesis Cross-References*: This appendix documents the persistent cloud storage backup manifest, repository organization, and visual evidence screenshot catalog. It is referenced in **Chapter III (Methodology)**, Section *Apparatus and Materials (Archival Storage and Reproducibility Environment)* and Section *Sources of Data*.
+
+## H.1 Archival Data Storage Infrastructure and Persistent Cloud Repository
+
+To ensure full auditability, scientific reproducibility, and long-term data preservation, the master raw and conformed aviation datasets are archived in a standardized directory hierarchy replicated across secure persistent cloud storage (OneDrive) and local data warehouse paths. Table H.1 documents the backup structure and directory contents.
+
+### Table H.1
+*OneDrive Archival Backup Directory Structure and Repository Manifest*
+
+{{TBL_H1}}
+
+*Note.* Adapted from `figures/04_Appendix_and_Reference/backups_organization.csv`. Directory manifest establishing repository backup protocols and persistent cloud storage organization.
+
+Figure H.1 and Figure H.2 document the backup organization and directory structure of the visual evidence screenshots.
+
+Figure H.1  
+*Archival Data Storage and OneDrive Directory Organization*
+
+![Figure H.1: Archival Data Storage and OneDrive Directory Organization](../../figures/04_Appendix_and_Reference/Backups%20organization.png)
+
+*Note.* Folder tree structure of the persistent cloud storage backup repository.
+
+---
+
+## H.2 Visual Evidence Screenshot Catalog
+
+Figure H.2 illustrates the organization of the 30 high-resolution visual evidence screenshots across the four analytical subdirectories.
+
+Figure H.2  
+*Diagrams and Screenshot Layout Structure*
+
+![Figure H.2: Diagrams and Screenshot Layout Structure](../../figures/04_Appendix_and_Reference/Diagrams%20and%20Screenshot%20Layout.png)
+
+*Note.* Directory organization and chapter mapping for the 30 visual evidence screenshots across the thesis repository.
+
+---
+""".replace("{{TBL_H1}}", tbl_h1)
+    sections.append(sec_h)
+
+    # Appendix I
+    text_i1 = render_docx_block(docx_paras, range(124, 145))
+    text_i2 = render_docx_block(docx_paras, range(267, 274))
+    sec_i = r"""# Appendix I: Four-Tier Purposive Filtering Pipeline Architecture and Progression
+
+> *Note on Thesis Cross-References*: This appendix details the progressive multi-phase filtering architecture that isolates dedicated single-carrier screening facilities from confounding network interactions. It is referenced in **Chapter III (Methodology)**, Section *Sample (Macro Categorization & Micro-Level Refinement)* and Section *Four-Tiered Purposive Filtering Pipeline*; and in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection (Four-Phase Filtering Pipeline & Pipeline Results)*.
+
+## I.1 Four-Tier Purposive Filtering Pipeline Rationale
+{{TEXT_I1}}
+
+### Table I.1
+*Four-Tier Purposive Filtering Pipeline Architecture and Progression Rationale*
+
+{{TBL_I1}}
+
+*Note.* Adapted from `figures/02_Data_Pipelines_and_Threats/master_funnel_progression.csv` and `figures/01_Sample_and_Airport_Selection/clustering_and_connecting_paradox.csv`. Progression of the purposive sampling architecture from the national air transport system to the final 9-airport experimental cohort.
+
+## I.2 Methodological Foundations of Purposive Filtering
+{{TEXT_I2}}
+
+## I.3 Crucial Methodological Distinction: Filtering Correlations for Validation Only
+
+A crucial methodological principle must be emphasized regarding the flight-to-throughput correlations reported across the four filtering phases:
+
+> **The correlation metrics calculated during the 4-tier filtering pipeline serve strictly as sample validation diagnostics to verify that single-carrier isolation has been econometrically achieved.**  
+> **Under NO circumstances are these correlations utilized as model feature weights, regression coefficients, or algorithmic inputs in any downstream forecasting model.**
+
+The candidate models (Baseline Control, Model 1, Model 2, and Model 3) are trained and calibrated strictly on the conformed feature store within the development partition, completely independent of the diagnostic correlations established during sample filtering.
+
+---
+""".replace("{{TEXT_I1}}", text_i1).replace("{{TBL_I1}}", tbl_i1).replace("{{TEXT_I2}}", text_i2)
+    sections.append(sec_i)
+
+    # Appendix J
+    text_j1 = render_docx_block(docx_paras, range(31, 40))
+    text_j2 = render_docx_block(docx_paras, range(102, 107))
+    text_j3 = render_docx_block(docx_paras, range(107, 109))
+    text_j4 = render_docx_block(docx_paras, range(176, 179))
+    sec_j = r"""# Appendix J: Multi-Source Aviation Data Ingestion and Post-ETL Descriptive Statistics
+
+> *Note on Thesis Cross-References*: This appendix documents the multi-source data feeds, conformed Star Schema staging pipeline, ETL transformations, and descriptive baseline profiles. It is referenced in **Chapter III (Methodology)**, Section *Sources of Data (TSA FOIA, BTS OTP, BTS Form 41 T-100, BTS DB1B)*; and in **Chapter IV (Results)**, Section *TSA and OTP Throughput Data* and Section *Descriptive Statistics for Post ETL Data*.
+
+## J.1 Sample Detail and Source Data Profiles
+{{TEXT_J1}}
+
+### Table J.1
+*Master Multi-Source Aviation Data Foundation Census & Base Feed Profiles*
+
+{{TBL_J1}}
+
+*Note.* Adapted from `figures/04_Appendix_and_Reference/database_profiles.csv`. Summary census of upstream raw ingested records versus cleaned conformed records preserved in the research warehouse.
+
+## J.2 Conformed Feature Store Parquet Dataset Breakdown
+Table J.2 provides the architectural breakdown of the conformed feature store stored in Apache Parquet format.
+
+### Table J.2
+*Conformed Feature Store Parquet Dataset Breakdown*
+
+{{TBL_J2}}
+
+*Note.* Adapted from `figures/04_Appendix_and_Reference/dataset_breakdown.csv`. Architectural specifications of conformed analytics tables stored in Apache Parquet format.
+
+## J.3 BTS Data Source Detail and Post-ETL Descriptive Statistics
+{{TEXT_J2}}
+
+{{TEXT_J3}}
+
+## J.4 Bureau of Transportation Statistics DB1B Ticket Survey Data Hierarchy
+Table J.3 summarizes the 3-tier hierarchy of the BTS DB1B origin-destination ticket survey.
+
+### Table J.3
+*Bureau of Transportation Statistics DB1B Ticket Survey Data Hierarchy*
+
+{{TBL_J3}}
+
+*Note.* Adapted from `figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv`. Bureau of Transportation Statistics 10% ticket coupon survey relational hierarchy.
+
+## J.5 Dataset Parameters
+{{TEXT_J4}}
+
+---
+""".replace("{{TEXT_J1}}", text_j1).replace("{{TBL_J1}}", tbl_j1).replace("{{TBL_J2}}", tbl_j2).replace("{{TEXT_J2}}", text_j2).replace("{{TEXT_J3}}", text_j3).replace("{{TBL_J3}}", tbl_j3).replace("{{TEXT_J4}}", text_j4)
+    sections.append(sec_j)
+
+    # Appendix K
+    text_k1 = render_docx_block(docx_paras, range(68, 99))
+    text_k2 = render_docx_block(docx_paras, range(160, 165))
+    sec_k = r"""# Appendix K: Treatment of Data: Extract, Transform, Load (ETL) Architecture and Hygiene Protocols
+
+> *Note on Thesis Cross-References*: This appendix details the 8-step Extract protocol, 15-step Transform protocol, 3-step Load protocol, spatial entity resolution, structural zero preservation, and flight cancellation handling. It is referenced in **Chapter III (Methodology)**, Section *Treatment of Data (Extract, Transform, Load)* and Section *Data Hygiene Protocols*; and in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection*.
+
+## K.1 Sequential Extract, Transform, Load (ETL) Pipeline Architecture
+{{TEXT_K1}}
+
+## K.2 Data Hygiene Protocols and Anomaly Remediation
+{{TEXT_K2}}
+
+---
+""".replace("{{TEXT_K1}}", text_k1).replace("{{TEXT_K2}}", text_k2)
+    sections.append(sec_k)
+
+    # Appendix L
+    sec_l = r"""# Appendix L: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
 
 > *Note on Thesis Cross-References*: This appendix provides the formal mathematical derivations, asymptotic theory, and degrees-of-freedom audits for the statistical significance tests operationalized throughout the thesis. It is referenced in **Chapter III (Methodology)**, Section *Dataset Partitioning and Validation Protocol* and Section *Apparatus and Materials (Evaluation Metric Definition)*; and in **Chapter IV (Results)**, Section *Model Performance in the Context of the Thesis (Asymmetric Hypothesis Testing)* and Section *Empirical Confirmation of Asymmetric Trade-Offs (Hypothesis 1 Verified)*.
 
-## C.1 The Methodological Dilemma: Why a Standard $p$-Value from a Paired $t$-Test Fails in Time-Series Forecasting
+## L.1 The Methodological Dilemma: Why a Standard $p$-Value from a Paired $t$-Test Fails in Time-Series Forecasting
 
 A frequent question encountered in applied statistics and operational forecasting is: *Why must researchers utilize the Diebold-Mariano test to establish statistical significance rather than simply calculating a standard $p$-value from a paired $t$-test or regression ANOVA?*
 
@@ -334,7 +590,7 @@ Furthermore, airport passenger volumes display pronounced **heteroskedasticity**
 
 ---
 
-## C.2 Mathematical Derivation and Econometric Architecture of the Diebold-Mariano Test
+## L.2 Mathematical Derivation and Econometric Architecture of the Diebold-Mariano Test
 
 The Diebold-Mariano procedure tests the null hypothesis that two competing forecasting models possess equal predictive accuracy over a given out-of-time evaluation sample, while explicitly correcting for serial correlation and heteroskedasticity in the forecast error differentials.
 
@@ -368,7 +624,7 @@ where $\gamma_k = \text{Cov}(d_t, d_{t-k})$ is the $k$-th order autocovariance o
 
 ---
 
-## C.3 Heteroskedasticity and Autocorrelation Consistent (HAC) Long-Run Covariance Estimation
+## L.3 Heteroskedasticity and Autocorrelation Consistent (HAC) Long-Run Covariance Estimation
 
 To construct a valid test statistic, the long-run variance $\sigma_{LR}^2$ must be estimated consistently. To ensure mathematical robustness against arbitrary autocorrelation and conditional heteroskedasticity, this research operationalizes the **Newey-West (1987) Bartlett kernel estimator**:
 
@@ -399,293 +655,31 @@ If $|DM| > 1.96$, the null hypothesis of equal predictive accuracy is rejected a
 
 ---
 
-## C.4 Empirical Pairwise Statistical Significance Matrix (2025 Out-of-Time Holdout)
+## L.4 Empirical Pairwise Statistical Significance Matrix (2025 Out-of-Time Holdout)
 
-Applying the Diebold-Mariano test across the certified 2025 holdout evaluation dataset ($N = 3,222$ test complex-days) yields the pairwise significance matrix reported in Table C.1.
+Applying the Diebold-Mariano test across the certified 2025 holdout evaluation dataset ($N = 3,222$ test complex-days) yields the pairwise significance matrix reported in Table L.1.
 
-### Table C.1
+### Table L.1
 *Diebold-Mariano Pairwise Statistical Significance Matrix (2025 Holdout Benchmark)*
 
-{{TBL_C1}}
+{{TBL_L1}}
 
 *Note.* Adapted from `figures/03_Modeling_and_Evaluation/models_and_tests.csv`. All pairwise tests evaluated under squared error loss ($L(e) = e^2$) with Newey-West HAC covariance correction. Degrees of freedom: $N = 3,222$ complex-days ($77,328$ hourly evaluations). All $p$-values are two-tailed.
 
 ---
-""".replace("{{TBL_C1}}", tbl_c1)
-    sections.append(sec_c)
-
-    # Appendix D
-    sec_d = r"""# Appendix D: Peer-Reviewed Literature Equation Registry and Mathematical Formulations
-
-> *Note on Thesis Cross-References*: This appendix establishes the comprehensive mathematical foundations, queuing theorems, and statistical metric definitions utilized throughout the study. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Classical Queuing Theory: First Moment (Volume) vs. Second Moment (Volatility)* and Section *The "Values versus Volatility" Paradigm in Transportation Demand*; in **Chapter III (Methodology)**, Section *Predictive Modeling Frameworks and Baseline Control* and Section *Construct Validity Threats and Operational Formulations*; and in **Chapter V (Discussion)**, Section *Connecting Queuing Principles to Dynamic Lane Staffing: The Staffing Safety Cushion*.
-
-## D.1 Comprehensive Peer-Reviewed Mathematical Formulations & Queuing Registry
-
-Table D.1 compiles the complete inventory of 20 peer-reviewed mathematical formulations, queuing theory equations, and econometric tests operationalized throughout this thesis.
-
-### Table D.1
-*Peer-Reviewed Literature Equations and Statistical Metric Registry*
-
-{{TBL_D1}}
-
-*Note.* Adapted from `results/manuscript_tables/appendix_standard_literature_equations.csv`. Compiles all 20 formal academic formulations, queuing approximations, capacity identities, error loss functions, and econometric hypothesis tests operationalized in the research design.
-
----
-""".replace("{{TBL_D1}}", tbl_d1)
-    sections.append(sec_d)
-
-    # Appendix E
-    text_e1 = render_docx_block(docx_paras, range(44, 53))
-    text_e2 = render_docx_block(docx_paras, range(115, 122))
-    sec_e = r"""# Appendix E: Multi-Source Aviation Data Ingestion and Post-ETL Descriptive Statistics
-
-> *Note on Thesis Cross-References*: This appendix documents the multi-source data feeds, conformed Star Schema staging pipeline, ETL transformations, and descriptive baseline profiles. It is referenced in **Chapter III (Methodology)**, Section *Temporal Scope and Boundary Definition*, Section *Sources of Data (TSA FOIA, BTS OTP, BTS Form 41 T-100, BTS DB1B)*, and Section *Treatment of Data*; and in **Chapter IV (Results)**, Section *TSA and OTP Throughput Data* and Section *Descriptive Statistics*.
-
-## E.1 Sample Detail and Source Data Profiles
-{{TEXT_E1}}
-
-### Table E.1
-*Master Multi-Source Aviation Data Foundation Census & Base Feed Profiles*
-
-{{TBL_E1}}
-
-*Note.* Adapted from `figures/04_Appendix_and_Reference/database_profiles.csv`. Summary census of upstream raw ingested records versus cleaned conformed records preserved in the research warehouse.
-
-## E.2 Conformed Feature Store Parquet Dataset Breakdown
-Table E.2 provides the architectural breakdown of the conformed feature store stored in Apache Parquet format.
-
-### Table E.2
-*Conformed Feature Store Parquet Dataset Breakdown*
-
-{{TBL_E2}}
-
-*Note.* Adapted from `figures/04_Appendix_and_Reference/dataset_breakdown.csv`. Architectural specifications of conformed analytics tables stored in Apache Parquet format.
-
-## E.3 Post-ETL Data Verification & Descriptive Statistics
-{{TEXT_E2}}
-
-## E.4 Bureau of Transportation Statistics DB1B Ticket Survey Data Hierarchy
-Table E.3 summarizes the 3-tier hierarchy of the BTS DB1B origin-destination ticket survey.
-
-### Table E.3
-*Bureau of Transportation Statistics DB1B Ticket Survey Data Hierarchy*
-
-{{TBL_E3}}
-
-*Note.* Adapted from `figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv`. Bureau of Transportation Statistics 10% ticket coupon survey relational hierarchy.
-
----
-""".replace("{{TEXT_E1}}", text_e1).replace("{{TBL_E1}}", tbl_e1).replace("{{TBL_E2}}", tbl_e2).replace("{{TEXT_E2}}", text_e2).replace("{{TBL_E3}}", tbl_e3)
-    sections.append(sec_e)
-
-    # Appendix F
-    text_f1 = render_docx_block(docx_paras, range(81, 112))
-    text_f2 = render_docx_block(docx_paras, range(173, 178))
-    sec_f = r"""# Appendix F: Treatment of Data: Extract, Transform, Load (ETL) Architecture and Hygiene Protocols
-
-> *Note on Thesis Cross-References*: This appendix details the 8-step Extract protocol, 15-step Transform protocol, 3-step Load protocol, spatial entity resolution, structural zero preservation, and flight cancellation handling. It is referenced in **Chapter III (Methodology)**, Section *Treatment of Data (Extract, Transform, Load)*; and in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection*.
-
-## F.1 Sequential Extract, Transform, Load (ETL) Pipeline Architecture
-{{TEXT_F1}}
-
-## F.2 Data Hygiene Protocols and Anomaly Remediation
-{{TEXT_F2}}
-
----
-""".replace("{{TEXT_F1}}", text_f1).replace("{{TEXT_F2}}", text_f2)
-    sections.append(sec_f)
-
-    # Appendix G
-    text_g1 = render_docx_block(docx_paras, range(41, 44))
-    text_g2 = render_docx_block(docx_paras, range(178, 184))
-    sec_g = r"""# Appendix G: Temporal Scope, Post-Pandemic Demarcation, and COVID-19 Boundary Definition
-
-> *Note on Thesis Cross-References*: This appendix establishes the empirical justification for excluding pandemic-period volatility and documents the Candidate B demarcation. It is referenced in **Chapter III (Methodology)**, Section *Temporal Scope and Boundary Definition* and Section *Dataset Partitioning and Validation Protocol*; and in **Chapter IV (Results)**, Section *Initial Exploratory Data Analysis*.
-
-## G.1 Temporal Scope and Boundary Definition
-{{TEXT_G1}}
-
-## G.2 Partitioning Design and Post-Pandemic Demarcation Verification
-{{TEXT_G2}}
-
----
-""".replace("{{TEXT_G1}}", text_g1).replace("{{TEXT_G2}}", text_g2)
-    sections.append(sec_g)
-
-    # Appendix H
-    text_h1 = render_docx_block(docx_paras, range(137, 158))
-    text_h2 = render_docx_block(docx_paras, range(280, 286))
-    sec_h = r"""# Appendix H: Four-Tier Purposive Filtering Pipeline Architecture and Progression
-
-> *Note on Thesis Cross-References*: This appendix details the progressive multi-phase filtering architecture that isolates dedicated single-carrier screening facilities from confounding network interactions. It is referenced in **Chapter III (Methodology)**, Section *Sample (Macro Categorization & Micro-Level Refinement)* and Section *Four-Tiered Purposive Filtering Pipeline*; and in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection (Four-Phase Filtering Pipeline & Pipeline Results)*.
-
-## H.1 Four-Tier Purposive Filtering Pipeline Rationale
-{{TEXT_H1}}
-
-### Table H.1
-*Four-Tier Purposive Filtering Pipeline Architecture and Progression Rationale*
-
-{{TBL_H1}}
-
-*Note.* Adapted from `figures/02_Data_Pipelines_and_Threats/master_funnel_progression.csv` and `figures/01_Sample_and_Airport_Selection/clustering_and_connecting_paradox.csv`. Progression of the purposive sampling architecture from the national air transport system to the final 9-airport experimental cohort.
-
-## H.2 Methodological Foundations of Purposive Filtering
-{{TEXT_H2}}
-
-## H.3 Crucial Methodological Distinction: Filtering Correlations for Validation Only
-
-A crucial methodological principle must be emphasized regarding the flight-to-throughput correlations reported across the four filtering phases:
-
-> **The correlation metrics calculated during the 4-tier filtering pipeline serve strictly as sample validation diagnostics to verify that single-carrier isolation has been econometrically achieved.**  
-> **Under NO circumstances are these correlations utilized as model feature weights, regression coefficients, or algorithmic inputs in any downstream forecasting model.**
-
-The candidate models (Baseline Control, Model 1, Model 2, and Model 3) are trained and calibrated strictly on the conformed feature store within the development partition, completely independent of the diagnostic correlations established during sample filtering.
-
----
-""".replace("{{TEXT_H1}}", text_h1).replace("{{TBL_H1}}", tbl_h1).replace("{{TEXT_H2}}", text_h2)
-    sections.append(sec_h)
-
-    # Appendix I
-    text_i = render_docx_block(docx_paras, range(158, 163))
-    sec_i = r"""# Appendix I: Top 25 Network Census vs. Nine-Airport Experimental Cohort
-
-> *Note on Thesis Cross-References*: This appendix provides the empirical census comparing the broader Top 25 airport network against the Nine-Airport Experimental Cohort. It is referenced in **Chapter III (Methodology)**, Section *Sample (Macro Categorization & Micro-Level Refinement)*; and in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection*.
-
-## I.1 Comparative Operational Profile and Representativeness
-{{TEXT_I}}
-
-### Table I.1
-*Summary Descriptive Statistics: Nine-Airport Experimental Cohort vs. Top 25 Airfields*
-
-{{TBL_I1}}
-
-*Note.* Adapted from `results/manuscript_tables/table_4_7.csv`. Statistical comparison validating the experimental power and operational representativeness of the nine selected airports relative to the broader national hub network.
-
----
-""".replace("{{TEXT_I}}", text_i).replace("{{TBL_I1}}", tbl_i1)
-    sections.append(sec_i)
-
-    # Appendix J
-    text_j = render_docx_block(docx_paras, range(184, 189))
-    sec_j = r"""# Appendix J: Econometric Validation of Carrier Checkpoint Demand Isolation
-
-> *Note on Thesis Cross-References*: This appendix documents the econometric tests verifying that single-carrier screening complexes isolate airline demand without confounding cross-carrier leakage. It is referenced in **Chapter III (Methodology)**, Section *Sample (Micro-Level Refinement)* and Section *Internal Validity Threats and Remediation Protocols*; and in **Chapter IV (Results)**, Section *Econometric Validation of Carrier Checkpoint Isolation*.
-
-## J.1 Econometric Testing Architecture for Single-Carrier Isolation
-{{TEXT_J}}
-
-### Table J.1
-*Econometric Tests for Carrier Checkpoint Demand Isolation*
-
-{{TBL_J1}}
-
-*Note.* Econometric verification matrix proving causal identification and single-carrier isolation across the 12 selected carrier complexes.
-
----
-""".replace("{{TEXT_J}}", text_j).replace("{{TBL_J1}}", tbl_j1)
-    sections.append(sec_j)
-
-    # Appendix K
-    text_k = render_docx_block(docx_paras, range(169, 173))
-    sec_k = r"""# Appendix K: Key Airport Selection Contrasts (LGA vs. JFK, PHL vs. SLC)
-
-> *Note on Thesis Cross-References*: This appendix documents the operational and structural justifications for airport inclusion and exclusion contrasts across the candidate hub universe. It is referenced in **Chapter IV (Results)**, Section *Key Airport Selection Contrasts*.
-
-## K.1 Operational Rationale for Specific Airport Inclusion and Exclusion
-{{TEXT_K}}
-
----
-""".replace("{{TEXT_K}}", text_k)
-    sections.append(sec_k)
-
-    # Appendix L
-    text_l1 = render_docx_block(docx_paras, range(122, 134))
-    text_l2 = render_docx_block(docx_paras, range(163, 169))
-    sec_l = r"""# Appendix L: Seasonal Volatility Regimes, Day-of-Week Archetypes, and Local Weekly Profiles
-
-> *Note on Thesis Cross-References*: This appendix establishes the three coupled seasonality dimensions: annual volatility regimes, day-of-week demand archetypes, and local weekly airport profiles. It is referenced in **Chapter III (Methodology)**, Section *Quantitative Evaluation Dimensions*; and in **Chapter IV (Results)**, Section *Defining Seasonality* and Section *Local Seasonal and Day-of-Week Differences Across the Nine Selected Airports*.
-
-## L.1 Annual Seasonal Regimes and Day-of-Week Dynamics
-{{TEXT_L1}}
-
-### Table L.1
-*Master Annual Seasonal Volatility Regimes Summary (Top 25 Airfields, $N = 1,341$ Days)*
-
-{{TBL_L1}}
-
-*Note.* Adapted from `results/manuscript_tables/table_4_3b.csv`. Annual seasonal baseline regimes demonstrating the monotonic expansion of the Coupled Volatility Index ($CVI = \sigma_{\text{TSA}} \cdot \sigma_{\text{Delay}}$) from winter lull to holiday peaks.
-
-### Table L.2
-*Day-of-Week Volatility Dynamics and Operational Archetypes (Top 25 Airfields, $N = 1,341$ Days)*
-
-{{TBL_L2}}
-
-*Note.* Adapted from `results/manuscript_tables/table_4_4a.csv`. Weekly operational dynamics and staffing decision rules across the Top 25 commercial airport network.
-
-## L.2 Local Seasonal and Day-of-Week Profiles Across the Nine Selected Airports
-{{TEXT_L2}}
-
-### Table L.3
-*Day-of-Week Mean Daily Passenger Throughput and Ratio Profiles Across the Nine Selected Airports*
-
-{{TBL_L3}}
-
-*Note.* Adapted from `results/manuscript_tables/table_4_8.csv`. Local day-of-week demand distributions illustrating corporate versus leisure archetypes across the 9-airport experimental cohort.
-
----
-""".replace("{{TEXT_L1}}", text_l1).replace("{{TBL_L1}}", tbl_l1).replace("{{TBL_L2}}", tbl_l2).replace("{{TEXT_L2}}", text_l2).replace("{{TBL_L3}}", tbl_l3)
+""".replace("{{TBL_L1}}", tbl_l1)
     sections.append(sec_l)
 
     # Appendix M
-    text_m = render_docx_block(docx_paras, range(134, 137))
-    sec_m = r"""# Appendix M: Diurnal Bimodal Turbulence Dynamics and Multi-Carrier Collinearity
+    text_m = render_docx_block(docx_paras, range(179, 183))
+    sec_m = r"""# Appendix M: Operational Evaluation Metrics and Performance Criteria Interpretation
 
-> *Note on Thesis Cross-References*: This appendix establishes the diurnal bimodal turbulence structure (morning surge vs. evening cascade), the 84-cell interaction grid, and the mathematical proof of shared-terminal collinearity. It is referenced in **Chapter III (Methodology)**, Section *Sample* and Section *Quantitative Evaluation Dimensions*; and in **Chapter IV (Results)**, Section *Defining Seasonality (Diurnal Non-Consecutive Dual Turbulence Peaks)*.
+> *Note on Thesis Cross-References*: This appendix defines the mathematical formulations, Kingman queuing interpretations, and operational floor translations for the primary holdout evaluation metrics, alongside the mathematical invalidation of MAPE. It is referenced in **Chapter III (Methodology)**, Section *Apparatus and Materials (Evaluation Metric Definition)*; and in **Chapter IV (Results)**, Section *Model Results and Evaluation*.
 
-## M.1 Validity of Diurnal Non-Consecutive Dual Turbulence Peaks
+## M.1 Evaluation Metrics and Dataset Parameters
 {{TEXT_M}}
 
-## M.2 Mathematical Hazard of Shared-Terminal Multi-Carrier Collinearity
-
-A primary finding of the exploratory analysis is that commercial airports cannot be accurately modeled at the aggregate airport level in shared-terminal facilities. In shared terminals, competing airlines schedule simultaneous departure banks (e.g., 08:00 morning departures across multiple carriers):
-
-$$\text{Corr}(S_{j,t}, S_{k,t}) \ge 0.75$$
-
-When multiple airline flight schedules $S_{j,t}$ and $S_{k,t}$ enter a regression model simultaneously, the **Variance Inflation Factor (VIF)** explodes:
-
-$$\text{VIF}_j = \frac{1}{1 - R_j^2} \ge \frac{1}{1 - (0.75)^2} = \frac{1}{0.4375} \approx 2.29$$
-
-Under severe multicollinearity, the variance of estimated regression coefficients escalates, standard errors inflate, parameter estimates become unstable, and models cannot identify which carrier's flight bank drove checkpoint arrivals. In shared terminals, regression models explain less than 20% of checkpoint throughput variance ($R^2 \approx 0.20$).
-
-**Isolating dedicated single-carrier checkpoints (Phase 3 of the filtering pipeline) eliminates multi-carrier collinearity entirely**, enabling models to achieve dedicated checkpoint-to-flight correlations of $r = +0.880$ to $+0.940$.
-
----
-""".replace("{{TEXT_M}}", text_m)
-    sections.append(sec_m)
-
-    # Appendix N
-    text_n = render_docx_block(docx_paras, range(53, 81))
-    sec_n = r"""# Appendix N: Construct Validity and Passenger Throughput Volatility Formulations
-
-> *Note on Thesis Cross-References*: This appendix establishes the formal mathematical definitions of the primary dependent volatility targets and resolves internal validity threats. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Classical Queuing Theory*; in **Chapter III (Methodology)**, Section *Establishing Construct Validity* and Section *Internal Validity Threats and Remediation Protocols*; and in **Chapter IV (Results)**, Section *TSA and OTP Throughput Data*.
-
-## N.1 Establishing Construct Validity: Targets and Formulations
-{{TEXT_N}}
-
----
-""".replace("{{TEXT_N}}", text_n)
-    sections.append(sec_n)
-
-    # Appendix O
-    text_o = render_docx_block(docx_paras, range(189, 196))
-    sec_o = r"""# Appendix O: Operational Evaluation Metrics and Performance Criteria Interpretation
-
-> *Note on Thesis Cross-References*: This appendix defines the mathematical formulations, Kingman queuing interpretations, and operational floor translations for the five primary holdout evaluation metrics and three multi-dimensional performance pillars. It is referenced in **Chapter III (Methodology)**, Section *Apparatus and Materials (Evaluation Metric Definition)*; and in **Chapter IV (Results)**, Section *Model Evaluation and Results*.
-
-## O.1 Evaluation Metrics and Dataset Parameters
-{{TEXT_O}}
-
-## O.2 Operational Forecasting Metrics and Checkpoint Floor Translations
+## M.2 Operational Forecasting Metrics and Checkpoint Floor Translations
 
 Evaluating passenger throughput volatility forecasts requires criteria grounded in queuing theory and operational utility. Models were benchmarked across five standard metrics:
 
@@ -704,7 +698,7 @@ Evaluating passenger throughput volatility forecasts requires criteria grounded 
 
 ---
 
-## O.3 Methodological Invalidation of Mean Absolute Percentage Error (MAPE)
+## M.3 Methodological Invalidation of Mean Absolute Percentage Error (MAPE)
 
 A critical methodological contribution of this research is the **formal mathematical invalidation of Mean Absolute Percentage Error (MAPE) in airport checkpoint demand forecasting**:
 
@@ -715,98 +709,177 @@ During overnight curfew hours (00:00 to 03:59), observed passenger throughput ($
 Reporting MAPE in airport operations produces severely distorted error statistics that reflect overnight division artifacts rather than operational forecasting skill. Mean Absolute Scaled Error (MASE) completely overcomes this deficiency by scaling against the daily persistence benchmark, providing a stable, non-parametric metric that remains fully defined across all operational hours.
 
 ---
-""".replace("{{TEXT_O}}", text_o)
+""".replace("{{TEXT_M}}", text_m)
+    sections.append(sec_m)
+
+    # Appendix N
+    text_n = render_docx_block(docx_paras, range(183, 193))
+    sec_n = r"""# Appendix N: Feature Engineering Pipeline Details and Empirical Arrival Convolution
+
+> *Note on Thesis Cross-References*: This appendix details the ACRP Report 40 empirical passenger show-up curve convolution, feature domains, and the 84-cell interaction grid. It is referenced in **Chapter III (Methodology)**, Section *Treatment of Data (Feature Engineering Pipeline Details)*; and in **Chapter IV (Results)**, Section *Model Development and Execution (Feature Engineering)*.
+
+## N.1 Feature Engineering Pipeline Details
+{{TEXT_N}}
+
+---
+""".replace("{{TEXT_N}}", text_n)
+    sections.append(sec_n)
+
+    # =========================================================================
+    # CHAPTER IV APPENDICES (O - U)
+    # =========================================================================
+
+    # Appendix O
+    text_o1 = render_docx_block(docx_paras, range(109, 117))
+    text_o2 = render_docx_block(docx_paras, range(117, 121))
+    text_o3 = render_docx_block(docx_paras, range(150, 156))
+    sec_o = r"""# Appendix O: Seasonal Volatility Regimes, Day-of-Week Archetypes, and Local Weekly Profiles
+
+> *Note on Thesis Cross-References*: This appendix establishes the three coupled seasonality dimensions: annual volatility regimes, day-of-week demand archetypes, and local weekly airport profiles. It is referenced in **Chapter IV (Results)**, Section *Initial Exploratory Data Analysis (Defining Seasonality)* and Section *Descriptive Statistics for Subset (Local Seasonal and Day-of-Week Differences Across the Nine Selected Airports)*.
+
+## O.1 Annual Seasonal Regimes and Day-of-Week Dynamics
+{{TEXT_O1}}
+
+### Table O.1
+*Master Annual Seasonal Volatility Regimes Summary (Top 25 Airfields, $N = 1,341$ Days)*
+
+{{TBL_O1}}
+
+*Note.* Adapted from `results/manuscript_tables/table_4_3b.csv`. Annual seasonal baseline regimes demonstrating the monotonic expansion of the Coupled Volatility Index ($CVI = \sigma_{\text{TSA}} \cdot \sigma_{\text{Delay}}$) from winter lull to holiday peaks.
+
+### Table O.2
+*Day-of-Week Volatility Dynamics and Operational Archetypes (Top 25 Airfields, $N = 1,341$ Days)*
+
+{{TBL_O2}}
+
+*Note.* Adapted from `results/manuscript_tables/table_4_4a.csv`. Weekly operational dynamics and staffing decision rules across the Top 25 commercial airport network.
+
+## O.2 Local Seasonal and Day-of-Week Profiles Across the Nine Selected Airports
+{{TEXT_O2}}
+
+{{TEXT_O3}}
+
+### Table O.3
+*Day-of-Week Mean Daily Passenger Throughput and Ratio Profiles Across the Nine Selected Airports*
+
+{{TBL_O3}}
+
+*Note.* Adapted from `results/manuscript_tables/table_4_8.csv`. Local day-of-week demand distributions illustrating corporate versus leisure archetypes across the 9-airport experimental cohort.
+
+---
+""".replace("{{TEXT_O1}}", text_o1).replace("{{TBL_O1}}", tbl_o1).replace("{{TEXT_O2}}", text_o2).replace("{{TEXT_O3}}", text_o3).replace("{{TBL_O2}}", tbl_o2).replace("{{TBL_O3}}", tbl_o3)
     sections.append(sec_o)
 
     # Appendix P
-    text_p = render_docx_block(docx_paras, range(196, 206))
-    sec_p = r"""# Appendix P: Feature Engineering Pipeline Details and Empirical Arrival Convolution
+    text_p = render_docx_block(docx_paras, range(121, 124))
+    sec_p = r"""# Appendix P: Diurnal Bimodal Turbulence Dynamics and Multi-Carrier Collinearity
 
-> *Note on Thesis Cross-References*: This appendix details the ACRP Report 40 empirical passenger show-up curve convolution, feature domains, and the 84-cell interaction grid. It is referenced in **Chapter III (Methodology)**, Section *Feature Engineering*; and in **Chapter IV (Results)**, Section *Model Development and Execution*.
+> *Note on Thesis Cross-References*: This appendix establishes the diurnal bimodal turbulence structure (morning surge vs. evening cascade), the 84-cell interaction grid, and the mathematical proof of shared-terminal collinearity. It is referenced in **Chapter IV (Results)**, Section *Initial Exploratory Data Analysis (Validity of Diurnal Non-Consecutive Dual Turbulence Peaks)*.
 
-## P.1 Feature Engineering Pipeline Details
+## P.1 Validity of Diurnal Non-Consecutive Dual Turbulence Peaks
 {{TEXT_P}}
+
+## P.2 Mathematical Hazard of Shared-Terminal Multi-Carrier Collinearity
+
+A primary finding of the exploratory analysis is that commercial airports cannot be accurately modeled at the aggregate airport level in shared-terminal facilities. In shared terminals, competing airlines schedule simultaneous departure banks (e.g., 08:00 morning departures across multiple carriers):
+
+$$\text{Corr}(S_{j,t}, S_{k,t}) \ge 0.75$$
+
+When multiple airline flight schedules $S_{j,t}$ and $S_{k,t}$ enter a regression model simultaneously, the **Variance Inflation Factor (VIF)** explodes:
+
+$$\text{VIF}_j = \frac{1}{1 - R_j^2} \ge \frac{1}{1 - (0.75)^2} = \frac{1}{0.4375} \approx 2.29$$
+
+Under severe multicollinearity, the variance of estimated regression coefficients escalates, standard errors inflate, parameter estimates become unstable, and models cannot identify which carrier's flight bank drove checkpoint arrivals. In shared terminals, regression models explain less than 20% of checkpoint throughput variance ($R^2 \approx 0.20$).
+
+**Isolating dedicated single-carrier checkpoints (Phase 3 of the filtering pipeline) eliminates multi-carrier collinearity entirely**, enabling models to achieve dedicated checkpoint-to-flight correlations of $r = +0.880$ to $+0.940$.
 
 ---
 """.replace("{{TEXT_P}}", text_p)
     sections.append(sec_p)
 
     # Appendix Q
-    text_q = render_docx_block(docx_paras, range(19, 40))
-    sec_q = r"""# Appendix Q: Candidate Predictive Modeling Suite and Operational Regimes
+    text_q = render_docx_block(docx_paras, range(171, 176))
+    sec_q = r"""# Appendix Q: Econometric Validation of Carrier Checkpoint Demand Isolation
 
-> *Note on Thesis Cross-References*: This appendix details the mathematical architectures and operational paradigms of the three candidate models and baseline control. It is referenced in **Chapter III (Methodology)**, Section *Predictive Modeling Frameworks and Baseline Control* and Section *Quantitative Evaluation Dimensions and Operational Regimes*.
+> *Note on Thesis Cross-References*: This appendix documents the econometric tests verifying that single-carrier screening complexes isolate airline demand without confounding cross-carrier leakage. It is referenced in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection (Econometric Validation of Carrier Checkpoint Isolation)*; and in **Chapter V (Discussion)**, Section *Spatial Architecture and Passenger Behavioral Dynamics*.
 
-## Q.1 Model Selection & Operational Taxonomies
+## Q.1 Econometric Testing Architecture for Single-Carrier Isolation
 {{TEXT_Q}}
 
+### Table Q.1
+*Econometric Tests for Carrier Checkpoint Demand Isolation*
+
+{{TBL_Q1}}
+
+*Note.* Econometric verification matrix proving causal identification and single-carrier isolation across the 12 selected carrier complexes.
+
 ---
-""".replace("{{TEXT_Q}}", text_q)
+""".replace("{{TEXT_Q}}", text_q).replace("{{TBL_Q1}}", tbl_q1)
     sections.append(sec_q)
 
     # Appendix R
-    text_r1 = render_docx_block(docx_paras, range(113, 115))
-    text_r2 = render_docx_block(docx_paras, range(206, 211))
-    sec_r = r"""# Appendix R: Master Multi-Pillar Hypothesis Evaluation Matrix and Holdout Benchmarks
+    text_r = render_docx_block(docx_paras, range(145, 150))
+    sec_r = r"""# Appendix R: Top 25 Network Census vs. Nine-Airport Experimental Cohort
 
-> *Note on Thesis Cross-References*: This appendix compiles the certified empirical evaluation benchmarks across all three candidate models and baseline control evaluated against the 2025 out-of-time holdout dataset. It is referenced in **Chapter IV (Results)**, Section *Model Evaluation and Results* and Section *Empirical Confirmation of Asymmetric Trade-Offs (Hypothesis 1 Verified)*; and in **Chapter V (Discussion)**, Section *Master Synthesis and Operational Recommendations*.
+> *Note on Thesis Cross-References*: This appendix provides the empirical census comparing the broader Top 25 airport network against the Nine-Airport Experimental Cohort. It is referenced in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection (Pipeline Results: Top 25 vs 9 Airport Cohort)*.
 
-## R.1 Model Tradeoffs and Evaluation Overview
-{{TEXT_R1}}
-
-## R.2 Holdout Benchmark Execution
-{{TEXT_R2}}
+## R.1 Comparative Operational Profile and Representativeness
+{{TEXT_R}}
 
 ### Table R.1
-*Master Multi-Pillar Hypothesis Evaluation Matrix (2025 Out-of-Time Holdout Suite, $N = 3,222$ Complex-Days)*
+*Summary Descriptive Statistics: Nine-Airport Experimental Cohort vs. Top 25 Airfields*
 
 {{TBL_R1}}
+
+*Note.* Adapted from `results/manuscript_tables/table_4_7.csv`. Statistical comparison validating the experimental power and operational representativeness of the nine selected airports relative to the broader national hub network.
+
+---
+""".replace("{{TEXT_R}}", text_r).replace("{{TBL_R1}}", tbl_r1)
+    sections.append(sec_r)
+
+    # Appendix S
+    text_s = render_docx_block(docx_paras, range(156, 160))
+    sec_s = r"""# Appendix S: Key Airport Selection Contrasts (LGA vs. JFK, PHL vs. SLC)
+
+> *Note on Thesis Cross-References*: This appendix documents the operational and structural justifications for airport inclusion and exclusion contrasts across the candidate hub universe. It is referenced in **Chapter IV (Results)**, Section *Data Filtering and Subset Selection (Key Airport Selection Contrasts)*; and in **Chapter V (Discussion)**, Section *Spatial Architecture and Passenger Behavioral Dynamics*.
+
+## S.1 Operational Rationale for Specific Airport Inclusion and Exclusion
+{{TEXT_S}}
+
+---
+""".replace("{{TEXT_S}}", text_s)
+    sections.append(sec_s)
+
+    # Appendix T
+    text_t1 = render_docx_block(docx_paras, range(100, 102))
+    text_t2 = render_docx_block(docx_paras, range(193, 197))
+    sec_t = r"""# Appendix T: Master Multi-Pillar Hypothesis Evaluation Matrix and Holdout Benchmarks
+
+> *Note on Thesis Cross-References*: This appendix compiles the certified empirical evaluation benchmarks across all three candidate models and baseline control evaluated against the 2025 out-of-time holdout dataset. It is referenced in **Chapter IV (Results)**, Section *Model Results and Evaluation* and Section *Empirical Confirmation of Asymmetric Trade-Offs (Hypothesis 1 Verified)*; and in **Chapter V (Discussion)**, Section *Master Synthesis and Operational Recommendations*.
+
+## T.1 Model Tradeoffs and Evaluation Overview
+{{TEXT_T1}}
+
+## T.2 Holdout Benchmark Execution
+{{TEXT_T2}}
+
+### Table T.1
+*Master Multi-Pillar Hypothesis Evaluation Matrix (2025 Out-of-Time Holdout Suite, $N = 3,222$ Complex-Days)*
+
+{{TBL_T1}}
 
 *Note.* Adapted from `results/manuscript_tables/table_4_10.csv`. Certified out-of-time holdout evaluation suite demonstrating Asymmetric Performance Trade-Offs ($H_1$).
 
 ---
-""".replace("{{TEXT_R1}}", text_r1).replace("{{TEXT_R2}}", text_r2).replace("{{TBL_R1}}", tbl_r1)
-    sections.append(sec_r)
-
-    # Appendix S
-    text_s = render_docx_block(docx_paras, range(243, 254))
-    sec_s = r"""# Appendix S: Resilience Mechanics and the Empty Checkpoint Fallacy Under Severe Disruption
-
-> *Note on Thesis Cross-References*: This appendix details the behavioral mechanics of forecast failures during severe weather and the live error feedback remediation in the Dynamic Hybrid. It is referenced in **Chapter IV (Results)**, Section *Empirical Confirmation of Asymmetric Trade-Offs*; and in **Chapter V (Discussion)**, Section *Evaluation Dimension 2: Resilience* and Section *Resilience Mechanics and the Empty Checkpoint Fallacy*.
-
-## S.1 Resilience Mechanics and Disruption Performance
-{{TEXT_S}}
-
-### Table S.1
-*Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption*
-
-{{TBL_S1}}
-
-*Note.* Adapted from `results/manuscript_tables/table_5_2.csv`. Operational resilience metrics during severe disruptions (delays $\ge 45$m or cancellations $\ge 5$).
-
----
-""".replace("{{TEXT_S}}", text_s).replace("{{TBL_S1}}", tbl_s1)
-    sections.append(sec_s)
-
-    # Appendix T
-    text_t = render_docx_block(docx_paras, range(225, 243))
-    sec_t = r"""# Appendix T: The Lead-Lag Asynchrony Mechanism and Shock Interaction Dynamics
-
-> *Note on Thesis Cross-References*: This appendix documents the landside-airside queuing disconnect, morning vs. evening shock dynamics, and the 84-cell interaction grid sample depth. It is referenced in **Chapter V (Discussion)**, Section *The Lead-Lag Asynchrony Mechanism* and Section *Robustness Across the Interaction Grid and Prevention of Delay Distortion*.
-
-## T.1 The Lead-Lag Asynchrony Mechanism and Shock Shielding
-{{TEXT_T}}
-
----
-""".replace("{{TEXT_T}}", text_t)
+""".replace("{{TEXT_T1}}", text_t1).replace("{{TEXT_T2}}", text_t2).replace("{{TBL_T1}}", tbl_t1)
     sections.append(sec_t)
 
     # Appendix U
-    text_u1 = render_docx_block(docx_paras, range(211, 224))
-    text_u2 = render_docx_block(docx_paras, range(254, 261))
+    text_u1 = render_docx_block(docx_paras, range(197, 211))
+    text_u2 = render_docx_block(docx_paras, range(241, 248))
     sec_u = r"""# Appendix U: The Values versus Volatility Paradigm Across Multi-Day Temporal Horizons
 
-> *Note on Thesis Cross-References*: This appendix establishes the econometric proof for Hypothesis 2 ($H_2$) across intraday absolute, scale-free relative, and multi-day temporal horizons. It is referenced in **Chapter IV (Results)**, Section *The Values versus Volatility Paradigm Empirical Results*; and in **Chapter V (Discussion)**, Section *Deep-Dive: Values versus Volatility Paradigm Across Temporal Horizons*.
+> *Note on Thesis Cross-References*: This appendix establishes the econometric proof for Hypothesis 2 ($H_2$) across intraday absolute, scale-free relative, and multi-day temporal horizons. It is referenced in **Chapter IV (Results)**, Section *Model Results and Evaluation (The Values versus Volatility Paradigm Empirical Results)*; and in **Chapter V (Discussion)**, Section *Deep-Dive: Values versus Volatility Paradigm Across Temporal Horizons*.
 
 ## U.1 Empirical Validation of the Values versus Volatility Paradigm ($H_2$)
 {{TEXT_U1}}
@@ -825,77 +898,65 @@ Reporting MAPE in airport operations produces severely distorted error statistic
 """.replace("{{TEXT_U1}}", text_u1).replace("{{TEXT_U2}}", text_u2).replace("{{TBL_U1}}", tbl_u1)
     sections.append(sec_u)
 
+    # =========================================================================
+    # CHAPTER V APPENDICES (V - X)
+    # =========================================================================
+
     # Appendix V
-    text_v = render_docx_block(docx_paras, range(261, 271))
-    sec_v = r"""# Appendix V: Dual-Track Operational Decision Playbook and Real-World Application
+    text_v1 = render_docx_block(docx_paras, range(212, 226))
+    text_v2 = render_docx_block(docx_paras, range(226, 233))
+    sec_v = r"""# Appendix V: The Lead-Lag Asynchrony Mechanism and Shock Interaction Dynamics
 
-> *Note on Thesis Cross-References*: This appendix translates the empirical modeling findings into an actionable operational decision playbook and regime-switched gated inference engine. It is referenced in **Chapter V (Discussion)**, Section *Master Synthesis and Operational Recommendations* and Section *The Regime-Switched Gated Inference Engine: The Airport Operator's Playbook*.
+> *Note on Thesis Cross-References*: This appendix documents the landside-airside queuing disconnect, morning vs. evening shock dynamics, and the 84-cell interaction grid sample depth. It is referenced in **Chapter V (Discussion)**, Section *Spatial Architecture and Passenger Behavioral Dynamics (The Lead-Lag Asynchrony Mechanism)* and Section *Robustness Across the Interaction Grid and Prevention of Delay Distortion*.
 
-## V.1 Real-World Operational Application
-{{TEXT_V}}
+## V.1 The Lead-Lag Asynchrony Mechanism and Shock Shielding
+{{TEXT_V1}}
 
-### Table V.1
+## V.2 Robustness Across the Interaction Grid and Prevention of Delay Distortion
+{{TEXT_V2}}
+
+---
+""".replace("{{TEXT_V1}}", text_v1).replace("{{TEXT_V2}}", text_v2)
+    sections.append(sec_v)
+
+    # Appendix W
+    text_w = render_docx_block(docx_paras, range(233, 241))
+    sec_w = r"""# Appendix W: Resilience Mechanics and the Empty Checkpoint Fallacy Under Severe Disruption
+
+> *Note on Thesis Cross-References*: This appendix details the behavioral mechanics of forecast failures during severe weather and the live error feedback remediation in the Dynamic Hybrid. It is referenced in **Chapter V (Discussion)**, Section *Empirical Evaluation of Resilience Under Disruption (Resilience Mechanics and the Empty Checkpoint Fallacy)*.
+
+## W.1 Resilience Mechanics and Disruption Performance
+{{TEXT_W}}
+
+### Table W.1
+*Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption*
+
+{{TBL_W1}}
+
+*Note.* Adapted from `results/manuscript_tables/table_5_2.csv`. Operational resilience metrics during severe disruptions (delays $\ge 45$m or cancellations $\ge 5$).
+
+---
+""".replace("{{TEXT_W}}", text_w).replace("{{TBL_W1}}", tbl_w1)
+    sections.append(sec_w)
+
+    # Appendix X
+    text_x = render_docx_block(docx_paras, range(248, 258))
+    sec_x = r"""# Appendix X: Dual-Track Operational Decision Playbook and Real-World Application
+
+> *Note on Thesis Cross-References*: This appendix translates the empirical modeling findings into an actionable operational decision playbook and regime-switched gated inference engine. It is referenced in **Chapter V (Discussion)**, Section *Implications and Recommendations for Predictive Forecasting in Airport Operations (Real-World Operational Application)*.
+
+## X.1 Real-World Operational Application
+{{TEXT_X}}
+
+### Table X.1
 *Dual-Track Operational Model Selection Policy Matrix*
 
-{{TBL_V1}}
+{{TBL_X1}}
 
 *Note.* Adapted from `results/manuscript_tables/dual_track_model_selection_policy.csv`. Dual-track operational deployment policy mapping operational flight regimes to assigned model architectures.
 
 ---
-""".replace("{{TEXT_V}}", text_v).replace("{{TBL_V1}}", tbl_v1)
-    sections.append(sec_v)
-
-    # Appendix W
-    text_w = render_docx_block(docx_paras, range(271, 280))
-    sec_w = r"""# Appendix W: Connecting Queuing Principles to Dynamic Lane Staffing and Safety Cushion
-
-> *Note on Thesis Cross-References*: This appendix connects heavy-traffic queuing theory with practical checkpoint lane dimensioning rules and the Staffing Safety Cushion. It is referenced in **Chapter II (Review of the Relevant Literature)**, Section *Classical Queuing Theory*; and in **Chapter V (Discussion)**, Section *Connecting Queuing Principles to Dynamic Lane Staffing: The Staffing Safety Cushion*.
-
-## W.1 Connecting Queuing Principles to Dynamic Lane Staffing
-{{TEXT_W}}
-
----
-""".replace("{{TEXT_W}}", text_w)
-    sections.append(sec_w)
-
-    # Appendix X
-    sec_x = r"""# Appendix X: Archival Data Storage Infrastructure, Directory Hierarchy, and Screenshot Catalog
-
-> *Note on Thesis Cross-References*: This appendix documents the persistent cloud storage backup manifest, repository organization, and visual evidence screenshot catalog. It is referenced in **Chapter I (Introduction)**, Section *Limitations and Assumptions*; and in **Chapter III (Methodology)**, Section *Apparatus and Materials*.
-
-## X.1 Archival Data Storage Infrastructure and Persistent Cloud Repository
-
-To ensure full auditability, scientific reproducibility, and long-term data preservation, the master raw and conformed aviation datasets are archived in a standardized directory hierarchy replicated across secure persistent cloud storage (OneDrive) and local data warehouse paths. Table X.1 documents the backup structure and directory contents.
-
-### Table X.1
-*OneDrive Archival Backup Directory Structure and Repository Manifest*
-
-{{TBL_X1}}
-
-*Note.* Adapted from `figures/04_Appendix_and_Reference/backups_organization.csv`. Directory manifest establishing repository backup protocols and persistent cloud storage organization.
-
-Figure X.1 and Figure X.2 document the backup organization and directory structure of the visual evidence screenshots.
-
-Figure X.1  
-*Archival Data Storage and OneDrive Directory Organization*
-
-![Figure X.1: Archival Data Storage and OneDrive Directory Organization](../../figures/04_Appendix_and_Reference/Backups%20organization.png)
-
-*Note.* Folder tree structure of the persistent cloud storage backup repository.
-
----
-
-## X.2 Visual Evidence Screenshot Catalog
-
-Figure X.2 illustrates the organization of the 30 high-resolution visual evidence screenshots across the four analytical subdirectories.
-
-Figure X.2  
-*Diagrams and Screenshot Layout Structure*
-
-![Figure X.2: Diagrams and Screenshot Layout Structure](../../figures/04_Appendix_and_Reference/Diagrams%20and%20Screenshot%20Layout.png)
-
-*Note.* Directory organization and chapter mapping for the 30 visual evidence screenshots across the thesis repository.
-""".replace("{{TBL_X1}}", tbl_x1)
+""".replace("{{TEXT_X}}", text_x).replace("{{TBL_X1}}", tbl_x1)
     sections.append(sec_x)
 
     # Combine all sections
