@@ -440,6 +440,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   (Options A through D).                                                   |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); synchronized tables and workbooks (39/39 tests ok).   |
+| v4.28   | 2026-10-06 | Chapter II Literature Review Synthesis Recommendations (litreview-rec.md):|
+|         |            | - Authored comprehensive synthesis recommendation report litreview-rec.md  |
+|         |            |   (deployed to root and thesis_docs/recommendations/chapter_updates/).      |
+|         |            | - Diagnosed word count and depth divergence between Chp2 v1.docx (3,894 w) |
+|         |            |   and ChpII v2.docx / chp2-litreview.md (1,764 w).                         |
+|         |            | - Formulated the 'V2 Backbone + V1 Empirical Depth' blueprint expanding    |
+|         |            |   Chapter II to ~3,900–4,200 words while preserving V2's concise flow.     |
+|         |            | - Mapped integration of 50+ empirical airport and queuing citations from   |
+|         |            |   V1 (Alnowibet, Peterson, Liu, Lu, Hess & Grbčić, Wei, Adeke, Brown &     |
+|         |            |   Madhavan, Takakuwa, Bießlich, Alodhaibi, Babu, Hopfe, Viaña, Sun, Li).   |
+|         |            | - Replaced telegraphic bullet points with continuous APA 7 academic prose.  |
+|         |            | - Pruned off-topic baggage metaheuristics, fuzzy logic, and lab jargon.     |
+|         |            | - Anchored the Allen-Cunneen queuing approximation (Ca^2) and econometrics |
+|         |            |   'Values vs. Volatility' paradigm (H2) into the chapter narrative.         |
+|         |            | - Formalized V1 Figures 2 & 3 into APA 7 Table 2.1 (Paradigm Taxonomy).     |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); synchronized tables and workbooks.                    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
