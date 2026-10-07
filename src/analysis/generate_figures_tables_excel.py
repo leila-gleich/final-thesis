@@ -598,7 +598,9 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     wb_title = subfolder_info["title"]
     wb_subtitle = subfolder_info["subtitle"]
     
-    subfolder_path = FIGURES_DIR / folder_name
+    target_dir = subfolder_info.get("target_dir", FIGURES_DIR / folder_name)
+    csv_dir = subfolder_info.get("csv_dir", FIGURES_DIR / folder_name)
+    subfolder_path = csv_dir
     print(f"\n" + "=" * 80)
     print(f" BUILDING WORKBOOK: {wb_filename} (Folder: {folder_name})")
     print("=" * 80)
