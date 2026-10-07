@@ -1,4 +1,0 @@
-component_family,modeling_approach,distribution_or_algorithm,parameters_and_hyperparameters,operational_mechanics_and_purpose
-Probabilistic Arrival Kernel,Continuous Arrival Density Kernel,Lognormal Probability Distribution,"mu = 4.65, sigma = 0.32, E[tau] approx 105 min pre-departure",Transforms discrete flight schedule pulses into realistic continuous passenger arrival waves peaking 90-120 minutes before takeoff.
-Uncertainty Interval Forecasting,Interval Quantile Regression,Quantile Pinball Loss,"alpha in [0.05, 0.50, 0.95]",Emits true probabilistic prediction intervals rather than rigid scalar point forecasts.
-Non-linear Shock Learning,Supervised Machine Learning Regressor,Ensemble Shallow Regularized Decision Trees,HistGradientBoostingRegressor / LightGBM,"Captures non-linear operational threshold effects (e.g., how prior-hour flight delays suddenly dampen arrivals and create secondary queue backlogs)."

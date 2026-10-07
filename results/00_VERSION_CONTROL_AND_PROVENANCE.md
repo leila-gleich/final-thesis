@@ -561,6 +561,22 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   acronyms.md and manuscripts-only/acronyms.md.                             |
 |         |            | - Authored test suite tests/test_acronyms_generation.py (44/44 unit tests ok)|
 |         |            | - Explicit user authorization granted for Word (.docx) creation.            |
+| v4.35   | 2026-10-06 | Two-Pillar Model A Finalization & Method 1 Test Redirection:                |
+|         |            | - Completed two-pillar asset reorganization (Model A) separating            |
+|         |            |   pre-empirical research exhibits (thesis_docs/exhibits/) from empirical    |
+|         |            |   findings (results/figures/ and results/tables/).                         |
+|         |            | - Pruned legacy non-appendix folders (figures/01, 02, 03) and root          |
+|         |            |   workbook duplicates from figures/ to resolve clutter.                     |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); untracked review drafts left untouched.                |
+|         |            | - Preserved strict user constraint: 100% zero edits to any appendix files   |
+|         |            |   (figures/04_Appendix_and_Reference/ and 04_Appendix_and_Reference.xlsx). |
+|         |            | - Refactored src/analysis/generate_figures_tables_excel.py to generate     |
+|         |            |   workbooks strictly in canonical targets (Method 1).                      |
+|         |            | - Updated tests/test_figure_workbooks.py targeting canonical paths.         |
+|         |            | - Cleaned up spurious .xlsx files from exhibits/ch03_methodology/tables/.   |
+|         |            | - Fully verified and passed all 44 unit tests with zero regressions.       |
+|         |            | - Synchronized all 16 manuscript tables and companion Excel workbooks.      |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

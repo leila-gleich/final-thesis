@@ -20,14 +20,15 @@ class TestFigureWorkbooks(unittest.TestCase):
     def test_build_all_figure_workbooks(self):
         """Verifies that all 4 figure workbooks build successfully with APA 7 rules."""
         generated = build_all_figure_workbooks()
-        self.assertEqual(len(generated), 8)  # 4 in subfolders + 4 mirrored in figures/
+        self.assertEqual(len(generated), 4)
 
         for sf_info in SUBFOLDER_WORKBOOKS:
             folder_name = sf_info["folder_name"]
             wb_filename = sf_info["wb_filename"]
             expected_tables = sf_info["tables"]
+            target_dir = sf_info.get("target_dir", FIGURES_DIR / folder_name)
             
-            wb_path = FIGURES_DIR / folder_name / wb_filename
+            wb_path = target_dir / wb_filename
             self.assertTrue(wb_path.exists(), f"Workbook {wb_path} does not exist.")
 
             wb = openpyxl.load_workbook(wb_path)

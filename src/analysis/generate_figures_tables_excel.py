@@ -1,14 +1,14 @@
 """
 src/analysis/generate_figures_tables_excel.py
 ---------------------------------------------
-Generates 4 consolidated multi-tab Excel workbooks corresponding to the 4 subfolders
-in the `figures/` directory, formatted strictly according to APA Style (7th ed.):
+Generates 4 consolidated multi-tab Excel workbooks corresponding to the exhibits
+and appendix subfolders, formatted strictly according to APA Style (7th ed.):
 
-Subfolders:
-1. figures/01_Sample_and_Airport_Selection -> 01_Sample_and_Airport_Selection.xlsx
-2. figures/02_Data_Pipelines_and_Threats  -> 02_Data_Pipelines_and_Threats.xlsx
-3. figures/03_Modeling_and_Evaluation     -> 03_Modeling_and_Evaluation.xlsx
-4. figures/04_Appendix_and_Reference      -> 04_Appendix_and_Reference.xlsx
+Target Locations:
+1. thesis_docs/exhibits/ch03_methodology/workbooks/01_Sample_and_Airport_Selection.xlsx
+2. thesis_docs/exhibits/ch03_methodology/workbooks/02_Data_Pipelines_and_Threats.xlsx
+3. thesis_docs/exhibits/ch03_methodology/workbooks/03_Modeling_and_Evaluation.xlsx
+4. figures/04_Appendix_and_Reference/04_Appendix_and_Reference.xlsx
 
 APA 7th Edition Formatting Rules:
 - No table auto-filters / dropdown arrows.
@@ -872,25 +872,12 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     # =========================================================================
     # 3. SAVE WORKBOOK
     # =========================================================================
-    # Save inside subfolder AND copy to figures/ root
-    dest_paths = [
-        subfolder_path / wb_filename,
-        FIGURES_DIR / wb_filename
-    ]
+    dest_path = target_dir / wb_filename
+    dest_path.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(dest_path)
+    print(f"  -> Saved workbook: {dest_path}")
 
-    for p in dest_paths:
-        p.parent.mkdir(parents=True, exist_ok=True)
-        wb.save(p)
-        print(f"  -> Saved workbook: {p}")
-
-    # Synchronize non-appendix workbooks to thesis_docs/exhibits/ch03_methodology/workbooks/
-    exhibits_wb_dir = BASE_DIR / "thesis_docs" / "exhibits" / "ch03_methodology" / "workbooks"
-    if exhibits_wb_dir.exists() and "Appendix" not in folder_name:
-        exhibit_dest = exhibits_wb_dir / wb_filename
-        wb.save(exhibit_dest)
-        print(f"  -> Synchronized exhibits workbook: {exhibit_dest}")
-
-    return dest_paths
+    return [dest_path]
 
 
 def build_all_figure_workbooks():

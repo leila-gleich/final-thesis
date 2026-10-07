@@ -1,7 +1,0 @@
-metric_name,volatility_class,cv_daily,cv_flight_grain,mean_or_median,iqr_or_range,kurtosis_skewness,operational_implications
-Cancellation Rate,Most Volatile (CV > 1.0),3.10,—,Median: 0.65%,Max: 100.0% (95th: 9.47%),Kurtosis: 56.7,"Highly intermittent, zero-inflated; acute shock driver during severe convective weather and GDPs."
-Arrival Delay,Most Volatile (CV > 1.0),3.77,9.24,—,—,"Skewness: +2.86, Kurtosis: 17.98",Massive right-tail skewness as en-route flight padding collapses during severe downline disruptions.
-Departure Delay,Most Volatile (CV > 1.0),1.26,4.27,Mean: 10.81 min (Median: 7.69 min),"IQR: 11.68 min, Max daily: 273.73 min (AUS)",—,Primary airside feedback signal driving terminal queuing and checkpoint arrival dispersion.
-Weather Delay Cause,Most Volatile (CV > 1.0),7.10,—,—,—,Kurtosis: 422.4,Highest volatility among all delay causes; heavily concentrated in localized severe convective storms and winter blizzards.
-Runway Taxi-Out Time,Least Volatile / Structurally Constrained (CV < 0.6),0.27,0.53,Mean: 18.70 min (Median: 17.78 min),IQR: 5.01 min,—,Strongly constrained by physical airport runway geometry and gate layout.
-Scheduled Flight Volume,Least Volatile / Structurally Constrained (CV < 0.6),0.51,—,—,—,—,Governed by deterministic airline schedules published months in advance.
