@@ -18,6 +18,7 @@
 | **Diurnal Non-Consecutive Dual Turbulence Peaks** | The daily bimodal congestion curve: morning passenger arrival rush (05:00–08:00) and evening flight delay propagation (14:00–22:00). | "Diurnal" sounds like biology/ecology; "non-consecutive" overcomplicates a standard bimodal curve; "turbulence" is borrowed physics jargon. | **Bimodal Intraday Operational Peaks: Morning Surges and Evening Delay Cascades** (or **Bimodal Intraday Congestion Regimes**) |
 | **Live 1-Step Error Innovation Feedback ($e_{t-1}$)** | If the model underpredicted checkpoint demand last hour because delayed passengers crowded the lobby, it raises this hour's forecast. | "Innovation" sounds like corporate tech buzzwords; "1-step" is abstract algorithm speak for "prior-hour." | **Real-Time Prior-Hour Error Correction** (or **Live Prior-Hour Forecast Error Feedback**) |
 | **Zero Feedback Latency** | Model 2 (Machine Learning) does not require live sensor feeds from the checkpoint floor, allowing advance shift scheduling. | Misleading (Model 2 has *no* feedback loop, it is feed-forward); "latency" is IT jargon that obscures the practical planning benefit. | **Requires No Real-Time Checkpoint Data Feeds** (or **Advance Scheduling Capability**) |
+| **Regime-Switched Gated Inference Engine** | An operational decision rule routing predictions to Model 2 (Supervised ML) during calm conditions and switching to Model 3 (Dynamic Hybrid) during severe disruptions ($T(h) \ge 0.75$). | "Gated" and "inference engine" are computer-science / AI runtime jargon; "gates" also conflicts with physical airport boarding gates. | **Dual-Track Operational Decision Framework** (or **Disruption-Adaptive Checkpoint Forecasting Playbook**, **Regime-Adaptive Predictive Architecture**) |
 
 ---
 
@@ -130,7 +131,48 @@ Rather than declaring an invented index, frame it as a **statistical interaction
 
 ---
 
-## 5. Defense Q&A Strategy: Anticipated Committee Questions
+## 5. Regime-Switched Gated Inference Engine
+
+### 5.1 Context and Original Question
+* **Query**: How to de-jargon and reword `Regime-Switched Gated Inference Engine` in Chapter V (Section 5.6 / Master Decision Architecture).
+* **Draft Phrasing**:
+  *"To operationalize these empirical findings, the Transportation Security Administration (TSA) and Airport Operations Centers (AOC) should deploy a **Regime-Switched Gated Inference Engine**—an automated decision playbook that monitors airport turbulence and automatically selects the most suitable forecasting model..."*
+
+### 5.2 Why the Phrasing Risks Committee Scrutiny
+1. **Computer Science & AI Jargon ("Gated Inference Engine")**:
+   * *"Gated"* is borrowed from neural network / deep learning architectures (e.g., Mixture-of-Experts gating networks, LSTM gates). In commercial airport operations, "gates" refers to physical aircraft parking positions; using "gated" for model switching causes unnecessary domain ambiguity.
+   * *"Inference Engine"* is borrowed from expert systems and machine learning hardware runtimes (e.g., TensorRT inference engines). Airport operations centers (AOCs) and TSA command centers execute *operational decision frameworks*, *dispatch playbooks*, or *staffing protocols*, not software "inference engines."
+2. **Techno-Centric Barrier**:
+   * While "regime switching" is an established econometric concept (Hamilton, 1989), combining all three buzzwords (*regime-switched*, *gated*, *inference engine*) into a single noun phrase creates an impression of unnecessary technical complexity for an aviation management thesis committee.
+
+### 5.3 The Underlying Operational Reality
+The framework operationalizes the **Asymmetric Performance Trade-Offs ($H_1$)** proven across the three candidate models:
+* **No Single Model Dominates**: Model 2 (Supervised ML) wins on routine computational efficiency and advance scheduling capability ($\text{MASE} = 0.68\text{--}0.70$, zero floor sensor dependency), but collapses during severe convective disruptions ($R_{\text{MASE}} = 2.14$). Model 3 (Dynamic Hybrid) decisively wins on disruption resilience ($R_{\text{MASE}} = 1.05, \text{TTR} = 2.8\text{h}$) via live prior-hour error feedback, but introduces real-time telemetry dependencies and localized overfitting ($RTR = 1.19$).
+* **Operational Dual-Track Strategy**: Instead of forcing a single model 24/7, the airport operational system evaluates prevailing flight network turbulence ($T(h)$ or delay dispersion) and selects the appropriate operational track:
+  * **Track 1 (Routine Flow Track, $T(h) < 0.75$)**: Uses **Model 2 (Supervised Machine Learning)** for low-overhead, advance shift scheduling.
+  * **Track 2 (Tactical Shock Track, $T(h) \ge 0.75$)**: Engages **Model 3 (Dynamic Two-Stage Hybrid)** with closed-loop prior-hour error correction to rapidly recover from severe weather disruptions and ground delay programs.
+
+### 5.4 Recommended Academic & Operational Replacements
+
+#### Recommended Heading / Framework Names:
+* **Option 1 (Operational & Applied Aviation - Recommended)**:  
+  `Dual-Track Operational Decision Framework` (or `Dual-Track Decision Playbook`)
+* **Option 2 (Disruption / Queuing Focused)**:  
+  `Disruption-Adaptive Checkpoint Forecasting Framework` (or `Condition-Responsive Staffing Protocol`)
+* **Option 3 (Econometrics & Operations Research)**:  
+  `Regime-Adaptive Predictive Architecture` (or `Dual-Regime Operational Forecasting System`)
+* **Option 4 (Conservative Polish Retaining "Regime-Switching")**:  
+  `Regime-Switched Dual-Track Decision Engine`
+
+#### Before vs. After Section Prose:
+* **Before (Draft Text)**:  
+  *"To operationalize these empirical findings, the Transportation Security Administration (TSA) and Airport Operations Centers (AOC) should deploy a **Regime-Switched Gated Inference Engine**—an automated decision playbook that monitors airport turbulence and automatically selects the most suitable forecasting model..."*
+* **After (Publishable Manuscript Text)**:  
+  *"To operationalize these empirical findings, the Transportation Security Administration (TSA) and Airport Operations Centers (AOC) should deploy a **Dual-Track Operational Decision Framework**—an automated operational playbook that monitors airport turbulence levels and dynamically routes checkpoint predictions to the most resilient forecasting model based on flight network stability..."*
+
+---
+
+## 6. Defense Q&A Strategy: Anticipated Committee Questions
 
 ### Q1: "Why didn't you just use an established index like the FAA Delay Index?"
 * **Response**: *"The FAA Delay Index and DOT A14 metrics evaluate airside aircraft delays in isolation from terminal buildings. Our empirical econometric analysis across the Top 25 airfields revealed that raw flight delay minutes have virtually no correlation with landside security throughput ($r = -0.062, p = 0.77$). Instead, terminal queue congestion is driven by variance interaction—the coupling between passenger arrival burstiness ($CV_{\text{TSA}}$) and flight delay dispersion ($\sigma_{\text{Delay}}$). To capture this, we evaluated a cross-system volatility interaction term grounded in Kingman's heavy-traffic queuing formula."*
@@ -140,3 +182,6 @@ Rather than declaring an invented index, frame it as a **statistical interaction
 
 ### Q3: "Why not run the Dynamic Hybrid model all the time if it recovers faster during disruptions?"
 * **Response**: *"This reflects the fundamental asymmetric trade-off identified in Hypothesis 1. Model 3 requires closed-loop live data feeds from the checkpoint floor every hour ($y_{t-1}$). Under calm, routine conditions, running live sensor ingestion 24/7 introduces unnecessary IT complexity without meaningful gain. Model 2 delivers comparable routine accuracy ($\text{MASE} = 0.680\text{--}0.700$) as an open-loop model, enabling advance shift planning days ahead without live sensor dependencies."*
+
+### Q4: "What is the practical justification for switching between two different forecasting models instead of selecting one overall winner?"
+* **Response**: *"This operational design directly responds to the asymmetric performance trade-offs demonstrated across our evaluation suite ($H_1$). No single model dominates all operational dimensions: Model 2 provides superior computational efficiency and requires no real-time sensor feeds during calm conditions ($\text{MASE} = 0.68\text{--}0.70$), but collapses during severe convective disruptions due to the empty checkpoint fallacy ($R_{\text{MASE}} = 2.14$). Conversely, Model 3 achieves decisive disruption resilience ($R_{\text{MASE}} = 1.05, \text{TTR} = 2.8\text{h}$) via live prior-hour error feedback, but introduces real-time data dependencies and localized overfitting ($RTR = 1.19$). A dual-track operational framework captures the distinct advantages of both: operating lean and fast during routine days, and engaging closed-loop feedback only when severe weather warrants live intervention."*

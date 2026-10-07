@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.16 (Academic Terminology Clarification and Replacement Guide Deployment)
+RELEASE VERSION: v4.17 (Regime-Switched Gated Inference Engine Terminology Replacement Integration)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -241,6 +241,13 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   3. 1-Step Error Innovation Feedback -> Real-Time Prior-Hour Error Correct |
 |         |            |   4. Zero Feedback Latency -> Requires No Real-Time Checkpoint Data Feeds.  |
 |         |            | - Formulated defense Q&A talking points for committee examination.          |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.17   | 2026-10-06 | Regime-Switched Gated Inference Engine Terminology Integration:             |
+|         |            | - Updated thesis_docs/notes/terminology_clarifications_and_replacements.md |
+|         |            |   incorporating Section 5 analysis and replacement recommendations for      |
+|         |            |   "Regime-Switched Gated Inference Engine" -> "Dual-Track Operational       |
+|         |            |   Decision Framework" / "Disruption-Adaptive Checkpoint Forecasting Playbook"|
+|         |            | - Added summary cheat-sheet entry and defense Q&A talking point (Q4).       |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
