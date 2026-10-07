@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.24 (Word Review Manuscripts Direct Markdown Drafting & Prior Version Archiving)
+RELEASE VERSION: v4.25 (Multi-Tab APA 7th Edition Excel Workbooks for All Figures Subfolders)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -382,6 +382,29 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Enhanced get_manuscript_path in src/analysis/sync_manuscript_tables.py   |
 |         |            |   with archive fallback for table extraction, keeping all 16 conformed CSVs|
 |         |            |   and multi-tab companion Excel workbooks synchronized (38/38 tests pass).  |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx).                                                       |
+| v4.25   | 2026-10-06 | Multi-Tab APA 7th Edition Excel Workbooks for All Figures Subfolders:       |
+|         |            | - Authored src/analysis/generate_figures_tables_excel.py combining all 30  |
+|         |            |   CSV files across the 4 figures/ subfolders into dedicated multi-tab      |
+|         |            |   Excel workbooks formatted strictly to APA Style (7th ed.):               |
+|         |            |   * figures/01_Sample_and_Airport_Selection/01_Sample_and_Airport_Selection|
+|         |            |     .xlsx (7 tabs: Table 1.1 to Table 1.7 + interactive Contents).         |
+|         |            |   * figures/02_Data_Pipelines_and_Threats/02_Data_Pipelines_and_Threats    |
+|         |            |     .xlsx (8 tabs: Table 2.1 to Table 2.8 + interactive Contents).         |
+|         |            |   * figures/03_Modeling_and_Evaluation/03_Modeling_and_Evaluation          |
+|         |            |     .xlsx (8 tabs: Table 3.1 to Table 3.8 + interactive Contents).         |
+|         |            |   * figures/04_Appendix_and_Reference/04_Appendix_and_Reference            |
+|         |            |     .xlsx (7 tabs: Table 4.1 to Table 4.7 + interactive Contents).         |
+|         |            | - Formatted all worksheets according to strict APA 7th rules: bold table ID |
+|         |            |   on line 1, italicized title on line 2, thin horizontal boundary rules    |
+|         |            |   (header top/bottom and terminal data row), zero internal borders, zero   |
+|         |            |   vertical rules, zero background fills/shading, and zero auto-filters.    |
+|         |            | - Added interactive navigation with clickable hyperlinks between Contents  |
+|         |            |   and every table tab (Return to Table of Contents in Cell A1).             |
+|         |            | - Mirrored all 4 workbooks to figures/ root for convenient accessibility.  |
+|         |            | - Authored comprehensive unit tests in tests/test_figure_workbooks.py      |
+|         |            |   validating structural integrity, hyperlinks, and APA 7 rules (39/39 ok). |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx).                                                       |
 +---------+------------+----------------------------------------------------------------------------+
