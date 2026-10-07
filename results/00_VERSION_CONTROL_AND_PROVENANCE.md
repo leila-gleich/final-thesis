@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.25 (Multi-Tab APA 7th Edition Excel Workbooks for All Figures Subfolders)
+RELEASE VERSION: v4.26 (Manuscript Appendix Overhaul, Clean Table Rendering, Full Text Integration & Cross-Reference Mapping)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -407,6 +407,28 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   validating structural integrity, hyperlinks, and APA 7 rules (39/39 ok). |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx).                                                       |
+| v4.26   | 2026-10-06 | Manuscript Appendix Overhaul, Table Rendering Fixes & Cross-References:    |
+|         |            | - Resolved table rendering failures across all 15 tables in appendix.md    |
+|         |            |   and manuscripts-only/appendix.md by eliminating leading 'r|' syntax      |
+|         |            |   artifacts and formatting with clean APA 7 headers and alignment.         |
+|         |            | - Fully synthesized all narrative details, parameters, and econometric     |
+|         |            |   formulations from author committee review draft Appendix v1.docx (read-  |
+|         |            |   only): 15-step Transform / 8-step Extract protocols, spatial entity      |
+|         |            |   resolution (35,809 records mapped to null key airportId=0,               |
+|         |            |   airportMissing=1), structural zero preservation (450,973 Tweedie Poisson |
+|         |            |   records in 00:00–03:59), advance vs. tactical cancellations (99.4%       |
+|         |            |   unassigned tail numbers), purposive filtering sample validation, LGA/JFK |
+|         |            |   and PHL/SLC selection contrasts, 84-cell interaction grid sample depth,  |
+|         |            |   lead-lag asynchrony mechanics, Empty Checkpoint Fallacy under feedback,  |
+|         |            |   and complete Values vs. Volatility numbers.                              |
+|         |            | - Embedded explicit 'Note on Thesis Cross-References' in all eight         |
+|         |            |   appendices (Appendices A through H) citing specific thesis chapters and   |
+|         |            |   sections referencing each appendix.                                      |
+|         |            | - Reordered appendices into logical A through H sequence.                  |
+|         |            | - Rewrote src/analysis/generate_appendix_md.py using token substitution    |
+|         |            |   and automated dual deployment.                                           |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); synchronized tables and workbooks (39/39 tests ok).   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
