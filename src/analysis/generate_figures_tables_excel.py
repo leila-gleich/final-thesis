@@ -33,12 +33,15 @@ from openpyxl.utils import get_column_letter
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 FIGURES_DIR = BASE_DIR / "figures"
+EXHIBITS_DIR = BASE_DIR / "thesis_docs" / "exhibits"
 
 # Master catalog of subfolders, workbooks, and table metadata
 SUBFOLDER_WORKBOOKS = [
     {
         "folder_name": "01_Sample_and_Airport_Selection",
         "wb_filename": "01_Sample_and_Airport_Selection.xlsx",
+        "target_dir": EXHIBITS_DIR / "ch03_methodology" / "workbooks",
+        "csv_dir": EXHIBITS_DIR / "ch03_methodology" / "tables",
         "title": "SAMPLE AND AIRPORT SELECTION FIGURE & DATA TABLES",
         "subtitle": "Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow | Gleich 700B",
         "tables": [
@@ -110,6 +113,8 @@ SUBFOLDER_WORKBOOKS = [
     {
         "folder_name": "02_Data_Pipelines_and_Threats",
         "wb_filename": "02_Data_Pipelines_and_Threats.xlsx",
+        "target_dir": EXHIBITS_DIR / "ch03_methodology" / "workbooks",
+        "csv_dir": EXHIBITS_DIR / "ch03_methodology" / "tables",
         "title": "DATA PIPELINES AND THREAT REMEDIATION TABLES",
         "subtitle": "Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow | Gleich 700B",
         "tables": [
