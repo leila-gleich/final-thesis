@@ -667,7 +667,7 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     toc_current_row = 6
     for t_info in tables:
         csv_file = t_info["csv_file"]
-        csv_path = subfolder_path / csv_file
+        csv_path = find_csv_file(csv_file, subfolder_path, folder_name)
         short_name = t_info["short_name"]
         table_id = t_info["table_id"]
         table_title = t_info["title"]
@@ -752,7 +752,7 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     # =========================================================================
     for t_info in tables:
         csv_file = t_info["csv_file"]
-        csv_path = subfolder_path / csv_file
+        csv_path = find_csv_file(csv_file, subfolder_path, folder_name)
         short_name = t_info["short_name"]
         table_id = t_info["table_id"]
         table_title = t_info["title"]
