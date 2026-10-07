@@ -261,6 +261,28 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Cataloged all 20 peer-reviewed operational and statistical equations       |
 |         |            |   in Table B.1 (Kingman, ACRP 40, DB1B, MASE, DM, Chow, CUSUM, lane safety).|
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.19   | 2026-10-06 | Figures Screenshot-to-CSV Structured Data Suite Deployment:                |
+|         |            | - Generated 30 high-fidelity CSV files directly capturing tabular and       |
+|         |            |   structural data from all 30 PNG screenshots in figures/ subdirectories:  |
+|         |            |   * 01_Sample_and_Airport_Selection (7 CSVs): airport clusters matrix,      |
+|         |            |     experimental power of 9 airports, post-pandemic justification, data     |
+|         |            |     sample profile census, clustering & connecting paradox, top 25 network  |
+|         |            |     inclusion guide, and airport selection strategy document.               |
+|         |            |   * 02_Data_Pipelines_and_Threats (8 CSVs): master funnel progression,      |
+|         |            |     unified data integrity & threat remediation matrix, OTP volatility      |
+|         |            |     metrics, TSA schema DDL, checkpoint name variation audit, lineage       |
+|         |            |     imputation metadata, OTP vs TSA volume coupling, and T-100 schema DDL. |
+|         |            |   * 03_Modeling_and_Evaluation (8 CSVs): evaluation metric definitions,     |
+|         |            |     exploratory metric criteria research benchmark, probabilistic and       |
+|         |            |     information selection metrics, models and tests comparison, control vs  |
+|         |            |     noisy test process, model walkthrough architecture, passenger           |
+|         |            |     stochastic arrival parameters, and physical transfer lead-lag timeline. |
+|         |            |   * 04_Appendix_and_Reference (7 CSVs): BTS DB1B table hierarchy, top-9     |
+|         |            |     data profile, database profiles, feature store dataset breakdown,       |
+|         |            |     backup archive organization, 14-point methodological assumptions, and   |
+|         |            |     diagrams/screenshots layout catalog.                                    |
+|         |            | - Validated all 30 CSV files with automated pandas integrity checks.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

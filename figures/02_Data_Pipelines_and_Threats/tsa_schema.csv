@@ -1,0 +1,8 @@
+column_name,data_type,nullable,description,foreign_key_or_lookup_dimension
+dateId,INT32,No,"Calendar date integer in YYYYMMDD format (e.g., 20201023).",dim_date.csv (dateId)
+hour,INT8,No,Hour of day in 24-hour local airport time (0 to 23).,Standard 24-hour integer
+timeBlockId,INT8,No,"BTS standard hourly time block (1 = 0001–0559, 2 = 0600–0659, ..., 19 = 2300–2359).",dim_time_block.csv (timeBlockId)
+airportId,INT16,No,"Conformed surrogate key for the airport (1..459, 0 = UNKNOWN).",dim_airport.csv (airportId)
+checkpointId,INT16,No,"Conformed surrogate key for the airport security checkpoint lane (1..7370, 0 = UNKNOWN).",dim_checkpoint.csv (checkpointId)
+throughput,INT32,No,Count of passengers screened through the checkpoint during that hour.,Metric (>= 0)
+airportMissing,INT8,No,Binary flag: 0 = Known airport; 1 = Unresolved airport mapped to airportId = 0.,Binary Indicator (0 / 1)

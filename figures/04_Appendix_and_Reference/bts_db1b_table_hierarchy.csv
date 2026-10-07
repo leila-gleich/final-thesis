@@ -1,0 +1,4 @@
+bts_table_level,table_acronym,unit_or_grain,example_itinerary_representation_bos_ord_lax,contains_connecting_itineraries
+1. DB1BTicket,DB1BTicket,Whole Itinerary,"1 row for the entire round-trip ticket purchase ($520 total fare, 2 round-trip components).",Yes (all legs)
+2. DB1BMarket,DB1BMarket,Directional Market (O&D),2 rows: Outbound Market (BOS -> LAX) and Return Market (LAX -> BOS).,Yes (a market can combine 2+ connecting flight legs)
+3. DB1BCoupon (DB1C),DB1BCoupon,Individual Flight Segment,3 rows (physical takeoff-to-landing flight legs): Leg 1: BOS -> ORD; Leg 2: ORD -> LAX; Leg 3: LAX -> BOS,No (pure single nonstop flight segments)

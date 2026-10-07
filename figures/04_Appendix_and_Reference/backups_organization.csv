@@ -1,0 +1,14 @@
+backup_directory_path,directory_level,description_and_contents
+OneDrive-Backups/,Root,Root backup archive directory
+OneDrive-Backups/00_FOLDER_INDEX.txt,Level 1,Plaintext reference guide and manifest
+OneDrive-Backups/01_Datasets/,Level 1,Raw and source aviation datasets
+OneDrive-Backups/01_Datasets/BTS_Flight_Data/,Level 2,BTS flight & delay datasets
+OneDrive-Backups/01_Datasets/TSA_Throughput_Data/,Level 2,TSA throughput PDFs & passenger CSVs
+OneDrive-Backups/01_Datasets/Aviation_DB1C_Data/,Level 2,Air passenger O&D survey datasets
+OneDrive-Backups/01_Datasets/Other_Raw_Datasets/,Level 2,General raw data tables
+OneDrive-Backups/02_Processed_SSOT/,Level 1,Master Single Source of Truth CSVs
+OneDrive-Backups/03_Projects_and_Code/,Level 1,Development code scripts and version control
+OneDrive-Backups/03_Projects_and_Code/Python_and_ETL/,Level 2,Python scripts (.py) & notebooks (.ipynb)
+OneDrive-Backups/03_Projects_and_Code/Git_Repositories/,Level 2,Git repositories & codebase snapshots
+OneDrive-Backups/04_System_and_ISOs/,Level 1,Windows installation ISOs & VM images
+OneDrive-Backups/05_Archives/,Level 1,Zip snapshots & historical backup archives

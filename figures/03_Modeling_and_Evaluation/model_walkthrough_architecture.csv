@@ -1,0 +1,5 @@
+pipeline_stage,model_architecture,model_paradigm,algorithmic_subcomponent,evaluation_window_and_regimes
+Data Ingestion & Feature Engineering,All Candidate Models,Preprocessing,TSA FOIA (3.07M rows) & BTS OTP (12.7M flights) processed into Standardized Preprocessing & Master Feature Pool,May 2022 to December 2024
+Candidate Model 1,Deterministic Flight Schedule Model,Deterministic Operational Baseline,Linear Schedule Seasonality with Stepwise Parameter Selection (AIC/BIC),"Out-of-Sample Holdout (2025): Robustness, Resilience, Generalizability"
+Candidate Model 2,Supervised Machine Learning Model,Automated Tree Regressor,"Dynamic Parametric Variance D(mu, sigma) with Feature Embeddings and 24 OTP Features","Out-of-Sample Holdout (2025): Robustness, Resilience, Generalizability"
+Candidate Model 3,Dynamic Two-Stage Hybrid Model,Two-Stage Sequential Hybrid,Stage 1: Linear Schedule Trend -> Stage 2: Quantile Decision Tree on Residuals (SHAP / 1-Step Error Innovation Feedback e_{t-1}),"Out-of-Sample Holdout (2025): Robustness, Resilience, Generalizability"

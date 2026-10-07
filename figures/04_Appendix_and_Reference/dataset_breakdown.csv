@@ -1,0 +1,8 @@
+dataset_file,data_grain,rows,columns,storage_size_parquet,uncompressed_ram_approx,operational_notes
+otpv1.parquet,Individual Flight Leg,"8,351,307",37,166.2 MB,~750 MB,Deduplicated BTS flight records with zero key nulls.
+tsav1.parquet,Checkpoint Hour,"6,880,725",7,31.6 MB,~110 MB,Cleaned TSA hourly screening throughput.
+db1v1.parquet,Ticket Coupon Sample,"12,910,384",10,35.1 MB,~320 MB,10% ticket survey used to calibrate connecting ratios.
+t100v1.parquet,Route Month,"269,895",11,2.2 MB,~12 MB,Carrier route segment capacity with clamped load factors.
+warehouse.duckdb,Feature Store Views & DDL,—,—,3.3 MB,—,Precomputed relational schemas and views.
+Dimensions (dimensions/),Lookup tables (CSV),—,—,0.34 MB,—,"Conformed star schema dimensions (airport, airline, date, time)."
+Total Feature Store Records,—,"28,412,311",—,~246.5 MB,~1.2 GB,"Precomputed lead-lag demand view vw_airport_hourly_demand contains 1,494,570 convolved records."

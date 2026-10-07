@@ -1,0 +1,31 @@
+folder,filename,chapter_mapping,description
+01_Sample_and_Airport_Selection,airport clusters.png,Chapter III: Sample Selection & Temporal Boundary,Master 4-cluster x 3-carrier experimental matrix
+01_Sample_and_Airport_Selection,Power of 9 airports.png,Chapter III: Sample Selection & Temporal Boundary,Intra-cluster generalizability & twin disruption logic
+01_Sample_and_Airport_Selection,post-pandemic justification.png,Chapter III: Sample Selection & Temporal Boundary,Candidate A vs B (May 1 2022 boundary)
+01_Sample_and_Airport_Selection,Inclusion of top 25 network approach.png,Chapter III: Sample Selection & Temporal Boundary,Chapter placement & network scaling guide
+01_Sample_and_Airport_Selection,Airport selection strategy document.png,Chapter III: Sample Selection & Temporal Boundary,docs/airport_selection_strategy.md outline
+01_Sample_and_Airport_Selection,clusting and connecting paradox.png,Chapter III: Sample Selection & Temporal Boundary,Empirical operational clustering & connecting ratio paradox
+01_Sample_and_Airport_Selection,Data Sample Profile.png,Chapter III: Sample Selection & Temporal Boundary,Multi-source data warehouse census
+02_Data_Pipelines_and_Threats,Combined_Data_Pipeline_and_Funnel_Lifecycle.png,Chapter III: Data Engineering & Threat Remediation,MASTER Funnel Graphic (replaces 3 profiles)
+02_Data_Pipelines_and_Threats,Combined_Data_Threats_and_Remediation_Matrix.png,Chapter III: Data Engineering & Threat Remediation,MASTER Threat Matrix (replaces 3 threat files)
+02_Data_Pipelines_and_Threats,OTP volatility.png,Chapter III: Data Engineering & Threat Remediation,Volatility of core OTP attributes
+02_Data_Pipelines_and_Threats,TSA Schema.png,Chapter III: Data Engineering & Threat Remediation,Checkpoint fact table DDL (tsav0.csv)
+02_Data_Pipelines_and_Threats,checkpoint examples.png,Chapter III: Data Engineering & Threat Remediation,FOIA lane naming anomaly examples
+02_Data_Pipelines_and_Threats,imputed defs.png,Chapter III: Data Engineering & Threat Remediation,Lineage tracking columns (is_imputed)
+02_Data_Pipelines_and_Threats,otp & tsa.png,Chapter III: Data Engineering & Threat Remediation,Relationship between OTP and TSA data / connecting paradox
+02_Data_Pipelines_and_Threats,t100 schema.png,Chapter III: Data Engineering & Threat Remediation,Route segment capacity DDL (t100v0.csv)
+03_Modeling_and_Evaluation,Evaluation Metric Definition.png,Chapter III & IV: Model Architecture & Benchmark Results,"Figure 2: Robustness, Resilience, Generalizability"
+03_Modeling_and_Evaluation,exploratory metric criteria research .png,Chapter III & IV: Model Architecture & Benchmark Results,Empirical benchmark results table
+03_Modeling_and_Evaluation,metrics.png,Chapter III & IV: Model Architecture & Benchmark Results,"CRPS, PICP, and AIC/BIC criteria"
+03_Modeling_and_Evaluation,models and tests.png,Chapter III & IV: Model Architecture & Benchmark Results,Deterministic vs Probabilistic/ML models empirical proof
+03_Modeling_and_Evaluation,Control and test process.png,Chapter III & IV: Model Architecture & Benchmark Results,Pure signal (exclusive) vs Noisy (shared) design
+03_Modeling_and_Evaluation,Model walk through.png,Chapter III & IV: Model Architecture & Benchmark Results,Flowchart: Deterministic vs Probabilistic RNN vs Sequential Hybrid
+03_Modeling_and_Evaluation,pax stochastic arrival.png,Chapter III & IV: Model Architecture & Benchmark Results,Continuous arrival density kernel and GBDT components
+03_Modeling_and_Evaluation,physical transfer lead lag time.png,Chapter III & IV: Model Architecture & Benchmark Results,Physical transfer function and lead-lag timeline
+04_Appendix_and_Reference,BTS-DB1B_Appendix.png,Thesis Appendix & Administrative,BTS DB1B ticket survey hierarchy (Ticket Market Coupon)
+04_Appendix_and_Reference,data profile top9.png,Thesis Appendix & Administrative,Filtered 9-airport target research cohort parquet files
+04_Appendix_and_Reference,database profiles.png,Thesis Appendix & Administrative,Base feeds database profiles and file sizes
+04_Appendix_and_Reference,dataset breakdown.png,Thesis Appendix & Administrative,Feature store dataset breakdown (v1 parquet files)
+04_Appendix_and_Reference,Backups organization.png,Thesis Appendix & Administrative,OneDrive backup directory structure
+04_Appendix_and_Reference,methodological assumptions.png,Thesis Appendix & Administrative,14-point master assumptions & failure modes table
+04_Appendix_and_Reference,Diagrams and Screenshot Layout.png,Thesis Appendix & Administrative,Layout directory tree of diagrams and screenshots

@@ -1,0 +1,5 @@
+dataset_name,parquet_file_path,record_count,compression_format,description
+TSA Throughput,data/processed/tsa-top9v1.parquet,"3,127,078",Zstandard (ZSTD),Hourly passenger screening counts filtered strictly to checkpoints at the 9 target airports (100% NOT NULL).
+On-Time Performance (OTP),data/processed/otp-top9v1.parquet,"1,368,142",Zstandard (ZSTD),"Big 3 commercial flights across the closed 9-airport city-pair network, with minute-of-day encodings and cyclical sin/cos features."
+T-100 Segment Capacity,data/processed/t100-top9v1.parquet,"39,432",Zstandard (ZSTD),Monthly carrier route segment capacity and load factor between the 9 target airports.
+DB1B/DB1C Coupon Survey,data/processed/db1-top9v1.parquet,"2,098,944",Zstandard (ZSTD),10% sample ticket routing coupons across city-pair markets connecting the 9 target airports.
