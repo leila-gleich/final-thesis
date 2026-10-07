@@ -10,9 +10,24 @@
 
 ---
 
+## Document Description & Operational Scope
+
+This document serves as the authoritative terminology harmonization and conceptual reference guide for the Master of Science in Aeronautics (MSAA) thesis *Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow (MSAA / Gleich 700B)*. 
+
+During manuscript drafting, quantitative modeling, and computational experimentation, predictive modeling workflows frequently introduce specialized computer science jargon (e.g., *gated inference engine*, *zero lookahead leakage*, *zero feedback latency*), engineering and physics metaphors (e.g., *turbulence shock index*, *queuing physics*, *cyber-physical manifolds*), or proprietary shorthand (e.g., *Coupled Volatility Index*). While functional in codebases or informal machine learning competitions, these terms risk severe academic scrutiny during committee review and oral defense before Embry-Riddle Aeronautical University faculty. Aeronautics and transportation management scholars emphasize qualitative research validity, authentic airline and airport operations, human traveler behavior, and formal econometric rigor.
+
+### Core Objectives of This Guide:
+1. **Academic De-Jargoning**: Systematically translate computational and physics metaphors into established transportation econometrics and commercial aviation operations terminology across Chapters I through V.
+2. **Methodological Defensibility**: Clarify the mathematical, queuing, and behavioral reality underlying each concept (e.g., Kingman's heavy-traffic approximation, empirical ACRP Report 40 passenger arrival distributions, and strict information causality).
+3. **Manuscript Prose Standardization**: Provide ready-to-use, APA 7th-compliant "Before" (draft jargon) and "After" (publishable academic prose) text replacements for seamless manuscript revision.
+4. **Information Causality & Leakage Prevention**: Explicitly differentiate between **Temporal Lookahead Leakage** (time-axis partition contamination) and **Feature Lookahead Leakage** (feature-space contemporaneous outcome contamination), establishing formal econometric framing under **Strict Information Causality**.
+5. **Oral Defense Preparation**: Equip the candidate with scripted, defensible answers to challenging committee questions, bridging quantitative predictive modeling with practical airport operations center (AOC) and TSA Federal Security Director (FSD) utility.
+
+---
+
 ## Executive Summary & Quick-Reference Cheat Sheet
 
-The following master replacement table maps all 26 identified jargon terms, physical metaphors, and coined phrases to their recommended academic replacements, plain-English operational meanings, and qualitative committee rationale.
+The following master replacement table maps all 27 identified jargon terms, physical metaphors, and coined phrases to their recommended academic replacements, plain-English operational meanings, and qualitative committee rationale.
 
 | Category | Draft Jargon / Coined Term | Recommended Academic Replacement | Plain-English Operational Reality | Why It Risks Committee Scrutiny |
 | :--- | :--- | :--- | :--- | :--- |
@@ -32,9 +47,9 @@ The following master replacement table maps all 26 identified jargon terms, phys
 | **Intraday Regimes** | **Diurnal Non-Consecutive Dual Turbulence Peaks** | **Bimodal Intraday Operational Peaks: Morning Surges and Evening Delay Cascades** | Daily bimodal congestion curve: morning passenger arrival rush (05:00–08:00) and evening flight delay propagation (14:00–22:00). | "Diurnal" is ecology jargon; "non-consecutive" overcomplicates a standard bimodal curve; "turbulence" borrows fluid physics jargon. |
 | **Intraday Regimes** | **Diurnal Operational Turbulence Shock Index ($T_{dow}(h)$)** | **Intraday Operational Congestion Index** (or **Operational Stress Index**) | Formula classifying hours of the day into Off-Peak, Mid-Peak, and Peak congestion blocks. | "Turbulence Shock Index" sounds like aeroelastic flutter or fluid mechanics rather than queuing congestion. |
 | **Model Control** | **Live 1-Step Error Innovation Feedback ($e_{t-1}$)** | **Real-Time Prior-Hour Error Correction** (or **Live Prior-Hour Forecast Error Feedback**) | Raising this hour's forecast if the model underpredicted last hour because delayed passengers crowded the terminal. | "Innovation" sounds like corporate buzzwords; "1-step" is abstract algorithm speak for "prior-hour." |
-| **Model Control** | **Zero Feedback Latency** | **Requires No Real-Time Checkpoint Data Feeds** (or **Advance Shift Scheduling Capability**) | Model 2 (Machine Learning) does not require live sensor feeds from turnstiles, enabling advance shift planning. | Misleading (Model 2 has no feedback loop at all); "latency" is IT jargon that obscures the practical planning benefit. |
-| **Data Engineering** | **Zero Lookahead Leakage** | **Strict Information Causality** (or **Preserving Operational Information Availability**) | Models only ingest information knowable before the forecast hour, using prior-hour delays rather than same-hour delays. | "Lookahead leakage" is Kaggle data science competition jargon rather than formal econometric causality terminology. |
-| **Carrier Isolation** | **Orthogonal Wiener-Hopf Deconvolution Operator** | **Carrier Checkpoint Isolation** (or **Carrier-Exclusive Terminal Pairing**) | In dedicated single-airline terminals, flight departure schedules map directly to security queues without multi-carrier overlap. | Extreme over-mathematization (Wiener-Hopf integral operators) for what is simply filtering data to dedicated single-airline terminals. |
+| **Data Engineering** | **Zero Lookahead Leakage (Overall)** | **Strict Information Causality** (or **Preserving Operational Information Availability**) | Models only ingest information knowable before the forecast hour, using prior-hour delays rather than same-hour delays. | "Lookahead leakage" is Kaggle data science competition jargon rather than formal econometric causality terminology. |
+| **Data Engineering** | **Temporal Lookahead Leakage** | **Operational Partition Demarcation with Purge Buffers** (or **Chronological Demarcation**) | Contamination along the chronological time axis across evaluation partitions (e.g., random k-fold cross-validation shuffling or global normalization across test sets). | Fails to distinguish structural time-axis partition errors from feature-space covariate leakage; sounds like informal competition jargon. |
+| **Data Engineering** | **Feature Lookahead Leakage** | **Strict Information Causality in Covariate Construction** (or **Lagged Covariate Ingestion**) | Ingesting realized, post-event operational states (e.g., actual departure delays, pushback timestamps) that are physically unknown at forecast time $t$. | Conflates planned flight schedules with realized downstream operations; creates models that collapse during live airport deployment. |
 | **Passenger Timing** | **Physics-Based Continuous Arrival Kernel Convolution** | **Empirical Passenger Show-Up Curve Convolution** (or **Lead-Lag Arrival Distribution**) | Spreading departing flight seats across 1, 2, and 3 hours prior to takeoff based on empirical ACRP Report 40 arrival timing. | Passengers do not follow continuous physics kernels; they follow empirical behavioral timing (90 to 120 minutes prior to departure). |
 | **Network Accounting** | **DB1B Transfer Deflation Manifold** | **Connecting Passenger Deflator** (or **Local Originating Passenger Fraction**) | Multiplying flight seats by $(1 - \text{Connecting Ratio})$ to remove passengers who connect airside and never enter TSA security. | Calling a simple subtraction and multiplication a "manifold" is pretension that invites immediate committee challenge. |
 | **Network Accounting** | **The Connecting Passenger Paradox** | **The Hub Disconnect** (or **Connecting vs. Local Originating Disconnect**) | The planning error of assuming every departing airline seat corresponds to a passenger entering landside security. | "Paradox" sounds melodramatic for a well-known airline hub transfer phenomenon. |
@@ -42,6 +57,7 @@ The following master replacement table maps all 26 identified jargon terms, phys
 | **Terminal Geometry** | **Inter-Terminal Airside Passenger Leakage / Cross-Contamination** | **Post-Security Terminal Cross-Over** | Passengers who clear TSA security at Terminal A and walk post-security to board a departure out of Terminal B. | "Leakage" and "cross-contamination" are chemical/microbiological terms that sound inappropriate in passenger transport. |
 | **Operational Regimes** | **Quiescent / Sterile Control** | **Nominal On-Time Baseline** (or **Overnight Low-Demand Period**) | On-time flight operations (delay < 15 min, 0 cancellations) used as a control state, or overnight curfew hours. | "Quiescent" is biology/laboratory jargon; "sterile control" confuses medical sterilization with FAA sterile concourses. |
 | **Performance Pillars** | **Continuous Static Stability (Hypothesis 1 & 2)** | **Routine Operational Accuracy (Robustness)** | How consistently and accurately a predictive model forecasts during normal, undisturbed commercial flight banks. | "Static stability" is flight dynamics terminology (longitudinal stability derivatives); confuses aerodynamics with forecast accuracy. |
+| **Temporal Evaluation** | **Out-of-Time Evaluation Benchmark Matrix** | **Prospective Chronological Holdout Evaluation Matrix** (or **Temporal Holdout Benchmark Matrix**) | Evaluating frozen models strictly forward in time on an unobserved future calendar year (2025) after training on historical operations (2022–2024). | Sounds like "running out of clock time" on an exam or an algorithmic compute timeout, rather than prospective chronological evaluation. |
 
 ---
 
@@ -258,19 +274,87 @@ Model 3 operates in two sequential stages:
 
 ---
 
-## 12. "Zero Lookahead Leakage" vs. Strict Information Causality
+## 12. Temporal and Feature Lookahead Leakage vs. Strict Information Causality
 
-### 12.1 Operational Meaning
-A forecasting model designed to predict passenger volumes at 16:00 cannot use flight departure delays that occur at 18:00, because airport managers at 16:00 do not yet know the future delay. Models must use lagged covariates (such as departure delays at $t-1$).
+### 12.1 Context and Operational Meaning: The "Offline Genius, Online Failure" Trap
+In predictive modeling and time-series forecasting, "lookahead leakage" describes the fatal flaw of allowing information from the future (or information unavailable at the forecast horizon) to contaminate model training, validation, or inference. This produces the classic **"offline genius, online failure" trap**: models exhibit near-perfect goodness-of-fit ($R^2 \approx 0.95$, $\text{MASE} < 0.40$) during historical cross-validation, but suffer catastrophic predictive collapse when deployed in real-time airport operations because the future information is physically inaccessible at decision time.
 
-### 12.2 Academic Lineage vs. Kaggle Jargon
-"Lookahead leakage" is informal machine learning competition slang. In academic transportation econometrics and time-series forecasting, the formal principle is **strict information causality** or **operational information availability**.
+Crucially, lookahead leakage manifests across two fundamentally distinct dimensions: **temporal lookahead leakage** (along the time axis) and **feature lookahead leakage** (across the feature space).
 
-### 12.3 Recommended Framing and Text Replacements
-* **Before (Draft Text)**:  
-  *"Strict ETL partitioning enforces zero lookahead leakage into downstream model training."*
+---
+
+### 12.2 Temporal Lookahead Leakage (The Time Axis)
+
+#### Definition:
+Temporal lookahead leakage occurs when the **structural partitioning or chronological ordering of the dataset** allows future chronological observations to contaminate the training partition, validation partition, or preprocessing pipelines.
+
+#### Operational Vulnerabilities in Transportation Modeling:
+1. **Random Cross-Validation / Shuffling**: Standard machine-learning cross-validation packages (e.g., standard scikit-learn `KFold`) randomly shuffle rows. In a time series, this trains a model on passenger throughput from Thursday and Saturday to "forecast" Friday. The model effectively interpolates across time rather than forecasting forward into an unobserved future.
+2. **Global Preprocessing & Normalization**: Computing scaling parameters (such as global mean $\mu$, standard deviation $\sigma$, min-max bounds, or target encodings) across the combined 2022–2025 dataset prior to partitioning. Future macroeconomic trends and post-pandemic recovery shifts contaminate the historical training feature distributions.
+3. **Operational Partition Boundary Spillover**: Multi-day delay cascades, winter blizzards, and FAA ground delay programs create multi-day temporal autocorrelation. If the training partition ends on December 31 at 23:59 and the validation partition begins on January 1 at 00:00 without a buffer, rolling lag features ($t-24, t-48, t-168$) and unrecovered disruption cascades bleed state information across the evaluation boundary.
+
+#### Thesis Remediation Protocols:
+* **Chronological Demarcation**: Strict prospective chronological splits are enforced: Development (May 1, 2022 – December 31, 2023), Validation (January 1, 2024 – December 31, 2024), and Out-of-Time Holdout Evaluation (January 1, 2025 – December 31, 2025).
+* **Pipeline Preprocessing Isolation**: All transformers, scalers, and encodings are strictly fit *only* on the training partition and applied out-of-sample to validation and test partitions.
+* **Operational Separation Purge Buffers**: A mandatory **7-day operational purge buffer** is inserted between evaluation partitions to ensure multi-day storm disruptions completely clear before out-of-sample scoring begins.
+
+---
+
+### 12.3 Feature Lookahead Leakage (The Feature Space)
+
+#### Definition:
+Feature lookahead leakage occurs when an **individual explanatory covariate or input feature** incorporates realized, post-event operational outcomes that are physically or administratively unobserved at the exact hour the forecast is generated.
+
+#### Operational Vulnerabilities in Airport Terminal Modeling:
+1. **Realized Flight Delays vs. Planned Flight Supply**: Airline passengers arrive at security checkpoints 1.5 to 3.0 hours *prior* to scheduled flight departure (`CRSDepTime`). If a forecasting model ingests realized flight departure delays (`DepDelay`), actual pushback timestamps (`DepTime`), or runway taxi queues (`TaxiOut`) for flights departing in hours $t+1, t+2$, or $t+3$, it conditions on flight outcomes that will not physically occur until hours after passengers have already cleared screening. An airport operations manager generating staffing plans at 06:00 cannot know that an 08:30 flight will push back 55 minutes late at 09:25.
+2. **Contemporaneous Operational States ($t$) vs. Prior-Hour Lags ($t-1$)**: In real-time execution at hour $t$ (e.g., 14:00), the realized delays of flights scheduled to depart between 14:00 and 14:59 are not yet known because pushbacks are ongoing. Ingesting same-hour delay metrics ($t$) introduces lookahead leakage; only prior-hour realized delays ($t-1$) are historically available as an operational proxy for airside terminal congestion.
+3. **Mishandling Tactical vs. Advance Flight Cancellations**: Across 13.1 million domestic departures, flight cancellations averaged 2.03%. If an airline tactically cancels a flight 30 minutes before departure, passengers are already in the terminal. If a model's demand feature retroactively sets departing seats to zero based on post-hoc cancellation flags (`Cancelled = 1`), it introduces feature lookahead leakage that directly contradicts the physical reality on the checkpoint floor (the "Empty Checkpoint Fallacy").
+
+#### Thesis Remediation Protocols:
+* **Strict Information Causality**: Pre-departure passenger arrival demand is driven strictly by published airline schedules (`CRSDepTime`, planned seat gauge) convolved across empirical ACRP Report 40 arrival profiles ($w_1 = 0.25, w_2 = 0.55, w_3 = 0.20$).
+* **Lagged Information Ingestion ($t-1$)**: Realized operational metrics are strictly lagged to prior hours ($t-1$), ensuring the model only consumes data physically recorded before the forecast hour begins.
+* **Causal Cancellation Delineation**: Advance cancellations ($>24$ hours prior) are purged from departing seat supply curves, while tactical cancellations ($<2$ hours prior) are retained in demand curves because affected travelers have already cleared security.
+
+---
+
+### 12.4 Side-by-Side Comparison: Temporal vs. Feature Lookahead Leakage
+
+| Dimension | Temporal Lookahead Leakage | Feature Lookahead Leakage |
+| :--- | :--- | :--- |
+| **Primary Structural Axis** | **Time Axis** (Dataset partitioning, splits, chronological ordering) | **Feature Space** (Covariate availability at decision time) |
+| **Underlying Mechanism** | Future calendar observations contaminate training sets or preprocessing transformations. | Features ingest realized downstream outcomes that have not yet occurred at forecast generation time. |
+| **Aviation Example** | Normalizing 2022 training data using the full 2022–2025 global passenger mean. | Using actual departure delays at 10:00 to predict passenger checkpoint arrivals at 08:00. |
+| **Operational Impact** | Overly optimistic validation scores; models fail to adapt to macro-trend shifts or non-stationary seasonality. | Model learns spurious short-cuts based on future outcomes that are unavailable in live production, causing severe staffing misallocations. |
+| **Academic Replacement** | **Operational Partition Demarcation** (or **Chronological Demarcation with Purge Buffers**) | **Strict Information Causality in Covariate Construction** (or **Preserving Operational Information Availability**) |
+| **Methodological Fix** | Prospective walk-forward splits, fold-isolated scalers, and 7-day operational purge buffers. | Strict schedule-based convolution, strictly lagged realized delay covariates ($t-1$), and causal cancellation rules. |
+
+---
+
+### 12.5 Academic Lineage vs. Kaggle / Competition Jargon
+* **Why It Risks Committee Scrutiny**: "Lookahead leakage" and "data leakage" are colloquial terms popularized by competitive data science platforms (such as Kaggle). In an academic defense before an aeronautics and transportation engineering committee, using informal competition jargon sounds ungrounded in established theory.
+* **Formal Academic Framing**: In transportation econometrics and time-series analysis, this principle is rooted in **Granger Causality** (Granger, 1969), **Sims Causality** (Sims, 1972), and **Information Filtration** ($\mathcal{F}_{t-1}$). The rigorous academic terms are **Strict Information Causality** (or **Operational Information Availability**) and **Operational Partition Demarcation**.
+
+---
+
+### 12.6 Recommended Framing and Text Replacements
+
+#### Before vs. After (Chapter III: Methodology):
+* **Before (Draft Jargon)**:  
+  *"Strict ETL partitioning enforces zero lookahead leakage into downstream model training, eliminating temporal leakage via chronological splits and feature lookahead leakage via feature pruning."*
 * **After (Publishable Manuscript Text)**:  
-  *"Strict information causality ensures that pre-departure forecasting models can only consume information that was knowable before the event, preserving real-world operational validity."*
+  *"To guarantee strict information causality and prevent data contamination, model evaluation enforces a two-fold operational demarcation: (a) temporal partition isolation, utilizing prospective chronological splits separated by 7-day operational purge buffers to isolate multi-day storm cascades, and (b) feature-level information causality, restricting pre-departure arrival demand strictly to published flight schedules (`CRSDepTime`) while constraining realized delay telemetry strictly to prior-hour observations ($t-1$) that are physically available to terminal operators."*
+
+#### Before vs. After (Chapter IV: Results / Cancellation Causality):
+* **Before (Draft Jargon)**:  
+  *"Advance vs. tactical flight cancellations were differentiated to prevent lookahead leakage in the feature set."*
+* **After (Publishable Manuscript Text)**:  
+  *"Advance and tactical cancellations were delineated under strict information availability: cancellations announced more than 24 hours in advance were removed from departing seat capacity, whereas tactical cancellations occurring within two hours of scheduled departure were retained, reflecting the operational reality that passengers had already cleared landside security screening before the airline issued the cancellation."*
+
+#### Before vs. After (Chapter V: Discussion / Delay Telemetry):
+* **Before (Draft Jargon)**:  
+  *"Including same-hour actual flight delays introduces severe lookahead bias, whereas prior-hour delays provide an effective proxy."*
+* **After (Publishable Manuscript Text)**:  
+  *"Flight delay telemetry must be handled with strict operational causality: ingesting contemporaneous departure delays introduces severe lookahead bias because pushback delays cannot be known until aircraft physically depart, whereas incorporating prior-hour delays ($t-1$) provides an operationally valid proxy for terminal dwell times and airside ramp congestion while preserving information availability."*
 
 ---
 
@@ -393,7 +477,51 @@ At major fortress hubs (e.g., Charlotte at 76.0% connecting or Atlanta at 70.1%)
 
 ---
 
-## 19. Comprehensive Oral Defense Q&A Strategy: Anticipated Committee Questions & Qualitative Defense Scripts
+## 19. "Out-of-Time Evaluation Benchmark Matrix" vs. Prospective Chronological Holdout Evaluation
+
+### 19.1 Operational Meaning & Context
+* **Draft Term**: `out-of-time evaluation benchmark matrix` (referenced in Chapter IV introducing Table 4.10).
+* **Underlying Operational Reality**: Evaluating frozen candidate models strictly forward in time on an unobserved future calendar year (January 1, 2025 to December 31, 2025; 12 continuous months; 72,053 hourly complex observations across 3,222 airport-days) after training exclusively on historical operations through December 2024.
+* **Why the Primary Target is Volatility**: In accordance with queuing theory principles (Kingman, 1962), checkpoint queues scale quadratically with arrival volatility ($C_a^2$). The benchmark matrix evaluates predictions of **intraday throughput volatility** ($\sigma_{\text{TSA, hr}}$ and $CV_{\text{TSA, hr}}$), not static raw volume ($y_t$).
+
+### 19.2 Why "Out-of-Time" Risks Committee Scrutiny
+1. **Linguistic Misinterpretation**: To readers outside predictive econometrics and time-series machine learning, "out-of-time" sounds colloquial—as though the model "ran out of time" on an exam clock, suffered an algorithmic execution timeout, or expired.
+2. **Methodological Contrast (Random Splits vs. Chronological Holdouts)**:
+   * *Random Cross-Validation ("In-Time")*: Randomly shuffling timestamps mixes future days into training and past days into testing. This creates catastrophic **temporal data leakage** (lookahead bias), artificially inflating accuracy because algorithms interpolate between known dates.
+   * *Out-of-Time (OOT) Prospective Evaluation*: Partitions data strictly along a chronological timeline. Models learn only from historical data prior to a fixed calendar cutoff date and are subsequently tested forward on an untouched future period.
+
+### 19.3 Methodological Implementation in the Thesis
+* **Candidate B Training Window**: May 1, 2022 to December 31, 2023 (post-mask-mandate operational stabilization; 122,847 hourly observations across the 9-airport complex cohort).
+* **Validation Window**: January 1, 2024 to December 31, 2024 (72,723 hourly observations), separated by a strict **7-day operational purge embargo** to prevent cascading delay leakage.
+* **Out-of-Time Holdout Window (Calendar Year 2025)**: All candidate models were frozen as of midnight December 31, 2024, and evaluated across all 12 continuous months of 2025 to test true prospective generalization across all four annual seasonal regimes.
+
+### 19.4 Recommended Framing and Text Replacements
+
+#### Recommended Heading & Nomenclature Options:
+* **Option 1 (Methodological & Formal - Recommended)**:  
+  `Prospective Chronological Holdout Evaluation Matrix` (or `Temporal Holdout Benchmark Matrix`)
+* **Option 2 (Operational & Practical)**:  
+  `Forward-Calendar Benchmark Matrix (2025 Holdout Evaluation)`
+* **Option 3 (Conservative Polish Retaining "Out-of-Time")**:  
+  `Out-of-Time (Prospective) Model Benchmark Matrix`
+
+#### Recommended Sentences for Earlier Chapters:
+
+* **For Chapter III (Methodology - Section on Data Partitioning & Model Validation Protocol)**:  
+  *"Unlike standard random cross-validation, which shuffles timestamps and introduces lookahead bias, this study employs a strict **out-of-time evaluation** protocol: candidate models are trained exclusively on historical data through December 2024 and then tested forward in time on an untouched 12-month holdout (calendar year 2025). This chronological separation evaluates true prospective forecasting skill across all four seasonal regimes without temporal data leakage."*
+
+* **For Chapter I (Introduction - Section on Delimitations / Temporal Scope)**:  
+  *"Calendar year 2025 is reserved as an **out-of-time holdout**, meaning models are frozen at the end of 2024 and evaluated solely on subsequent unobserved operations to replicate the chronological decision environment faced by airport checkpoint planners."*
+
+#### Before vs. After Section Prose (Chapter IV Intro to Table 4.10):
+* **Before (Draft Text)**:  
+  *"Table 4.10 reports the out-of-time evaluation benchmark matrix across the candidate model architectures on the 2025 holdout dataset (3,222 test airport-days; 72,053 hourly complex observations)."*
+* **After (Publishable Manuscript Text)**:  
+  *"Table 4.10 reports the prospective chronological holdout benchmark matrix across the candidate model architectures on the untouched 2025 evaluation dataset (3,222 test airport-days; 72,053 hourly complex observations)."*
+
+---
+
+## 20. Comprehensive Oral Defense Q&A Strategy: Anticipated Committee Questions & Qualitative Defense Scripts
 
 The following scripted questions and responses prepare the candidate to address qualitative and operational questions during the thesis oral defense before Embry-Riddle aeronautics professors.
 
@@ -424,3 +552,10 @@ The following scripted questions and responses prepare the candidate to address 
   * During routine, clear-weather operations ($T(h) < 0.75$), the airport uses **Model 2 (Supervised Machine Learning)**. It requires no real-time sensor connections, produces shift staffing plans days in advance, and achieves superior accuracy ($\text{MASE} = 0.680\text{--}0.700$).  
   * When severe convective weather ground stops occur ($T(h) \ge 0.75$), the system automatically switches to **Model 3 (Dynamic Two-Stage Hybrid)**. Model 3 engages live prior-hour error correction ($e_{t-1}$), tracking stranded passengers dwelling landside and recovering normal error bounds in 2.8 hours.  
   This provides airport authorities with a practical, defensible decision tool that optimizes screening lane staffing without costly brick-and-mortar facility expansion."*
+
+### Question 6: "How does your methodology prevent temporal and feature lookahead leakage, and why does this distinction matter for airport security checkpoint forecasting?"
+* **Candidate Defense Script**:  
+  *"This distinction is fundamental to ensuring our models actually function on the airport floor rather than merely excelling in offline backtests:  
+  * **Temporal lookahead leakage** occurs across the time axis. In airport operations, multi-day convective storms and winter ground delay programs create multi-day ripple effects. If training and test periods abut directly, or if data is randomly shuffled, the model 'cheats' by learning future states. We prevented this by using strict prospective chronological splits (training on 2022–2023, validating on 2024, and holdout testing on 2025) separated by 7-day operational purge buffers to isolate multi-day storm cascades.  
+  * **Feature lookahead leakage** occurs in the feature space at the forecast hour. Passengers arrive at checkpoints 1.5 to 3 hours before flight departure. If a model uses actual flight pushback delays or wheels-off times to predict checkpoint demand, it consumes information that will not physically occur until hours after passengers have already cleared security. We enforced strict information causality by driving passenger arrival demand strictly from published airline schedules convolved across empirical ACRP Report 40 curves ($t+1, t+2, t+3$), while restricting realized flight delay telemetry strictly to prior-hour observations ($t-1$).  
+  This guarantees that a TSA Federal Security Director can trust the model's staffing recommendations in live production."*

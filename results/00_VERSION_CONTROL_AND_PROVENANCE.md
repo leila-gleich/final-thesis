@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.18 (Manuscript Appendix Deployment: Diebold-Mariano Test Econometric Foundation & Equation Registry)
+RELEASE VERSION: v4.20 (Academic Terminology Notes Enhancement: Document Description & Temporal vs. Feature Lookahead Leakage Specification)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -278,10 +278,20 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |     noisy test process, model walkthrough architecture, passenger           |
 |         |            |     stochastic arrival parameters, and physical transfer lead-lag timeline. |
 |         |            |   * 04_Appendix_and_Reference (7 CSVs): BTS DB1B table hierarchy, top-9     |
-|         |            |     data profile, database profiles, feature store dataset breakdown,       |
-|         |            |     backup archive organization, 14-point methodological assumptions, and   |
 |         |            |     diagrams/screenshots layout catalog.                                    |
 |         |            | - Validated all 30 CSV files with automated pandas integrity checks.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.20   | 2026-10-06 | Academic Terminology Notes Enhancement: Document Description & Leakage:     |
+|         |            | - Authored dedicated Document Description & Operational Scope in           |
+|         |            |   thesis_docs/notes/terminology_clarifications_and_replacements.md.         |
+|         |            | - Formally delineated Temporal Lookahead Leakage (time-axis partitioning    |
+|         |            |   and 7-day operational purge buffers) from Feature Lookahead Leakage       |
+|         |            |   (covariate-space realized delay ingestion and cancellation causality)    |
+|         |            |   grounded in Strict Information Causality and Granger/Sims principles.     |
+|         |            | - Updated Executive Summary cheat sheet and added Question 6 to the        |
+|         |            |   oral defense Q&A strategy.                                                |
+|         |            | - Generated synchronized companion CSV files in thesis_docs/notes/ and      |
+|         |            |   results/tables/ (terminology_replacements.csv).                           |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
