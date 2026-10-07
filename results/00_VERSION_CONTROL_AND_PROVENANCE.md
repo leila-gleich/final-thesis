@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.17 (Regime-Switched Gated Inference Engine Terminology Replacement Integration)
+RELEASE VERSION: v4.18 (Manuscript Appendix Deployment: Diebold-Mariano Test Econometric Foundation & Equation Registry)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -249,6 +249,18 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   Decision Framework" / "Disruption-Adaptive Checkpoint Forecasting Playbook"|
 |         |            | - Added summary cheat-sheet entry and defense Q&A talking point (Q4).       |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.18   | 2026-10-06 | Manuscript Appendix Deployment: Diebold-Mariano & Equation Registry:        |
+|         |            | - Authored thesis_docs/manuscripts/appendix.md providing formal econometric |
+|         |            |   derivations for the Diebold-Mariano (DM) test of forecast accuracy.       |
+|         |            | - Articulated why time-series autocorrelation violates i.i.d. assumptions   |
+|         |            |   and invalidates standard paired t-test p-values (spurious significance).  |
+|         |            | - Formulated the HAC long-run variance estimator (Newey-West spectral       |
+|         |            |   density at frequency zero) and asymptotic normality proofs.               |
+|         |            | - Tabulated pairwise DM statistics across the 2025 holdout benchmark:       |
+|         |            |   Model 2 vs Model 1 (DM = 42.15) and Model 3 vs Model 1 (DM = 48.72).      |
+|         |            | - Cataloged all 20 peer-reviewed operational and statistical equations       |
+|         |            |   in Table B.1 (Kingman, ACRP 40, DB1B, MASE, DM, Chow, CUSUM, lane safety).|
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -340,6 +352,7 @@ The foundational analysis suite (housed in `results/foundational_analysis/`) is 
    - 06_Nine_Airport_Filtered_Cohort/: 4-Tier filtering pipeline, factorial grid, Table C summary, Table D census, 4Tier-Filtering-Stats.xlsx, and top9-desc-stats.xlsx.
 
 04_Reports_and_Walkthroughs/
+   - appendix.md: Econometric foundations, Diebold-Mariano test derivation, and peer-reviewed equation registry.
    - operational-metric-framework.md: Statistical formulations, queuing theory dynamics, and committee defense guide.
    - Thesis_Results_and_Discussion_Comprehensive_Draft.md: Full draft of Chapter IV Results and Empirical Findings.
    - Approach1_Results_and_Analysis_Summary.txt: Detailed econometric walkthrough of Approach 1 modeling results.
