@@ -235,6 +235,12 @@ def extract_tables_from_markdown(filepath: Path):
 
 def get_manuscript_path(filename: str) -> Path:
     p = MANUSCRIPTS_DIR / filename
+    if p.exists() and len(extract_tables_from_markdown(p)) > 0:
+        return p
+    arch_name = f"{Path(filename).stem}_v2_archive.md"
+    arch_p = MANUSCRIPTS_DIR / "archive" / arch_name
+    if arch_p.exists() and len(extract_tables_from_markdown(arch_p)) > 0:
+        return arch_p
     if not p.exists():
         sub_p = MANUSCRIPTS_DIR / "manuscripts-only" / filename
         if sub_p.exists():

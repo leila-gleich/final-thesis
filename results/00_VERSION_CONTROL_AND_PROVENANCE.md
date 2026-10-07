@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.23 (Implementation Plans Archive Relocation & Active Recommendations Audit)
+RELEASE VERSION: v4.24 (Word Review Manuscripts Direct Markdown Drafting & Prior Version Archiving)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -367,6 +367,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Authored thesis_docs/recommendations/chapter_updates/chp5-recs.md         |
 |         |            |   drafting Chapter V Section 5.6 operational telemetry recommendation text. |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); 38/38 tests ok.|
+| v4.24   | 2026-10-06 | Word Review Manuscripts Direct Markdown Drafting & Prior Version Archiving:|
+|         |            | - Archived existing markdown manuscript drafts into                        |
+|         |            |   thesis_docs/manuscripts/archive/ with explicit older version identifiers  |
+|         |            |   (chp1-intro_v2_archive.md through chp5-discussion_v2_archive.md and      |
+|         |            |   chp4-intro_v2_archive.md).                                               |
+|         |            | - Drafted updated markdown manuscripts for Chapters 1 through 5            |
+|         |            |   (chp1-intro.md, chp2-litreview.md, chp3-methodology.md, chp4-results.md,  |
+|         |            |   chp5-discussion.md) directly reflecting committee review Word documents  |
+|         |            |   (ChpI v2.docx through ChpV v1.docx) with exact textual fidelity,         |
+|         |            |   nothing added, clean APA 7 headings, and fully parsed LaTeX equations.   |
+|         |            | - Synchronized table-free layout in manuscripts-only/ (including master    |
+|         |            |   full-thesis.md).                                                         |
+|         |            | - Enhanced get_manuscript_path in src/analysis/sync_manuscript_tables.py   |
+|         |            |   with archive fallback for table extraction, keeping all 16 conformed CSVs|
+|         |            |   and multi-tab companion Excel workbooks synchronized (38/38 tests pass).  |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx).                                                       |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
