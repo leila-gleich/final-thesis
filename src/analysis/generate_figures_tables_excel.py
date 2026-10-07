@@ -195,6 +195,8 @@ SUBFOLDER_WORKBOOKS = [
     {
         "folder_name": "03_Modeling_and_Evaluation",
         "wb_filename": "03_Modeling_and_Evaluation.xlsx",
+        "target_dir": EXHIBITS_DIR / "ch03_methodology" / "workbooks",
+        "csv_dir": EXHIBITS_DIR / "ch03_methodology" / "tables",
         "title": "MODELING ARCHITECTURE AND EVALUATION TABLES",
         "subtitle": "Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow | Gleich 700B",
         "tables": [
@@ -275,6 +277,8 @@ SUBFOLDER_WORKBOOKS = [
     {
         "folder_name": "04_Appendix_and_Reference",
         "wb_filename": "04_Appendix_and_Reference.xlsx",
+        "target_dir": FIGURES_DIR / "04_Appendix_and_Reference",
+        "csv_dir": FIGURES_DIR / "04_Appendix_and_Reference",
         "title": "APPENDIX AND REFERENCE DATA TABLES",
         "subtitle": "Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow | Gleich 700B",
         "tables": [
