@@ -575,6 +575,21 @@ def parse_cell_value(val_str: str):
     return s, None, "left"
 
 
+def find_csv_file(csv_file: str, preferred_dir: Path, folder_name: str) -> Path:
+    search_dirs = [
+        preferred_dir,
+        EXHIBITS_DIR / "ch03_methodology" / "tables",
+        EXHIBITS_DIR / "ch01_intro",
+        EXHIBITS_DIR / "ch02_lit_review",
+        FIGURES_DIR / folder_name,
+    ]
+    for d in search_dirs:
+        cand = d / csv_file
+        if cand.exists():
+            return cand
+    return preferred_dir / csv_file
+
+
 def generate_workbook_for_subfolder(subfolder_info: dict):
     """Builds a single multi-tab APA 7th Excel workbook for a figures subfolder."""
     folder_name = subfolder_info["folder_name"]
