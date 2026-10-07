@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.20 (Academic Terminology Notes Enhancement: Document Description & Temporal vs. Feature Lookahead Leakage Specification)
+RELEASE VERSION: v4.21 (Comprehensive Academic Terminology Harmonization, 40-Item CSV Suite & Expanded Defense Guide)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -292,6 +292,32 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   oral defense Q&A strategy.                                                |
 |         |            | - Generated synchronized companion CSV files in thesis_docs/notes/ and      |
 |         |            |   results/tables/ (terminology_replacements.csv).                           |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.21   | 2026-10-06 | Comprehensive Academic Terminology Harmonization & Defense Guide Expansion: |
+|         |            | - Generated conformed 40-item companion CSV datasets in                     |
+|         |            |   thesis_docs/notes/terminology_replacements.csv and                        |
+|         |            |   results/tables/terminology_replacements.csv mapping draft jargon and     |
+|         |            |   physics metaphors across 7 functional categories to authentic commercial  |
+|         |            |   aviation operations and transportation econometrics terminology.          |
+|         |            | - Expanded thesis_docs/notes/terminology_clarifications_and_replacements.md |
+|         |            |   from 20 to 34 comprehensive narrative sections, adding in-depth           |
+|         |            |   qualitative and operational analyses for: Tweedie count regression        |
+|         |            |   (p = 1.3), carrier arrival consistency, overnight curfew periods vs.      |
+|         |            |   quiescence, ambient operational churn vs. noise, irregular operations     |
+|         |            |   (IROPS) vs. acute shocks, peak-hour congestion asymptotics, post-COVID    |
+|         |            |   sample demarcation, the Empty Checkpoint Fallacy, unidentified airport    |
+|         |            |   records (null key quarantining), multi-dimensional performance pillars    |
+|         |            |   (Robustness, Resilience, Generalizability), disruption error multipliers  |
+|         |            |   (R_MASE), transfer error penalties (RTR), and queuing burstiness vs.      |
+|         |            |   fluid mechanics.                                                          |
+|         |            | - Expanded Oral Defense Q&A Strategy from 7 to 12 comprehensive questions   |
+|         |            |   and candidate defense scripts, equipping the candidate to defend queuing  |
+|         |            |   theory, Tweedie regression, the Empty Checkpoint Fallacy, asymmetric      |
+|         |            |   trade-offs, and Kingman lane staffing buffers before Embry-Riddle         |
+|         |            |   qualitative aviation management faculty.                                  |
+|         |            | - Enhanced src/analysis/sync_manuscript_tables.py with flexible manuscript   |
+|         |            |   path resolution supporting both root and manuscripts-only/ layouts.       |
+|         |            | - Validated 100% passing test suite across all 38 unit tests.               |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 

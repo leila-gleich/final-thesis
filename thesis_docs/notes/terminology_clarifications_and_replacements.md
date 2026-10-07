@@ -27,37 +27,50 @@ During manuscript drafting, quantitative modeling, and computational experimenta
 
 ## Executive Summary & Quick-Reference Cheat Sheet
 
-The following master replacement table maps all 27 identified jargon terms, physical metaphors, and coined phrases to their recommended academic replacements, plain-English operational meanings, and qualitative committee rationale.
+The following master replacement table maps all 38 identified jargon terms, physical metaphors, and coined phrases (plus the prospective temporal evaluation framework) to their recommended academic replacements, plain-English operational meanings, and qualitative committee rationale across seven functional categories.
 
 | Category | Draft Jargon / Coined Term | Recommended Academic Replacement | Plain-English Operational Reality | Why It Risks Committee Scrutiny |
 | :--- | :--- | :--- | :--- | :--- |
 | **Queuing & Physics** | **Heavy-Traffic Queuing Physics** | **Heavy-Traffic Queuing Principles** (or **Queuing Dynamics / Queuing Theory**) | Checkpoint wait times and delays scale quadratically with passenger arrival variance ($C_a^2$) as checkpoint utilization approaches capacity ($\rho \to 1.0$). | Prompts qualitative committee members to ask where the physical conservation laws or Navier-Stokes equations are; passengers are human travelers making cognitive choices. |
-| **Model Baselines** | **Deterministic Physical Baseline (Model 1)** | **Deterministic Operational Baseline** | Published airline flight schedules shifted forward in time across empirical ACRP Report 40 passenger arrival distributions ($t+1, t+2, t+3$). | "Physical baseline" implies physical sensor modeling or physics-informed neural networks rather than schedule-driven terminal planning. |
-| **Model Baselines** | **Physical Ebb and Flow / Physical Rules** | **Operational Ebb and Flow / Deterministic Operational Rules** | Concentrated surges and valleys in security arrivals caused by hub-and-spoke airline flight departure banks. | Conflates airline bank scheduling and passenger habits with physical forces or mechanics. |
-| **Model Baselines** | **True Physical Lead-Lag Relationship** | **True Empirical Lead-Lag Relationship** (or **Operational Lead-Lag Offset**) | The observed time gap between when passengers clear security (90–120 min prior) and when flights push back from gates. | It is an empirically observed behavioral timeline in aviation data, not a physical law of nature. |
-| **Terminal Geometry** | **Idiosyncratic Physical Geometry** | **Idiosyncratic Terminal Layouts and Gate Configurations** | Unique concourse layout, pier shapes, checkpoint locations, and gate distributions at an individual airport. | "Physical geometry" sounds like CAD engineering or fluid domain meshing rather than airport terminal planning. |
-| **Terminal Geometry** | **Facility Physical Features** | **Facility and Aircraft Features** (or **Terminal Operational Features**) | Screening lane counts, checkpoint configurations, aircraft seat gauge, route load factors, and connecting ratios. | Over-emphasizes "physics" when referring to operational and equipment characteristics of commercial aviation. |
-| **Terminal Geometry** | **Carrier Isolation Physically Impossible** | **Carrier Isolation Structurally / Operationally Impossible** | Consolidated central checkpoint halls (such as Salt Lake City) where all airlines mix into a single passenger screening line. | It is an architectural and operational design choice of the terminal, not an impossibility under physical laws. |
-| **Data Hygiene** | **Physical Checkpoint Closures vs. Missing Sensor Data** | **Scheduled Checkpoint Closures vs. Missing Sensor Data** (or **Nighttime Closures**) | Zero throughput recorded between 00:00 and 04:00 because checkpoints are closed overnight by TSA policy. | Conflates administrative operating schedules with physical phenomenon; "sensor dropouts" implies faulty hardware. |
-| **Model Architecture** | **Cyber-Physical Hybrid Model / Architecture** | **Dynamic Two-Stage Hybrid Model** (or **Sequential Two-Stage Hybrid**) | A sequential model coupling recurring daily flight schedule cycles with live prior-hour error feedback ($e_{t-1}$) from checkpoint turnstiles. | "Cyber-physical" refers to robotics, industrial SCADA systems, or IoT embedded hardware; using it for a statistical model is buzzword inflation. |
-| **Model Architecture** | **Cyber-Physical Stability Manifolds** | **Two-Stage Sequential Architecture / Closed-Loop Error Adaptation** | Updating forecasts dynamically using live floor feedback during severe flight delays to avoid demand collapse. | "Manifolds" is borrowed from differential geometry and topology, sounding like pseudo-mathematical obfuscation. |
-| **Model Architecture** | **Regime-Switched Gated Inference Engine** | **Dual-Track Operational Decision Framework** (or **Disruption-Adaptive Checkpoint Forecasting Playbook / Regime-Adaptive Predictive Architecture**) | An automated operational decision rule routing predictions to Model 2 (Supervised ML) during calm conditions and switching to Model 3 (Dynamic Hybrid) during severe disruptions ($T(h) \ge 0.75$). | "Gated" and "inference engine" are computer science / AI runtime jargon; "gates" also conflicts with physical airport boarding gates. |
-| **Proprietary Metrics** | **Coupled Volatility Index ($\text{CVI}$)** | **Landside–Airside Volatility Interaction Term** (or **Joint Volatility Interaction**) | Compounding operational stress when passenger arrival surges ($CV_{\text{TSA}}$) coincide with high flight departure delay dispersion ($\sigma_{\text{Delay}}$). | Coined, proprietary acronym not found in FAA/IATA literature; multiplies mixed units (dimensionless ratio $\times$ delay minutes). |
-| **Proprietary Metrics** | **Coupled Volatility Matrix / Regimes** | **Bivariate Volatility Stratification** (or **Cross-System Volatility Regimes**) | Grouping operational days by both landside passenger variation ($CV_{\text{TSA}}$) and airside flight delay spread ($\sigma_{\text{Delay}}$). | Sounds like an invented mathematical artifact rather than standard bivariate statistical clustering. |
-| **Intraday Regimes** | **Diurnal Non-Consecutive Dual Turbulence Peaks** | **Bimodal Intraday Operational Peaks: Morning Surges and Evening Delay Cascades** | Daily bimodal congestion curve: morning passenger arrival rush (05:00–08:00) and evening flight delay propagation (14:00–22:00). | "Diurnal" is ecology jargon; "non-consecutive" overcomplicates a standard bimodal curve; "turbulence" borrows fluid physics jargon. |
-| **Intraday Regimes** | **Diurnal Operational Turbulence Shock Index ($T_{dow}(h)$)** | **Intraday Operational Congestion Index** (or **Operational Stress Index**) | Formula classifying hours of the day into Off-Peak, Mid-Peak, and Peak congestion blocks. | "Turbulence Shock Index" sounds like aeroelastic flutter or fluid mechanics rather than queuing congestion. |
-| **Model Control** | **Live 1-Step Error Innovation Feedback ($e_{t-1}$)** | **Real-Time Prior-Hour Error Correction** (or **Live Prior-Hour Forecast Error Feedback**) | Raising this hour's forecast if the model underpredicted last hour because delayed passengers crowded the terminal. | "Innovation" sounds like corporate buzzwords; "1-step" is abstract algorithm speak for "prior-hour." |
-| **Data Engineering** | **Zero Lookahead Leakage (Overall)** | **Strict Information Causality** (or **Preserving Operational Information Availability**) | Models only ingest information knowable before the forecast hour, using prior-hour delays rather than same-hour delays. | "Lookahead leakage" is Kaggle data science competition jargon rather than formal econometric causality terminology. |
-| **Data Engineering** | **Temporal Lookahead Leakage** | **Operational Partition Demarcation with Purge Buffers** (or **Chronological Demarcation**) | Contamination along the chronological time axis across evaluation partitions (e.g., random k-fold cross-validation shuffling or global normalization across test sets). | Fails to distinguish structural time-axis partition errors from feature-space covariate leakage; sounds like informal competition jargon. |
-| **Data Engineering** | **Feature Lookahead Leakage** | **Strict Information Causality in Covariate Construction** (or **Lagged Covariate Ingestion**) | Ingesting realized, post-event operational states (e.g., actual departure delays, pushback timestamps) that are physically unknown at forecast time $t$. | Conflates planned flight schedules with realized downstream operations; creates models that collapse during live airport deployment. |
-| **Passenger Timing** | **Physics-Based Continuous Arrival Kernel Convolution** | **Empirical Passenger Show-Up Curve Convolution** (or **Lead-Lag Arrival Distribution**) | Spreading departing flight seats across 1, 2, and 3 hours prior to takeoff based on empirical ACRP Report 40 arrival timing. | Passengers do not follow continuous physics kernels; they follow empirical behavioral timing (90 to 120 minutes prior to departure). |
-| **Network Accounting** | **DB1B Transfer Deflation Manifold** | **Connecting Passenger Deflator** (or **Local Originating Passenger Fraction**) | Multiplying flight seats by $(1 - \text{Connecting Ratio})$ to remove passengers who connect airside and never enter TSA security. | Calling a simple subtraction and multiplication a "manifold" is pretension that invites immediate committee challenge. |
-| **Network Accounting** | **The Connecting Passenger Paradox** | **The Hub Disconnect** (or **Connecting vs. Local Originating Disconnect**) | The planning error of assuming every departing airline seat corresponds to a passenger entering landside security. | "Paradox" sounds melodramatic for a well-known airline hub transfer phenomenon. |
-| **Terminal Geometry** | **Type I (Air-Gapped) vs. Type II (Airside Connected) Complexes** | **Physically Separate Terminals vs. Walkway-Connected Terminals** | Standalone terminal buildings (LGA, DTW) versus terminals connected airside by post-security pedestrian walkways (DFW, LAX). | "Type I/II" is idiosyncratic labeling; "air-gapped" is cybersecurity jargon borrowed from network engineering. |
-| **Terminal Geometry** | **Inter-Terminal Airside Passenger Leakage / Cross-Contamination** | **Post-Security Terminal Cross-Over** | Passengers who clear TSA security at Terminal A and walk post-security to board a departure out of Terminal B. | "Leakage" and "cross-contamination" are chemical/microbiological terms that sound inappropriate in passenger transport. |
-| **Operational Regimes** | **Quiescent / Sterile Control** | **Nominal On-Time Baseline** (or **Overnight Low-Demand Period**) | On-time flight operations (delay < 15 min, 0 cancellations) used as a control state, or overnight curfew hours. | "Quiescent" is biology/laboratory jargon; "sterile control" confuses medical sterilization with FAA sterile concourses. |
-| **Performance Pillars** | **Continuous Static Stability (Hypothesis 1 & 2)** | **Routine Operational Accuracy (Robustness)** | How consistently and accurately a predictive model forecasts during normal, undisturbed commercial flight banks. | "Static stability" is flight dynamics terminology (longitudinal stability derivatives); confuses aerodynamics with forecast accuracy. |
-| **Temporal Evaluation** | **Out-of-Time Evaluation Benchmark Matrix** | **Prospective Chronological Holdout Evaluation Matrix** (or **Temporal Holdout Benchmark Matrix**) | Evaluating frozen models strictly forward in time on an unobserved future calendar year (2025) after training on historical operations (2022–2024). | Sounds like "running out of clock time" on an exam or an algorithmic compute timeout, rather than prospective chronological evaluation. |
+| **Queuing & Physics** | **Continuous Physics-Based Arrival Kernel Convolution** | **Empirical Passenger Show-Up Curve Convolution** (ACRP Report 40) | Convolving scheduled airline departure banks with empirical passenger arrival distributions peaking 90 to 120 minutes prior to takeoff ($t+1, t+2, t+3$). | Calling passenger arrival timing physics-based prompts committee members to ask where physical conservation laws are. |
+| **Queuing & Physics** | **Deterministic Physical Baseline (Model 1)** | **Deterministic Operational Baseline** | Baseline model shifting published flight schedules forward across empirical ACRP Report 40 passenger arrival distributions without real-time delay telemetry or ML. | Using 'physical' implies mechanical engineering rather than an operational schedule baseline. |
+| **Queuing & Physics** | **Deterministic Physical Rules / Physical Ebb and Flow** | **Deterministic Operational Rules / Operational Ebb and Flow** | The recurring departure bank waves and scheduling rhythms established by published airline timetables. | Aviation planners evaluate operational bank structures; human flight schedules are not physical laws. |
+| **Queuing & Physics** | **True Physical Lead-Lag Relationship** | **True Empirical Lead-Lag Relationship** (or **Operational Lead-Lag Offset**) | The observed 90- to 120-minute operational time offset between when passengers clear security and when flights push back from gates. | The time gap reflects traveler behavior and airline boarding cutoff rules, not physical mechanics. |
+| **Queuing & Physics** | **Idiosyncratic Physical Geometry** | **Idiosyncratic Terminal Layouts and Gate Configurations** | Airport-specific spatial floorplans such as finger-pier concourses, terminal walkway connections, and satellite gate pods. | Over-mathematizes airport concourse architecture and spatial layouts. |
+| **Queuing & Physics** | **Facility Physical Features** | **Facility Operational Features** (or **Facility and Aircraft Features**) | Screening lane counts, checkpoint finger-pier configurations, aircraft seating gauge, route load factors, and connecting passenger ratios. | Labeling operational checkpoint attributes as 'physical features' confuses architectural infrastructure with screening operations. |
+| **Queuing & Physics** | **Carrier Isolation Physically Impossible** | **Carrier Isolation Structurally / Operationally Impossible** | Airports like Salt Lake City (SLC) where all airlines funnel passengers through a single consolidated central screening checkpoint. | It is an architectural and operational routing constraint rather than a violation of physical laws. |
+| **Queuing & Physics** | **Fluid Physics / Entropy / Manifold Transitions** | **Queuing Dynamics / Arrival Burstiness / Flight Bank Synchronization** | Rapid buildup of passenger crowds at security lines when airline banks cluster departures into tight 45-to-90-minute waves. | Borrowed physics jargon that obscures standard transportation queuing and airline scheduling phenomena. |
+| **Mathematical & Econometric** | **Coupled Volatility Index ($\text{CVI}$)** | **Landside–Airside Volatility Interaction Term** (or **Joint Volatility Interaction**) | Compounding operational stress when passenger arrival surges ($CV_{\text{TSA}}$) coincide with high flight departure delay dispersion ($\sigma_{\text{Delay}}$). | Coined, proprietary acronym not found in FAA/IATA literature; multiplies mixed units (dimensionless ratio $\times$ delay minutes). |
+| **Mathematical & Econometric** | **Coupled Volatility Matrix / Regimes** | **Bivariate Volatility Stratification** (or **Cross-System Volatility Regimes**) | Stratifying operational days or weeks by both passenger arrival variation ($CV_{\text{TSA}}$) and flight delay standard deviation ($\sigma_{\text{Delay}}$). | Sounds like an invented mathematical artifact rather than standard bivariate empirical clustering. |
+| **Mathematical & Econometric** | **Econometric Deconvolution / Orthogonal Wiener-Hopf Operator** | **Carrier Checkpoint Isolation** (or **Mathematical Separation of Demand**) | Isolating single-airline terminal complexes to eliminate collinearity ($\kappa < 25$) among competing airlines scheduling simultaneous departure banks. | Borrowed electrical signal processing and Wiener-Hopf operator jargon that alienates aviation committee members. |
+| **Mathematical & Econometric** | **DB1B Transfer Deflation Manifold** | **Connecting Passenger Deflator** (or **Local Originating Passenger Fraction**) | Multiplying departing seats by $(1 - \text{Connecting Ratio})$ using BTS DB1B ticket surveys to subtract transferring travelers who never enter landside security. | A manifold is a topological differential geometry space; this is simple proportional subtraction of connecting travelers. |
+| **Mathematical & Econometric** | **Heteroskedastic Tweedie Deviance Minimization ($p = 1.3$)** | **Zero-Bounded Count Regression (Tweedie Distribution)** | A generalized linear model distribution that naturally handles positive continuous counts and exact zeros without negative passenger predictions. | Overly dense statistical jargon that obscures the practical purpose of handling overnight checkpoint closures without artificial smoothing. |
+| **Mathematical & Econometric** | **Parameter Exchangeability Across Carrier Kernels** | **Consistent Passenger Arrival Timing** | Legacy carrier passengers exhibit similar lognormal arrival curves (mean $\sim 105$ min) whereas Southwest passengers follow bimodal timing due to open seating. | Bayesian exchangeability jargon that obscures airline-specific passenger boarding behavior. |
+| **Temporal & Congestion Regimes** | **Diurnal Non-Consecutive Dual Turbulence Peaks** | **Bimodal Intraday Operational Peaks: Morning Surges and Evening Delay Cascades** | Commercial airports experience a morning peak (05:00–08:00) driven by passenger surges and an evening peak (14:00–22:00) driven by compounding flight delays. | 'Diurnal' sounds like biology; 'non-consecutive' overcomplicates a standard bimodal curve; 'turbulence' is borrowed fluid dynamics. |
+| **Temporal & Congestion Regimes** | **Diurnal Operational Turbulence Shock Index ($T(h)$)** | **Intraday Operational Congestion Index** (or **Operational Stress Index**) | Formula classifying hours of the day into Off-Peak, Mid-Peak, and Peak congestion blocks. | "Turbulence Shock Index" sounds like aeroelastic flutter or fluid mechanics rather than queuing congestion. |
+| **Temporal & Congestion Regimes** | **Quiescent / Sterile Control** | **Nominal On-Time Baseline** (or **FAA A14 Reference Standard**) | Operating hours with flight departure delays under 15 minutes and zero cancellations reflecting undisturbed airline schedules. | 'Quiescent' and 'sterile' are laboratory/medical terms; FAA and DOT use A14 on-time standards. |
+| **Temporal & Congestion Regimes** | **Checkpoint Demand is Quiescent / Curfew Quiescence** | **Checkpoint Demand is Minimal / Overnight Curfew Period** | Overnight hours (00:00 to 03:59) where flight departures cease and checkpoints experience scheduled closures or minimal traffic. | Laboratory physics jargon that obscures standard nighttime airport curfew closures. |
+| **Temporal & Congestion Regimes** | **Ambient Noise / Low-Amplitude Churn** | **Routine Daily Operations** (or **Ambient Operational Churn**) | Everyday hub operations characterized by routine 15- to 30-minute departure delays and normal 1–2% flight cancellation rates. | Acoustic/signal processing jargon that mischaracterizes routine commercial flight operations. |
+| **Temporal & Congestion Regimes** | **Acute Shock State / Severe Perturbation** | **Irregular Operations (IROPS) / Severe Convective Disruption** | Severe operational disruptions caused by summer convective thunderstorms or winter blizzards (delays $\ge 45$ min or cancels $\ge 5$). | Hard-science physics jargon; commercial aviation universally uses the established industry term IROPS. |
+| **Temporal & Congestion Regimes** | **Heavy-Traffic Asymptotics and Boundary Saturation ($\rho \to 1.0$)** | **Peak-Hour Checkpoint Congestion** | High-volume flight departure waves where passenger arrival rates approach screening lane capacity. | Theoretical mathematical jargon that obscures the practical reality of peak-hour line backups. |
+| **Temporal & Congestion Regimes** | **Temporal Demarcation Regime** | **Post-COVID Study Period** (or **Training Window Start Date: May 1, 2022**) | Selecting May 1, 2022 as the study start date following the judicial vacatur of federal transportation mask mandates. | Overcomplicated geopolitical jargon for explaining sample period selection and post-pandemic normalization. |
+| **Model Mechanics & Feedback** | **Live 1-Step Error Innovation Feedback ($e_{t-1}$)** | **Real-Time Prior-Hour Error Correction** (or **Live Prior-Hour Forecast Error Feedback**) | Ingesting the prior-hour prediction error (actual throughput minus forecast) to dynamically update the current hour's checkpoint forecast. | 'Innovation' sounds like corporate tech buzzwords; '1-step' is abstract algorithm speak for prior-hour error. |
+| **Model Mechanics & Feedback** | **Zero Feedback Latency** | **Requires No Real-Time Checkpoint Data Feeds** (or **Advance Scheduling Capability**) | Model 2 (Supervised ML) relies solely on schedules and weather without needing real-time screening sensor feeds, enabling 24- to 72-hour advance staffing. | Misleading (Model 2 has no feedback loop at all; it is feed-forward); IT 'latency' obscures practical shift planning benefits. |
+| **Model Mechanics & Feedback** | **Regime-Switched Gated Inference Engine** | **Dual-Track Operational Decision Framework** (or **Disruption-Adaptive Checkpoint Forecasting Playbook**) | A decision playbook routing predictions to Model 2 during routine conditions and switching to Model 3 during severe convective disruptions. | 'Gated' and 'inference engine' are AI runtime jargon; airport 'gates' also conflicts with aircraft parking positions. |
+| **Model Mechanics & Feedback** | **Cyber-Physical Hybrid Architecture / Stability Manifolds** | **Dynamic Two-Stage Hybrid Model** (or **Sequential Two-Stage Hybrid Model**) | A sequential model combining recurring flight schedules in Stage 1 with decision trees and live error feedback in Stage 2. | Robotics and control engineering jargon that obscures an intuitive two-stage operational forecasting structure. |
+| **Model Mechanics & Feedback** | **Empty Checkpoint Fallacy** | **Empty Checkpoint Fallacy (Stranded Passenger Underprediction)** | When open-loop machine learning assumes delayed flights mean empty checkpoints, ignoring passengers already stranded in the terminal lobby. | Essential operational concept explaining why pure ML fails during storms; describes traveler behavior rather than an algorithm flaw. |
+| **Terminal Layout & Passenger Behavior** | **Type I (Air-Gapped) vs. Type II (Airside Connected) Complexes** | **Physically Separate Terminals vs. Walkway-Connected Terminals** | Terminals that are standalone buildings (e.g., LGA, DTW) versus terminals connected post-security by airside walkways (e.g., DFW, LAX). | Industrial engineering / network security jargon; transportation planning uses physical separation vs. walkway connections. |
+| **Terminal Layout & Passenger Behavior** | **Inter-Terminal Airside Passenger Leakage / Cross-Contamination** | **Post-Security Terminal Cross-Over** | Ticketed passengers clearing security in Terminal A and walking airside to board a flight departing Terminal B. | Epidemiological/fluid jargon ('leakage', 'cross-contamination') that inappropriately describes human traveler movement. |
+| **Terminal Layout & Passenger Behavior** | **The Connecting Passenger Paradox** | **The Hub Disconnect** (or **Connecting vs. Local Originating Disconnect**) | The mistaken planning assumption that every departing airline seat represents a passenger entering landside airport security. | Calling an empirical accounting omission a 'paradox' overcomplicates a straightforward hub transfer phenomenon. |
+| **Data Engineering & Hygiene** | **Sensor Dropouts vs. Structural Zeros** | **Scheduled Checkpoint Closures vs. Missing Data** | Zero throughput recorded between midnight and 04:00 AM represents true physical lane closures rather than broken sensors. | Electronics hardware jargon; qualitative reviewers need to understand that nighttime zeros are real operational closures. |
+| **Data Engineering & Hygiene** | **Phantom Composite Mega-Airport Aggregation** | **Unidentified Airport Records (Null Key Quarantining)** | Quarantining 22,190 raw TSA records with missing or corrupted airport codes so they do not create a fake 9.71-million passenger airport. | Sensationalist lab jargon ('phantom mega-airport') that obscures standard data-cleaning surrogate key assignment. |
+| **Data Engineering & Hygiene** | **Zero Lookahead Leakage (Overall / Temporal / Feature)** | **Strict Information Causality** | Ensuring forecasting models only ingest operational attributes knowable before departure (prior-hour delays, scheduled seats). | Machine learning competition jargon; transportation economists and planners understand information causality and real-world availability. |
+| **Data Engineering & Hygiene** | **Out-of-Time Evaluation Benchmark Matrix** | **Prospective Chronological Holdout Evaluation Matrix** (or **Temporal Holdout Benchmark Matrix**) | Evaluating frozen models strictly forward in time on an unobserved future calendar year (2025) after training on historical operations (2022–2024). | Sounds like "running out of clock time" on an exam or an algorithmic compute timeout, rather than prospective chronological evaluation. |
+| **Performance Dimensions & Metrics** | **Continuous Static Stability (Hypothesis 1)** | **Routine Operational Accuracy (Robustness)** | Model forecasting consistency and precision during nominal on-time flight operations under clear weather. | Control-systems engineering jargon that obscures day-in day-out baseline forecasting accuracy. |
+| **Performance Dimensions & Metrics** | **System Shock Absorption & Disruption Dynamics (Hypothesis 2)** | **Resilience Under Severe Disruption** | A model's ability to maintain accuracy, resist demand collapse, and recover quickly during severe storm ground stops. | Mechanical shock absorption jargon that obscures operational recovery during irregular flight operations. |
+| **Performance Dimensions & Metrics** | **Spatial Layout Transferability (Hypothesis 3)** | **Cross-Airport Transferability (Generalizability)** | Capability of a model calibrated at one airport to deploy directly to an unfamiliar airport without site-specific retraining. | Abstract spatial topology jargon; airport authorities evaluate practical cross-airport portability. |
+| **Performance Dimensions & Metrics** | **Resilience Multiplier ($R_{\text{MASE}}$)** | **Disruption Error Multiplier** | Ratio of forecast error during severe flight disruptions to forecast error during routine operations ($\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$). | Over-mathematized metric name; plain English clarifies whether storm error doubles (fragile) or stays near 1.0 (resilient). |
+| **Performance Dimensions & Metrics** | **Relative Transfer Ratio ($\text{RTR}$)** | **Transfer Error Penalty** | Ratio of zero-shot transfer forecast error to in-sample forecast error ($\text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$). | Abstract acronym; plain English clarifies the percentage accuracy penalty incurred when deploying to a new airport. |
 
 ---
 
@@ -521,7 +534,313 @@ At major fortress hubs (e.g., Charlotte at 76.0% connecting or Atlanta at 70.1%)
 
 ---
 
-## 20. Comprehensive Oral Defense Q&A Strategy: Anticipated Committee Questions & Qualitative Defense Scripts
+## 20. Heteroskedastic Tweedie Deviance Minimization ($p = 1.3$) vs. Zero-Bounded Count Regression (Tweedie Distribution)
+
+### 20.1 Operational & Econometric Context
+* **Draft Term**: `Heteroskedastic Tweedie Deviance Minimization (p = 1.3)`
+* **Underlying Operational Reality**: Hourly TSA throughput observations are non-negative integer passenger counts ($y_t \ge 0$). During scheduled overnight curfew closures (00:00–03:59), checkpoint throughput drops to exactly zero. 
+* Standard Ordinary Least Squares (OLS) linear regression with Gaussian errors predicts negative passengers (e.g., $-45$ pax/hr) during low-volume overnight hours, which is structurally impossible.
+* Furthermore, applying an ad-hoc logarithmic transformation ($\log(y + 1)$) introduces severe re-transformation bias under Jensen's inequality ($\mathbb{E}[\log(Y)] \ne \log(\mathbb{E}[Y])$) and distorts variance estimation across low-volume counts.
+* The **compound Poisson-Gamma Tweedie generalized linear model** with power parameter $p = 1.3$ (where $1 < p < 2$) naturally accommodates a discrete probability mass of exact zeros combined with a continuous positive distribution whose variance scales with the mean as $\text{Var}(Y) = \phi \mu^p$.
+
+### 20.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Heteroskedastic Tweedie Deviance Minimization" sounds like hyper-dense econometric jargon intended to intimidate readers rather than clarify modeling choices.
+* Qualitative aviation management faculty want to know: *Why not standard regression, and how does this handle nighttime airport closures without fabricating passenger traffic or distorting day-in, day-out staffing plans?*
+
+### 20.3 Recommended Academic Framing
+* `Zero-Bounded Count Regression (Tweedie Distribution)` (or `Compound Poisson-Gamma Count Regression`).
+
+### 20.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Model 2 optimizes heteroskedastic Tweedie deviance minimization ($p = 1.3$) to penalize tail divergence across boundary zeros and heteroskedastic error manifolds."*
+* **After (Publishable Manuscript Text)**:  
+  *"Model 2 utilizes zero-bounded count regression based on the compound Poisson-Gamma Tweedie distribution ($p = 1.3$). This distribution naturally accounts for exact zeros during scheduled overnight checkpoint closures without requiring artificial log-offset constants, while preventing structurally impossible negative passenger forecasts during off-peak hours."*
+
+---
+
+## 21. Parameter Exchangeability Across Carrier Kernels vs. Consistent Passenger Arrival Timing
+
+### 21.1 Operational Meaning & Context
+* **Draft Term**: `Parameter Exchangeability Across Carrier Kernels`
+* **Underlying Operational Reality**: In Chapter IV, airline passenger arrival profiles were evaluated across legacy network carriers (Delta, American, United) and low-cost carriers. Legacy network passengers display consistent lognormal arrival timing (peaking 90 to 120 minutes prior to departure, mean $\sim 105$ min) because assigned seating, business traveler habits, and checked baggage cutoff rules are standardized.
+* In contrast, Southwest Airlines passengers historically exhibited bimodal arrival timing (with surges 150+ minutes prior) driven by open-seating boarding group competition, prompting the exclusion of Southwest from carrier-exclusive modeling.
+
+### 21.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Parameter exchangeability" is formal Bayesian probability theory terminology (de Finetti's theorem).
+* Applying Bayesian exchangeability jargon to describe human airline passengers obscures the practical reality: passengers traveling on major network carriers follow uniform check-in habits and airline cutoff deadlines.
+
+### 21.3 Recommended Academic Framing
+* `Consistent Passenger Arrival Timing` (or `Cross-Carrier Arrival Consistency`).
+
+### 21.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"We establish Bayesian parameter exchangeability across carrier arrival kernels to justify universal convolution weights."*
+* **After (Publishable Manuscript Text)**:  
+  *"Legacy airline passenger show-up curves demonstrate consistent passenger arrival timing across major network carriers (Delta, American, United), validating the application of standardized ACRP Report 40 arrival profiles across carrier-exclusive terminals."*
+
+---
+
+## 22. Checkpoint Quiescence vs. Overnight Curfew Period & Minimal Demand
+
+### 22.1 Operational Meaning & Context
+* **Draft Term**: `Checkpoint Demand is Quiescent / Curfew Quiescence`
+* **Underlying Operational Reality**: Between midnight (00:00) and 03:59 local time, scheduled commercial flight departures cease at almost all domestic hub airports due to local municipal noise curfews, scheduled aircraft maintenance turns, and TSA checkpoint staffing rotations. Passenger screening throughput drops to zero or near-zero.
+
+### 22.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Quiescent" and "quiescence" are biology, medicine, and seismology terms (e.g., quiescent stem cells, seismic fault quiescence).
+* Describing standard nighttime airport operating hours as "quiescence" creates unnecessary abstraction for commercial aviation scholars.
+
+### 22.3 Recommended Academic Framing
+* `Minimal Checkpoint Demand / Overnight Curfew Period` (or `Overnight Low-Demand Hours`).
+
+### 22.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"During curfew quiescence, checkpoint demand is completely quiescent across all terminal nodes."*
+* **After (Publishable Manuscript Text)**:  
+  *"During overnight curfew hours (00:00–03:59), commercial flight departures cease and passenger checkpoint demand is minimal, reflecting scheduled overnight screening lane closures."*
+
+---
+
+## 23. Ambient Noise / Low-Amplitude Churn vs. Routine Daily Operations (Ambient Operational Churn)
+
+### 23.1 Operational Meaning & Context
+* **Draft Term**: `Ambient Noise / Low-Amplitude Churn`
+* **Underlying Operational Reality**: Commercial aviation is never completely "on time." Even during clear, nominal operations, commercial hubs experience routine departure delays of 15 to 30 minutes due to late-arriving connecting passengers, gate holds, minor fueling delays, or routine ramp congestion, alongside baseline 1–2% flight cancellation churn.
+
+### 23.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Ambient noise" and "low-amplitude churn" are acoustic engineering, signal processing, and fluid mechanics terms.
+* Referring to normal commercial flight operations as "noise" implies that legitimate commercial air travel is an unwanted transmission artifact rather than the core operational mission of an airport.
+
+### 23.3 Recommended Academic Framing
+* `Routine Daily Operations` (or `Ambient Operational Churn`).
+
+### 23.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Tier 2 filters ambient noise and low-amplitude churn across background commercial schedules."*
+* **After (Publishable Manuscript Text)**:  
+  *"Tier 2 captures routine daily operations, characterized by ambient operational churn including normal 15- to 30-minute departure delays and baseline 1–2% flight cancellation rates."*
+
+---
+
+## 24. Acute Shock State / Severe Perturbation vs. Irregular Operations (IROPS) / Severe Convective Disruption
+
+### 24.1 Operational Meaning & Context
+* **Draft Term**: `Acute Shock State / Severe Perturbation`
+* **Underlying Operational Reality**: Severe operational disruptions caused by summer convective thunderstorms, FAA Ground Delay Programs (GDPs), ground stops, or winter blizzards. In this thesis, these events are quantitatively defined as hours where average departure delays reach or exceed 45 minutes or flight cancellations reach or exceed 5 flights per complex per hour.
+
+### 24.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Acute shock state" and "severe perturbation" are borrowed from emergency trauma medicine, mechanical physics, and orbital mechanics.
+* Commercial aviation and airline management universally recognize the established industry term **IROPS (Irregular Operations)**.
+
+### 24.3 Recommended Academic Framing
+* `Irregular Operations (IROPS)` (or `Severe Convective Disruption`).
+
+### 24.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Under acute shock states and severe perturbations, open-loop models experience catastrophic failure across the shock manifold."*
+* **After (Publishable Manuscript Text)**:  
+  *"During irregular operations (IROPS) triggered by severe convective weather and FAA ground stops, open-loop machine learning models experience severe forecast breakdown due to the empty checkpoint fallacy."*
+
+---
+
+## 25. Heavy-Traffic Asymptotics and Boundary Saturation ($\rho \to 1.0$) vs. Peak-Hour Checkpoint Congestion
+
+### 25.1 Operational Meaning & Context
+* **Draft Term**: `Heavy-Traffic Asymptotics and Boundary Saturation (rho -> 1.0)`
+* **Underlying Operational Reality**: During morning peak flight departure waves (05:00–08:00), passenger arrival rates approach the screening lane capacity of the checkpoint ($\rho = \lambda / c\mu \to 1.0$). Queues rapidly spill into airport lobbies, and passenger wait times escalate non-linearly with arrival volatility.
+
+### 25.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Heavy-traffic asymptotics and boundary saturation" sounds like abstract pure mathematics and fluid boundary-layer theory.
+* Airport operators and qualitative researchers describe this simply as peak-hour checkpoint congestion or arrival surges approaching screening lane capacity.
+
+### 25.3 Recommended Academic Framing
+* `Peak-Hour Checkpoint Congestion` (or `High-Utilization Screening Periods`).
+
+### 25.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"When boundary saturation occurs under heavy-traffic asymptotics ($\rho \to 1.0$), queuing delay explodes."*
+* **After (Publishable Manuscript Text)**:  
+  *"During peak-hour checkpoint congestion, passenger arrival rates approach screening lane capacity ($\rho \to 1.0$), causing queue wait times to escalate non-linearly with arrival volatility."*
+
+---
+
+## 26. Temporal Demarcation Regime vs. Post-COVID Study Period (Training Window Start Date: May 1, 2022)
+
+### 26.1 Operational Meaning & Context
+* **Draft Term**: `Temporal Demarcation Regime`
+* **Underlying Operational Reality**: The empirical study period begins on May 1, 2022, immediately following the April 18, 2022 judicial vacatur of the federal transportation mask mandate (*Health Freedom Defense Fund v. Biden*). Prior to May 2022, airline schedules and passenger travel habits were structurally distorted by pandemic travel restrictions, quarantine rules, and business travel reductions.
+
+### 26.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Temporal demarcation regime" sounds like geopolitical treaty diplomacy or chronological philosophy.
+* In an empirical aviation thesis, it simply refers to selecting a post-pandemic sample start date to ensure stable baseline passenger behavior.
+
+### 26.3 Recommended Academic Framing
+* `Post-COVID Study Period` (or `Post-Pandemic Operational Baseline / Training Window Start Date: May 1, 2022`).
+
+### 26.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"The temporal demarcation regime establishes May 1, 2022 as the epoch boundary for model training."*
+* **After (Publishable Manuscript Text)**:  
+  *"The post-COVID study period was established beginning May 1, 2022, following the judicial vacatur of federal transportation mask mandates, ensuring that model training was conducted on stable, representative commercial airline operations."*
+
+---
+
+## 27. The Empty Checkpoint Fallacy (Stranded Passenger Underprediction)
+
+### 27.1 Operational Meaning & Human Behavioral Reality
+* **Draft Term**: `Empty Checkpoint Fallacy`
+* **Underlying Operational Reality**: When severe weather triggers cascading flight departure delays (e.g., flights scheduled for 17:00 delayed to 21:00), an open-loop machine learning model observing the live airside delay boards assumes the terminal checkpoint will be empty between 15:00 and 17:00.
+* In reality, passengers arrived at the airport on their original ticketed schedule (having already checked out of hotels, returned rental cars, or left work) and are standing in the terminal lobby or crowded checkpoint lines.
+* Pure machine learning severely underpredicts demand (predicting 400 pax/hr when 1,300 are waiting), causing critical TSA lane understaffing and queue blowouts.
+
+### 27.2 Why It Matters for Committee Defense (Qualitative Centerpiece)
+* This concept is the qualitative centerpiece of the thesis: it demonstrates that **human passengers behave according to personal schedules, hotel checkouts, and ticketing rules, not downstream aircraft pushback delays**.
+* It provides an empirical and behavioral justification for why open-loop machine learning (Model 2) collapses during storms ($R_{\text{MASE}} = 2.14$), and why the closed-loop error feedback in Model 3 is essential.
+
+### 27.3 Recommended Academic Framing
+* `Empty Checkpoint Fallacy (Stranded Passenger Underprediction)`.
+
+### 27.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Model 2 suffers catastrophic collapse during shock regimes due to the empty checkpoint fallacy."*
+* **After (Publishable Manuscript Text)**:  
+  *"Model 2 collapses during severe weather disruptions because of the Empty Checkpoint Fallacy: it erroneously assumes delayed flight departures imply empty checkpoints, failing to account for stranded passengers who arrived on their original ticketed schedules and dwell landside in airport lobbies."*
+
+---
+
+## 28. Phantom Composite Mega-Airport Aggregation vs. Unidentified Airport Records (Null Key Quarantining)
+
+### 28.1 Operational Meaning & Data Hygiene Reality
+* **Draft Term**: `Phantom Composite Mega-Airport Aggregation`
+* **Underlying Operational Reality**: In the raw TSA throughput database (over 1.1 million hourly records), 22,190 records contained null, missing, or corrupted airport IATA/ICAO identifier codes. If an ETL pipeline naively groups missing keys under a single default category (e.g., grouping all `NULL` records together), it aggregates those records into an artificial "phantom" airport representing 9.71 million passengers.
+* The ETL pipeline quarantined these records into a dedicated null key table (`airports_raw_unidentified`) rather than letting them distort the national airport network census.
+
+### 28.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Phantom composite mega-airport" sounds sensationalist and theatrical.
+* Data management in aviation and econometrics uses standard terminology: **unidentified airport records** and **null key quarantining**.
+
+### 28.3 Recommended Academic Framing
+* `Unidentified Airport Records (Null Key Quarantining)` (or `Missing Identifier Segregation`).
+
+### 28.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Naïve aggregation produces a phantom composite mega-airport of 9.71 million passengers across corrupted records."*
+* **After (Publishable Manuscript Text)**:  
+  *"Rather than naively aggregating missing identifier keys into an artificial composite airport, 22,190 unidentified airport records (representing 9.71 million passengers) were quarantined into a separate census table to prevent data corruption."*
+
+---
+
+## 29. System Shock Absorption & Disruption Dynamics vs. Resilience Under Severe Disruption (Hypothesis 2)
+
+### 29.1 Operational Meaning & Performance Dimension 2
+* **Draft Term**: `System Shock Absorption & Disruption Dynamics (Hypothesis 2)`
+* **Underlying Operational Reality**: Dimension 2 evaluates how candidate models perform when the airport experiences severe irregular operations (IROPS; departure delays $\ge 45$ min or cancellations $\ge 5$). Model 3 maintains accuracy ($R_{\text{MASE}} = 1.05$, $\text{TTR} = 2.8\text{h}$) because its closed-loop error feedback detects stranded passengers, whereas Model 2 fragilely collapses ($R_{\text{MASE}} = 2.14$).
+
+### 29.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Shock absorption" borrows mechanical suspension and damping metaphors from automotive or structural engineering.
+* In transportation systems, the established term is **operational resilience under disruption**.
+
+### 29.3 Recommended Academic Framing
+* `Resilience Under Severe Disruption` (or `Evaluation Dimension 2: Resilience`).
+
+### 29.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Hypothesis 2 evaluates system shock absorption and disruption dynamics across convective shock manifolds."*
+* **After (Publishable Manuscript Text)**:  
+  *"Evaluation Dimension 2 assesses resilience under severe disruption, testing whether candidate models maintain forecast accuracy and recover rapidly during irregular flight operations (IROPS)."*
+
+---
+
+## 30. Spatial Layout Transferability vs. Cross-Airport Transferability (Generalizability, Hypothesis 3)
+
+### 30.1 Operational Meaning & Performance Dimension 3
+* **Draft Term**: `Spatial Layout Transferability (Hypothesis 3)`
+* **Underlying Operational Reality**: Dimension 3 evaluates zero-shot transfer—taking a model calibrated at one airport (e.g., Newark Liberty Terminal C) and deploying it to an unfamiliar airport (e.g., LaGuardia Terminal C) without retraining.
+* Model 1 (Deterministic Operational Baseline) wins decisively ($\text{RTR} = 1.04$, error increases by only 4.0%), while Model 3 fails ($\text{RTR} = 1.19$, error increases by 21.5%) because decision trees overfit to Newark's specific concourse geometry and flight banks.
+
+### 30.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Spatial layout transferability" sounds like geographic GIS spatial modeling or computer vision.
+* Airport management evaluates whether a tool can be ported across airport facilities—known in the literature as **cross-airport transferability** or **model generalizability**.
+
+### 30.3 Recommended Academic Framing
+* `Cross-Airport Transferability (Generalizability)` (or `Evaluation Dimension 3: Generalizability`).
+
+### 30.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Dimension 3 measures spatial layout transferability across zero-shot geometric manifolds."*
+* **After (Publishable Manuscript Text)**:  
+  *"Evaluation Dimension 3 evaluates cross-airport transferability (generalizability), testing whether models calibrated at one hub terminal can deploy directly to an unfamiliar airport facility without site-specific retraining."*
+
+---
+
+## 31. Resilience Multiplier ($R_{\text{MASE}}$) vs. Disruption Error Multiplier
+
+### 31.1 Operational Meaning & Formula
+* **Draft Term**: `Resilience Multiplier (R_MASE)`
+* **Underlying Operational Reality**: The ratio of forecast error during severe flight disruptions to forecast error during routine operations:
+  $$R_{\text{MASE}} = \frac{\text{MASE}_{\text{shock}}}{\text{MASE}_{\text{routine}}}$$
+* A value near $1.00$ indicates that disruption has minimal impact on model accuracy (perfect resilience). A value $> 2.00$ indicates that disruption doubles forecast error (severe fragility).
+
+### 31.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Resilience multiplier" sounds like economic macro-stimulus Keynesian multipliers or materials science toughness multipliers.
+* Clarifying it as the **Disruption Error Multiplier** immediately tells the reader what is being divided: the ratio of shock error to routine error.
+
+### 31.3 Recommended Academic Framing
+* `Disruption Error Multiplier` (or `Resilience Ratio ($R_{\text{MASE}}$)`).
+
+### 31.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"The Resilience Multiplier $R_{\text{MASE}}$ was calculated to measure shock dampening."*
+* **After (Publishable Manuscript Text)**:  
+  *"The disruption error multiplier ($R_{\text{MASE}} = \text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$) quantifies forecast degradation during severe weather, where values near 1.00 demonstrate operational resilience and values exceeding 2.00 indicate model fragility."*
+
+---
+
+## 32. Relative Transfer Ratio ($\text{RTR}$) vs. Transfer Error Penalty
+
+### 32.1 Operational Meaning & Formula
+* **Draft Term**: `Relative Transfer Ratio (RTR)`
+* **Underlying Operational Reality**: The ratio of forecast error when deployed zero-shot to an unfamiliar airport to the forecast error when evaluated in-sample at the training airport:
+  $$\text{RTR} = \frac{\text{RMSE}_{\text{transfer}}}{\text{RMSE}_{\text{in-sample}}}$$
+* Model 1 achieves $\text{RTR} = 1.04$ ($+4.0\%$ error penalty), satisfying the academic target of $\Delta\text{MASE} \le 10\%$. Model 3 achieves $\text{RTR} = 1.19$ ($+21.5\%$ error penalty), decisively failing due to terminal geometry memorization.
+
+### 32.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* "Relative Transfer Ratio" is an abstract, generic acronym.
+* Calling it the **Transfer Error Penalty** or **Cross-Airport Transfer Ratio** makes the operational accuracy penalty immediately transparent to aviation planners.
+
+### 32.3 Recommended Academic Framing
+* `Transfer Error Penalty` (or `Cross-Airport Transfer Ratio ($\text{RTR}$)`).
+
+### 32.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"The Relative Transfer Ratio $\text{RTR}$ measures cross-domain geometric degradation."*
+* **After (Publishable Manuscript Text)**:  
+  *"The transfer error penalty ($\text{RTR} = \text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$) measures the accuracy loss incurred when transferring a calibrated model to an unfamiliar airport without local retraining."*
+
+---
+
+## 33. Fluid Physics, Thermodynamic Entropy, and Manifold Transitions vs. Queuing Dynamics, Arrival Burstiness, and Flight Bank Synchronization
+
+### 33.1 Operational Meaning & Phenomenon
+* **Draft Terms**: `Fluid Physics / Entropy / Manifold Transitions`
+* **Underlying Operational Reality**: When hub-and-spoke airlines schedule tightly packed departure banks (e.g., 25 aircraft departing between 07:00 and 08:00), passenger arrivals at security checkpoints surge into a concentrated burst. When flights are staggered throughout the day, arrivals smooth out.
+
+### 33.2 Why It Risks Committee Scrutiny (Qualitative Lens)
+* Early drafts borrowed metaphors from fluid mechanics (hydrodynamic flow, laminar vs. turbulent flow), thermodynamics (entropy, thermal dissipation), and differential geometry (manifold transitions).
+* Qualitative aviation scholars at Embry-Riddle will challenge this vigorously: passengers do not flow like water through a pipe, nor do they maximize physical entropy. They are human travelers responding to airline ticket prices, boarding cutoff rules, and scheduled departure banks.
+
+### 33.3 Recommended Academic Framing
+* `Queuing Dynamics, Arrival Burstiness, and Flight Bank Synchronization`.
+
+### 33.4 Before vs. After Manuscript Prose
+* **Before (Draft Jargon)**:  
+  *"Passenger flow resembles fluid physics where arrival waves trigger high entropy and manifold transitions across boundary states."*
+* **After (Publishable Manuscript Text)**:  
+  *"Security checkpoint queuing dynamics are governed by arrival burstiness and flight bank synchronization, where tightly clustered airline departure banks create concentrated passenger surges at screening lanes."*
+
+---
+
+## 34. Comprehensive Oral Defense Q&A Strategy: Anticipated Committee Questions & Qualitative Defense Scripts
 
 The following scripted questions and responses prepare the candidate to address qualitative and operational questions during the thesis oral defense before Embry-Riddle aeronautics professors.
 
@@ -563,3 +882,40 @@ The following scripted questions and responses prepare the candidate to address 
 ### Question 7: "What exactly does 'out-of-time evaluation' mean in your benchmark matrix, and why is it preferred over standard random cross-validation?"
 * **Candidate Defense Script**:  
   *"In predictive time-series modeling, 'out-of-time' means testing models strictly forward in time on an unobserved future calendar period rather than randomly shuffling dates. Standard cross-validation randomly mixes past and future timestamps, creating lookahead bias and data leakage because the model gets to interpolate between known days. To replicate the true operational reality of airport security planners—who must forecast without knowing the future—we froze all models at the end of 2024 and evaluated them prospectively across the entire 12 months of 2025. This proves the models generalize across all four annual seasonal regimes and severe weather disruptions without temporal hindsight."*
+
+### Question 8: "Why did you use the Tweedie distribution ($p = 1.3$) rather than a simple log transform or standard Poisson regression for overnight passenger counts?"
+* **Candidate Defense Script**:  
+  *"Hourly security screening data presents an operational challenge: overnight curfew closures produce true structural zeros (no passengers screened between 00:00 and 03:59), while daytime departure banks generate continuous passenger surges up to 4,000 passengers per hour.  
+  Standard linear regression with Gaussian errors predicts negative passengers at night (e.g., $-45$ pax/hr), which is structurally impossible. Simple logarithmic transformations ($\log(y + 1)$) suffer from severe Jensen's inequality re-transformation bias, underestimating total demand when transformed back to natural passenger counts. Poisson regression assumes variance equals the mean ($\text{Var} = \mu$), whereas airport passenger arrivals are heavily overdispersed ($\text{Var} \gg \mu$).  
+  The compound Poisson-Gamma Tweedie distribution with $p = 1.3$ naturally accommodates exact structural zeros without artificial offset constants while modeling overdispersed daytime counts with variance proportional to $\mu^{1.3}$. This mathematically honors real-world airport operations."*
+
+### Question 9: "What is the 'Empty Checkpoint Fallacy', and why does Model 2 (Supervised Machine Learning) fail when severe flight delays occur?"
+* **Candidate Defense Script**:  
+  *"The Empty Checkpoint Fallacy occurs when a purely data-driven algorithm assumes that downstream flight departure delays immediately cause upstream security checkpoints to empty out.  
+  During severe convective weather, afternoon flights may be delayed by four hours. Model 2 observes flight departure delays reaching 240 minutes and predicts that security throughput will drop to zero. In the real world, human passengers do not monitor real-time air traffic control ground stops from home: they check out of hotel rooms, return rental cars, and arrive at the airport on their original scheduled flight times.  
+  As a result, passengers arrive and crowd into the terminal lobby, yet Model 2 predicts an empty checkpoint. This causes pure machine learning to collapse ($R_{\text{MASE}} = 2.14$). Model 3 avoids this failure because its closed-loop error feedback ($e_{t-1}$) senses the unpredicted passenger buildup at the turnstiles and immediately corrects the forecast upward."*
+
+### Question 10: "Why does cross-airport generalizability succeed for Model 1 (Deterministic Operational Baseline) but fail for Model 3 (Dynamic Two-Stage Hybrid)?"
+* **Candidate Defense Script**:  
+  *"This finding directly supports Hypothesis 3: complex models overfit to local terminal geometry.  
+  Model 1 relies entirely on published flight schedules convolved across standard ACRP Report 40 passenger arrival curves. Because airline scheduling principles and passenger risk aversion are uniform nationwide, Model 1 transfers zero-shot from Newark to LaGuardia with only a 4.0% increase in forecast error ($\text{RTR} = 1.04$).  
+  In contrast, Model 3 uses decision trees trained on Newark's operational data. The decision trees memorized Newark Terminal C's specific gate walking distances, local carrier departure banks, and terminal layout quirks. When transferred to LaGuardia Terminal C without retraining, Model 3 suffered a 21.5% accuracy degradation ($\text{RTR} = 1.19$), failing the generalizability threshold.  
+  For airport operators, this proves that simple deterministic operational baselines are far superior for multi-airport network deployment, while machine learning models require site-specific local calibration."*
+
+### Question 11: "How does your three-pillar evaluation framework (Robustness, Resilience, Generalizability) prevent models from over-fitting to calm operational weather?"
+* **Candidate Defense Script**:  
+  *"In commercial aviation research, 80% to 90% of operational days are relatively calm, with delays under 15 minutes. If a researcher only evaluates models using overall aggregate metrics like annual RMSE, an algorithm that performs exceptionally well during sunny weather will appear to win, even if it completely collapses during severe storms.  
+  To prevent this, our thesis establishes three orthogonal evaluation dimensions:  
+  1. **Robustness (Routine Operational Accuracy)**: Evaluates performance exclusively during nominal, on-time flight banks.  
+  2. **Resilience (Performance Under Irregular Operations)**: Evaluates models during severe storm ground stops (delays $\ge 45$ min or cancellations $\ge 5$), measuring disruption error multipliers and time-to-recovery (TTR).  
+  3. **Generalizability (Cross-Airport Transferability)**: Evaluates zero-shot transfer across distinct airport facilities without retraining.  
+  This multi-dimensional framework proves that no single model is universally superior, revealing the asymmetric operational trade-offs necessary for executive decision-making."*
+
+### Question 12: "How does Kingman's heavy-traffic formula directly translate throughput volatility into dynamic TSA lane staffing buffers?"
+* **Candidate Defense Script**:  
+  *"Kingman's approximation ($W_q \approx \frac{\rho}{1-\rho} \frac{C_a^2 + C_s^2}{2} \frac{1}{\mu}$) demonstrates that queue wait times depend linearly on the squared coefficient of arrival variation ($C_a^2$). When arrival volatility increases during peak departure banks, queue lines grow rapidly unless lane capacity is expanded.  
+  To operationalize this, our research translates the predicted hourly arrival mean ($\hat{\mu}_t$) and predicted throughput volatility ($\hat{\sigma}_t$) directly into a dynamic staffing buffer formula:  
+  $$c(t) = \left\lceil \frac{\hat{\mu}_t + z_{0.85} \cdot \hat{\sigma}_t}{\mu_{\text{lane}}} \right\rceil = \left\lceil \frac{\hat{\mu}_t + 1.036 \cdot \hat{\sigma}_t}{160} \right\rceil$$  
+  where $\mu_{\text{lane}} = 160$ passengers/hour represents standard TSA Advanced Imaging Technology (AIT) screening lane throughput, and $z_{0.85} = 1.036$ establishes an 85th percentile service level buffer.  
+  This dynamic buffer ensures that screening lane capacity scales proactively with passenger arrival volatility, preventing checkpoint queues from spilling into airport lobbies during peak flight bank surges."*
+

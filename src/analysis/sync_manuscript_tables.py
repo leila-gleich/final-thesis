@@ -233,13 +233,22 @@ def extract_tables_from_markdown(filepath: Path):
     return tables
 
 
+def get_manuscript_path(filename: str) -> Path:
+    p = MANUSCRIPTS_DIR / filename
+    if not p.exists():
+        sub_p = MANUSCRIPTS_DIR / "manuscripts-only" / filename
+        if sub_p.exists():
+            return sub_p
+    return p
+
+
 def export_all_tables_to_csv():
     """Extracts all tables from manuscripts and writes CSVs to results/manuscript_tables/ and results/tables/."""
     MANUSCRIPT_TABLES_DIR.mkdir(parents=True, exist_ok=True)
     TABLES_DIR.mkdir(parents=True, exist_ok=True)
     
-    ch4_tables = extract_tables_from_markdown(MANUSCRIPTS_DIR / "chp4-results.md")
-    ch5_tables = extract_tables_from_markdown(MANUSCRIPTS_DIR / "chp5-discussion.md")
+    ch4_tables = extract_tables_from_markdown(get_manuscript_path("chp4-results.md"))
+    ch5_tables = extract_tables_from_markdown(get_manuscript_path("chp5-discussion.md"))
     all_extracted = {t[0]: t for t in ch4_tables + ch5_tables}
     
     results = []
