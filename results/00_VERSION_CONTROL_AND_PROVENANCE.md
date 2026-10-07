@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.34 (Comprehensive Word and Markdown Acronyms and Abbreviations Suite Deployment)
+RELEASE VERSION: v4.36 (Author-Editor Interlock Protocol, File Ownership SOP, and Explicit Git Governance Deployment)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -573,10 +573,21 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   (figures/04_Appendix_and_Reference/ and 04_Appendix_and_Reference.xlsx). |
 |         |            | - Refactored src/analysis/generate_figures_tables_excel.py to generate     |
 |         |            |   workbooks strictly in canonical targets (Method 1).                      |
-|         |            | - Updated tests/test_figure_workbooks.py targeting canonical paths.         |
-|         |            | - Cleaned up spurious .xlsx files from exhibits/ch03_methodology/tables/.   |
-|         |            | - Fully verified and passed all 44 unit tests with zero regressions.       |
-|         |            | - Synchronized all 16 manuscript tables and companion Excel workbooks.      |
+| v4.36   | 2026-10-06 | Author-Editor Interlock Protocol & Git Version Control SOP Deployment:       |
+|         |            | - Codified Policy 1.5 (Author-Editor Interlock Protocol) in AGENTS.md:      |
+|         |            |   Strict 4-Gate safety sequence locking all author-edited files against     |
+|         |            |   direct modification, requiring explicit author notification, relevance    |
+|         |            |   rationale, non-destructive proposed preview drafts, and written approval.|
+|         |            | - Codified Policy 1.6 (Explicit Git Staging & Blanket Add Ban) in AGENTS.md: |
+|         |            |   Strict prohibition of blanket staging (git add -A / git add . / git add -u)|
+|         |            |   with mandatory explicit file path enumeration and worktree audit.         |
+|         |            | - Codified Policy 1.7 (Branching & Checkpoint Safety Architecture) in        |
+|         |            |   AGENTS.md with automated pre-task safety tags and author branch protection.|
+|         |            | - Authored comprehensive thesis_docs/notes/AUTHOR_SAFETY_AND_GIT_SOP.md     |
+|         |            |   establishing formal SOP-01, flowchart, and author rollback cheat sheet.   |
+|         |            | - Updated Section 7 checklist in AGENTS.md with mandatory protocol checks.  |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); untracked review drafts left 100% untouched.           |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

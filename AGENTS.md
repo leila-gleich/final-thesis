@@ -27,6 +27,26 @@
   2. The **multi-tab companion Excel workbooks** in `results/` (`01_top25_clustering.xlsx`, `02_4tier_filtering.xlsx`, `02_top9_cohort_comprehensive_analysis.xlsx`, `03_lead_lag_deconvolution.xlsx`, `04_model_execution_2025_holdout.xlsx`, `05_robustness_resilience_generalizability.xlsx`).
 * Always execute or verify with `python3 src/analysis/sync_manuscript_tables.py` to ensure exact mathematical synchronization across all tabular outputs.
 
+### Policy 1.5: The Author-Editor Interlock Protocol (The 4-Gate Safety Rule)
+* **Strict Rule**: If the AI agent was not the most recent editor of a file (i.e. the author, Leila Gleich, made the last edit or uncommitted local changes exist), that file is **STRICTLY LOCKED against direct modification, overwrite, move, or deletion**.
+* **Mandatory 4-Gate Sequence before touching any author-edited file**:
+  1. **Gate 1 (Authorship Statement)**: State explicitly in the response: *"The file `[path]` was last edited by you (`Leila Gleich`) on `[timestamp]`. Direct edits are locked."*
+  2. **Gate 2 (Relevance & Rationale Explanation)**: Explain clearly why modifying this file is relevant to the user's prompt and detail the exact proposed changes.
+  3. **Gate 3 (Non-Destructive Proposed Draft)**: Create a temporary preview file (e.g., `thesis_docs/recommendations/proposed_<filename>.md` or `<filename>.proposed.md`) or present an isolated diff. **Never overwrite the author's file directly.**
+  4. **Gate 4 (Explicit Written Authorization)**: Halt execution and ask the user for explicit written permission. Only proceed with merging/applying changes if the user explicitly confirms in writing.
+
+### Policy 1.6: Strict Explicit Git Staging & Blanket Add Ban
+* **Strict Rule**: AI agents are **strictly forbidden** from executing blanket staging commands:
+  - `git add -A` (STRICTLY PROHIBITED)
+  - `git add .` (STRICTLY PROHIBITED)
+  - `git add -u` (STRICTLY PROHIBITED)
+* **Explicit Targeting Only**: Every `git add` command executed by an agent MUST name the explicit file paths modified during that discrete task (e.g., `git add src/analysis/sync_manuscript_tables.py`).
+* **Worktree Integrity Audit**: Run `git status --short` before committing. Never stage `.docx` files or any file with uncommitted modifications outside the agent's explicit task scope.
+
+### Policy 1.7: Branching & Checkpoint Safety Architecture
+* **Strict Rule**: For any multi-file refactoring or extensive automated pipeline task, the agent must create an immutable local restore point tag (`git tag -a "safety/pre-task-$(date +%Y%m%d-%H%M)" -m "Automated safety checkpoint"`) before modifying files.
+* Author drafts on protected branches (`main` or `author-drafts`) must remain completely undisturbed. Experimental or extensive refactors must be executed on dedicated feature branches (`agent/<task-name>`).
+
 ---
 
 ## 2. Core Research Problem & Target Formulation
@@ -114,6 +134,8 @@ All text, metrics, table titles, and code documentation must use authentic comme
 ## 7. Mandatory Agent Task Completion Checklist
 Before concluding ANY task, every agent must verify:
 - [ ] Were Microsoft Word documents (`.docx`) preserved untouched (0 edits)?
+- [ ] Was the Author-Editor Interlock Protocol obeyed (0 unapproved edits to author-modified files)?
+- [ ] Were git staging commands explicit (0 blanket git add -A / git add .)?
 - [ ] Does all analysis and prose target throughput volatility ($\sigma_{\text{TSA}}$ / $CV_{\text{TSA}}$) rather than raw volume?
 - [ ] Were the 3 candidate models and baseline control (Baseline Control, Model 1, Model 2, Model 3) evaluated with asymmetric trade-offs preserved?
 - [ ] Were all lab-science/physics jargon terms replaced with authentic aviation operations terms?
