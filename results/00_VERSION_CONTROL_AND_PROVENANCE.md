@@ -447,9 +447,9 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   and ChpII v2.docx / chp2-litreview.md (1,764 w).                         |
 |         |            | - Formulated the 'V2 Backbone + V1 Empirical Depth' blueprint expanding    |
 |         |            |   Chapter II to ~3,900–4,200 words while preserving V2's concise flow.     |
-|         |            | - Mapped integration of 50+ empirical airport and queuing citations from   |
-|         |            |   V1 (Alnowibet, Peterson, Liu, Lu, Hess & Grbčić, Wei, Adeke, Brown &     |
-|         |            |   Madhavan, Takakuwa, Bießlich, Alodhaibi, Babu, Hopfe, Viaña, Sun, Li).   |
+|         |            | - Completed forensic 100% census cataloging all 101 citations across both   |
+|         |            |   drafts (91 in V1, 40 in V2) in the Master Harmonization Registry with     |
+|         |            |   explicit section mapping and operational roles for all references.        |
 |         |            | - Replaced telegraphic bullet points with continuous APA 7 academic prose.  |
 |         |            | - Pruned off-topic baggage metaheuristics, fuzzy logic, and lab jargon.     |
 |         |            | - Anchored the Allen-Cunneen queuing approximation (Ca^2) and econometrics |
