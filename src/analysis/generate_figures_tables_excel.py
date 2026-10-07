@@ -857,6 +857,13 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
         wb.save(p)
         print(f"  -> Saved workbook: {p}")
 
+    # Synchronize non-appendix workbooks to thesis_docs/exhibits/ch03_methodology/workbooks/
+    exhibits_wb_dir = BASE_DIR / "thesis_docs" / "exhibits" / "ch03_methodology" / "workbooks"
+    if exhibits_wb_dir.exists() and "Appendix" not in folder_name:
+        exhibit_dest = exhibits_wb_dir / wb_filename
+        wb.save(exhibit_dest)
+        print(f"  -> Synchronized exhibits workbook: {exhibit_dest}")
+
     return dest_paths
 
 

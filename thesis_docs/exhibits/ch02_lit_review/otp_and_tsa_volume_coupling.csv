@@ -1,0 +1,23 @@
+airport_iata,airport_name,scheduled_domestic_departures,annual_tsa_passengers_millions,local_originating_pct,connecting_transfer_pct,operational_category_and_notes
+CLT,Charlotte Douglas,"227,198",28.17,23.96%,76.04%,High Flight Volume / Low TSA Throughput (Connecting Hub Paradox; >34M seats vs 28.17M TSA)
+ORD,Chicago O'Hare,"360,571",47.43k/day,40.00%,60.00%,Nation's highest flight count; ranked only #15 in daily checkpoint throughput
+JFK,New York JFK,"133,151",116.01,65.76%,34.24%,Low Flight Volume / High TSA Throughput (#20 in departures; #2 TSA throughput)
+LAX,Los Angeles International,—,129.07,60.00%,40.00%,Nation's #1 TSA throughput volume; dominant local originating traffic
+ATL,Atlanta Hartsfield-Jackson,—,—,29.91%,70.09%,Mega connecting fortress hub with heavy sterile transfer volume
+DFW,Dallas/Fort Worth,—,—,33.68%,66.32%,Mega connecting fortress hub with high connecting passenger ratio
+DEN,Denver International,—,—,33.65%,66.35%,Major connecting transfer hub with extensive mountain/west connections
+EWR,Newark Liberty,—,—,66.42%,33.58%,High O&D coastal origin gateway
+BOS,Boston Logan,—,—,64.31%,35.69%,High-density O&D commercial center
+MCO,Orlando International,—,—,—,—,High-volume tourist and leisure originating airport
+MIA,Miami International,—,—,—,—,Major international and Latin American gateway
+SFO,San Francisco International,—,—,—,—,Transpacific gateway and coastal high O&D hub
+PHX,Phoenix Sky Harbor,—,—,—,—,Southwest and American operational focus hub
+DTW,Detroit Metropolitan,—,—,—,—,Delta high-reliability fortress hub (McNamara mega-terminal)
+MSP,Minneapolis-St. Paul,—,—,—,—,Delta high-reliability fortress hub
+SEA,Seattle-Tacoma,—,—,—,—,Pacific Northwest connecting and O&D hub
+LGA,New York LaGuardia,—,—,—,—,Slot-controlled short-haul domestic high O&D hub
+SLC,Salt Lake City,—,—,—,—,Delta hub with centralized single checkpoint processing 100% of pax
+PHL,Philadelphia International,—,—,—,—,American Airlines fortress hub with dedicated Terminals B and C
+DCA,Washington Reagan,—,—,—,—,Perimeter-restricted high O&D capital gateway
+IAD,Washington Dulles,—,—,—,—,United Airlines transatlantic connecting hub
+AUS,Austin-Bergstrom,—,—,—,—,Rapid growth high O&D tech focus hub

@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.29 (Manuscript Appendix Expansion to 24 Dedicated Lettered Appendices A-X)
+RELEASE VERSION: v4.30 (Two-Pillar Manuscript Exhibits & Results Architecture Reorganization)
 DATE: October 6, 2026
 ====================================================================================================
 
@@ -483,6 +483,26 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Formatted all 15 APA 7th edition tables and 2 figures cleanly.           |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); synchronized tables and workbooks (39/39 tests ok).   |
+| v4.30   | 2026-10-06 | Two-Pillar Manuscript Exhibits & Results Architecture Reorganization:       |
+|         |            | - Implemented clean two-pillar exhibit architecture separating Pre-Empirical|
+|         |            |   Research Design from Empirical Results findings.                         |
+|         |            | - Established thesis_docs/exhibits/ with chapter-dedicated subfolders for   |
+|         |            |   Chapters I–III (ch01_intro/, ch02_lit_review/, ch03_methodology/)        |
+|         |            |   housing conceptual frameworks, queuing curves, process diagrams, data    |
+|         |            |   schemas, and companion multi-tab Excel workbooks.                        |
+|         |            | - Established results/figures/ housing the empirical publication-ready      |
+|         |            |   volatility figures (Figure 4.2 annual clusters, Figure 4.3 DOW dynamics, |
+|         |            |   Figure 4.4 diurnal curves, Figure 4.5 lead-lag convolution, and sample   |
+|         |            |   sufficiency distribution).                                               |
+|         |            | - Updated src/utils/paths.py declaring EXHIBITS_DIR and RESULTS_FIGURES_DIR.|
+|         |            | - Updated src/analysis/generate_figures_tables_excel.py and                 |
+|         |            |   src/analysis/generate_thesis_tables_excel.py for exhibits synchronization.|
+|         |            | - Pruned legacy pre-volatility PNG duplicates in thesis_docs/manuscripts/   |
+|         |            |   figures/.                                                                |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx).                                                       |
+|         |            | - Preserved strict user constraint: 100% zero edits to any appendix files.  |
+|         |            | - Synchronized all 16 manuscript tables and Excel workbooks (39/39 tests ok)|
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

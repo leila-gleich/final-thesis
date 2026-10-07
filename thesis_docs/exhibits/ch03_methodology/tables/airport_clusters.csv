@@ -1,0 +1,6 @@
+operational_cluster,member_airports,american_airlines_exclusive_checkpoint,delta_air_lines_exclusive_checkpoint,united_airlines_exclusive_checkpoint
+Cluster 0: Mega-Connecting Gateways,"LAX, ORD, DFW","LAX: Terminal 4; ORD: Terminal 3; DFW: Terminals A, B, C",LAX: Terminal 3 (Delta Sky Way),LAX: Terminal 7; ORD: Terminal 1
+Cluster 1: High-Density O&D Focus,"BOS, IAH",—,BOS: Terminal A (A1),IAH: Terminals C & E
+Cluster 2: High-Reliability Fortress Hubs,"DTW, PHL",PHL: Terminals B & C,DTW: McNamara Terminal,—
+Cluster 3: Congested Coastal / Slot-Controlled,"EWR, LGA",—,LGA: Terminal C,EWR: Terminal C
+TOTALS PER CARRIER,9 AIRPORTS,"4 Airports (LAX, ORD, DFW, PHL)","4 Airports (LAX, BOS, DTW, LGA)","4 Airports (LAX, ORD, EWR, IAH)"

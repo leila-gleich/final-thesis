@@ -31,6 +31,7 @@ from openpyxl.utils import get_column_letter
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 RESULTS_DIR = BASE_DIR / "results"
 MANUSCRIPT_TABLES_DIR = RESULTS_DIR / "manuscript_tables"
+TABLES_DIR = RESULTS_DIR / "tables"
 
 # Comprehensive metadata catalog for all tables
 TABLE_CATALOG = [
@@ -646,7 +647,8 @@ def build_thesis_tables_workbook():
     # =========================================================================
     out_paths = [
         RESULTS_DIR / "thesis_tables.xlsx",
-        MANUSCRIPT_TABLES_DIR / "thesis_tables.xlsx"
+        MANUSCRIPT_TABLES_DIR / "thesis_tables.xlsx",
+        TABLES_DIR / "thesis_tables.xlsx"
     ]
 
     for p in out_paths:

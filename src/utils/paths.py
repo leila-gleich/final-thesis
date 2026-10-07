@@ -21,9 +21,11 @@ DIMENSIONS_DIR = DATA_DIR / "dimensions"
 # Results and documentation directories
 RESULTS_DIR = BASE_DIR / "results"
 RESULTS_TABLES_DIR = RESULTS_DIR / "tables"
+RESULTS_FIGURES_DIR = RESULTS_DIR / "figures"
 MANUSCRIPT_TABLES_DIR = RESULTS_DIR / "manuscript_tables"
 THESIS_DOCS_DIR = BASE_DIR / "thesis_docs"
 MANUSCRIPTS_DIR = THESIS_DOCS_DIR / "manuscripts"
+EXHIBITS_DIR = THESIS_DOCS_DIR / "exhibits"
 
 # Canonical curated file targets
 HOURLY_CURATED_PATH = CURATED_DATA_DIR / "hourly_aggregated_data.csv"
