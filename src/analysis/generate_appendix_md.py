@@ -1,4 +1,61 @@
-# Appendix: Econometric Foundations, Methodological Architecture, and Peer-Reviewed Equation Registry
+#!/usr/bin/env python3
+r"""
+generate_appendix_md.py
+Compiles the comprehensive Appendix manuscript (appendix.md) combining the econometric
+foundations, peer-reviewed equation registry, 4-tier filtering pipeline, data engineering census,
+seasonal volatility regimes, holdout benchmark matrices, resilience mechanics, dynamic lane
+dimensioning playbook, and research limitations.
+
+Adheres strictly to AGENTS.md:
+- Target is Throughput Volatility (sigma_TSA, CV_TSA), NOT raw volume
+- 3 candidate models + baseline control (Baseline Control, Model 1, Model 2, Model 3)
+- Asymmetric trade-offs preserved (H1)
+- Authentic aviation terminology (zero-jargon policy)
+- APA 7th Edition formatting and KaTeX equations
+r"""
+
+import os
+import pandas as pd
+
+def format_table(df, align=None):
+    cols = list(df.columns)
+    header = "| " + " | ".join(cols) + " |"
+    if align is None:
+        sep = "| " + " | ".join([":---"] * len(cols)) + " |"
+    else:
+        sep = "| " + " | ".join(align) + " |"
+    rows = []
+    for _, r in df.iterrows():
+        row_str = "| " + " | ".join(str(r[c]) if pd.notna(r[c]) else "" for c in cols) + " |"
+        rows.append(row_str)
+    return "\n".join([header, sep] + rows)
+
+def main():
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    output_path = os.path.join(root_dir, "thesis_docs/manuscripts/appendix.md")
+    manuscripts_only_path = os.path.join(root_dir, "thesis_docs/manuscripts/manuscripts-only/appendix.md")
+
+    # Read source CSVs
+    table_4_3b = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_4_3b.csv"))
+    table_4_4a = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_4_4a.csv"))
+    table_4_7 = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_4_7.csv"))
+    table_4_8 = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_4_8.csv"))
+    table_4_11 = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_4_11.csv"))
+    table_5_2 = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_5_2.csv"))
+    table_5_3 = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/table_5_3.csv"))
+    table_policy = pd.read_csv(os.path.join(root_dir, "results/manuscript_tables/dual_track_model_selection_policy.csv"))
+    
+    ref_assumptions = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/methodological_assumptions.csv"))
+    ref_db_profiles = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/database_profiles.csv"))
+    ref_dataset_breakdown = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/dataset_breakdown.csv"))
+    ref_data_top9 = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/data_profile_top9.csv"))
+    ref_db1b_hierarchy = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv"))
+    ref_backups = pd.read_csv(os.path.join(root_dir, "figures/04_Appendix_and_Reference/backups_organization.csv"))
+
+    doc = []
+
+    # Title & Header
+    doc.append(r"""# Appendix: Econometric Foundations, Methodological Architecture, and Peer-Reviewed Equation Registry
 *Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow (MSAA / Gleich 700B)*  
 *Author: Leila Gleich | Committee Review Draft | Embry-Riddle Aeronautical University*
 
@@ -17,9 +74,10 @@ This appendix provides the foundational econometric derivations, data engineerin
 * **Appendix G**: Real-World Operational Decision Playbook and Dynamic Checkpoint Lane Staffing
 * **Appendix H**: Research Limitations, Archival Infrastructure, and Repository Reproducibility
 
----
+---""")
 
-# Appendix A: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
+    # Appendix A (Preserved and expanded from existing appendix.md)
+    doc.append(r"""# Appendix A: Statistical Foundation and Derivation of the Diebold-Mariano ($DM$) Test for Predictive Superiority
 
 ## A.1 The Methodological Dilemma: Why a Standard $p$-Value from a Paired $t$-Test Fails in Time-Series Forecasting
 
@@ -145,9 +203,10 @@ A vital distinction for academic committees and airport operational leadership i
 3. **The Routine Pareto Choice**:  
    Model 2 delivers an operational holdout accuracy of $\\text{MASE}_{\\text{routine}} = 0.680\\text{--}0.700$—fully meeting the TSA operational target ($\\text{MASE} < 0.700$)—while relying exclusively on published flight schedules and BTS operational data available hours in advance. Consequently, while Model 3 is statistically superior ($p < 0.0001$), **Model 2 represents the optimal practical strategy for routine, day-to-day checkpoint lane staffing.**
 
----
+---""")
 
-# Appendix B: Peer-Reviewed Equation Registry and Mathematical Formulations
+    # Appendix B (Preserved and complete)
+    doc.append(r"""# Appendix B: Peer-Reviewed Equation Registry and Mathematical Formulations
 
 Table B.1 compiles the complete inventory of 20 peer-reviewed mathematical formulations, queuing theory equations, and econometric tests operationalized throughout this thesis.
 
@@ -179,9 +238,10 @@ Table B.1 compiles the complete inventory of 20 peer-reviewed mathematical formu
 
 *Note.* Adapted from `results/manuscript_tables/appendix_standard_literature_equations.csv`. Statistical notation conforms to APA Style (7th ed.).
 
----
+---""")
 
-# Appendix C: Methodological Foundations, 4-Tier Filtering Pipeline, and Cohort Econometric Validation
+    # Appendix C
+    doc.append(r"""# Appendix C: Methodological Foundations, 4-Tier Filtering Pipeline, and Cohort Econometric Validation
 
 ## C.1 Methodological Assumptions and Threat Remediation Protocols
 
@@ -190,22 +250,7 @@ To ensure rigorous internal and external construct validity across all downstrea
 ### Table C.1
 *Methodological Assumptions and Failure Mode Prevention Matrix*
 
-r| level | key_assumption | mathematical_operational_justification | failure_mode_prevented |
-| :--- | :--- | :--- | :--- |
-| Terminal Flow | Non-traveler exits are negligible | Gate passes / aborted boardings are << 1% of peak bank volume | Over-parameterized noise modeling; false uncoupling |
-| Terminal Flow | Connecting passengers bypass security | Sterile area transfers never enter landside security screening | Throughput paradoxes (e.g., CLT 76% connecting traffic) |
-| Terminal Flow | Exclusion of inbound arrivals | Arriving passengers exit directly via one-way sterile exits | Inbound flight ghost demand & spurious correlation |
-| Terminal Flow | Exhaustive nationwide departures | Physical screening serves all destinations and carriers | Truncation bias (>50% omitted originating volume) |
-| Temporal Coupling | 90–120 min lead time window | Unidirectional pipeline (doors close T - 15; screening T - 100) | Phase-shift misspecification (t <-> t correlation error) |
-| Temporal Coupling | Lognormal arrival density kernel | Peak show-up mode approx 92.5 min; discrete weights (0.25, 0.55, 0.20) | Rigid scalar shifts failing to capture human variance |
-| Temporal Coupling | Zero lookahead leakage | Models rely strictly on planned pre-departure schedules | Target leakage from realized operational delays |
-| Sample Filtering | Top 25 macro power-law cut-off | Captures 67% of NAS volume; Kingman heavy-traffic limit rho -> 1.0 | Light-traffic triviality (rho << 0.3) and low SNR (CV ~ 0.14) |
-| Sample Filtering | Micro checkpoint exclusivity | Eliminates cross-carrier collinearity (Corr approx 0.90) | Gram matrix inversion collapse (kappa >> 10^4) |
-| Sample Filtering | Meso Big 3 co-location | Identical weather/airspace shock differencing (delta_t - delta_t = 0) | Carrier comparison confounded by regional weather |
-| Sample Filtering | Exclusion of Southwest (WN) | Open-seating bimodal arrival distribution (mu_1 approx 135m, mu_2 approx 65m) | Violation of parameter exchangeability (f_j(tau) != f(tau)) |
-| Sample Filtering | Post-pandemic May 1, 2022 boundary | Mask mandate repeal; network aggregate stability | Localized leisure vs. business recovery distortions |
-| Evaluation | Orthogonal 4 x 4 factorial design | Exactly 4 exclusive checkpoints per carrier across 4 clusters | Unbalanced ANOVA variance inflation |
-| Evaluation | Twin TRACON disruption controls | Matched weather shocks (EWR T-C vs. LGA T-C) | Localized convective bias in resilience / TTR testing |
+r""" + format_table(ref_assumptions) + r"""
 
 *Note.* Adapted from `figures/04_Appendix_and_Reference/methodological_assumptions.csv`. Formulates the 14-point methodological safeguards isolating genuine passenger screening queues from upstream schedule and network artifacts.
 
@@ -298,47 +343,21 @@ To verify mathematically that dedicated checkpoints isolate single-carrier deman
 ### Table C.4
 *Summary Descriptive Statistics: Nine-Airport Experimental Cohort vs. Top 25 Airfield Network Profile*
 
-r| Metric Category | Operational Metric | Unit | 9-Airport Mean | 9-Airport Std Dev | 9-Airport Median | 9-Airport Min (Airport) | 9-Airport Max (Airport) | Top 25 Mean | Delta (%) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| BTS OTP Operations | Scheduled Domestic Flights | flights | 224,576 | 78,441 | 206,024 | 138,372 (PHL) | 360,571 (ORD) | 192,160 | +16.9% |
-| BTS OTP Operations | Cancelled Flights | flights | 3,623 | 1,599 | 2,920 | 1,777 (DTW) | 6,515 (DFW) | 2,738 | +32.3% |
-| BTS OTP Operations | Flight Cancellation Rate | % | 1.63% | 0.50% | 1.47% | 0.99% (LAX) | 2.46% (LGA) | 1.43% | +14.1% |
-| BTS OTP Delays | Average Departure Delay | min | 15.23 | 2.75 | 15.65 | 11.55 (DTW) | 19.85 (DFW) | 14.21 | +7.2% |
-| BTS OTP Delays | Significant Delay Rate (>= 15m) | % | 21.42% | 3.30% | 20.14% | 17.93% (LAX) | 28.07% (DFW) | 20.31% | +5.5% |
-| BTS OTP Delays | Runway Taxi-Out Queue Time | min | 20.59 | 2.58 | 20.35 | 16.96 (DTW) | 24.67 (EWR) | 19.69 | +4.5% |
-| TSA Checkpoint | Total Passenger Throughput | pax | 71,145,628 | 27,465,238 | 63,720,916 | 40,429,531 (PHL) | 129,069,341 (LAX) | 68,495,531 | +3.9% |
-| TSA Checkpoint | Average Daily Passenger Count | pax/day | 53,075 | 20,473 | 47,553 | 30,171 (PHL) | 96,249 (LAX) | 51,138 | +3.8% |
-| TSA Checkpoint | Average Hourly Passenger Count | pax/hr | 418.53 | 157.02 | 388.40 | 239.60 (ORD) | 662.40 (LGA) | 540.34 | -22.5% |
-| TSA Checkpoint | Peak Single-Hour Checkpoint Rush | pax/hr | 2,673 | 881 | 2,654 | 1,385 (DTW) | 4,020 (EWR) | 2,784 | -4.0% |
-| TSA Checkpoint | Demand Volatility (CV_TSA) | ratio | 0.8728 | 0.2000 | 0.9064 | 0.6488 (BOS) | 1.1240 (LGA) | 0.8250 | +5.8% |
-| BTS DB1B Surveys | Connecting Passenger Share | % | 47.45% | 10.98% | 44.41% | 33.58% (EWR) | 66.32% (DFW) | 51.39% | -7.7% |
-| BTS DB1B Surveys | Local Originating Passenger Share | % | 52.55% | 10.98% | 55.59% | 33.68% (DFW) | 66.42% (EWR) | 48.61% | +8.1% |
-| BTS DB1B Surveys | True Local Originating TSA Demand | pax | 16,376,561 | 5,167,458 | 15,995,278 | 10,555,299 (DTW) | 26,293,897 (LAX) | 13,103,484 | +25.0% |
-| T-100 Aircraft Gauge | Seating Capacity per Flight | seats | 168.42 | 7.49 | 168.00 | 154.20 (LGA) | 182.30 (LAX) | 171.10 | -1.6% |
-| T-100 Load Factor | Route Passenger Load Factor | % | 85.08% | 0.82% | 85.26% | 83.85% (DTW) | 86.12% (EWR) | 84.73% | +0.4% |
+r""" + format_table(table_4_7) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_4_7.csv`. Illustrates that the 9-airport experimental cohort exhibits +16.9% higher flight density, +7.2% higher departure delays, +14.1% higher cancellation rates, and +25.0% higher local originating passenger volume than the broader Top 25 network, ensuring deep exposure to heavy-traffic queuing dynamics.
 
 ### Table C.5
 *Day-of-Week Mean Daily Passenger Throughput and Ratio Profiles Across the Nine Selected Airports*
 
-r| Airport Code | Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday | Weekly Peak Day | Weekly Trough Day | Peak/Trough Ratio | Dominant Demand Profile |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| BOS | 48,480 | 42,606 | 45,175 | 50,464 | 52,244 | 44,552 | 49,359 | Friday | Tuesday | 1.23 | Business & Weekend Getaway |
-| DFW | 69,808 | 60,600 | 65,285 | 73,310 | 73,625 | 60,733 | 68,963 | Friday | Tuesday | 1.21 | Connecting Bank Synchronization |
-| DTW | 35,584 | 30,783 | 32,827 | 37,627 | 37,871 | 30,782 | 36,037 | Friday | Saturday | 1.23 | Midwest Corporate & Connecting |
-| EWR | 66,949 | 60,812 | 63,989 | 68,765 | 69,206 | 61,039 | 67,550 | Friday | Tuesday | 1.14 | Coastal Business & Leisure |
-| IAH | 52,107 | 45,585 | 47,757 | 53,351 | 50,946 | 42,177 | 52,646 | Thursday | Saturday | 1.26 | Energy Sector Corporate Travel |
-| LAX | 99,048 | 87,693 | 92,361 | 100,603 | 101,502 | 89,502 | 103,045 | Sunday | Tuesday | 1.18 | Transcontinental Leisure & Long-Haul |
-| LGA | 49,002 | 42,740 | 44,229 | 47,045 | 21,310 | 24,619 | 48,000 | Monday | Friday | 2.3 | Pure Corporate Outbound Profile |
-| ORD | 49,381 | 43,406 | 45,713 | 50,706 | 50,620 | 42,697 | 49,468 | Thursday | Saturday | 1.19 | Dual Hub Synchronized Banks |
-| PHL | 31,519 | 26,716 | 28,626 | 32,740 | 32,812 | 27,675 | 31,112 | Friday | Tuesday | 1.23 | Mid-Atlantic Fortress Outbound |
+r""" + format_table(table_4_8) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_4_8.csv`. Documents local weekly profiles across the 9 airports: LGA displays a Pure Corporate profile (DOW ratio = 2.30, Monday peak of 49,002 pax vs. Friday drop to 21,310 pax); BOS, EWR, PHL, DTW, and DFW display Corporate-to-Weekend profiles (Friday peaks, Tuesday troughs); and IAH and ORD display Energy/Midweek profiles (Thursday peaks).
 
----
+---""")
 
-# Appendix D: Aviation Data Engineering, Warehouse Architecture, and Hygiene Protocols
+    # Appendix D
+    doc.append(r"""# Appendix D: Aviation Data Engineering, Warehouse Architecture, and Hygiene Protocols
 
 ## D.1 Multi-Source Aviation Data Foundation Census and Base Feeds
 
@@ -351,18 +370,7 @@ The analytical data warehouse unifies four authoritative federal aviation feeds 
 ### Table D.1
 *Master Multi-Source Aviation Data Foundation Census & Base Feed Profiles*
 
-r| metric | tsa_throughput_tsav0_csv | on_time_performance_otpv0_csv | t100_segment_statistics_t100v0_csv |
-| :--- | :--- | :--- | :--- |
-| File Size on Disk | 542 MB | 6.5 GB | 81 MB |
-| Total Record Count | 19,500,286 | 45,777,091 | 1,945,451 |
-| Schema Column Count | 7 columns | 39 columns | 11 columns |
-| Temporal Coverage | Jan 1, 2019 – Jun 13, 2026 | Jan 1, 2019 – Dec 31, 2025 | Jan 1, 2019 – May 31, 2026 |
-| Distinct Time Units | 2,721 days (65,304 hrs) | 2,557 days (7 full years) | 89 calendar months |
-| Distinct Airports | 460 airports | 376 airports | 518 airports |
-| Distinct Airlines | — (All screened pax) | 21 carriers | 18 carriers |
-| Distinct Aircraft | — | 7,617 tail numbers | 40 aircraft models |
-| Primary Unit of Analysis | Hourly Checkpoint Lane | Individual Flight Leg | Monthly Route Segment |
-| Data Health / Nulls | 0.00% Nulls | 0.00% Key Nulls | 0.00% Nulls |
+r""" + format_table(ref_db_profiles) + r"""
 
 *Note.* Adapted from `figures/04_Appendix_and_Reference/database_profiles.csv`. Documents base feed physical sizes, temporal coverage, distinct entities, and data health metrics.
 
@@ -382,27 +390,14 @@ Figure D.1
 ### Table D.2
 *Conformed Feature Store Parquet Dataset Breakdown*
 
-r| dataset_file | data_grain | rows | columns | storage_size_parquet | uncompressed_ram_approx | operational_notes |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| otpv1.parquet | Individual Flight Leg | 8,351,307 | 37 | 166.2 MB | ~750 MB | Deduplicated BTS flight records with zero key nulls. |
-| tsav1.parquet | Checkpoint Hour | 6,880,725 | 7 | 31.6 MB | ~110 MB | Cleaned TSA hourly screening throughput. |
-| db1v1.parquet | Ticket Coupon Sample | 12,910,384 | 10 | 35.1 MB | ~320 MB | 10% ticket survey used to calibrate connecting ratios. |
-| t100v1.parquet | Route Month | 269,895 | 11 | 2.2 MB | ~12 MB | Carrier route segment capacity with clamped load factors. |
-| warehouse.duckdb | Feature Store Views & DDL | — | — | 3.3 MB | — | Precomputed relational schemas and views. |
-| Dimensions (dimensions/) | Lookup tables (CSV) | — | — | 0.34 MB | — | Conformed star schema dimensions (airport, airline, date, time). |
-| Total Feature Store Records | — | 28,412,311 | — | ~246.5 MB | ~1.2 GB | Precomputed lead-lag demand view vw_airport_hourly_demand contains 1,494,570 convolved records. |
+r""" + format_table(ref_dataset_breakdown) + r"""
 
 *Note.* Adapted from `figures/04_Appendix_and_Reference/dataset_breakdown.csv`. Summarizes feature store files, analytical grain, row counts, and compressed vs. uncompressed storage memory profiles.
 
 ### Table D.3
 *Filtered Nine-Airport Target Research Cohort Parquet File Profiles*
 
-r| dataset_name | parquet_file_path | record_count | compression_format | description |
-| :--- | :--- | :--- | :--- | :--- |
-| TSA Throughput | data/processed/tsa-top9v1.parquet | 3,127,078 | Zstandard (ZSTD) | Hourly passenger screening counts filtered strictly to checkpoints at the 9 target airports (100% NOT NULL). |
-| On-Time Performance (OTP) | data/processed/otp-top9v1.parquet | 1,368,142 | Zstandard (ZSTD) | Big 3 commercial flights across the closed 9-airport city-pair network, with minute-of-day encodings and cyclical sin/cos features. |
-| T-100 Segment Capacity | data/processed/t100-top9v1.parquet | 39,432 | Zstandard (ZSTD) | Monthly carrier route segment capacity and load factor between the 9 target airports. |
-| DB1B/DB1C Coupon Survey | data/processed/db1-top9v1.parquet | 2,098,944 | Zstandard (ZSTD) | 10% sample ticket routing coupons across city-pair markets connecting the 9 target airports. |
+r""" + format_table(ref_data_top9) + r"""
 
 *Note.* Adapted from `figures/04_Appendix_and_Reference/data_profile_top9.csv`. Documents the conformed Parquet partitions for the 9-airport research cohort.
 
@@ -436,11 +431,7 @@ The BTS DB1B database is structured into three hierarchical tiers:
 ### Table D.4
 *Bureau of Transportation Statistics DB1B Ticket Survey Data Hierarchy*
 
-r| bts_table_level | table_acronym | unit_or_grain | example_itinerary_representation_bos_ord_lax | contains_connecting_itineraries |
-| :--- | :--- | :--- | :--- | :--- |
-| 1. DB1BTicket | DB1BTicket | Whole Itinerary | 1 row for the entire round-trip ticket purchase ($520 total fare, 2 round-trip components). | Yes (all legs) |
-| 2. DB1BMarket | DB1BMarket | Directional Market (O&D) | 2 rows: Outbound Market (BOS -> LAX) and Return Market (LAX -> BOS). | Yes (a market can combine 2+ connecting flight legs) |
-| 3. DB1BCoupon (DB1C) | DB1BCoupon | Individual Flight Segment | 3 rows (physical takeoff-to-landing flight legs): Leg 1: BOS -> ORD; Leg 2: ORD -> LAX; Leg 3: LAX -> BOS | No (pure single nonstop flight segments) |
+r""" + format_table(ref_db1b_hierarchy) + r"""
 
 *Note.* Adapted from `figures/04_Appendix_and_Reference/bts_db1b_table_hierarchy.csv`. Details the itinerary representation across ticket, market, and coupon grains used to compute airport-specific connecting deflators: $\\text{Demand}_{\\text{orig}, t} = \\sum \\text{Seats}_f \\cdot \\text{LF}_f \\cdot (1 - \\text{ConnRatio})$.
 
@@ -478,9 +469,10 @@ The resulting feature engineering pipeline spans five functional domains structu
 * **Feature Volatilities (Dispersion, 10 Attributes)**: Schedule dispersion (`sched_hourly_std`, `sched_hourly_cv`, `actual_hourly_std`, `actual_hourly_cv`, `sched_rolling_7d_std`, `sched_rolling_7d_cv`), cancellation volatility (`cancel_rolling_7d_std`, `cancel_rate_rolling_7d_std`, `otp_cancellation_volatility_cv`), and delay dispersion (`otp_departure_delay_volatility_cv`).
 * **Combined Dual Paradigm (24 Attributes)**: Interacts both spaces to test predictive complementarity.
 
----
+---""")
 
-# Appendix E: Seasonal Volatility Regimes, Operational Taxonomies, and Diurnal Queue Dynamics
+    # Appendix E
+    doc.append(r"""# Appendix E: Seasonal Volatility Regimes, Operational Taxonomies, and Diurnal Queue Dynamics
 
 ## E.1 Three-Tier Operational Taxonomy
 
@@ -503,12 +495,7 @@ $$CVI_d = CV_{\\text{TSA}, d} \\times \\sigma_{\\text{Delay}, d}$$
 ### Table E.1
 *Master Annual Seasonal Volatility Regimes Summary (Top 25 Airfields, $N = 1,341$ Days)*
 
-r| Seasonal Regime | Operational Regime Description | Calendar Days (N) | Share of Days (%) | Mean Daily TSA (Pax) | Within-Day TSA CV | Delay Dispersion (sigma_Delay) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed >= 15m (%) | Cancellation Rate (%) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1_OFF_PEAK | Winter Lull & Mid-Autumn Shoulder | 500 | 37.3% | 1,123,386 | 0.605 | 46.09 min | 27.85 | 9.85 min | 18.00% | 0.89% |
-| 2_MID_PEAK | Spring Ramps & Late-Summer Shoulder | 426 | 31.8% | 1,187,095 | 0.589 | 55.06 min | 32.38 | 15.14 min | 23.23% | 1.36% |
-| 3_PEAK | Summer Severe Weather & Convective Surge | 224 | 16.7% | 1,305,968 | 0.576 | 68.43 min | 39.36 | 24.17 min | 31.04% | 3.16% |
-| 4_HOLIDAY | National Holiday Travel Corridors | 191 | 14.2% | 1,215,636 | 0.597 | 55.78 min | 33.07 | 16.51 min | 24.33% | 1.82% |
+r""" + format_table(table_4_3b) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_4_3b.csv`. Across the calendar year, flight departure delay dispersion ($\sigma_{\text{Delay}}$) expands monotonically from 46.09 minutes during the winter lull to 68.43 minutes during the summer peak (+48.5%), driving the Coupled Volatility Index from 27.85 to 39.36 (+41.3%) and tripling cancellation rates (0.89% to 3.16%).
 
@@ -525,15 +512,7 @@ Standardizing observations under ISO 8601 ($1 = \\text{Monday}, \\dots, 7 = \\te
 ### Table E.2
 *Day-of-Week Volatility Dynamics and Operational Archetypes (Top 25 Airfields, $N = 1,341$ Days)*
 
-r| Day of Week | DOW Name | Operational Volatility Archetype | Study Days (N) | Mean Daily TSA (Pax) | Within-Day TSA CV | Delay Dispersion (sigma_Delay) | Coupled Volatility Index | Mean Departure Delay | Flights Delayed >= 15m (%) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | Monday | Outbound Business Surge & High Screening Volatility | 192 | 1,246,150 | 0.604 | 56.56 min | 34.0 | 15.78 min | 23.54% |
-| 2 | Tuesday | Midweek Operational Reset (Low Turbulence) | 192 | 1,076,625 | 0.601 | 50.09 min | 29.99 | 11.69 min | 19.44% |
-| 3 | Wednesday | Midweek Baseline Stability (Minimum Volatility) | 192 | 1,123,368 | 0.594 | 49.27 min | 29.13 | 12.22 min | 20.05% |
-| 4 | Thursday | Corporate Outbound & Early Weekend Ramp | 191 | 1,254,744 | 0.589 | 54.65 min | 31.96 | 15.39 min | 23.35% |
-| 5 | Friday | Combined Business & Weekend Getaway Surge | 191 | 1,241,359 | 0.592 | 55.58 min | 32.77 | 16.61 min | 24.76% |
-| 6 | Saturday | Volume Trough & Fleet Repositioning | 191 | 1,089,699 | 0.602 | 54.16 min | 32.45 | 14.64 min | 22.47% |
-| 7 | Sunday | Leisure Return Peak & Evening Delay Propagation | 192 | 1,279,017 | 0.577 | 58.07 min | 33.4 | 17.78 min | 25.60% |
+r""" + format_table(table_4_4a) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_4_4a.csv`. Establishes empirical cyclical volatility baselines across weekly commercial flight schedules.
 
@@ -557,9 +536,10 @@ Applying 1D K-Means clustering ($k = 3$) establishes three operational diurnal r
 
 The cross-classification of the 4 annual seasonal regimes ($\\mathcal{S}$), 7 days of the week ($\\mathcal{D}$), and 3 diurnal blocks ($\\mathcal{H}$) forms an **84-Cell Operational Condition Matrix** ($\\mathcal{G} = \\mathcal{S} \\times \\mathcal{D} \\times \\mathcal{H}$). Across this operational matrix, 83 of 84 cells (98.8%) satisfy the statistical minimum power threshold of $N_{\\text{train}} \\ge 50$ (median $N_{\\text{train}} = 215$), confirming that temporal stratification establishes ample sample depth without sparse-sample estimation bias.
 
----
+---""")
 
-# Appendix F: Model Evaluation Benchmarks, Resilience Mechanics, and the Values vs. Volatility Paradigm
+    # Appendix F
+    doc.append(r"""# Appendix F: Model Evaluation Benchmarks, Resilience Mechanics, and the Values vs. Volatility Paradigm
 
 ## F.1 Master Multi-Pillar Hypothesis Evaluation Matrix
 
@@ -568,19 +548,7 @@ The complete evaluation suite was tested on the certified **2025 out-of-time hol
 ### Table F.1
 *Master Multi-Pillar Hypothesis Evaluation Matrix (2025 Out-of-Time Holdout Suite, $N = 72,053$)*
 
-r| Operational Dimension | Performance Metric | Formula / Definition | Academic Stated Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Paradigm Dimension Winner & Status |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Dimension 1: Robustness | RMSE_routine (Nominal: Delay < 15m; 0 Cancels) | sqrt(mean((Vol - Vol_hat)^2 | routine)) | Lowest Routine RMSE | 253.6 pax/hr | 313.4 pax/hr | 273.5 pax/hr | 222.1 pax/hr | Model 3 achieves lowest RMSE; Model 2 delivers low-compute routine Pareto fit. |
-| Dimension 1: Robustness | MASE_routine (Relative Routine Error) | MAE_routine / MAE_naive | MASE < 0.700 | 1.000 | 0.945 | 0.680--0.700 | 0.662 | Target Met by Model 2 and Model 3; confirms H1(a) (ML/Hybrids fit routine rhythms). |
-| Dimension 1: Robustness | Statistical Significance vs Baseline | Loss Differential Test vs. Model 1 | p < 0.001 | Reference | Control Baseline | DM = 42.15 (p < 0.0001) | DM = 48.72 (p < 0.0001) | Statistically proves ML and Hybrid gains over deterministic scheduling are genuine. |
-| Dimension 2: Resilience | RMSE_shock (IROPS: Delay >= 45m or Cancels >= 5) | sqrt(mean((Vol - Vol_hat)^2 | shock)) | Lowest Shock RMSE | 398.2 pax/hr | 412.8 pax/hr | 318.4 pax/hr | 254.2 pax/hr | Model 3 minimizes absolute error during severe convective storms. |
-| Dimension 2: Resilience | MASE_shock (Relative Disruption Error) | MAE_shock / MAE_naive | Lowest Shock MASE | 1.000 | 1.082 | 0.812 | 0.694 (LOWEST) | Model 3 performs 30.6% better than daily persistence during airport ground stops. |
-| Dimension 2: Resilience | Disruption Multiplier (R_MASE) | MASE_shock / MASE_routine | R ~ 1.00 (Fragile >= 2.0) | 1.00 (Static) | 1.32 (Blind to Delays) | 2.14 (Fragile Collapse) | 1.05 (RESILIENT) | Model 3 DECISIVE WINNER (Target Met); live feedback prevents collapse. |
-| Dimension 2: Resilience | Time-to-Recovery (TTR_shock) | Elapsed time to return to normal error bounds | TTR < 4.0 hours | 8.4 hours | 7.8 hours | 5.4 hours | 2.8 hours (FASTEST) | Model 3 returns to normal error bounds 5.0 hrs faster than Model 1 and 2.6 hrs faster than Model 2. |
-| Dimension 3: Generalizability | Zero-Shot RMSE_transfer | Transfer from EWR to LGA (no retraining) | Minimize Transfer RMSE | 253.6 pax/hr | 326.5 pax/hr | 295.1 pax/hr | 264.3 pax/hr | Out-of-the-box accuracy when deploying model to an unfamiliar airport facility. |
-| Dimension 3: Generalizability | Relative Transfer Ratio (RTR) | RMSE_transfer / RMSE_in-sample | RTR = 1.00 | 1.00 | 1.04 (TARGET MET) | 1.08 | 1.19 (FAILS TARGET) | Model 1 DECISIVE WINNER; Model 3 suffers heavy penalty due to terminal overfitting. |
-| Dimension 3: Generalizability | Transfer Degradation (Delta_transfer) | Percent increase in transfer RMSE | Minimal Penalty (<= 10%) | 0.0% | +4.2% (MINIMAL) | +7.9% (LOW) | +19.0% (ELEVATED) | Deterministic operational rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%. |
-| Dimension 3: Generalizability | Change in MASE on Transfer (DeltaMASE) | MASE_transfer - MASE_in-sample | DeltaMASE <= 10.0% | 0.0% | +4.0% (TARGET MET) | +8.3% (PASSES) | +21.5% (FAILS TARGET) | Model 1 passes target with +4.0% shift (+0.038); Model 3 fails target with +21.5% shift (+0.142). |
+r""" + format_table(table_4_11) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_4_11.csv`. Confirms asymmetric operational trade-offs ($H_1$): Model 3 achieves lowest RMSE (222.1 pax/hr) and decisive resilience ($R_{\text{MASE}} = 1.05$); Model 2 wins Routine Pareto Efficiency ($\text{MASE} = 0.680\text{--}0.700$, zero feedback compute latency); and Model 1 wins Generalizability ($\text{RTR} = 1.04, \Delta\text{MASE} = +4.0\%$).
 
@@ -591,12 +559,7 @@ r| Operational Dimension | Performance Metric | Formula / Definition | Academic 
 ### Table F.2
 *Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption (IROPS)*
 
-r| Model Family | Model Name | Operational Approach | RMSE_shock (pax/hr) | MASE_shock | Disruption Multiplier (R_MASE) | Stated Target (R ~ 1.00, Lowest MASE) | Time-to-Recovery (TTR_shock) | Operational Status & Resilience Behavior |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 398.2 | 1.0 | 1.0 | Static Reference | 8.4 hours | Static persistence benchmark; slow natural dissipation |
-| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 412.8 | 1.082 | 1.32 | Fails Target | 7.8 hours | Blind to airside delay cascades; high disruption error |
-| Machine Learning | Model 2 | Supervised Machine Learning Model | 318.4 | 0.812 | 2.14 | Fails Multiplier | 5.4 hours | Fragile collapse from "Empty Checkpoint Fallacy" |
-| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model | 254.2 | 0.694 | 1.05 | TARGET MET (WINNER) | 2.8 hours | Decisive Winner: Live error feedback prevents collapse |
+r""" + format_table(table_5_2) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_5_2.csv`. Evaluated during IROPS hours ($\text{Delay} \ge 45\text{ min}$ or $\text{Cancellations} \ge 5$).
 
@@ -612,12 +575,7 @@ The empirical results reveal why pure machine learning models collapse during se
 ### Table F.3
 *Evaluation Dimension 3: Generalizability and Cross-Airport Transfer Performance (Zero-Shot EWR $\to$ LGA)*
 
-r| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | Zero-Shot Transfer RMSE (pax/hr) | Relative Transfer Ratio (RTR) | Transfer Degradation (Delta_transfer) | Change in MASE (DeltaMASE) | Academic Target Status (RTR=1.00, DeltaMASE<= 10%) |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 253.6 | 253.6 | 1.0 | 0.0% | 0.0% | Benchmark Reference |
-| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 313.4 | 326.5 | 1.04 | +4.2% | +4.0% (+0.038) | TARGET MET (WINNER) |
-| Machine Learning | Model 2 | Supervised Machine Learning Model | 273.5 | 295.1 | 1.08 | +7.9% | +8.3% (+0.065) | Passes Both Targets (<= 10%) |
-| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model | 222.1 | 264.3 | 1.19 | +19.0% | +21.5% (+0.142) | FAILS BOTH TARGETS |
+r""" + format_table(table_5_3) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/table_5_3.csv`. Evaluates zero-shot spatial transfer from Newark Terminal C to LaGuardia Terminal C without local retraining.
 
@@ -658,9 +616,10 @@ Evaluating across the 2025 out-of-time holdout suite ($N = 3,222$ test complex-d
 
 *Note.* $N = 3,222$ test complex-days on the 2025 out-of-time holdout suite. Dependent target is multi-day rolling volatility ($\sigma_{\text{TSA, 7d}}$).
 
----
+---""")
 
-# Appendix G: Real-World Operational Decision Playbook and Dynamic Checkpoint Lane Staffing
+    # Appendix G
+    doc.append(r"""# Appendix G: Real-World Operational Decision Playbook and Dynamic Checkpoint Lane Staffing
 
 ## G.1 Dual-Track Operational Decision Framework / Regime-Switched Gated Inference Engine
 
@@ -679,10 +638,7 @@ To operationalize these empirical findings, the Transportation Security Administ
 ### Table G.1
 *Dual-Track Operational Model Selection Policy Matrix*
 
-r| Operational_Track | Operating_Regime | Assigned_Canonical_Architecture | Target_Thresholds | Empirical_Holdout_Performance | Operational_Rationale |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Gate 1: Routine Flow Track (T(h) < 0.75) | Calm seasonal periods (1_OFF_PEAK), midweek baseline days (Tue/Wed), steady midday hours (08:00-13:00) | Model 2: Supervised Machine Learning Model | Lowest RMSE under routine conditions & MASE_routine < 0.70 | RMSE = 273.5 pax/hr; MASE = 0.680-0.700; RTR = 1.08; Transfer Delta = +7.9% | Fast automated execution delivering superior routine accuracy with zero online compute overhead and high spatial portability across diverse terminal layouts. |
-| Gate 2: Tactical Shock Track (T(h) >= 0.75) | Summer convective thunderstorms (3_PEAK), peak holiday rushes, ground stops (Delay >= 45m or Cancels >= 5) | Model 3: Dynamic Two-Stage Hybrid Model | Recovery RMSE Multiplier R ≈ 1.00 & Lowest MASE_shock (TTR < 4.0h) | RMSE = 254.2 pax/hr; MASE = 0.694; R_MASE = 1.05; TTR = 2.8 hrs | Closed-loop 1-step recursive error innovation feedback (e_{t-1}) actively tracks live queue accumulation, preventing empty-checkpoint forecast collapse and recovering in 2.8 hours. |
+r""" + format_table(table_policy) + r"""
 
 *Note.* Adapted from `results/manuscript_tables/dual_track_model_selection_policy.csv`. Operational decision matrix guiding TSA Federal Security Directors (FSD) and Airport Operations Centers in deploying predictive models based on real-time airspace congestion states.
 
@@ -708,9 +664,10 @@ $$c(t) = \\left\\lceil \\frac{\\hat{\\mu}_t + z_q \\cdot \\hat{\\sigma}_{\\text{
 
 where $\\mu_{\\text{lane}}$ is nominal screening lane capacity (~180 to 220 pax/lane/hr) and $z_q$ is the coverage quantile factor ($z_{0.85} \\approx 1.04$ for an 85% service guarantee; $z_{0.95} \\approx 1.645$). By adding a dynamic volatility buffer ($z_q \\cdot \\hat{\\sigma}_{\\text{TSA}, t}$) to lane scheduling, checkpoint administrators cap utilization at a safe threshold ($\\rho \\le 0.85\\text{--}0.90$), effectively clamping the $\\frac{\\rho}{1-\\rho}$ multiplier and preventing exponential wait-time explosions.
 
----
+---""")
 
-# Appendix H: Research Limitations, Archival Infrastructure, and Repository Reproducibility
+    # Appendix H
+    doc.append(r"""# Appendix H: Research Limitations, Archival Infrastructure, and Repository Reproducibility
 
 ## H.1 Methodological and Operational Limitations
 
@@ -730,21 +687,7 @@ To ensure full auditability, scientific reproducibility, and long-term data pres
 ### Table H.1
 *OneDrive Archival Backup Directory Structure and Repository Manifest*
 
-r| backup_directory_path | directory_level | description_and_contents |
-| :--- | :--- | :--- |
-| OneDrive-Backups/ | Root | Root backup archive directory |
-| OneDrive-Backups/00_FOLDER_INDEX.txt | Level 1 | Plaintext reference guide and manifest |
-| OneDrive-Backups/01_Datasets/ | Level 1 | Raw and source aviation datasets |
-| OneDrive-Backups/01_Datasets/BTS_Flight_Data/ | Level 2 | BTS flight & delay datasets |
-| OneDrive-Backups/01_Datasets/TSA_Throughput_Data/ | Level 2 | TSA throughput PDFs & passenger CSVs |
-| OneDrive-Backups/01_Datasets/Aviation_DB1C_Data/ | Level 2 | Air passenger O&D survey datasets |
-| OneDrive-Backups/01_Datasets/Other_Raw_Datasets/ | Level 2 | General raw data tables |
-| OneDrive-Backups/02_Processed_SSOT/ | Level 1 | Master Single Source of Truth CSVs |
-| OneDrive-Backups/03_Projects_and_Code/ | Level 1 | Development code scripts and version control |
-| OneDrive-Backups/03_Projects_and_Code/Python_and_ETL/ | Level 2 | Python scripts (.py) & notebooks (.ipynb) |
-| OneDrive-Backups/03_Projects_and_Code/Git_Repositories/ | Level 2 | Git repositories & codebase snapshots |
-| OneDrive-Backups/04_System_and_ISOs/ | Level 1 | Windows installation ISOs & VM images |
-| OneDrive-Backups/05_Archives/ | Level 1 | Zip snapshots & historical backup archives |
+r""" + format_table(ref_backups) + r"""
 
 *Note.* Adapted from `figures/04_Appendix_and_Reference/backups_organization.csv`. Directory manifest establishing repository backup protocols and persistent cloud storage organization.
 
@@ -763,4 +706,18 @@ Figure H.2
 ![Figure H.2: Diagrams and Screenshot Layout Structure](../../figures/04_Appendix_and_Reference/Diagrams%20and%20Screenshot%20Layout.png)
 
 *Note.* Directory organization and chapter mapping for the 30 visual evidence screenshots across the thesis repository.
-r
+r""")
+
+    full_text = "\n\n".join(doc) + "\n"
+
+    # Write to target files
+    with open(output_path, "w") as f:
+        f.write(full_text)
+    print(f"Successfully generated {output_path} ({len(full_text.splitlines())} lines, {len(full_text)} bytes)")
+
+    with open(manuscripts_only_path, "w") as f:
+        f.write(full_text)
+    print(f"Successfully synchronized {manuscripts_only_path} ({len(full_text.splitlines())} lines, {len(full_text)} bytes)")
+
+if __name__ == "__main__":
+    main()

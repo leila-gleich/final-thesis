@@ -319,6 +319,39 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   path resolution supporting both root and manuscripts-only/ layouts.       |
 |         |            | - Validated 100% passing test suite across all 38 unit tests.               |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
+| v4.22   | 2026-10-06 | Full Manuscript Appendix Overhaul & Committee Review Alignment:             |
+|         |            | - Synthesized Appendix v1.docx and figures/04_Appendix_and_Reference into a|
+|         |            |   comprehensive, publication-grade manuscript appendix deployed to both     |
+|         |            |   thesis_docs/manuscripts/appendix.md and manuscripts-only/ layout.        |
+|         |            | - Expanded appendix structure into eight dedicated appendices (A through H):|
+|         |            |   * Appendix A: Statistical Foundation & Diebold-Mariano Test Derivation.   |
+|         |            |   * Appendix B: Peer-Reviewed Equation Registry (Table B.1, EQ-01 to 20).   |
+|         |            |   * Appendix C: Methodological Foundations, 4-Tier Filtering Pipeline,      |
+|         |            |     Table C.1 (14-point assumptions), Figure C.1, Table C.2 (progression),  |
+|         |            |     Figure C.2 (4-cluster matrix), Table C.3 (4 econometric tests for       |
+|         |            |     carrier isolation), Table C.4 (census), Table C.5 (local DOW profiles). |
+|         |            |   * Appendix D: Aviation Data Engineering, Warehouse Census (Table D.1,     |
+|         |            |     Figure D.1), Feature Store Breakdown (Table D.2, Figure D.3), 9-Airport|
+|         |            |     Parquet Profile (Table D.3, Figure D.2), DB1B Ticket Hierarchy &        |
+|         |            |     Connecting Deflation (Table D.4, Figure D.4), Data Hygiene (surrogate   |
+|         |            |     null key, Tweedie Poisson p=1.3 zeros, tactical cancellations), and     |
+|         |            |     empirical show-up convolution with 24 dual-paradigm attributes.         |
+|         |            |   * Appendix E: Seasonal Regimes, Operational Taxonomies (Three-Tier),      |
+|         |            |     Table E.1 (Annual Regimes & CVI), Table E.2 (DOW Archetypes), Bimodal   |
+|         |            |     Intraday Peaks (Morning Surge vs. Evening Delay Cascade), Turbulence    |
+|         |            |     Shock Index T_dow(h), and 84-Cell Operational Matrix.                   |
+|         |            |   * Appendix F: Holdout Benchmarks & Resilience Mechanics: Table F.1        |
+|         |            |     (Multi-Pillar Matrix), Table F.2 (Resilience & Empty Checkpoint Fallacy |
+|         |            |     under live feedback), Table F.3 (Generalizability & Spatial Penalty),   |
+|         |            |     and Table F.4 (Values vs. Volatility Paradigm proof for H2).             |
+|         |            |   * Appendix G: Operational Decision Playbook: Table G.1 (Dual-Track        |
+|         |            |     Gated Policy), Kingman Queuing Law, and Volatility-Buffered Dynamic     |
+|         |            |     Lane Dimensioning Rule (EQ-20).                                         |
+|         |            |   * Appendix H: Research Limitations (4 operational boundary constraints),  |
+|         |            |     Table H.1 (OneDrive Backup Manifest), Figure H.1 (Backup Tree), and     |
+|         |            |     Figure H.2 (Diagrams & Screenshot Layout Catalog).                      |
+|         |            | - Authored automated compiler script src/analysis/generate_appendix_md.py.  |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx); synchronized.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
