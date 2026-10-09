@@ -1,20 +1,10 @@
-# Chapter III
+# Chapter III: Methodology
 
-## Methodology
+This chapter details the approach and analytical framework to evaluate and optimize passenger flow forecasting, specifically at airport security checkpoints. Commercial airport landside subsystems—ticketing lobbies, Transportation Security Administration (TSA) security checkpoints, and boarding concourses—operate as a tightly coupled stochastic queuing network capable of absorbing dynamic, schedule-driven variability (De Neufville & Odoni, 2014). To evaluate how predictive models navigate this operational complexity, this investigation systematically compares deterministic flight schedule baselines, supervised machine learning decision trees, and dynamic two-stage hybrid architectures against an empirical daily persistence control.
 
-This chapter details the approach and analytical framework to evaluate and optimize passenger flow forecasting, specifically at airport security checkpoints. To provide a structural roadmap for this investigation, the methodology is organized into five components:
+To provide a structural roadmap for this investigation, the methodology is organized into five major sections. Section 1 (Research Approach) establishes the theoretical queuing framework, core research variables, formal hypotheses, sequential procedural design phases, candidate predictive model architectures, and technical computational apparatus. Section 2 (Sample) details the multi-tiered macro and micro sampling frameworks, carrier exclusivity isolation criteria, four-tiered purposive filtering pipeline, and the resulting balanced nine-airport experimental cohort. Section 3 (Sources of the Data) identifies the primary authorized federal reporting repositories supplying the conformed longitudinal datasets. Section 4 (Validity) addresses internal, construct, and statistical conclusion validity threats, formalizing the mathematical formulations of passenger throughput volatility. Finally, Section 5 (Treatment of Data) details the sequential data pipeline used to ingest, clean, standardize, feature-engineer, and load the multi-source analytical warehouse.
 
-**Research Approach**: Establishes the theoretical framework, research variables, hypotheses, experimental design, and the technical apparatus utilized.
-
-**Sample**: Outlines the multi-tiered macro and micro sampling frameworks used to categorize physical checkpoint environments and terminal architectures.
-
-**Sources of Data**: Identifies the primary authorized data repositories supplying the longitudinal datasets.
-
-**Validity**: Addresses and controls internal and construct threats, specifically related to passenger flow bias and screening lane heterogeneity.
-
-**Treatment of Data**: Details the sequential pipeline used to ingest, clean, standardize, and align the data sources.
-
-## 3.1 Research Approach
+## Section 1: Research Approach
 
 ### Theoretical Framework & Stochastic Queuing Principles
 
@@ -82,7 +72,7 @@ Distinct modeling frameworks and hybrid combinations thereof will exhibit asymme
 
 *Hypothesis *$H_{1C}$: Under zero-shot cross-airport transfer without local retraining (e.g., deploying from Newark to LaGuardia), the Deterministic Flight Schedule Model (Model 1) will decisively satisfy the generalizability target ($RTR\approx 1.00,\Delta MASE\le 10.0%$) because published flight schedule convolution is strictly invariant to local terminal layout. Conversely, the Dynamic Hybrid (Model 3) will decisively fail the generalizability target ($RTR\gg 1.00,\Delta MASE>10.0%$) due to decision tree terminal geometry overfitting (memorization of specific carrier bank timings and gate configurations at the training airport).
 
-### Design and Procedures
+### Section 1.1 Design and procedures
 
 The execution of this research is structured into four sequential, iterative phases designed to translate raw aviation data streams into comparative model performance results:
 
@@ -186,7 +176,7 @@ Performance is evaluated across three orthogonal dimensions:
 
 **Dimension 3: Generalizability (Cross-Airport Transferability)**: Verifying whether a model calibrated at one airport (e.g., Newark Liberty, EWR) can be deployed directly to a different airport with distinct gate layouts (e.g., New York LaGuardia, LGA) without site-specific retraining. Governing metrics: Relative Transfer Ratio ($RTR=RMSE_{transfer}/RMSE_{in-sample}$) and Percentage Change in Transfer MASE ($\Delta MASE_{transfer}$). Explicit target: $RTR\approx 1.00 \left(1.00\pm 0.05\right)$ and $\Delta MASE_{transfer}\le 10.0%$.
 
-### Apparatus and Materials
+### Section 1.2 Apparatus and materials
 
 To manage, parse, and evaluate the large datasets required for this study, the following software and computing resources are used:
 
@@ -196,7 +186,7 @@ To manage, parse, and evaluate the large datasets required for this study, the f
 
 **Vega High-Performance Computing (HPC) Cluster**: The remote institutional environment used to execute resource-intensive Python algorithms, filtering large-scale raw data down to determine airport and airline parameters.
 
-## 3.2 Sample
+## Section 2: Sample
 
 The sample consists of airport checkpoint environments selected to reflect variation in terminal structure and airline dominance. Airports are grouped into structured categories to account for how physical layout influences passenger distribution and checkpoint use (OAG, 2026). This strategy is intended to support comparison across terminal types and carriers rather than to claim complete uniformity across airports and airlines.
 
@@ -272,7 +262,7 @@ To ensure structural modeling integrity, the temporal boundaries of this sample 
 
 This preprocessing step evaluates pre-pandemic baseline patterns against longitudinal 2019–2025 data to pinpoint the empirical inflection point where system throughput and schedule deviations returned to steady-state normalization. Structural break tests, rolling Welch's $t$-tests, and CUSUM analyses identified **May 1, 2022** (Candidate B demarcation) as the empirical inflection point, coinciding with the vacatur of the federal transit mask mandate and the rebound of airline load factors to 84.7%, matching pre-pandemic baselines. Restricting the active dataset to this verified window enables the forecasting models to capture contemporary queue dynamics and schedule-driven variability without being skewed by transient historic anomalies.
 
-## 3.3 Sources of Data
+## Section 3: Sources of the Data
 
 Secondary operational data will be compiled from four primary authorized repositories covering the 2019 to 2025 period (TSA, 2026; BTS, 2026; LAWA, 2026):
 
@@ -292,7 +282,7 @@ Published by the BTS Office of Airline Information, Form 41 captures monthly car
 
 A 10% randomized sample of airline ticket itineraries (12,910,384 raw coupons; 22,051,557 conformed coupon records), supplemented by authorized monthly airport traffic reports (such as LAX Air Traffic Statistics). These feeds are utilized to extract quarterly connecting passenger ratios across airport pairs to support originating passenger flow estimation.
 
-## 3.4 Validity
+## Section 4: Validity
 
 ### Internal Validity Threats and Remediation Protocols
 
@@ -354,7 +344,7 @@ $T_{dow}\left(h\right)=max\left(\left(\frac{\sigma _{TSA,dow}\left(h\right)}{max
 
 Applying 1D K-Means clustering ($k=3$) establishes three operational diurnal regimes: *1_OFF_PEAK* ($T<0.35$, overnight curfew), *2_MID_PEAK* ($0.35\le T<0.75$, midday steady flow), and *3_PEAK* ($T\ge 0.75$, queuing turbulence).
 
-## 3.5 Treatment of Data
+## Section 5: Treatment of Data
 
 The execution of data preparation follows a rigorous, sequential Extract, Transform, Load (ETL) pipeline designed to ingest, clean, standardize, and align the longitudinal aviation datasets:
 
