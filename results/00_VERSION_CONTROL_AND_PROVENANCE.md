@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.38 (Chapter Alignment, Full Table Restoration, and Complete Hypothesis 2 Excision)
+RELEASE VERSION: v4.39 (Author Outline Alignment, COVID Volatility Catalyst Core, and Exhibit Harmonization)
 DATE: October 9, 2026
 ====================================================================================================
 
@@ -621,6 +621,26 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Completely excised Hypothesis 2 across all manuscripts, appendices,       |
 |         |            |   helper scripts, notes, recommendations, and exhibition CSVs.              |
 |         |            | - Verified zero edits to .docx files and raw data; full table sync passed.  |
+| v4.39   | 2026-10-09 | Author Outline Alignment, COVID Volatility Catalyst & Exhibit Sync:        |
+|         |            | - Remediated jargon residue ("quiescent") and expanded Chapter 2 Literature |
+|         |            |   Review (§2.6) establishing COVID-19 as the CORE catalyst and concrete     |
+|         |            |   operational "why" demanding the multidimensional volatility triad.        |
+|         |            | - Harmonized thesis_docs/exhibits/ch01_intro/models_and_tests.csv with     |
+|         |            |   certified throughput volatility metrics (MASE=0.662, DM=48.72, RTR=1.04). |
+|         |            | - Restructured Chapter I to author's strict outline: unheaded introductory |
+|         |            |   narrative followed by Section 1 (Significance) through Section 7          |
+|         |            |   (List of Acronyms, with Table 1.1 foundational acronym inventory).        |
+|         |            | - Restructured Chapter III to author's strict outline: unheaded intro,      |
+|         |            |   roadmap paragraph, Section 1 (Research Approach; §1.1 Design and          |
+|         |            |   procedures, §1.2 Apparatus and materials), Section 2 (Sample),            |
+|         |            |   Section 3 (Sources of the Data), Section 4 (Validity), and Section 5      |
+|         |            |   (Treatment of Data).                                                      |
+|         |            | - Compiled synchronized master full-thesis.md across all five chapters.    |
+|         |            | - Cleansed historical H2 tags in advisory notes to operational paradigm.   |
+|         |            | - Synchronized all 16 conformed CSV tables and companion Excel workbooks    |
+|         |            |   via sync_manuscript_tables.py; verified 44/44 unit tests pass.           |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); raw federal source data untouched.                     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

@@ -48,7 +48,7 @@ The table below catalogs all **101 peer-reviewed citations** present across `Chp
 | **006** | **Alnowibet et al. (2022)** | V1 | §2.1.1 | Cairo International Airport case study; server utilization exceeding capacity at check-in/screening. | Primary Narrative Core: Empirical proof of peak checkpoint server saturation. |
 | **007** | **Alodhaibi et al. (2017)** | Both | §2.2.2 | DES terminal assessment; critiques treating passengers as passive, static rule-followers. | Primary Narrative Core: The Passive Traveler Behavioral Assumption. |
 | **008** | **Anagnostopoulou et al. (2024)**| V1 | §2.3.4 | Distributional flow forecast underestimation in real-time terminal environments. | Contextual Synthesis: Functional gap between ML predictions and reality. |
-| **009** | **Andersen & Bollerslev (1998)**| V2 | §2.1.4 | High-frequency financial econometric foundations of volatility vs. level forecasting. | Primary Narrative Core: Anchor the "Values vs. Volatility" paradigm ($H_2$). |
+| **009** | **Andersen & Bollerslev (1998)**| V2 | §2.1.4 | High-frequency financial econometric foundations of volatility vs. level forecasting. | Primary Narrative Core: Anchor the "Values vs. Volatility" operational paradigm. |
 | **010** | **Anupam & Lawal (2024)** | V1 | §2.4.3 | Nonlinear Autoregressive with Exogenous Input (NARX); weather inputs improving transparency. | Supporting Synthesis: Contrast exogenous regressors with black-box models. |
 | **011** | **Araujo & Repolho (2015)** | Both | §2.1.3 / §2.2.1| Queue optimization models and schedule de-peaking in terminal facilities. | Supporting Synthesis: Schedule de-peaking and Level of Service (LOS). |
 | **012** | **Ateş et al. (2021)** | V1 | §2.2.1 | Testing hypothetical flight schedules to reduce terminal congestion under uncertainty. | Supporting Synthesis: Offline schedule testing via simulation. |
@@ -68,7 +68,7 @@ The table below catalogs all **101 peer-reviewed citations** present across `Chp
 | **026** | **Dönmez et al. (2025)** | V2 | §2.1.2 | Airline bank de-peaking impacts on airport terminal capacity and queuing distributions. | Primary Narrative Core: Bank de-peaking and screening queue dispersion. |
 | **027** | **Ebert et al. (2021)** | Both | §2.4.3 | Kalman filtering and state estimation for real-time passenger queue tracking. | Primary Narrative Core: Dynamic 1-step error innovation feedback ($e_{t-1}$). |
 | **028** | **Edwards (2026)** | V1 | §2.2.1 | Real-time virtual replicas and digital tracking of airport operational infrastructure. | Reframe from V1: Reframe as dynamic state-space telemetry. |
-| **029** | **Engle (2001)** | V2 | §2.1.4 | Nobel-winning ARCH/GARCH volatility modeling foundations in modern econometrics. | Primary Narrative Core: Justifies volatility as primary dependent variable ($H_2$). |
+| **029** | **Engle (2001)** | V2 | §2.1.4 | Nobel-winning ARCH/GARCH volatility modeling foundations in modern econometrics. | Primary Narrative Core: Justifies volatility as primary dependent variable. |
 | **030** | **FAA (2024)** | V1 | §2.0 / §2.1.1 | Federal Aviation Administration aerospace forecasts of passenger enplanement growth. | Primary Narrative Core: Frame national airspace growth vs. terminal limits. |
 | **031** | **Fernandes & Pacheco (2002)** | V1 | §2.1.1 | Airport passenger terminal capacity benchmarking and service quality indices. | Contextual Synthesis: Historical Level of Service (LOS) definitions. |
 | **032** | **Guizzi et al. (2009)** | V1 | §2.2.1 | Correlation between check-in throughput and security checkpoint demand. | Primary Narrative Core: Cross-subsystem flow correlation in terminal operations. |
@@ -76,7 +76,7 @@ The table below catalogs all **101 peer-reviewed citations** present across `Chp
 | **034** | **Guo et al. (2025)** | V1 | §2.4.4 | Bayesian Networks and Best-Worst Method quantifying terminal resilience factors. | Contextual Synthesis: Probabilistic reasoning across terminal dependencies. |
 | **035** | **Güner & Seçkin Codal (2024)**| Both | §2.5.4 | Generalizability of models across heterogeneous airport facilities and terminal layouts. | Primary Narrative Core: Dimension 3 Generalizability (Zero-shot transfer). |
 | **036** | **Had et al. (2025)** | Both | §2.4.1 | Merging physical queuing conservation laws with machine learning for resilient forecasting. | Primary Narrative Core: Two-stage physical-learning hybrid modeling. |
-| **037** | **Hansen & Lunde (2005)** | V2 | §2.1.4 | Econometric evaluation of volatility models; level vs. volatility explanatory power. | Primary Narrative Core: Values vs. Volatility mathematical paradigm ($H_2$). |
+| **037** | **Hansen & Lunde (2005)** | V2 | §2.1.4 | Econometric evaluation of volatility models; level vs. volatility explanatory power. | Primary Narrative Core: Values vs. Volatility mathematical paradigm. |
 | **038** | **He et al. (2024)** | V1 | §2.4.1 | Deep hybrid architectures (CNN-BiLSTM-GRU) for passenger flow prediction. | Supporting Synthesis: Multi-scale temporal feature extraction and its complexity. |
 | **039** | **Hess & Grbčić (2019)** | V1 | §2.1.1 | Multiphase single-server queuing systems; traffic intensity and inter-stage delays. | Primary Narrative Core: Upstream check-in delays rippling into security lines. |
 | **040** | **Hewamalage et al. (2021)** | V1 | §2.3.2 | Recurrent neural networks (LSTM/GRU) for temporal time-series forecasting. | Primary Narrative Core: Non-linear temporal dependencies in sequential data. |
@@ -183,7 +183,7 @@ The blueprint below demonstrates how **all 101 citations** are systematically in
 4. **Second-Order Moments: Kingman & Allen-Cunneen Queuing Law**: Present the Allen-Cunneen heavy-traffic approximation (Kingman, 1961; Whitt, 1993):
    $$W_q pprox \left(rac{ho^{\sqrt{2(s+1)}-1}}{s(1-ho)}ight)\left(rac{C_a^2 + C_s^2}{2}ight)rac{1}{\mu}$$
    Explain that as utilization approaches capacity ($ho 	o 1.0$), queue length and delay scale quadratically with arrival volatility ($C_a^2$). Therefore, modeling and forecasting **throughput volatility** ($\sigma_{	ext{TSA}}$ and $CV_{	ext{TSA}}$) is the vital operational prerequisite for queue stability and lane staffing.
-5. **The Values versus Volatility Paradigm ($H_2$)**: Establish the econometric foundation (Andersen & Bollerslev, 1998; Engle, 2001; Hansen & Lunde, 2005). Articulate the two horizons: Intraday Diurnal Volatility ($\sigma_{	ext{TSA, hr}}$) scaling with compound Poisson volume ($Var(Y) \propto \mu^p$), versus Multi-Day Rolling Volatility ($\sigma_{	ext{TSA, 7d}}$) where static flight volumes fail to capture delay and cancellation turbulence (Hopfe et al., 2024).
+5. **The Values versus Volatility Paradigm**: Establish the econometric foundation (Andersen & Bollerslev, 1998; Engle, 2001; Hansen & Lunde, 2005). Articulate the two horizons: Intraday Diurnal Volatility ($\sigma_{\text{TSA, hr}}$) scaling with compound Poisson volume ($Var(Y) \propto \mu^p$), versus Multi-Day Rolling Volatility ($\sigma_{\text{TSA, 7d}}$) where static flight volumes fail to capture delay and cancellation turbulence (Hopfe et al., 2024).
 
 ---
 
