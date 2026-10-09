@@ -14,7 +14,9 @@ This chapter details the approach and analytical framework to evaluate and optim
 
 **Treatment of Data**: Details the sequential pipeline used to ingest, clean, standardize, and align the data sources.
 
-## Research Approach
+## 3.1 Research Approach
+
+### Theoretical Framework & Stochastic Queuing Principles
 
 The study uses an exploratory, sequential, quantitative design to systematically assess the predictive accuracy and operational utility of distinct forecasting approaches for passenger flow forecasting at airport security checkpoints. While this study evaluates a broad range of frameworks—including static deterministic baselines—it asserts that to truly optimize checkpoint flows, terminal subsystems (i.e., check-in, security screening, and boarding concourses) must ultimately be treated as a stochastic queuing network capable of absorbing dynamic, schedule-driven variability (De Neufville & Odoni, 2014).
 
@@ -80,8 +82,6 @@ Distinct modeling frameworks and hybrid combinations thereof will exhibit asymme
 
 *Hypothesis *$H_{1C}$: Under zero-shot cross-airport transfer without local retraining (e.g., deploying from Newark to LaGuardia), the Deterministic Flight Schedule Model (Model 1) will decisively satisfy the generalizability target ($RTR\approx 1.00,\Delta MASE\le 10.0%$) because published flight schedule convolution is strictly invariant to local terminal layout. Conversely, the Dynamic Hybrid (Model 3) will decisively fail the generalizability target ($RTR\gg 1.00,\Delta MASE>10.0%$) due to decision tree terminal geometry overfitting (memorization of specific carrier bank timings and gate configurations at the training airport).
 
-**Feature Paradigm Hypothesis (**$H_{2}$**)**: Predicting multi-day temporal rolling volatility ($\sigma _{TSA, 7d}$) cannot be achieved using static flight volume levels (Feature Values), which collapse during structural shocks ($R^{2}<0$), but requires tracking operational dispersion (Feature Volatility metrics, achieving $R^{2}>0.30$).
-
 ### Design and Procedures
 
 The execution of this research is structured into four sequential, iterative phases designed to translate raw aviation data streams into comparative model performance results:
@@ -124,7 +124,7 @@ Figure 3*Design and Procedure Phases*
 
 *Figure 3: Design and Procedure Phases*
 
-### Predictive Modeling Frameworks and Baseline Control
+#### Candidate Predictive Models and Baseline Control
 
 To evaluate the research questions, the investigation establishes three candidate models representing distinct operational paradigms, benchmarked against an empirical baseline control:
 
@@ -156,7 +156,7 @@ To evaluate the research questions, the investigation establishes three candidat
 
 *Stage 2*: A decision tree predicts residual volatility shocks caused by flight delays and weather ground stops, dynamically incorporating live 1-step error feedback from the previous hour ($e_{t-1}=y_{t-1}-\hat{y}_{t-1}$). If lines are longer than the flight schedule predicted, the model immediately adjusts upward to track stranded passengers.
 
-### Dataset Partitioning and Validation Protocol
+#### Dataset Partitioning and Validation Protocol
 
 Models were trained, tuned, and evaluated across the 32-month Candidate B development partition:
 
@@ -168,7 +168,7 @@ Models were trained, tuned, and evaluated across the 32-month Candidate B develo
 
 **Operational Separation Buffer**: A 7-day purge buffer between partitions ensures that multi-day delay cascades and severe convective storm disruptions do not leak across evaluation boundaries.
 
-### Quantitative Evaluation Dimensions and Operational Regimes
+#### Quantitative Evaluation Dimensions and Operational Regimes
 
 Airport operations are structured into a three-tier operational taxonomy:
 
@@ -196,7 +196,7 @@ To manage, parse, and evaluate the large datasets required for this study, the f
 
 **Vega High-Performance Computing (HPC) Cluster**: The remote institutional environment used to execute resource-intensive Python algorithms, filtering large-scale raw data down to determine airport and airline parameters.
 
-## Sample
+## 3.2 Sample
 
 The sample consists of airport checkpoint environments selected to reflect variation in terminal structure and airline dominance. Airports are grouped into structured categories to account for how physical layout influences passenger distribution and checkpoint use (OAG, 2026). This strategy is intended to support comparison across terminal types and carriers rather than to claim complete uniformity across airports and airlines.
 
@@ -256,7 +256,9 @@ To systematically isolate the direct operational link connecting airside flight 
 
 **Micro Filter: Carrier Checkpoint Isolation**: In shared terminal complexes, synchronized departure banks produce collinear flight schedules ($Corr\left(S_{j}S_{j^{'}}\right)\ge 0.88$). Restricting analysis to carrier-exclusive screening environments enforces $P\left(Carrier=j^{*}\mid Checkpoint k\right)=1.0$, eliminating inter-carrier schedule crosstalk ($\kappa <25$) and directly mapping carrier flight banks to landside checkpoint throughput.
 
-**Balanced Factorial Cohort**: Applying this four-tiered funnel across the Top 25 airfields yielded the **9-Airport Balanced Experimental Cohort** across 12 carrier-exclusive screening complexes:
+### Balanced Factorial Cohort
+
+Applying this four-tiered funnel across the Top 25 airfields yielded the **9-Airport Balanced Experimental Cohort** across 12 carrier-exclusive screening complexes:
 
 **American Airlines (AA)**: Dallas/Fort Worth (DFW), Philadelphia (PHL), Chicago O'Hare (ORD)
 
@@ -270,7 +272,7 @@ To ensure structural modeling integrity, the temporal boundaries of this sample 
 
 This preprocessing step evaluates pre-pandemic baseline patterns against longitudinal 2019–2025 data to pinpoint the empirical inflection point where system throughput and schedule deviations returned to steady-state normalization. Structural break tests, rolling Welch's $t$-tests, and CUSUM analyses identified **May 1, 2022** (Candidate B demarcation) as the empirical inflection point, coinciding with the vacatur of the federal transit mask mandate and the rebound of airline load factors to 84.7%, matching pre-pandemic baselines. Restricting the active dataset to this verified window enables the forecasting models to capture contemporary queue dynamics and schedule-driven variability without being skewed by transient historic anomalies.
 
-## Sources of Data
+## 3.3 Sources of Data
 
 Secondary operational data will be compiled from four primary authorized repositories covering the 2019 to 2025 period (TSA, 2026; BTS, 2026; LAWA, 2026):
 
@@ -290,7 +292,7 @@ Published by the BTS Office of Airline Information, Form 41 captures monthly car
 
 A 10% randomized sample of airline ticket itineraries (12,910,384 raw coupons; 22,051,557 conformed coupon records), supplemented by authorized monthly airport traffic reports (such as LAX Air Traffic Statistics). These feeds are utilized to extract quarterly connecting passenger ratios across airport pairs to support originating passenger flow estimation.
 
-## Validity
+## 3.4 Validity
 
 ### Internal Validity Threats and Remediation Protocols
 
@@ -306,7 +308,9 @@ Additional internal validity controls include:
 
 Construct validity is affected by checkpoint heterogeneity, as raw lane counts obtained from TSA throughput data combine different screening modes, such as TSA PreCheck, with standard screening lanes, each exhibiting disparate processing rates ($\approx 250–300$ pax/lane-hr for PreCheck vs. $\approx 150–180$ pax/lane-hr for standard). To resolve this heterogeneity threat, the methodology constructs scale-free relative volatility metrics ($CV_{TSA}$) and standardized lane measures rather than unadjusted raw totals.
 
-Furthermore, construct validity requires establishing explicit mathematical formulations that measure passenger throughput volatility rather than static volume levels:
+### Mathematical Formulation of Volatility Targets
+
+Construct validity requires establishing explicit mathematical formulations that measure passenger throughput volatility rather than static volume levels:
 
 #### 1. Intraday Diurnal Absolute Dispersion ($\sigma _{TSA, hr}$)
 
@@ -350,11 +354,11 @@ $T_{dow}\left(h\right)=max\left(\left(\frac{\sigma _{TSA,dow}\left(h\right)}{max
 
 Applying 1D K-Means clustering ($k=3$) establishes three operational diurnal regimes: *1_OFF_PEAK* ($T<0.35$, overnight curfew), *2_MID_PEAK* ($0.35\le T<0.75$, midday steady flow), and *3_PEAK* ($T\ge 0.75$, queuing turbulence).
 
-## Treatment of Data
+## 3.5 Treatment of Data
 
 The execution of data preparation follows a rigorous, sequential Extract, Transform, Load (ETL) pipeline designed to ingest, clean, standardize, and align the longitudinal aviation datasets:
 
-### Extract
+### Sequential Extract Pipeline
 
 Download TSA Throughput files from the FOIA reading room (PDFs) spanning 2019 to 2026.
 
@@ -372,7 +376,7 @@ Download BTS DB1B ticket survey coupon files and airport-specific origin-and-des
 
 Perform an audit across the 7-year sequence to identify missing data and reporting discontinuities.
 
-### Transform
+### Sequential Transform Pipeline
 
 Standardize timestamps across all feeds to a uniform operational clock (local airport solar operational time).
 
@@ -396,15 +400,17 @@ Merge datasets to determine terminal-specific connecting passengers within targe
 
 Empirical passenger show-up curve convolution: Convolve scheduled flight departure banks across empirical lead-time distributions ($t+1,t+2,t+3$ from ACRP Report 40) and align them with hourly TSA throughput intervals to produce the final conformed modeling dataset.
 
-Construct the Values versus Volatility feature representation space:
+### Feature Space Engineering
+
+Construct the Multi-Scale Operational Feature representation space:
 
 *Feature Values (Levels, 14 Attributes)*: Schedule Scale (sched_daily_total, actual_daily_total, sched_hourly_mean, sched_rolling_7d_mean), Cancellations (daily_cancellations, daily_cancel_rate, cancel_rolling_7d_mean, cancel_rate_rolling_7d_mean), Delays (avg_dep_delay_minutes, flights_delayed_15min_pct), Surface Queues (avg_taxi_out_minutes), and Network Buffers (aircraft_gauge_seats, route_load_factor_pct, connecting_passenger_share_pct).
 
 *Feature Volatilities (Dispersion, 10 Attributes)*: Schedule Dispersion (sched_hourly_std, sched_hourly_cv, actual_hourly_std, actual_hourly_cv, sched_rolling_7d_std, sched_rolling_7d_cv), Cancellation Dispersion (cancel_rolling_7d_std, cancel_rate_rolling_7d_std, otp_cancellation_volatility_cv), and Delay Dispersion (otp_departure_delay_volatility_cv).
 
-*Combined Dual Paradigm (24 Attributes)*: Interacts both feature spaces to test predictive complementarity.
+*Combined Dual Paradigm (24 Attributes)*: Interacts both feature spaces to capture both baseline capacity scale and operational volatility.
 
-### Load
+### Sequential Load Pipeline
 
 Load master conformed data copies to secure persistent cloud storage (OneDrive) and local data warehouse directories.
 

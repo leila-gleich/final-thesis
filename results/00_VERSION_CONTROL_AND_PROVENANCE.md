@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.37 (Manuscript Appendix Table Formatting & Pipe Syntax Remediation Audit)
-DATE: October 8, 2026
+RELEASE VERSION: v4.38 (Chapter Alignment, Full Table Restoration, and Complete Hypothesis 2 Excision)
+DATE: October 9, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -604,6 +604,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   evaluation framework and the Values versus Volatility paradigm.          |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); synchronized tables and workbooks (44/44 tests pass). |
+| v4.38   | 2026-10-09 | Comprehensive Chapter Outline Alignment, Table Restoration & H2 Excision:   |
+|         |            | - Aligned Chapter 1 strictly to Chapter_1_SSOT.md outline (1.1 Context and  |
+|         |            |   Motivation, 1.2 Significance, 1.3 Problem Statement, 1.4 Purpose, 1.5     |
+|         |            |   Research Questions [H1 only], 1.6 Delimitations, 1.7 Limitations).        |
+|         |            | - Re-synthesized Chapter 2 Literature Review adhering to litreview-rec.md   |
+|         |            |   integrating all 101 cited academic sources with APA 7th Table 2.1.        |
+|         |            | - Aligned Chapter 3 strictly to Chapter_3_SSOT.md outline (3.1 Research     |
+|         |            |   Approach, 3.2 Sample, 3.3 Sources of Data, 3.4 Validity, 3.5 Treatment);  |
+|         |            |   purged former Hypothesis 2 subsection and reframed feature space.         |
+|         |            | - Preserved Chapter 4 strict 4-section architecture (4.1 Initial EDA, 4.2   |
+|         |            |   Data Filtering & Subset Selection, 4.3 Model Development & Execution, 4.4 |
+|         |            |   Model Results & Evaluation) with complete Markdown Tables 4.1–4.11.       |
+|         |            | - Restored complete Markdown Tables 5.1–5.4 into Chapter 5 Discussion and   |
+|         |            |   harmonized with Chapter_5_SSOT.md.                                        |
+|         |            | - Completely excised Hypothesis 2 across all manuscripts, appendices,       |
+|         |            |   helper scripts, notes, recommendations, and exhibition CSVs.              |
+|         |            | - Verified zero edits to .docx files and raw data; full table sync passed.  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

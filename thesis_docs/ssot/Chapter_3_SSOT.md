@@ -26,7 +26,7 @@ CHAPTER III: METHODOLOGY
 ├── 3.1 Research Approach
 │   ├── Theoretical Framework & Stochastic Queuing Principles (Kingman Formula, Ca^2)
 │   ├── Core Research Variables (Independent, Dependent Volatility Targets, Performance)
-│   ├── Research Hypotheses (H1 Master Asymmetric Trade-Off, H1A, H1B, H1C, H2 Feature Paradigm)
+│   ├── Research Hypotheses (H1 Master Asymmetric Trade-Off, H1A, H1B, H1C)
 │   ├── Design and Procedures (Phases 1–4, Model Suite, Partitioning, Evaluation Regimes)
 │   └── Apparatus and Materials (Google Antigravity & Python, Excel/Power BI, Vega HPC Cluster)
 ├── 3.2 Sample

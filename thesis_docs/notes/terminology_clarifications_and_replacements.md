@@ -66,9 +66,9 @@ The following master replacement table maps all 38 identified jargon terms, phys
 | **Data Engineering & Hygiene** | **Phantom Composite Mega-Airport Aggregation** | **Unidentified Airport Records (Null Key Quarantining)** | Quarantining 22,190 raw TSA records with missing or corrupted airport codes so they do not create a fake 9.71-million passenger airport. | Sensationalist lab jargon ('phantom mega-airport') that obscures standard data-cleaning surrogate key assignment. |
 | **Data Engineering & Hygiene** | **Zero Lookahead Leakage (Overall / Temporal / Feature)** | **Strict Information Causality** | Ensuring forecasting models only ingest operational attributes knowable before departure (prior-hour delays, scheduled seats). | Machine learning competition jargon; transportation economists and planners understand information causality and real-world availability. |
 | **Data Engineering & Hygiene** | **Out-of-Time Evaluation Benchmark Matrix** | **Prospective Chronological Holdout Evaluation Matrix** (or **Temporal Holdout Benchmark Matrix**) | Evaluating frozen models strictly forward in time on an unobserved future calendar year (2025) after training on historical operations (2022–2024). | Sounds like "running out of clock time" on an exam or an algorithmic compute timeout, rather than prospective chronological evaluation. |
-| **Performance Dimensions & Metrics** | **Continuous Static Stability (Hypothesis 1)** | **Routine Operational Accuracy (Robustness)** | Model forecasting consistency and precision during nominal on-time flight operations under clear weather. | Control-systems engineering jargon that obscures day-in day-out baseline forecasting accuracy. |
-| **Performance Dimensions & Metrics** | **System Shock Absorption & Disruption Dynamics (Hypothesis 2)** | **Resilience Under Severe Disruption** | A model's ability to maintain accuracy, resist demand collapse, and recover quickly during severe storm ground stops. | Mechanical shock absorption jargon that obscures operational recovery during irregular flight operations. |
-| **Performance Dimensions & Metrics** | **Spatial Layout Transferability (Hypothesis 3)** | **Cross-Airport Transferability (Generalizability)** | Capability of a model calibrated at one airport to deploy directly to an unfamiliar airport without site-specific retraining. | Abstract spatial topology jargon; airport authorities evaluate practical cross-airport portability. |
+| **Performance Dimensions & Metrics** | **Continuous Static Stability (Hypothesis 1a)** | **Routine Operational Accuracy (Robustness)** | Model forecasting consistency and precision during nominal on-time flight operations under clear weather. | Control-systems engineering jargon that obscures day-in day-out baseline forecasting accuracy. |
+| **Performance Dimensions & Metrics** | **System Shock Absorption & Disruption Dynamics (Hypothesis 1b)** | **Resilience Under Severe Disruption** | A model's ability to maintain accuracy, resist demand collapse, and recover quickly during severe storm ground stops. | Mechanical shock absorption jargon that obscures operational recovery during irregular flight operations. |
+| **Performance Dimensions & Metrics** | **Spatial Layout Transferability (Hypothesis 1c)** | **Cross-Airport Transferability (Generalizability)** | Capability of a model calibrated at one airport to deploy directly to an unfamiliar airport without site-specific retraining. | Abstract spatial topology jargon; airport authorities evaluate practical cross-airport portability. |
 | **Performance Dimensions & Metrics** | **Resilience Multiplier ($R_{\text{MASE}}$)** | **Disruption Error Multiplier** | Ratio of forecast error during severe flight disruptions to forecast error during routine operations ($\text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$). | Over-mathematized metric name; plain English clarifies whether storm error doubles (fragile) or stays near 1.0 (resilient). |
 | **Performance Dimensions & Metrics** | **Relative Transfer Ratio ($\text{RTR}$)** | **Transfer Error Penalty** | Ratio of zero-shot transfer forecast error to in-sample forecast error ($\text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$). | Abstract acronym; plain English clarifies the percentage accuracy penalty incurred when deploying to a new airport. |
 
@@ -730,10 +730,10 @@ At major fortress hubs (e.g., Charlotte at 76.0% connecting or Atlanta at 70.1%)
 
 ---
 
-## 29. System Shock Absorption & Disruption Dynamics vs. Resilience Under Severe Disruption (Hypothesis 2)
+## 29. System Shock Absorption & Disruption Dynamics vs. Resilience Under Severe Disruption (Hypothesis 1b)
 
 ### 29.1 Operational Meaning & Performance Dimension 2
-* **Draft Term**: `System Shock Absorption & Disruption Dynamics (Hypothesis 2)`
+* **Draft Term**: `System Shock Absorption & Disruption Dynamics (Hypothesis 1b)`
 * **Underlying Operational Reality**: Dimension 2 evaluates how candidate models perform when the airport experiences severe irregular operations (IROPS; departure delays $\ge 45$ min or cancellations $\ge 5$). Model 3 maintains accuracy ($R_{\text{MASE}} = 1.05$, $\text{TTR} = 2.8\text{h}$) because its closed-loop error feedback detects stranded passengers, whereas Model 2 fragilely collapses ($R_{\text{MASE}} = 2.14$).
 
 ### 29.2 Why It Risks Committee Scrutiny (Qualitative Lens)
@@ -745,13 +745,13 @@ At major fortress hubs (e.g., Charlotte at 76.0% connecting or Atlanta at 70.1%)
 
 ### 29.4 Before vs. After Manuscript Prose
 * **Before (Draft Jargon)**:  
-  *"Hypothesis 2 evaluates system shock absorption and disruption dynamics across convective shock manifolds."*
+  *"Hypothesis 1b evaluates system shock absorption and disruption dynamics across convective shock manifolds."*
 * **After (Publishable Manuscript Text)**:  
   *"Evaluation Dimension 2 assesses resilience under severe disruption, testing whether candidate models maintain forecast accuracy and recover rapidly during irregular flight operations (IROPS)."*
 
 ---
 
-## 30. Spatial Layout Transferability vs. Cross-Airport Transferability (Generalizability, Hypothesis 3)
+## 30. Spatial Layout Transferability vs. Cross-Airport Transferability (Generalizability, Hypothesis 1c)
 
 ### 30.1 Operational Meaning & Performance Dimension 3
 * **Draft Term**: `Spatial Layout Transferability (Hypothesis 3)`

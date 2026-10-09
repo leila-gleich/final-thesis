@@ -19,7 +19,7 @@
 │ Chapter II: Literature Review (chp2-litreview.md)                                      │
 │  ├── Figure 2.1: The Checkpoint Tipping Point (Kingman Heavy-Traffic Queuing Curve)    │
 │  ├── Table 2.1: Comparative Synthesis of Historical Airport Flow Modeling Paradigms    │
-│  ├── Table 2.2: The "Values versus Volatility" Analytical Matrix (H2 Duality)          │
+│  ├── Table 2.2: The "Values versus Volatility" Analytical Matrix (Operational Coupling) │
 │  └── Figure 2.2: Conceptual Architecture of the Two-Stage Sequential Hybrid Model      │
 ├────────────────────────────────────────────────────────────────────────────────────────┤
 │ Chapter III: Methodology (chp3-methodology.md)                                         │
@@ -50,7 +50,7 @@
 │  ├── Figure 4.5: Empirical Lead-Lag Passenger Show-Up Curve Convolution                │
 │  ├── Table 4.10: Master Model Benchmark Matrix (2025 Full-Year Holdout) (Callout P62)  │
 │  ├── Table 4.11: Pairwise Diebold-Mariano Forecast Accuracy Divergence Tests           │
-│  └── Table 4.12: The Values vs. Volatility Empirical Proof (H2 Regression Matrix)      │
+│  └── Table 4.12: The Values vs. Volatility Empirical Proof (Operational Coupling Matrix) │
 ├────────────────────────────────────────────────────────────────────────────────────────┤
 │ Chapter V: Discussion & Conclusions (chp5-discussion.md)                               │
 │  ├── Table 5.1: Evaluation Dimension 1: Routine Operational Accuracy (Callout P13)     │
@@ -108,7 +108,7 @@
 * **Columns**: Modeling Paradigm, Theoretical Mechanism, Input Data Requirements, Computational Latency, Primary Operational Vulnerability, Aviation Literature Citations.
 * **Source Asset**: Synthesized from `figures/03_Modeling_and_Evaluation/exploratory_metric_criteria_research.csv`.
 
-### Proposed Table 2.2: The "Values versus Volatility" Analytical Matrix ($H_2$)
+### Proposed Table 2.2: The "Values versus Volatility" Analytical Matrix (Operational Coupling)
 * **Target Insertion Point**: Following Section `## The "Values versus Volatility" Paradigm in Transportation Demand` (after paragraph 15).
 * **Academic Rationale**: Articulates the mathematical and operational differences between feature levels (static counts) and feature volatilities (dispersion, standard deviation, CV) across intraday diurnal and multi-day horizons.
 * **Source Asset**: Derived from `results/04_model_execution_2025_holdout.xlsx` (tab: `values_vs_volatility`).
@@ -186,7 +186,7 @@ Chapter IV contains formal callouts and image placeholders in the Word draft. Re
 | **Figure 4.5** | *Empirical Lead-Lag Passenger Show-Up Curve Convolution (t, t+1, t+2, t+3)* | Directly following Table 4.9 | [`figures/03_Modeling_and_Evaluation/physical transfer lead lag time.png`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/figures/03_Modeling_and_Evaluation/physical%20transfer%20lead%20lag%20time.png) |
 | **Table 4.10** | *Master Model Benchmark Matrix for TSA Throughput Volatility (2025 Full-Year Holdout)* | Replace Callout P62 | [`results/manuscript_tables/table_4_10_master_model_benchmark_matrix_2025_holdout.csv`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/results/manuscript_tables/table_4_10_master_model_benchmark_matrix_2025_holdout.csv) |
 | **Table 4.11** | *Pairwise Diebold-Mariano Forecast Accuracy Divergence Tests* | Within Section `### General Model Performance` (after paragraph 68) | [`results/manuscript_tables/table_4_11_pairwise_diebold_mariano_tests.csv`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/results/manuscript_tables/table_4_11_pairwise_diebold_mariano_tests.csv) |
-| **Table 4.12** | *The "Values versus Volatility" Paradigm: Feature Space Regression Benchmark* | Within Section `### Model Performance and Hypothesis Testing` (after paragraph 70) | Proves $H_2$: Static volume levels fail on multi-day volatility ($R^2 < 0$), feature volatilities succeed ($R^2 > 0.31$). |
+| **Table 4.12** | *The "Values versus Volatility" Paradigm: Feature Space Regression Benchmark* | Within Section `### Model Performance and Hypothesis Testing` (after paragraph 70) | Proves operational coupling: Static volume levels fail on multi-day volatility ($R^2 < 0$), feature volatilities succeed ($R^2 > 0.31$). |
 
 ---
 

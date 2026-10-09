@@ -48,10 +48,10 @@ Under classical queuing theory (such as Kingman's heavy-traffic approximation an
 $$W_q \approx \left( \frac{\rho^{\sqrt{2(s+1)}-1}}{s(1-\rho)} \right) \left( \frac{C_a^2 + C_s^2}{2} \right) \frac{1}{\mu}$$
 where $\rho = \frac{\lambda}{s \mu}$ represents checkpoint utilization. As screening lanes approach saturation ($\rho \to 1.0$), queue length and passenger wait times scale **linearly with arrival volatility $C_a^2$**. A surge in arrival volatility creates sudden queue spikes, severe passenger processing delays, and checkpoint egress starvation, which propagates downline into delayed aircraft boarding and gate pushback holds ($r = +0.4375, p < 0.05$).
 
-### 1.2 The Hypotheses Tested
-1. **Hypothesis 1 (Scale-Induced Volatility)**: Higher levels of flight operations, larger aircraft gauge, and higher cancellation rates naturally increase absolute throughput dispersion $\sigma_{\text{TSA}}$ due to higher base passenger volume.
-2. **Hypothesis 2 (Operational Volatility Transmission)**: Instability in flight operations (spiky departure banks, fluctuating cancellation rates, and erratic departure delay spreads) directly transmits into passenger arrival volatility $\text{CV}_{\text{TSA}}$.
-3. **Hypothesis 3 (Orthogonal Predictive Complementarity)**: Combining operational levels (values) with operational volatility features creates a superior predictive representation that outperforms either feature set in isolation.
+### 1.2 Empirical Research Questions Evaluated
+1. **Research Question 1 (Scale-Induced Volatility)**: Higher levels of flight operations, larger aircraft gauge, and higher cancellation rates naturally increase absolute throughput dispersion $\sigma_{\text{TSA}}$ due to higher base passenger volume.
+2. **Research Question 2 (Operational Volatility Transmission)**: Instability in flight operations (spiky departure banks, fluctuating cancellation rates, and erratic departure delay spreads) directly transmits into passenger arrival volatility $\text{CV}_{\text{TSA}}$.
+3. **Research Question 3 (Orthogonal Predictive Complementarity)**: Combining operational levels (values) with operational volatility features creates a superior predictive representation that outperforms either feature set in isolation.
 
 ---
 

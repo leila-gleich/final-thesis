@@ -163,9 +163,9 @@ TABLE_CATALOG = [
         "title": "Master Multi-Pillar Hypothesis Evaluation Matrix Across the Four Models (Throughput Volatility)",
         "chapter": "Chapter 4: Results",
         "focus": "Formal empirical hypothesis test matrix across Robustness, Resilience, and Generalizability with explicit targets",
-        "dimension": "Hypothesis Testing (H1 & H2)",
+        "dimension": "Hypothesis Testing (H1)",
         "companion_wb": "05_robustness_resilience_generalizability.xlsx",
-        "note": "Note. Master multi-pillar hypothesis evaluation matrix across Robustness, Resilience, and Generalizability. Demonstrates asymmetric trade-offs (H1) and confirms the values versus volatility paradigm (H2)."
+        "note": "Note. Master multi-pillar hypothesis evaluation matrix across Robustness, Resilience, and Generalizability. Demonstrates asymmetric trade-offs (H1) and confirms the values versus volatility operational coupling."
     },
     {
         "table_id": "Table 5.1",

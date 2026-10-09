@@ -98,7 +98,8 @@ During catastrophic disruptions—such as severe summer convective storms where 
 
 Earlier literature in airport systems planning explored stochastic optimization and probabilistic graphical models to manage operational uncertainty. Hybrid Queue-based Bayesian Networks (HQBN; Wu et al., 2014) combined analytical queuing equations with directed acyclic graphs to diagnose bottleneck causes, while Guo et al. (2025) coupled Bayesian networks with the Best-Worst Method to evaluate terminal resilience factors. In parallel, metaheuristic optimization algorithms—such as Particle Swarm Optimization (PSO) and simulated annealing (Jiang et al., 2024; Naji et al., 2020; Sörensen, 2015; Wu, 2024)—were deployed to optimize parameter spaces in complex airport baggage and ground transit networks. While valuable for offline optimization, these metaheuristic frameworks lack the sub-second inference speeds and transparent decision rules required for tactical TSA checkpoint lane reallocation, underscoring the superior operational alignment of two-stage tree-based hybrid architectures.
 
-## Table 2.1: Comparative Modeling Paradigm Taxonomy for Airport Passenger Screening Throughput
+Table 2.1  
+*Comparative Modeling Paradigm Taxonomy for Airport Passenger Screening Throughput*
 
 | Modeling Paradigm | Mathematical Foundation | Operational Strengths | Critical Operational Limitations | Key Citations |
 | :--- | :--- | :--- | :--- | :--- |

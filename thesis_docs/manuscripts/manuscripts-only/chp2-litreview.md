@@ -98,9 +98,19 @@ During catastrophic disruptions—such as severe summer convective storms where 
 
 Earlier literature in airport systems planning explored stochastic optimization and probabilistic graphical models to manage operational uncertainty. Hybrid Queue-based Bayesian Networks (HQBN; Wu et al., 2014) combined analytical queuing equations with directed acyclic graphs to diagnose bottleneck causes, while Guo et al. (2025) coupled Bayesian networks with the Best-Worst Method to evaluate terminal resilience factors. In parallel, metaheuristic optimization algorithms—such as Particle Swarm Optimization (PSO) and simulated annealing (Jiang et al., 2024; Naji et al., 2020; Sörensen, 2015; Wu, 2024)—were deployed to optimize parameter spaces in complex airport baggage and ground transit networks. While valuable for offline optimization, these metaheuristic frameworks lack the sub-second inference speeds and transparent decision rules required for tactical TSA checkpoint lane reallocation, underscoring the superior operational alignment of two-stage tree-based hybrid architectures.
 
-## Table 2.1: Comparative Modeling Paradigm Taxonomy for Airport Passenger Screening Throughput
+Table 2.1  
+*Comparative Modeling Paradigm Taxonomy for Airport Passenger Screening Throughput*
 
-*Note.* Table synthesized from thesis literature review. Taxonomy formalizes the theoretical trade-offs across candidate modeling paradigms evaluated in Chapter IV. Refer to companion CSV and Excel workbooks for full data matrices.
+| Modeling Paradigm | Mathematical Foundation | Operational Strengths | Critical Operational Limitations | Key Citations |
+| :--- | :--- | :--- | :--- | :--- |
+| **Classical Queuing Theory** | Poisson / Exponential: $M/M/s$, $M/G/s$, NHPP | Closed-form solutions; transparent parameterization; negligible compute latency. | Fails under batch flight banks; ignores airside connecting passenger shielding; assumes static arrival rates. | Odoni (1986); Wang (2018); Brunetta et al. (1999); Guo et al. (2022). |
+| **Discrete Event Simulation (DES)** | Stochastic entity tracking through discrete physical screening stages. | High micro-level spatial and lane layout fidelity; granular TSO lane configuration. | Extreme calibration sensitivity; high compute latency during disruptions; passive traveler assumptions. | Brown & Madhavan (2011); Takakuwa & Oyama (2004); Bießlich et al. (2014). |
+| **Linear Statistical Time-Series** | Autoregressive moving average: $\text{SARIMAX}(p,d,q) \times (P,D,Q)_s$ | Lightweight; captures diurnal (24h) and weekly (168h) cycles; clear confidence bounds. | Fails during structural breaks and severe weather ground stops; cannot model non-linear delays. | Li et al. (2017); Box et al. (2015); Hyndman & Athanasopoulos (2018). |
+| **Supervised Machine Learning (GBM)** | Non-linear decision trees: Gradient Boosting (HistGBM) minimizing Tweedie loss | Captures non-linear delays, aircraft gauge, and weather; fast inference; auditable rules. | Susceptible to "Empty Checkpoint Fallacy" during flight delays; overfits to local terminal geometry. | Hopfe et al. (2024); Ribeiro et al. (2025); Chen & Guestrin (2016). |
+| **Deep Neural Networks (LSTM / GRU)** | Recurrent hidden state: Gated recurrent units $h_t = \sigma(W_{hh} h_{t-1} + W_{xh} x_t + b)$ | Directly models complex long-sequence dependencies without manual feature engineering. | Complete "black-box" opacity; FSD adoption resistance; severe spatial transfer degradation (>40% error). | Hochreiter & Schmidhuber (1997); Adadi & Berrada (2018); Viaña et al. (2024); Wang et al. (2025). |
+| **Sequential Two-Stage State-Space Hybrids** | Stage 1 Physical Schedule + Stage 2 Tree Residual + Kalman Innovation Feedback | Superior routine accuracy; high disruption resilience ($R_{\text{MASE}}$); high cross-airport portability. | Multi-stage training complexity; requires automated ingestion of live prior-hour floor throughput ($y_{t-1}$). | Brun et al. (2025); Had et al. (2025); Ebert et al. (2021); Wu et al. (2024). |
+
+*Note.* Table synthesized from thesis literature review. Taxonomy formalizes the theoretical trade-offs across candidate modeling paradigms evaluated in Chapter IV.
 
 ## Post-Pandemic Operational Volatility and the Triad of Operational Evaluation
 

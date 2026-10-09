@@ -1,5 +1,5 @@
 methodological_test,deterministic_baseline_model_1,probabilistic_ml_model_model_3,empirical_finding_proof
 Arrival Timing,Assumes passenger flow is contemporaneous with flight departure (t).,Convolves scheduled seats across a continuous probability density curve peaking at t + 2.,Convolving arrival probability raised explained variance from 19.88% to 48.78% (+145% gain).
 Delay Feedback,Static schedule only; blind to flight delays.,"Ingests lagged operational congestion signals (DepDelay_{t-1}, Cancels_{t-1}).",Slashed holdout error by 200.9 pax/hr (14.4%) over status-quo scheduling.
-Routine Stability (Robustness),Fails against naive persistence (MASE = 1.083).,Significantly outperforms naive persistence (MASE_routine = 0.890).,"Hypothesis 2 Confirmed: The Diebold-Mariano test proved statistically significant superiority (DM = 74.25, p < 0.0001)."
+Routine Stability (Robustness),Fails against naive persistence (MASE = 1.083).,Significantly outperforms naive persistence (MASE_routine = 0.890).,"The Diebold-Mariano test proved statistically significant superiority (DM = 74.25, p < 0.0001)."
 Spatial Transfer (Generalizability),"Rigid linear scaling (RMSE = 1,370.3).",Physics-based arrival kernel transfers cleanly across layouts.,"Maintained lowest absolute zero-shot transfer error (1,162.8 pax/hr, only +7.9% degradation)."

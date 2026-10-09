@@ -58,7 +58,7 @@
   1. **Intraday Diurnal Absolute Volatility ($\sigma_{\text{TSA, hr}}$, pax/hr dispersion)**: Standard deviation across the 24 hours of day $d$.
   2. **Intraday Scale-Free Relative Volatility ($CV_{\text{TSA, hr}} = \sigma / \mu$, dimensionless)**: Scale-free arrival burstiness normalized across small vs. mega checkpoints.
   3. **Multi-Day Rolling Volatility ($\sigma_{\text{TSA, 7d}}$, pax/day)**: Rolling 7-day standard deviation capturing network turbulence.
-* **The Values versus Volatility Paradigm ($H_2$)**: Static volume feature levels fail on multi-day volatility ($R^2 < 0$), whereas feature volatility metrics succeed ($R^2 > +0.31$). Checkpoint arrival volatility is coupled with flight departure delay volatility ($CV_{\text{delay}}: r = +0.4373, p < 0.05$), while raw delay minutes show zero correlation ($r = -0.062, p = 0.77$).
+* **The Values versus Volatility Operational Coupling**: Static volume feature levels fail on multi-day volatility ($R^2 < 0$), whereas feature volatility metrics succeed ($R^2 > +0.31$). Checkpoint arrival volatility is coupled with flight departure delay volatility ($CV_{\text{delay}}: r = +0.4373, p < 0.05$), while raw delay minutes show zero correlation ($r = -0.062, p = 0.77$).
 
 ---
 
