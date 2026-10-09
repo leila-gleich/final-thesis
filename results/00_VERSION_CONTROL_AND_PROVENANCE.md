@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.40 (Repository Codebase Modernization & Model Nomenclature Sanitization)
+RELEASE VERSION: v4.41 (CI Pipeline Dependency Harmonization & Defensive Test Hardening)
 DATE: October 9, 2026
 ====================================================================================================
 
@@ -657,6 +657,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   verified 100% test pass rate (44/44 tests) and end-to-end pipeline run.  |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); raw data and conformed tables synchronized.           |
+| v4.41   | 2026-10-09 | CI Pipeline Dependency Harmonization & Defensive Test Hardening:            |
+|         |            | - Resolved GitHub Actions CI collection failure on tests/                  |
+|         |            |   test_acronyms_generation.py by adding python-docx>=1.1.0 to              |
+|         |            |   requirements.txt and pyproject.toml dependencies.                       |
+|         |            | - Hardened tests/test_acronyms_generation.py with defensive import and     |
+|         |            |   skipUnless decorator to safeguard against absent optional dependencies.  |
+|         |            | - Verified 100% test pass rate (44/44 unit tests passing cleanly).          |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all conformed tables and exhibits synchronized.       |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
