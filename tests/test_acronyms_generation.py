@@ -8,13 +8,7 @@ and textual completeness of the generated Acronyms and Abbreviations documents
 
 import os
 import unittest
-
-try:
-    import docx
-    HAS_DOCX = True
-except ImportError:
-    docx = None
-    HAS_DOCX = False
+import docx
 
 class TestAcronymsGeneration(unittest.TestCase):
     def setUp(self):
@@ -29,7 +23,6 @@ class TestAcronymsGeneration(unittest.TestCase):
             self.assertTrue(os.path.exists(path), f"File missing: {path}")
             self.assertGreater(os.path.getsize(path), 1000, f"File too small: {path}")
 
-    @unittest.skipUnless(HAS_DOCX, "python-docx is not installed")
     def test_docx_structure_and_table(self):
         """Verify that the Word document loads cleanly, contains the APA table and categories."""
         doc = docx.Document(self.docx_path)
