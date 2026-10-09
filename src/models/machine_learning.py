@@ -2,8 +2,9 @@
 src/models/machine_learning.py
 -------------------------------
 Supervised Machine Learning Models for Airport Passenger Flow:
-- M3: HistGradientBoosting Poisson Deviance Regressor (Tweedie family, p=1.0–1.3)
-      Captures non-linear feature interactions across diurnal cycles,
+- Model 2: Supervised Machine Learning Model
+      HistGradientBoosting Poisson Deviance Regressor (Tweedie family, p=1.0–1.3)
+      capturing non-linear feature interactions across diurnal cycles,
       fleet gauge tiers, and airside delay interaction terms.
 """
 
@@ -31,7 +32,7 @@ MODEL_FEATURE_COLUMNS = [
 
 class TweedieGradientBoostedRegressor:
     """
-    M3: Gradient Boosted Regressor for Throughput Volatility Modeling.
+    Model 2: Supervised Machine Learning Model for Throughput Volatility Modeling.
     Optimizes for heteroskedastic, positive arrival volatility (CV and sigma).
     Captures non-linear interactions across flight schedule bank dispersion,
     tactical cancellations, departure delays, and surface taxi queues.
@@ -101,9 +102,9 @@ if __name__ == "__main__":
     })
     
     feat_df = build_conformed_feature_matrix(df)
-    m3 = TweedieGradientBoostedRegressor(max_iter=50)
-    m3.fit(feat_df, feat_df["TSA_Throughput"])
-    preds = m3.predict(feat_df)
+    model2 = TweedieGradientBoostedRegressor(max_iter=50)
+    model2.fit(feat_df, feat_df["TSA_Throughput"])
+    preds = model2.predict(feat_df)
     
     corr = np.corrcoef(preds, feat_df["TSA_Throughput"])[0, 1]
-    print(f"M3 Tweedie GBR fitted successfully. Prediction-Target correlation: r = {corr:.4f}")
+    print(f"Model 2 Supervised ML fitted successfully. Prediction-Target correlation: r = {corr:.4f}")

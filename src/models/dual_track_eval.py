@@ -71,10 +71,10 @@ def run_dual_track_evaluation(model_metrics: Dict[str, Dict] = None) -> pd.DataF
         penalty = m.get("transfer_penalty_pct", 10.0)
         
         # Winner for Track B is Model 1 (near-zero transfer penalty and RTR ≈ 1.00)
-        track_b_winner = (rtr <= 1.05 and delta_mase <= 10.0 and ("Model 1" in name or "M1*" in name))
+        track_b_winner = (rtr <= 1.05 and delta_mase <= 10.0 and ("Model 1" in name or "Deterministic" in name or "M1*" in name))
         status_b = "DEPLOYED FOR TRACK B (Zero-Shot Generalizability Champion: RTR ≈ 1.00)" if track_b_winner else (
-            "Viable Portable ML (Passes Delta MASE <= 10%)" if (("Model 2" in name or "M3" in name) and delta_mase <= 10.0) else (
-                "Unusable Baseline Accuracy" if ("Baseline" in name or "M0" in name) else "Overfitting Risk on Zero-Shot Transfer (FAILS RTR & Delta MASE)"
+            "Viable Portable ML (Passes Delta MASE <= 10%)" if (("Model 2" in name or "Machine Learning" in name or "M3" in name) and delta_mase <= 10.0) else (
+                "Unusable Baseline Accuracy" if ("Baseline" in name or "Persistence" in name or "M0" in name) else "Overfitting Risk on Zero-Shot Transfer (FAILS RTR & Delta MASE)"
             )
         )
         

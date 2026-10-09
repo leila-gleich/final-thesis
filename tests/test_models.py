@@ -1,7 +1,8 @@
 """
 tests/test_models.py
 --------------------
-Unit tests for model estimators (M0, M1, M3, M5) and evaluation frameworks (REC-05, REC-11, REC-12).
+Unit tests for candidate model estimators (Baseline Control, Model 1, Model 2, Model 3)
+and evaluation frameworks (REC-05, REC-11, REC-12).
 """
 
 import os
@@ -37,36 +38,36 @@ class TestModelEstimators(unittest.TestCase):
         })
 
     def test_diurnal_seasonal_naive(self):
-        m0 = DiurnalSeasonalNaive(lag_hours=24)
-        preds = m0.predict(self.df, target_col="TSA_Throughput")
+        baseline_ctrl = DiurnalSeasonalNaive(lag_hours=24)
+        preds = baseline_ctrl.predict(self.df, target_col="TSA_Throughput")
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
     def test_deterministic_fixed_lead_baseline(self):
-        m1 = DeterministicFixedLeadBaseline()
-        m1.fit(self.df, self.df["TSA_Throughput"])
-        preds = m1.predict(self.df)
+        model1 = DeterministicFixedLeadBaseline()
+        model1.fit(self.df, self.df["TSA_Throughput"])
+        preds = model1.predict(self.df)
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
     def test_tweedie_gbr_estimator(self):
-        m3 = TweedieGradientBoostedRegressor(max_iter=30)
-        m3.fit(self.df, self.df["TSA_Throughput"])
-        preds = m3.predict(self.df)
+        model2 = TweedieGradientBoostedRegressor(max_iter=30)
+        model2.fit(self.df, self.df["TSA_Throughput"])
+        preds = model2.predict(self.df)
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
     def test_sequential_sarima_tree_hybrid(self):
-        m5 = SequentialSARIMATreeHybrid()
-        m5.fit(self.df, self.df["TSA_Throughput"])
-        preds = m5.predict(self.df, y_true_for_feedback=self.df["TSA_Throughput"])
+        model3 = SequentialSARIMATreeHybrid()
+        model3.fit(self.df, self.df["TSA_Throughput"])
+        preds = model3.predict(self.df, y_true_for_feedback=self.df["TSA_Throughput"])
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
     def test_probabilistic_quantiles(self):
-        m5 = SequentialSARIMATreeHybrid()
-        m5.fit(self.df, self.df["TSA_Throughput"])
-        q_dict = m5.predict_quantiles(self.df, quantiles=(0.10, 0.50, 0.85, 0.90))
+        model3 = SequentialSARIMATreeHybrid()
+        model3.fit(self.df, self.df["TSA_Throughput"])
+        q_dict = model3.predict_quantiles(self.df, quantiles=(0.10, 0.50, 0.85, 0.90))
         self.assertIn(0.85, q_dict)
         self.assertEqual(len(q_dict[0.85]), len(self.df))
         # 85th percentile upper bound must be greater than or equal to 10th percentile bound

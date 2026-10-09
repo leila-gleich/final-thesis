@@ -8,10 +8,10 @@ Orchestrates:
 3. Candidate B Demarcation & 7-Day Purge Embargo Partitioning (REC-06).
 4. Physics-Informed Feature Engineering Pipeline (REC-01, REC-02, REC-03, REC-04, REC-07, REC-13).
 5. Model Training & 2025 Holdout Benchmark Evaluation:
-   - M0: Diurnal Seasonal Naive (y(t-24))
-   - M1: Rebuilt Deterministic 2-Hour Static Lead Baseline
-   - M3: Gradient Boosted Tweedie / Poisson Regressor
-   - M5: Sequential SARIMA-Tree Cyber-Physical Hybrid with Error Feedback (Winner)
+   - Baseline Control: Diurnal Volatility Naive Persistence Benchmark
+   - Model 1: Deterministic Flight Schedule Model
+   - Model 2: Supervised Machine Learning Model
+   - Model 3: Dynamic Two-Stage Hybrid Model
 6. Multi-Pillar Quantitative Evaluation Suite (REC-11) & Dual-Track Policy Selection (REC-05).
 """
 
@@ -102,10 +102,10 @@ def main():
     y_test = test_df[target_col].fillna(test_df[target_col].mean())
     
     models = {
-        "M0: Diurnal Volatility Naive Benchmark": DiurnalSeasonalNaive(lag_hours=1),
-        "M1*: Deterministic Sched Bank Volatility": DeterministicFixedLeadBaseline(),
-        "M3: Supervised Volatility GBR (Combined)": TweedieGradientBoostedRegressor(max_iter=100, loss="squared_error"),
-        "M5: Sequential SARIMA-Tree Volatility Hybrid": SequentialSARIMATreeHybrid()
+        "Baseline Control: Daily Persistence Benchmark": DiurnalSeasonalNaive(lag_hours=1),
+        "Model 1: Deterministic Schedule Model": DeterministicFixedLeadBaseline(),
+        "Model 2: Supervised Machine Learning Model": TweedieGradientBoostedRegressor(max_iter=100, loss="squared_error"),
+        "Model 3: Dynamic Two-Stage Hybrid Model": SequentialSARIMATreeHybrid()
     }
     
     benchmark_results = {}
@@ -115,9 +115,9 @@ def main():
         if hasattr(model, "fit"):
             model.fit(train_df, y_train)
             
-        if name.startswith("M5"):
+        if "Model 3" in name:
             y_pred = model.predict(test_df, y_true_for_feedback=y_test)
-        elif name.startswith("M0"):
+        elif "Baseline" in name:
             y_pred = model.predict(test_df, target_col=target_col)
         else:
             y_pred = model.predict(test_df)
@@ -131,10 +131,10 @@ def main():
     print(f"{'Model Paradigm (Target: Throughput Volatility)':<44} | {'Test R^2':<8} | {'Test RMSE':<9} | {'Test MASE':<9} | {'Category'}")
     print("=" * 96)
     category_map = {
-        "M0: Diurnal Volatility Naive Benchmark": "Persistence Control",
-        "M1*: Deterministic Sched Bank Volatility": "Deterministic Baseline",
-        "M3: Supervised Volatility GBR (Combined)": "Supervised Volatility ML",
-        "M5: Sequential SARIMA-Tree Volatility Hybrid": "Cyber-Physical Hybrid (Winner)"
+        "Baseline Control: Daily Persistence Benchmark": "Persistence Control",
+        "Model 1: Deterministic Schedule Model": "Deterministic Baseline",
+        "Model 2: Supervised Machine Learning Model": "Supervised Volatility ML",
+        "Model 3: Dynamic Two-Stage Hybrid Model": "Dynamic Two-Stage Hybrid"
     }
     for name, m in benchmark_results.items():
         r2 = m["routine_r2"]

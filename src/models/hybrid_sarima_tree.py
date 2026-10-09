@@ -1,7 +1,7 @@
 """
 src/models/hybrid_sarima_tree.py
 --------------------------------
-Sequential SARIMA-Tree Cyber-Physical Hybrid Model (M5).
+Dynamic Two-Stage Hybrid Model (Model 3).
 
 Two-Stage Estimation Architecture:
 Stage 1: Linear seasonal diurnal baseline (capturing periodic diurnal schedule demand).
@@ -18,7 +18,7 @@ from typing import Optional
 
 class SequentialSARIMATreeHybrid:
     """
-    Model M5: Sequential SARIMA-Tree Hybrid with Dynamic Residual Error Feedback.
+    Model 3: Dynamic Two-Stage Hybrid Model with Dynamic Residual Error Feedback.
     """
     def __init__(self, random_state: int = 42):
         self.random_state = random_state
@@ -144,8 +144,8 @@ if __name__ == "__main__":
         "TSA_Throughput": np.random.uniform(400, 1600, size=n)
     })
     
-    m5 = SequentialSARIMATreeHybrid()
-    m5.fit(df, df["TSA_Throughput"])
-    preds = m5.predict(df, y_true_for_feedback=df["TSA_Throughput"])
+    model3 = SequentialSARIMATreeHybrid()
+    model3.fit(df, df["TSA_Throughput"])
+    preds = model3.predict(df, y_true_for_feedback=df["TSA_Throughput"])
     corr = np.corrcoef(preds, df["TSA_Throughput"])[0, 1]
-    print(f"M5 Hybrid fitted successfully. Prediction-Target correlation: r = {corr:.4f}")
+    print(f"Model 3 Dynamic Hybrid fitted successfully. Prediction-Target correlation: r = {corr:.4f}")

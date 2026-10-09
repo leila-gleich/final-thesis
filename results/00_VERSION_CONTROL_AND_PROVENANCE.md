@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.39 (Author Outline Alignment, COVID Volatility Catalyst Core, and Exhibit Harmonization)
+RELEASE VERSION: v4.40 (Repository Codebase Modernization & Model Nomenclature Sanitization)
 DATE: October 9, 2026
 ====================================================================================================
 
@@ -641,6 +641,22 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   via sync_manuscript_tables.py; verified 44/44 unit tests pass.           |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); raw federal source data untouched.                     |
+| v4.40   | 2026-10-09 | Codebase Modernization & Model Nomenclature Sanitization:                   |
+|         |            | - Modernized run_pipeline.py to eradicate internal code variable tags      |
+|         |            |   (M0, M1*, M3, M5) and prohibited lab jargon ("Cyber-Physical (Winner)"). |
+|         |            | - Re-keyed model training and execution suites to canonical plain-English   |
+|         |            |   suite: Baseline Control (Daily Persistence Benchmark), Model 1            |
+|         |            |   (Deterministic Schedule Model), Model 2 (Supervised Machine Learning     |
+|         |            |   Model), and Model 3 (Dynamic Two-Stage Hybrid Model).                     |
+|         |            | - Modernized model docstrings, class documentation, and self-tests across   |
+|         |            |   src/models/ (hybrid_sarima_tree.py, machine_learning.py, baselines.py).  |
+|         |            | - Enhanced dual_track_eval.py to natively match plain-English model names.  |
+|         |            | - Modernized src/features/airport_selector.py to prioritize conformed       |
+|         |            |   curated hourly dataset (data/curated/hourly_aggregated_data.csv).        |
+|         |            | - Updated test suite (tests/test_models.py) to plain-English nomenclature;  |
+|         |            |   verified 100% test pass rate (44/44 tests) and end-to-end pipeline run.  |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); raw data and conformed tables synchronized.           |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

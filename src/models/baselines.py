@@ -42,7 +42,7 @@ class DiurnalSeasonalNaive:
 
 class DeterministicFixedLeadBaseline:
     """
-    M1: Rebuilt Deterministic Schedule Volatility Baseline.
+    Model 1: Deterministic Flight Schedule Model.
     
     Reflects deterministic airport planning practice:
     Derives predicted passenger screening volatility directly from scheduled flight departure bank dispersion
@@ -89,12 +89,12 @@ if __name__ == "__main__":
         "TSA_Throughput": [500, 600, 800, 1200, 1500] * 10,
         "convolved_lead2": [450, 580, 750, 1100, 1400] * 10
     })
-    m0 = DiurnalSeasonalNaive()
-    m1 = DeterministicFixedLeadBaseline()
-    m1.fit(df, df["TSA_Throughput"])
+    baseline_ctrl = DiurnalSeasonalNaive()
+    model1 = DeterministicFixedLeadBaseline()
+    model1.fit(df, df["TSA_Throughput"])
     
-    p0 = m0.predict(df)
-    p1 = m1.predict(df)
-    print("M0 Naive predictions:", p0[:5])
-    print(f"M1 Baseline fitted: beta_0={m1.beta_0:.2f}, beta_1={m1.beta_1:.4f}")
-    print("M1 Baseline predictions:", p1[:5])
+    p0 = baseline_ctrl.predict(df)
+    p1 = model1.predict(df)
+    print("Baseline Control predictions:", p0[:5])
+    print(f"Model 1 Baseline fitted: beta_0={model1.beta_0:.2f}, beta_1={model1.beta_1:.4f}")
+    print("Model 1 Baseline predictions:", p1[:5])
