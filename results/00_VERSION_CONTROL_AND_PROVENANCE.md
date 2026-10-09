@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.36 (Author-Editor Interlock Protocol, File Ownership SOP, and Explicit Git Governance Deployment)
-DATE: October 6, 2026
+RELEASE VERSION: v4.37 (Manuscript Appendix Table Formatting & Pipe Syntax Remediation Audit)
+DATE: October 8, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -588,6 +588,22 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Updated Section 7 checklist in AGENTS.md with mandatory protocol checks.  |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); untracked review drafts left 100% untouched.           |
+| v4.37   | 2026-10-08 | Manuscript Appendix Table Formatting & Pipe Syntax Remediation Audit:      |
+|         |            | - Remediated broken markdown table rendering across 8 appendix tables      |
+|         |            |   (Tables D.1, J.3, O.1, O.2, O.3, Q.1, U.1, X.1) due to unescaped LaTeX   |
+|         |            |   pipe symbols (|e_t|, \mathbb{E}[Y | S = 0]) and column count mismatches. |
+|         |            | - Hardened src/analysis/generate_appendix_md.py with automatic LaTeX pipe  |
+|         |            |   escaping, newline stripping, and strict length validation.               |
+|         |            | - Reconstructed Table U.1 with dedicated 7-column schema for holdout       |
+|         |            |   regimes across nominal, routine, and severe disruption environments.     |
+|         |            | - Completed forensic audit of all 270 content paragraphs from Appendix     |
+|         |            |   v1.docx across 24 appendices (A-X) with 0 duplicates and 0 omissions.    |
+|         |            | - Validated strictly monotonic chronological chapter citation order        |
+|         |            |   (Ch I -> Ch II -> Ch III -> Ch IV -> Ch V; 0 sequence violations).       |
+|         |            | - Harmonized Appendix U and Table D.1 with single-hypothesis (H1) model    |
+|         |            |   evaluation framework and the Values versus Volatility paradigm.          |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); synchronized tables and workbooks (44/44 tests pass). |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
