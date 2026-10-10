@@ -68,14 +68,18 @@ The revisions incorporated in this update systematically implement the following
   - `## Significance of the Study`
   - `## Statement of the Problem`
   - `## Purpose Statement`
+  - `## Research Questions`
   - `## Hypotheses` (Formal presentation of $H_1$, $H_{1a}$, $H_{1b}$, $H_{1c}$)
-  - `## Theoretical Framework`
   - `## Delimitations`
-  - `## Definition of Terms`
-- **Equation Extraction**: Extracted OMML equations from Word paragraphs, ensuring exact mathematical fidelity:
-  - $H_{1a}$: Robustness target under nominal conditions ($\text{Delay} < 15\text{m}$, 0 cancels).
-  - $H_{1b}$: Resilience target under IROPS ($\text{Delay} \ge 45\text{m}$ or cancels $\ge 5$).
-  - $H_{1c}$: Generalizability target under zero-shot spatial transfer (EWR $\to$ LGA).
+  - `## Limitations and Assumptions`
+- **Equation & Syntax Remediation (Release v4.43)**:
+  - Extracted OMML equations from Word paragraphs, ensuring exact mathematical fidelity and robust KaTeX rendering:
+    * $H_{1a}$: Robustness target under nominal conditions ($\text{Delay} < 15\text{m}$, 0 cancels): Lowest $\text{RMSE}_{\text{routine}}$ and $\text{MASE}_{\text{routine}} < 0.700$.
+    * $H_{1b}$: Resilience target under IROPS ($\text{Delay} \ge 45\text{m}$ or cancels $\ge 5$): $R_{\text{RMSE}} \approx 1.00$, $R_{\text{MASE}} \approx 1.00$, lowest $\text{MASE}_{\text{shock}}$, and $\text{TTR} < 4.0\text{ hours}$.
+    * $H_{1c}$: Generalizability target under zero-shot spatial transfer (EWR $\to$ LGA): $\text{RTR} \approx 1.00$ and $\Delta\text{MASE}_{\text{transfer}} \le 10.0\%$.
+  - Fixed unescaped percent symbols in inline math (`\%`) that acted as LaTeX comment characters, causing KaTeX parsers to comment out closing dollar signs and truncate subsequent paragraphs.
+  - Converted unicode math symbols (`≈`, `≤`, `≫`, `Δ`) into proper LaTeX commands (`\approx`, `\le`, `\gg`, `\Delta`).
+  - Purged raw non-breaking spaces (`\xa0`) from Word paragraph extractions.
 
 ### 3.2 Chapter II: Literature Review
 - **Formatting**: Maintained ERAU MS in Aeronautics thesis layout standards (`format-thesis-example.pdf`).

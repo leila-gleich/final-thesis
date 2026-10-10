@@ -681,6 +681,14 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Authored PROMPT_AND_DECISION_LOG_2026-10-09.md preserving all directives. |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); verified 100% test pass rate (44/44 unit tests).      |
+| v4.43   | 2026-10-09 | Chapter I KaTeX Mathematical Rendering & Markdown Syntax Remediation:      |
+|         |            | - Remedied KaTeX parser breakage in Chapter I (full-thesis.md & chp1-intro):|
+|         |            |   escaped % characters in inline math (Delta MASE <= 10.0\%) to prevent     |
+|         |            |   LaTeX comment truncation; converted unicode symbols (approx, le, gg,     |
+|         |            |   Delta); corrected concatenated variable strings to proper LaTeX notation. |
+|         |            | - Restored explicit ## Hypotheses level 2 heading above H1.                 |
+|         |            | - Purged non-breaking space characters (\\xa0) from paragraph extractions.   |
+|         |            | - Verified 100% test pass rate (44/44 unit tests); zero edits to .docx.     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
