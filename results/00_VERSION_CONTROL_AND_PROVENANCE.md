@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.47 (Figures Directory Reorganization by Thesis Chapter)
+RELEASE VERSION: v4.48 (Appendix v3 Compilation, Delimitations Bullets & Table-Free Linking)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -751,6 +751,21 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Verified 100% test pass rate (48/48 unit tests passing cleanly).          |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx).                                                       |
+| v4.48   | 2026-10-10 | Appendix v3 Compilation, Delimitations Bullets & Table-Free Linking:       |
+|         |            | - Created thesis_docs/manuscripts/Appendix v3.docx from Appendix v2.docx   |
+|         |            |   per author directive, leaving Appendix v2.docx 100% untouched.           |
+|         |            | - Consolidated redundant appendix sections into 14 non-redundant,          |
+|         |            |   lettered appendices (A-N) strictly following chapter citation order.     |
+|         |            | - Removed all embedded tables from appendix and replaced with structured   |
+|         |            |   references to authoritative data assets in final-thesis/figures/.        |
+|         |            | - Added explicit reference to Table 4.11 (Master Multi-Pillar Hypothesis   |
+|         |            |   Evaluation Matrix Across the Four Models) in Appendix J.                 |
+|         |            | - Added formal research delimitations detail bullets under Delimitations   |
+|         |            |   in Chapter I across chp1-intro.md, manuscripts-only, and full-thesis.md. |
+|         |            | - Synchronized Word (Appendix v3.docx) & Markdown (appendix.md) replicas.  |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to author Word drafts |
+|         |            |   (ChpI v4, ChpII v5, ChpIII v4, ChpIV v2.0, ChpV v1, Appendix v2).        |
+|         |            | - Verified 100% test pass rate (48/48 unit tests passing cleanly).         |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
