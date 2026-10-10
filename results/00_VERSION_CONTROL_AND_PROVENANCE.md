@@ -718,24 +718,21 @@ auditability, reproducibility, and referential integrity across all empirical fi
 | v4.46   | 2026-10-10 | Chapter III v3 Recommendation, Methodology Tables & Appendix Streamlining:  |
 |         |            | - Redrafted ChpIII v2.2 into Chp III v3_recommendation.docx per author     |
 |         |            |   directives and APA 7th Edition formatting standards.                      |
-|         |            | - Streamlined Design & Procedures to a single explanatory paragraph and     |
-|         |            |   created companion multi-tab Excel workbook methodology-tables.xlsx        |
-|         |            |   with Design_Procedures_Summary, Design_Procedures_Detailed,                |
-|         |            |   Dataset_Partitioning, and Data_Sources_Summary tabs.                      |
-|         |            | - Made predictive modeling frameworks and baseline control concise without  |
-|         |            |   sub-bullets, covering Baseline Control and Models 1, 2, and 3.            |
-|         |            | - Replaced partitioning protocol bullets with concise text referencing      |
-|         |            |   Table 3.2 and methodology-tables.xlsx.                                    |
-|         |            | - Condensed quantitative evaluation dimensions and operational regimes to a |
-|         |            |   single summary paragraph referencing the Appendix.                        |
+|         |            | - Aligned Research Approach opening text verbatim per author directive with|
+|         |            |   Figure 1 callout, 3 model families, and 3 bulleted performance measures.  |
+|         |            | - Streamlined Research Hypotheses to master hypothesis H1 and 1 sentence per|
+|         |            |   performance measure, excising overly complicated formulas to the Appendix. |
+|         |            | - Condensed Design & Procedures to 6 sentences, with Table 3.1 speaking for |
+|         |            |   itself, and created companion workbook methodology-tables.xlsx.           |
+|         |            | - Condensed Dataset Partitioning to 1 sentence, moving Table 3.2 to Appendix|
+|         |            |   (Table A.2), removing purge buffer column and Candidate B references.     |
+|         |            | - Moved Data Sources Table 3.3 to Appendix (Table A.3); Sources of Data is 1|
+|         |            |   concise paragraph referencing the Appendix.                               |
 |         |            | - Streamlined Four-Tiered Purposive Filtering Pipeline to 1-sentence reasons|
 |         |            |   per tier without numbers, redirecting quantitative counts to Chapter IV.  |
-|         |            | - Condensed Sources of Data to a single paragraph referencing Table 3.3.    |
-|         |            | - Moved Additional Internal Validity Controls and all Construct Validity    |
-|         |            |   threats & mathematical volatility formulations to the Appendix.            |
-|         |            | - Condensed Treatment of Data ETL process to exactly 5 summary sentences,   |
-|         |            |   migrating detailed data engineering protocols to the Appendix.            |
-|         |            | - Synchronized Appendix v1/v2.docx and appendix.md with all detailed sections|
+|         |            | - Integrated author drafts for Validity (Hub Disconnect and lane heterogeneity)|
+|         |            |   and Treatment of Data (3-step HPC ETL pipeline) with polished phrasing.   |
+|         |            | - Synchronized Appendix v1/v2.docx and appendix.md with all detailed sections.|
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
