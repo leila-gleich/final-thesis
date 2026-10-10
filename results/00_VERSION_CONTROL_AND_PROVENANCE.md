@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.41 (CI Pipeline Dependency Harmonization & Defensive Test Hardening)
+RELEASE VERSION: v4.44 (Python Codebase Audit, Obsolete Script Archival & Table Styling Deduplication)
 DATE: October 9, 2026
 ====================================================================================================
 
@@ -687,8 +687,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   LaTeX comment truncation; converted unicode symbols (approx, le, gg,     |
 |         |            |   Delta); corrected concatenated variable strings to proper LaTeX notation. |
 |         |            | - Restored explicit ## Hypotheses level 2 heading above H1.                 |
-|         |            | - Purged non-breaking space characters (\\xa0) from paragraph extractions.   |
+|         |            | - Purged non-breaking space characters (\xa0) from paragraph extractions.   |
 |         |            | - Verified 100% test pass rate (44/44 unit tests); zero edits to .docx.     |
+| v4.44   | 2026-10-09 | Python Codebase Audit, Obsolete Script Archival & Deduplication:            |
+|         |            | - Performed repository-wide audit of all 66 Python scripts across codebase. |
+|         |            | - Archived 10 obsolete/superseded scripts to archive/superseded_scripts/    |
+|         |            |   (db_connection.py, airport_selector.py, lead_lag_convolution.py,          |
+|         |            |   download_2022_2025_db1b.py, combine_db1c_datasets.py, process_od_coupon.py|
+|         |            |   profile_db1b.py, build_db1v0.py, enrich_dimensions.py, perform_top9.py);  |
+|         |            |   cataloged all additions in archive/README.md.                             |
+|         |            | - Modernized run_pipeline.py by removing dead feature pipeline import and   |
+|         |            |   formally connecting apply_candidate_b_partitions with 7-day purge embargo.|
+|         |            | - Extracted standardized APA 7th ed. openpyxl styling engine to             |
+|         |            |   src/utils/excel_styling.py; deduplicated parse_cell_value across excel     |
+|         |            |   table generators (generate_figures_tables_excel and thesis_tables_excel). |
+|         |            | - Cleaned legacy package exports in src/features/ and src/utils/__init__.py.|
+|         |            | - Archived legacy tests/test_features.py; verified 100% test pass rate      |
+|         |            |   (41/41 passing in 0.82s); zero commits per explicit user directive.       |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

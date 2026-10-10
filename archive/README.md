@@ -45,7 +45,18 @@ archive/
     ├── filter_datasets_by_otp.py   # Legacy warehouse filter (superseded by conformed data)
     ├── generate_v1_datasets.py     # Initial batch ETL pipeline for warehouse v1
     ├── transform_otp_time.py       # Vectorized timestamp script (modularized to time_features.py)
-    └── temporal_features.py        # Legacy rolling average query (modularized to time_features.py)
+    ├── temporal_features.py        # Legacy rolling average query (modularized to time_features.py)
+    ├── db_connection.py            # Obsolete DuckDB connector targeting data/warehouse.duckdb
+    ├── airport_selector.py         # Legacy volume-based airport selector targeting archive Parquet
+    ├── lead_lag_convolution.py     # Static lognormal arrival kernel (superseded by cluster_adapt.py)
+    ├── download_2022_2025_db1b.py  # One-off TranStats curl download for historical DB1B ZIPs
+    ├── combine_db1c_datasets.py    # One-off concatenation of 2025-07 to 2025-12 DB1C monthly files
+    ├── process_od_coupon.py        # One-off coupon streaming/cleaning ZIP preprocessor
+    ├── profile_db1b.py             # One-off random sampling and schema profiler for raw DB1B
+    ├── build_db1v0.py              # Precursor fact table builder (superseded by conformed curated feeds)
+    ├── enrich_dimensions.py        # One-off dimension metadata builder for airport/date dimensions
+    ├── perform_top9_analysis.py    # Standalone Top 9 vs Top 25 script (superseded by conformed tables)
+    └── test_features_legacy.py     # Legacy unit tests for archived lead_lag_convolution & airport_selector
 ```
 
 ---

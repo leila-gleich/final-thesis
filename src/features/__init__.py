@@ -9,14 +9,6 @@ from .airside_flow import compute_airside_interactions
 from .checkpoint_map import compute_checkpoint_weights, get_checkpoint_confidence
 from .feature_pipeline import build_conformed_feature_matrix
 
-# Backward-compatibility legacy exports
-from .lead_lag_convolution import (
-    compute_arrival_weights,
-    convolve_scheduled_demand,
-    continuous_passenger_arrival_kernel,
-)
-from .airport_selector import AirportSelector
-
 __all__ = [
     # Modern Feature Engineering Pipeline (REC-01 to REC-13)
     "generate_temporal_features",
@@ -31,10 +23,5 @@ __all__ = [
     "compute_checkpoint_weights",
     "get_checkpoint_confidence",
     "build_conformed_feature_matrix",
-    # Legacy compatibility
-    "compute_arrival_weights",
-    "convolve_scheduled_demand",
-    "continuous_passenger_arrival_kernel",
-    "AirportSelector",
 ]
 
