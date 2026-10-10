@@ -60,6 +60,7 @@ final-thesis/
 │   ├── analysis/                       <-- Seasonal Volatility & Table Synchronization
 │   │   ├── generate_figures_tables_excel.py # Multi-tab exhibits Excel generator
 │   │   ├── generate_thesis_tables_excel.py  # APA master thesis_tables.xlsx generator
+│   │   ├── generate_radar_chart.py     # Figure 5.1 Asymmetric Trade-Off Triangle radar chart
 │   │   ├── season_analysis_volatility_runner.py # Reproducible seasonal regimes runner
 │   │   └── sync_manuscript_tables.py   # Automated 16-table CSV extraction & Excel sync
 │   ├── etl/                            <-- Ingestion, Top 25 Clustering & 4-Tier Filtering
@@ -85,12 +86,11 @@ final-thesis/
 │   │   └── split_regimes.py            # Candidate B & 7-day purge embargoes
 │   ├── manuscripts/                    <-- Manuscript Compilers & Markdown Generators
 │   │   ├── generate_acronyms_docx.py   # Acronyms & abbreviations list generator
-│   │   ├── generate_appendix_md.py     # Appendix generator
+│   │   ├── generate_appendix_v3.py     # Appendix v3 compiler (14 consolidated appendices)
 │   │   └── generate_categorized_glossary.py # Categorized glossary compiler
 │   └── utils/                          <-- Path Resolution & Styling Utilities
 │       ├── paths.py                    # Self-contained repository path registry
-│       ├── excel_styling.py            # Centralized APA 7th ed. openpyxl layout & styling engine
-│       └── logger.py                   # Standardized logging utility
+│       └── excel_styling.py            # Centralized APA 7th ed. openpyxl layout & styling engine
 ├── data/                               <-- Data Directory (Curated aggregates, samples, dimensions)
 │   ├── curated/                        # Coupled hourly & daily TSA/flight aggregates (2019–2025)
 │   ├── sample/                         # Representative sample fixtures for pipeline validation

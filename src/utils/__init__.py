@@ -1,7 +1,6 @@
 """
-Utility modules for logging and database connectivity.
+Utility modules for path resolution and Excel layout styling.
 """
-from .logger import setup_logger
 from .excel_styling import (
     parse_cell_value,
     auto_fit_columns,
@@ -22,7 +21,6 @@ from .excel_styling import (
 )
 
 __all__ = [
-    "setup_logger",
     "parse_cell_value",
     "auto_fit_columns",
     "autofit_column_widths",

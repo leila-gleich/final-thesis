@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.49 (Comprehensive Acronyms Expansion to 149 Terms Across Manuscripts & Code)
+RELEASE VERSION: v4.50 (Codebase Streamlining, Script Archiving & Analysis vs. Manuscript Modularization)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -784,6 +784,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Added backward-compatible forwarder src/analysis/generate_acronyms_docx.py|
 |         |            | - Updated test suite tests/test_acronyms_generation.py (48/48 tests ok).    |
 |         |            | - Preserved strict Policy 1.1: Word thesis review drafts 100% untouched.    |
+| v4.50   | 2026-10-10 | Codebase Streamlining, Script Archiving & Analysis vs. Manuscript Modular: |
+|         |            | - Archived superseded Appendix v1 compiler (src/manuscripts/generate_       |
+|         |            |   appendix_md.py -> archive/superseded_scripts/generate_appendix_v1_legacy).|
+|         |            | - Relocated active Appendix v3 compiler from src/analysis/ to canonical     |
+|         |            |   location in src/manuscripts/ (src/manuscripts/generate_appendix_v3.py).   |
+|         |            | - Extracted Figure 5.1 radar chart generator into dedicated self-contained   |
+|         |            |   script (src/analysis/generate_radar_chart.py).                            |
+|         |            | - Archived one-time directory migration script (reorganize_figures_by_      |
+|         |            |   chapter.py -> archive/superseded_scripts/).                               |
+|         |            | - Archived unused stream logger (src/utils/logger.py -> archive/superseded_ |
+|         |            |   scripts/logger.py) and cleaned package exports in src/utils/__init__.py.  |
+|         |            | - Updated archive/README.md catalog with all newly archived scripts.        |
+|         |            | - Synchronized root README.md directory tree to reflect modular package lay-|
+|         |            |   out and active generators.                                                |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx).                                                        |
+|         |            | - Verified 100% test pass rate (48/48 unit tests passing cleanly).          |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
