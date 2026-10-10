@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.45 (Architecture Standardization, Model Tag Sanitization & Test Suite Expansion)
+RELEASE VERSION: v4.46 (Chapter III v3 Recommendation, Methodology Tables & Appendix Streamlining)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -715,6 +715,27 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Added tests/test_panel_loader.py, test_excel_styling.py, and              |
 |         |            |   test_feature_pipeline.py expanding test suite to 48 tests (100% passing). |
 |         |            | - Synchronized root README.md directory tree to reflect modular architecture.|
+| v4.46   | 2026-10-10 | Chapter III v3 Recommendation, Methodology Tables & Appendix Streamlining:  |
+|         |            | - Redrafted ChpIII v2.2 into Chp III v3_recommendation.docx per author     |
+|         |            |   directives and APA 7th Edition formatting standards.                      |
+|         |            | - Streamlined Design & Procedures to a single explanatory paragraph and     |
+|         |            |   created companion multi-tab Excel workbook methodology-tables.xlsx        |
+|         |            |   with Design_Procedures_Summary, Design_Procedures_Detailed,                |
+|         |            |   Dataset_Partitioning, and Data_Sources_Summary tabs.                      |
+|         |            | - Made predictive modeling frameworks and baseline control concise without  |
+|         |            |   sub-bullets, covering Baseline Control and Models 1, 2, and 3.            |
+|         |            | - Replaced partitioning protocol bullets with concise text referencing      |
+|         |            |   Table 3.2 and methodology-tables.xlsx.                                    |
+|         |            | - Condensed quantitative evaluation dimensions and operational regimes to a |
+|         |            |   single summary paragraph referencing the Appendix.                        |
+|         |            | - Streamlined Four-Tiered Purposive Filtering Pipeline to 1-sentence reasons|
+|         |            |   per tier without numbers, redirecting quantitative counts to Chapter IV.  |
+|         |            | - Condensed Sources of Data to a single paragraph referencing Table 3.3.    |
+|         |            | - Moved Additional Internal Validity Controls and all Construct Validity    |
+|         |            |   threats & mathematical volatility formulations to the Appendix.            |
+|         |            | - Condensed Treatment of Data ETL process to exactly 5 summary sentences,   |
+|         |            |   migrating detailed data engineering protocols to the Appendix.            |
+|         |            | - Synchronized Appendix v1/v2.docx and appendix.md with all detailed sections|
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
