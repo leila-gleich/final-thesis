@@ -42,6 +42,10 @@ from openpyxl.utils import get_column_letter
 # Paths configuration
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+from src.utils.excel_styling import autofit_column_widths
 
 RESULTS_REGIMES_DIR = os.path.join(PROJECT_ROOT, "results", "01_top25_clustering", "seasonality_and_regimes")
 OUTPUT_DIRS = [
@@ -627,10 +631,7 @@ def run_volatility_analysis():
                     c.alignment = Alignment(horizontal="left")
                     
         # Column width formatting
-        for col in ws.columns:
-            max_len = max(len(str(cell.value or '')) for cell in col)
-            col_letter = get_column_letter(col[0].column)
-            ws.column_dimensions[col_letter].width = min(max(max_len + 3, 11), 40)
+        autofit_column_widths(ws, min_width=11, max_width=40, padding=3)
             
     # Save workbook in all target directories
     for target_dir in OUTPUT_DIRS:

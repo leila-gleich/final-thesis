@@ -58,10 +58,11 @@ final-thesis/
 │
 ├── src/                                <-- Modular Python Source Code Infrastructure
 │   ├── analysis/                       <-- Seasonal Volatility & Table Synchronization
+│   │   ├── generate_figures_tables_excel.py # Multi-tab exhibits Excel generator
+│   │   ├── generate_thesis_tables_excel.py  # APA master thesis_tables.xlsx generator
 │   │   ├── season_analysis_volatility_runner.py # Reproducible seasonal regimes runner
 │   │   └── sync_manuscript_tables.py   # Automated 16-table CSV extraction & Excel sync
 │   ├── etl/                            <-- Ingestion, Top 25 Clustering & 4-Tier Filtering
-│   │   ├── build_db1v0.py
 │   │   ├── perform_top25_clustering.py # Step 1: Top 25 PCA & K-Means clustering
 │   │   ├── apply_4tier_filtering.py    # Step 2: 4-tier filtering pipeline (Top 25 -> 9 Cohort)
 │   │   └── pipeline_audit.py           # Step 3: Standardized 6-point referential audit
@@ -79,10 +80,16 @@ final-thesis/
 │   │   ├── hybrid_sarima_tree.py       # Dynamic Two-Stage Hybrid Volatility Model
 │   │   ├── eval_pillars.py             # Multi-pillar quantitative evaluation suite
 │   │   └── dual_track_eval.py          # Dual-track operational policy decision rules
-│   ├── data/                           <-- Regime Demarcation & Partitioning
+│   ├── data/                           <-- Regime Demarcation & Panel Loading
+│   │   ├── panel_loader.py             # Curated hourly panel data loader & volatility calculator
 │   │   └── split_regimes.py            # Candidate B & 7-day purge embargoes
-│   └── utils/                          <-- Path Resolution & Logging Utilities
+│   ├── manuscripts/                    <-- Manuscript Compilers & Markdown Generators
+│   │   ├── generate_acronyms_docx.py   # Acronyms & abbreviations list generator
+│   │   ├── generate_appendix_md.py     # Appendix generator
+│   │   └── generate_categorized_glossary.py # Categorized glossary compiler
+│   └── utils/                          <-- Path Resolution & Styling Utilities
 │       ├── paths.py                    # Self-contained repository path registry
+│       ├── excel_styling.py            # Centralized APA 7th ed. openpyxl layout & styling engine
 │       └── logger.py                   # Standardized logging utility
 ├── data/                               <-- Data Directory (Curated aggregates, samples, dimensions)
 │   ├── curated/                        # Coupled hourly & daily TSA/flight aggregates (2019–2025)

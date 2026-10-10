@@ -16,9 +16,9 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
-from src.utils.paths import BASE_DIR, RESULTS_DIR
+from src.utils.paths import BASE_DIR, RESULTS_DIR, TOP25_CLUSTERING_WB
 
-TOP25_EXCEL_PATH = RESULTS_DIR / "01_top25_clustering" / "01_top25_clustering.xlsx"
+TOP25_EXCEL_PATH = TOP25_CLUSTERING_WB
 
 TOP_25_AIRPORTS = [
     "ATL", "AUS", "BOS", "CLT", "DCA", "DEN", "DFW", "DTW", "EWR", "IAD",

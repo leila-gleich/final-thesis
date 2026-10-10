@@ -32,6 +32,9 @@ except ImportError:
         TOP25_CLUSTERING_WB
     )
 
+COHORT_AIRPORTS = {"DFW", "PHL", "ORD", "DTW", "LGA", "BOS", "EWR", "IAH", "LAX"}
+CURATED_HOURLY_AIRPORTS = {"BOS", "DFW", "DTW", "EWR", "IAD", "IAH", "LAX", "LGA", "ORD"}
+
 
 def load_and_prepare_panel_data(
     hourly_path=None,

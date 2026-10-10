@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.44 (Python Codebase Audit, Obsolete Script Archival & Table Styling Deduplication)
-DATE: October 9, 2026
+RELEASE VERSION: v4.45 (Architecture Standardization, Model Tag Sanitization & Test Suite Expansion)
+DATE: October 10, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -704,6 +704,17 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Cleaned legacy package exports in src/features/ and src/utils/__init__.py.|
 |         |            | - Archived legacy tests/test_features.py; verified 100% test pass rate      |
 |         |            |   (41/41 passing in 0.82s); zero commits per explicit user directive.       |
+| v4.45   | 2026-10-10 | Architecture Standardization, Model Tag Sanitization & Test Suite Expansion: |
+|         |            | - Sanitized model tags in src/models/dual_track_eval.py to remove legacy    |
+|         |            |   internal tags (M0, M1*, M3), ensuring 100% Policy 3.2 plain-English rules. |
+|         |            | - Standardized TOP25_CLUSTERING_WB import in perform_top25_clustering.py.   |
+|         |            | - Refactored season_analysis_volatility_runner.py to reuse openpyxl autofit |
+|         |            |   helpers from src.utils.excel_styling.                                    |
+|         |            | - Modernized src/utils/logger.py default logger name to 'final_thesis'.     |
+|         |            | - Enhanced src/utils/excel_styling.py with comma float parsing & APA rules. |
+|         |            | - Added tests/test_panel_loader.py, test_excel_styling.py, and              |
+|         |            |   test_feature_pipeline.py expanding test suite to 48 tests (100% passing). |
+|         |            | - Synchronized root README.md directory tree to reflect modular architecture.|
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

@@ -78,14 +78,15 @@ def parse_cell_value(val_str: str) -> Tuple[Any, Optional[str], str]:
         except ValueError:
             pass
 
-    # Floating point numbers (handling decimals)
+    # Floating point numbers (handling decimals and optional comma separators)
+    clean_float_s = s.replace(",", "")
     try:
-        f = float(s)
-        if "." in s:
-            decimals = len(s.split(".")[1])
-            fmt = "0." + "0" * min(decimals, 4)
+        f = float(clean_float_s)
+        if "." in clean_float_s:
+            decimals = len(clean_float_s.split(".")[1])
+            fmt = "#,##0." + "0" * min(decimals, 4) if "," in s else "0." + "0" * min(decimals, 4)
         else:
-            fmt = "0.00"
+            fmt = "#,##0.00" if "," in s else "0.00"
         return f, fmt, "right"
     except ValueError:
         pass
@@ -137,3 +138,54 @@ def setup_return_link(ws, row: int = 1, col: int = 1,
     c.hyperlink = target
     c.alignment = Alignment(horizontal="left", vertical="center")
     ws.row_dimensions[row].height = 20
+
+
+APA_FONT_NAME = "Calibri"
+autofit_column_widths = auto_fit_columns
+
+
+def apply_apa_table_borders(
+    ws,
+    header_row_idx: int,
+    data_start_row: int,
+    data_end_row: int,
+    start_col: int = 1,
+    end_col: Optional[int] = None
+):
+    """
+    Applies APA 7th Edition horizontal boundary rules:
+    - Header row: thin horizontal rule above and below.
+    - Data rows: zero interior horizontal or vertical gridlines.
+    - Last data row: thin horizontal rule below.
+    """
+    max_c = end_col or ws.max_column
+    for c_idx in range(start_col, max_c + 1):
+        ws.cell(row=header_row_idx, column=c_idx).border = BORDER_TOP_BOTTOM
+        if data_end_row >= data_start_row:
+            ws.cell(row=data_end_row, column=c_idx).border = BORDER_BOTTOM_ONLY
+
+
+def style_table_range(
+    ws,
+    start_row: int,
+    end_row: int,
+    start_col: int = 1,
+    end_col: Optional[int] = None,
+    font_size: int = 11,
+    font_name: str = "Calibri"
+):
+    """
+    Ensures clean APA typography across a table range.
+    """
+    max_c = end_col or ws.max_column
+    for r_idx in range(start_row, end_row + 1):
+        for c_idx in range(start_col, max_c + 1):
+            cell = ws.cell(row=r_idx, column=c_idx)
+            cell.font = Font(
+                name=font_name,
+                size=font_size,
+                bold=cell.font.bold if cell.font else False,
+                italic=cell.font.italic if cell.font else False,
+                color="000000"
+            )
+

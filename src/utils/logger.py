@@ -1,7 +1,7 @@
 import logging
 import sys
 
-def setup_logger(name="700b_warehouse", level=logging.INFO):
+def setup_logger(name="final_thesis", level=logging.INFO):
     logger = logging.getLogger(name)
     if not logger.handlers:
         handler = logging.StreamHandler(sys.stdout)
