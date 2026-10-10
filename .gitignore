@@ -14,10 +14,12 @@ data/raw/*
 data/processed/*
 !data/processed/.gitkeep
 
-# Microsoft Office temporary lock files
+# Microsoft Office temporary lock and cache files
 ~$*.docx
 ~$*.xlsx
 ~$*.pptx
+~$*.tmp
+*.tmp
 *.docx                # ignore all Word documents
 
 # Jupyter Notebook checkpoints
