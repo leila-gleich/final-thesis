@@ -1,0 +1,6 @@
+operational_milestone,airport_zone,lead_time_relative_to_departure,operational_mechanics_and_feedback
+Passenger Arrival & Queue Entry,Landside (Curbside & Checkpoint),T - 90 to T - 150 min (mean approx 105 min),"Passengers enter security screening lanes; checkpoint throughput at hour t represents demand for flights departing in hours t+1, t+2, and t+3."
+Security Screening Clearance,TSA Checkpoint Complex,T - 60 to T - 100 min,"Physical identity verification, passenger divestiture, and body/baggage scanning."
+Airside Concourse Dwell,Airside (Sterile Concourse),T - 20 to T - 50 min,"Passengers transit sterile terminal concourse, visit concessions, and assemble at gate."
+Boarding Door Closure,Airside (Aircraft Gate),T - 15 min,Federal security regulations and airline SOP require gate doors to close strictly 15 minutes before scheduled pushback.
+Pushback / Taxi (CRSDepTime),Airside (Runway & Apron),T = 0 min (Scheduled Pushback),Aircraft gate pushback and taxi-out; actual flight departure delays act as a downstream feedback indicator of terminal gate saturation.

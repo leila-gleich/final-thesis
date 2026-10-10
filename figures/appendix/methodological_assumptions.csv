@@ -1,0 +1,15 @@
+level,key_assumption,mathematical_operational_justification,failure_mode_prevented
+Terminal Flow,Non-traveler exits are negligible,Gate passes / aborted boardings are << 1% of peak bank volume,Over-parameterized noise modeling; false uncoupling
+Terminal Flow,Connecting passengers bypass security,Sterile area transfers never enter landside security screening,"Throughput paradoxes (e.g., CLT 76% connecting traffic)"
+Terminal Flow,Exclusion of inbound arrivals,Arriving passengers exit directly via one-way sterile exits,Inbound flight ghost demand & spurious correlation
+Terminal Flow,Exhaustive nationwide departures,Physical screening serves all destinations and carriers,Truncation bias (>50% omitted originating volume)
+Temporal Coupling,90–120 min lead time window,Unidirectional pipeline (doors close T - 15; screening T - 100),Phase-shift misspecification (t <-> t correlation error)
+Temporal Coupling,Lognormal arrival density kernel,"Peak show-up mode approx 92.5 min; discrete weights (0.25, 0.55, 0.20)",Rigid scalar shifts failing to capture human variance
+Temporal Coupling,Zero lookahead leakage,Models rely strictly on planned pre-departure schedules,Target leakage from realized operational delays
+Sample Filtering,Top 25 macro power-law cut-off,Captures 67% of NAS volume; Kingman heavy-traffic limit rho -> 1.0,Light-traffic triviality (rho << 0.3) and low SNR (CV ~ 0.14)
+Sample Filtering,Micro checkpoint exclusivity,Eliminates cross-carrier collinearity (Corr approx 0.90),Gram matrix inversion collapse (kappa >> 10^4)
+Sample Filtering,Meso Big 3 co-location,Identical weather/airspace shock differencing (delta_t - delta_t = 0),Carrier comparison confounded by regional weather
+Sample Filtering,Exclusion of Southwest (WN),"Open-seating bimodal arrival distribution (mu_1 approx 135m, mu_2 approx 65m)",Violation of parameter exchangeability (f_j(tau) != f(tau))
+Sample Filtering,"Post-pandemic May 1, 2022 boundary",Mask mandate repeal; network aggregate stability,Localized leisure vs. business recovery distortions
+Evaluation,Orthogonal 4 x 4 factorial design,Exactly 4 exclusive checkpoints per carrier across 4 clusters,Unbalanced ANOVA variance inflation
+Evaluation,Twin TRACON disruption controls,Matched weather shocks (EWR T-C vs. LGA T-C),Localized convective bias in resilience / TTR testing

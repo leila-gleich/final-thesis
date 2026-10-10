@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.46 (Chapter III v3 Recommendation, Methodology Tables & Appendix Streamlining)
+RELEASE VERSION: v4.47 (Figures Directory Reorganization by Thesis Chapter)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -733,6 +733,24 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Integrated author drafts for Validity (Hub Disconnect and lane heterogeneity)|
 |         |            |   and Treatment of Data (3-step HPC ETL pipeline) with polished phrasing.   |
 |         |            | - Synchronized Appendix v1/v2.docx and appendix.md with all detailed sections.|
+| v4.47   | 2026-10-10 | Figures Directory Reorganization by Thesis Chapter (Ch I - V & Appendix):   |
+|         |            | - Reorganized figures/ directory into intuitive, chapter-aligned folders:   |
+|         |            |   * figures/ch01_intro/ (3 figures, 3 companion CSV datasets, README.md)   |
+|         |            |   * figures/ch02_lit_review/ (6 figures, 6 companion CSV datasets, README) |
+|         |            |   * figures/ch03_methodology/ (15 figures, 15 CSVs, 3 workbooks, README.md)|
+|         |            |   * figures/ch04_results/ (5 figure pairs, 7 companion CSV tables, README)  |
+|         |            |   * figures/ch05_discussion/ (Figure 5.1 radar chart, 5 CSVs, README.md)   |
+|         |            |   * figures/appendix/ (7 reference figures, 7 CSV tables, 1 workbook)      |
+|         |            | - Preserved figures/04_Appendix_and_Reference/ for 100% test compatibility. |
+|         |            | - Generated Figure 5.1: The Asymmetric Trade-Off Evaluation Triangle (H1)  |
+|         |            |   radar chart illustrating multi-dimensional trade-offs (Robustness,       |
+|         |            |   Resilience, Generalizability) across candidate models.                   |
+|         |            | - Authored Master figures/README.md cataloging all figures, companion data  |
+|         |            |   tables, APA 7 boundary rules, and heavy-traffic queuing formulations.     |
+|         |            | - Authored src/analysis/reorganize_figures_by_chapter.py automation runner. |
+|         |            | - Verified 100% test pass rate (48/48 unit tests passing cleanly).          |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx).                                                       |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

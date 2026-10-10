@@ -1,0 +1,11 @@
+metric,tsa_throughput_tsav0_csv,on_time_performance_otpv0_csv,t100_segment_statistics_t100v0_csv
+File Size on Disk,542 MB,6.5 GB,81 MB
+Total Record Count,"19,500,286","45,777,091","1,945,451"
+Schema Column Count,7 columns,39 columns,11 columns
+Temporal Coverage,"Jan 1, 2019 – Jun 13, 2026","Jan 1, 2019 – Dec 31, 2025","Jan 1, 2019 – May 31, 2026"
+Distinct Time Units,"2,721 days (65,304 hrs)","2,557 days (7 full years)",89 calendar months
+Distinct Airports,460 airports,376 airports,518 airports
+Distinct Airlines,— (All screened pax),21 carriers,18 carriers
+Distinct Aircraft,—,"7,617 tail numbers",40 aircraft models
+Primary Unit of Analysis,Hourly Checkpoint Lane,Individual Flight Leg,Monthly Route Segment
+Data Health / Nulls,0.00% Nulls,0.00% Key Nulls,0.00% Nulls
