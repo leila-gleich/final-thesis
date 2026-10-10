@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.48 (Appendix v3 Compilation, Delimitations Bullets & Table-Free Linking)
+RELEASE VERSION: v4.49 (Comprehensive Acronyms Expansion to 149 Terms Across Manuscripts & Code)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -766,6 +766,24 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to author Word drafts |
 |         |            |   (ChpI v4, ChpII v5, ChpIII v4, ChpIV v2.0, ChpV v1, Appendix v2).        |
 |         |            | - Verified 100% test pass rate (48/48 unit tests passing cleanly).         |
+| v4.49   | 2026-10-10 | Comprehensive Acronyms & Abbreviations Inventory Expansion (149 Terms):     |
+|         |            | - Scanned all updated manuscript chapters (ChpI v4, ChpII v5, ChpIII v4,    |
+|         |            |   ChpIV v2.0, ChpV v1, Appendix v3, and Markdown equivalents).              |
+|         |            | - Expanded master acronyms inventory from 132 to 149 terms (+17 terms):     |
+|         |            |   * Security/Hardware: AIT (Advanced Imaging Technology body scanners)      |
+|         |            |   * Simulation/Modeling: ARENA, CAST, SIMMOD                                |
+|         |            |   * Terminals/Cargo: B/C (Terminal B/C dedicated complexes), MEM, SDF, UPS  |
+|         |            |   * Legislation/Federal: CARES (CARES Act of 2020)                          |
+|         |            |   * Operations/BTS: DepDelay, TaxiOut, LF (Passenger Load Factor), JOC      |
+|         |            |   * Mathematics/Econometrics: FIR (Finite Impulse Response filter), IQR     |
+|         |            |   * Hypotheses: H1 (Asymmetric Trade-Offs), H2 (Volatility Coupling).        |
+|         |            | - Regenerated Word documents (List_of_Acronyms_and_Abbreviations.docx,      |
+|         |            |   Acronyms v1.docx) strictly per APA 7th Edition style.                     |
+|         |            | - Regenerated Markdown replicas (thesis_docs/manuscripts/acronyms.md and    |
+|         |            |   thesis_docs/manuscripts/manuscripts-only/acronyms.md).                    |
+|         |            | - Added backward-compatible forwarder src/analysis/generate_acronyms_docx.py|
+|         |            | - Updated test suite tests/test_acronyms_generation.py (48/48 tests ok).    |
+|         |            | - Preserved strict Policy 1.1: Word thesis review drafts 100% untouched.    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

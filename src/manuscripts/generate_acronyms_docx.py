@@ -31,7 +31,6 @@ from docx.oxml.ns import qn, nsdecls
 
 # Master Dictionary of Acronyms across the Thesis Manuscripts
 ACRONYM_DATA = [
-    # A
     {
         "acronym": "A14",
         "full_term": "Air Carrier On-Time Reporting Benchmark (14-Minute Arrival Delay Tolerance)",
@@ -59,6 +58,13 @@ ACRONYM_DATA = [
         "category": "Predictive Modeling & Computational Methods",
         "cat_id": 6,
         "definition": "The overarching computer science discipline encompassing machine learning, statistical pattern recognition, and autonomous operational decision systems; evaluated in the literature review to contrast empirical data-driven forecasting with deterministic operational models."
+    },
+    {
+        "acronym": "AIT",
+        "full_term": "Advanced Imaging Technology",
+        "category": "Airport Infrastructure & Operations",
+        "cat_id": 2,
+        "definition": "Full-body millimeter-wave automated scanning technology deployed at commercial airport TSA screening checkpoints; operates alongside Credential Authentication Technology (CAT) and Computed Tomography (CT) lanes to detect non-metallic and metallic threats while governing individual lane service times."
     },
     {
         "acronym": "ANN",
@@ -93,7 +99,14 @@ ACRONYM_DATA = [
         "full_term": "Absolute Percentage Error",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "The observation-level forecasting error ratio defined as |y_t - ŷ_t| / y_t. In the thesis, shown to produce catastrophic division-by-zero explosions during overnight checkpoint curfew hours when actual screening volumes approach zero (y_t ≈ 0), methodologically invalidating Mean Absolute Percentage Error (MAPE)."
+        "definition": "The observation-level forecasting error ratio defined as |y_t - \u0177_t| / y_t. In the thesis, shown to produce catastrophic division-by-zero explosions during overnight checkpoint curfew hours when actual screening volumes approach zero (y_t \u2248 0), methodologically invalidating Mean Absolute Percentage Error (MAPE)."
+    },
+    {
+        "acronym": "ARENA",
+        "full_term": "Arena Discrete-Event Simulation Software",
+        "category": "Predictive Modeling & Computational Methods",
+        "cat_id": 6,
+        "definition": "Discrete-event simulation software platform (Rockwell Automation) widely evaluated in airport terminal and passenger processing literature; reviewed in Chapter II as high-fidelity for structural planning but computationally unsuitable for real-time tactical floor control."
     },
     {
         "acronym": "ARIMA",
@@ -123,8 +136,13 @@ ACRONYM_DATA = [
         "cat_id": 4,
         "definition": "Major commercial connecting hub (IATA code: ATL; Delta Air Lines primary mega-complex). Evaluated in the Top 25 network clustering census; excluded from the primary 9-airport experimental cohort during 4-tier filtering due to extreme connecting transfer ratios (>65%) that confound TSA checkpoint throughput."
     },
-
-    # B
+    {
+        "acronym": "B/C",
+        "full_term": "Terminal B/C Dedicated Carrier Screening Complex",
+        "category": "Airport Cohort & Airfield Codes",
+        "cat_id": 4,
+        "definition": "Physical passenger screening checkpoint complexes serving interconnected concourses (e.g., LGA Terminal B and C, PHL Terminal B/C); analyzed during the 4-tier filtering process to isolate dedicated carrier terminal banks from multi-carrier shared checkpoints."
+    },
     {
         "acronym": "BI",
         "full_term": "Business Intelligence",
@@ -147,6 +165,13 @@ ACRONYM_DATA = [
         "definition": "Statistical operating administration within the U.S. Department of Transportation (USDOT) that collects, compiles, and publishes official national transportation datasets, including BTS Form 234 (On-Time Performance), Form 41 (Schedule T-100), and the DB1B Origin and Destination Survey."
     },
     {
+        "acronym": "BTS Form 234",
+        "full_term": "BTS Form 234 Airline On-Time Performance Survey",
+        "category": "Federal Aviation Datasets & Schemas",
+        "cat_id": 3,
+        "definition": "Mandatory monthly flight-by-flight operational database providing departure delays, arrival delays, taxi-out queue durations, airborne times, and cause-of-delay categories (Carrier, Weather, NAS, Security, Late Aircraft) across reporting air carriers."
+    },
+    {
         "acronym": "BTS Form 41",
         "full_term": "BTS Form 41 Financial and Operating Statistics (Schedule T-100)",
         "category": "Federal Aviation Datasets & Schemas",
@@ -154,14 +179,19 @@ ACRONYM_DATA = [
         "definition": "Federal regulatory reporting schedule filed by commercial airlines containing monthly non-stop domestic flight segment records, available aircraft seat capacity, flown revenue passenger counts, and passenger load factors."
     },
     {
-        "acronym": "BTS Form 234",
-        "full_term": "BTS Form 234 Airline On-Time Performance Survey",
-        "category": "Federal Aviation Datasets & Schemas",
-        "cat_id": 3,
-        "definition": "Mandatory monthly flight-by-flight operational database providing departure delays, arrival delays, taxi-out queue durations, airborne times, and cause-of-delay categories (Carrier, Weather, NAS, Security, Late Aircraft) across reporting air carriers."
+        "acronym": "CARES",
+        "full_term": "Coronavirus Aid, Relief, and Economic Security Act",
+        "category": "Regulatory & Air Traffic Management",
+        "cat_id": 1,
+        "definition": "Federal emergency relief statute (Public Law 116-136, enacted March 2020) that established the airline Payroll Support Program and mandated minimum commercial service obligations; analyzed in Chapter III and Appendix G regarding pandemic capacity distortions."
     },
-
-    # C
+    {
+        "acronym": "CAST",
+        "full_term": "Comprehensive Airport Simulation Technology (ARC Simulation Platform)",
+        "category": "Predictive Modeling & Computational Methods",
+        "cat_id": 6,
+        "definition": "Integrated fast-time airport terminal, apron, and airspace simulation platform developed by Airport Research Center (ARC); reviewed in Chapter II terminal passenger modeling literature."
+    },
     {
         "acronym": "CAT",
         "full_term": "Credential Authentication Technology",
@@ -230,24 +260,22 @@ ACRONYM_DATA = [
         "full_term": "Coefficient of Variation",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Dimensionless scale-free measure of relative dispersion defined as the ratio of the standard deviation to the mean (CV = σ / μ). Used throughout the thesis to quantify passenger arrival burstiness independent of airport size."
+        "definition": "Dimensionless scale-free measure of relative dispersion defined as the ratio of the standard deviation to the mean (CV = \u03c3 / \u03bc). Used throughout the thesis to quantify passenger arrival burstiness independent of airport size."
     },
     {
         "acronym": "CVI",
         "full_term": "Coupled Volatility Index (Landside-Airside Volatility Interaction Term)",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Operational interaction term defined as the product of scale-free passenger throughput volatility (CV_TSA) and flight departure delay dispersion (σ_Delay), measuring compounding operational turbulence when landside surges coincide with airside flight delays."
+        "definition": "Operational interaction term defined as the product of scale-free passenger throughput volatility (CV_TSA) and flight departure delay dispersion (\u03c3_Delay), measuring compounding operational turbulence when landside surges coincide with airside flight delays."
     },
     {
         "acronym": "CV_TSA",
         "full_term": "Coefficient of Variation of TSA Passenger Screening Throughput",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Primary scale-free dependent target of the thesis, defined as the hourly standard deviation of passenger screening throughput divided by mean hourly throughput across the diurnal cycle (CV_TSA,hr = σ_hr / μ_hr). Captures checkpoint arrival burstiness."
+        "definition": "Primary scale-free dependent target of the thesis, defined as the hourly standard deviation of passenger screening throughput divided by mean hourly throughput across the diurnal cycle (CV_TSA,hr = \u03c3_hr / \u03bc_hr). Captures checkpoint arrival burstiness."
     },
-
-    # D
     {
         "acronym": "DB1B",
         "full_term": "Airline Origin and Destination Survey (Data Bank 1B)",
@@ -282,6 +310,13 @@ ACRONYM_DATA = [
         "category": "Airport Cohort & Airfield Codes",
         "cat_id": 4,
         "definition": "Major connecting hub and commercial mega-airport (IATA code: DEN). Analyzed during Top 25 network clustering as a dual-carrier hub complex (United / Southwest)."
+    },
+    {
+        "acronym": "DepDelay",
+        "full_term": "Flight Departure Delay Duration",
+        "category": "Federal Aviation Datasets & Schemas",
+        "cat_id": 3,
+        "definition": "The difference in elapsed minutes between actual pushback departure time and scheduled departure time reported in BTS Form 234; departure delay dispersion (\u03c3_Delay) couples with passenger throughput volatility (CV_TSA) to govern checkpoint congestion."
     },
     {
         "acronym": "DES",
@@ -332,8 +367,6 @@ ACRONYM_DATA = [
         "cat_id": 4,
         "definition": "Major connecting hub (IATA code: DTW). The McNamara Terminal at DTW represents an isolated carrier-dedicated screening facility (Delta Air Lines) evaluated in the balanced 4x4 experimental cohort."
     },
-
-    # E
     {
         "acronym": "ETL",
         "full_term": "Extract, Transform, and Load",
@@ -348,8 +381,6 @@ ACRONYM_DATA = [
         "cat_id": 4,
         "definition": "Primary commercial hub (IATA code: EWR). Terminal C, an isolated United Airlines screening complex, serves as the primary development testbed airfield for lead-lag deconvolution and the in-sample baseline for zero-shot spatial transfer."
     },
-
-    # F
     {
         "acronym": "FAA",
         "full_term": "Federal Aviation Administration",
@@ -372,11 +403,18 @@ ACRONYM_DATA = [
         "definition": "Predictive multi-source intelligence architecture cited in literature integrating heterogeneous data feeds across airside and landside operations."
     },
     {
+        "acronym": "FIR",
+        "full_term": "Finite Impulse Response",
+        "category": "Queuing Theory & Passenger Dynamics",
+        "cat_id": 5,
+        "definition": "Discrete digital signal processing filter architecture operationalizing the ACRP Report 40 empirical passenger show-up curves (t+1, t+2, t+3 hours prior to departure) to convolve scheduled airline seat banks into expected checkpoint arrival waves (EQ-07 in Appendix D)."
+    },
+    {
         "acronym": "FOIA",
         "full_term": "Freedom of Information Act",
         "category": "Federal Aviation Datasets & Schemas",
         "cat_id": 3,
-        "definition": "Federal public records disclosure statute (5 U.S.C. § 552) through which the multi-year, hourly checkpoint-lane passenger screening dataset was acquired from the TSA for this research."
+        "definition": "Federal public records disclosure statute (5 U.S.C. \u00a7 552) through which the multi-year, hourly checkpoint-lane passenger screening dataset was acquired from the TSA for this research."
     },
     {
         "acronym": "FSD",
@@ -384,22 +422,6 @@ ACRONYM_DATA = [
         "category": "Airport Infrastructure & Operations",
         "cat_id": 2,
         "definition": "Senior executive official appointed by the TSA stationed at commercial airports, exercising operational authority over checkpoint staffing, screening procedures, and terminal security compliance."
-    },
-
-    # G
-    {
-        "acronym": "G/G/c",
-        "full_term": "General Arrival / General Service / c-Server Queuing Model",
-        "category": "Queuing Theory & Passenger Dynamics",
-        "cat_id": 5,
-        "definition": "Kendall notation for a multi-server queuing system with arbitrary inter-arrival distributions, arbitrary service times, and c parallel screening lanes operating in parallel."
-    },
-    {
-        "acronym": "GBM",
-        "full_term": "Gradient Boosting Machine",
-        "category": "Predictive Modeling & Computational Methods",
-        "cat_id": 6,
-        "definition": "Supervised machine learning ensemble architecture that builds sequential decision trees to minimize empirical loss. Serves as the core regressor in Model 2 (Supervised Machine Learning Model)."
     },
     {
         "acronym": "GBDT",
@@ -409,11 +431,25 @@ ACRONYM_DATA = [
         "definition": "Alternative designation for Gradient Boosting Machines emphasizing tree-based weak learners."
     },
     {
+        "acronym": "GBM",
+        "full_term": "Gradient Boosting Machine",
+        "category": "Predictive Modeling & Computational Methods",
+        "cat_id": 6,
+        "definition": "Supervised machine learning ensemble architecture that builds sequential decision trees to minimize empirical loss. Serves as the core regressor in Model 2 (Supervised Machine Learning Model)."
+    },
+    {
         "acronym": "GDP",
         "full_term": "Ground Delay Program",
         "category": "Regulatory & Air Traffic Management",
         "cat_id": 2,
         "definition": "FAA air traffic management initiative implemented during severe weather or congestion that holds departing aircraft on the ground at origin airports, inducing lead-lag flight departure delays."
+    },
+    {
+        "acronym": "G/G/c",
+        "full_term": "General Arrival / General Service / c-Server Queuing Model",
+        "category": "Queuing Theory & Passenger Dynamics",
+        "cat_id": 5,
+        "definition": "Kendall notation for a multi-server queuing system with arbitrary inter-arrival distributions, arbitrary service times, and c parallel screening lanes operating in parallel."
     },
     {
         "acronym": "GI/G/1",
@@ -436,8 +472,20 @@ ACRONYM_DATA = [
         "cat_id": 6,
         "definition": "Mathematical and graphical modeling formalism utilized in terminal simulation literature to analyze concurrent, stochastic passenger movements."
     },
-
-    # H
+    {
+        "acronym": "H1",
+        "full_term": "Hypothesis 1 (Overarching Empirical Asymmetric Trade-Offs Hypothesis)",
+        "category": "Academic & Publishing Standards",
+        "cat_id": 7,
+        "definition": "The primary empirical hypothesis of this thesis, establishing that no single predictive modeling paradigm universally dominates across all three operational dimensions: Model 3 wins Resilience (Dimension 2) and lowest routine RMSE; Model 2 wins Routine Pareto Efficiency (Dimension 1); and Model 1 wins Zero-Shot Spatial Generalizability (Dimension 3)."
+    },
+    {
+        "acronym": "H2",
+        "full_term": "Hypothesis 2 (Theoretical Volatility Coupling Hypothesis)",
+        "category": "Academic & Publishing Standards",
+        "cat_id": 7,
+        "definition": "The foundational theoretical queuing hypothesis of this thesis, positing that passenger checkpoint queue stability and terminal wait times are coupled with throughput volatility (CV_TSA and \u03c3_TSA) rather than raw volume levels (y_t), consistent with Kingman's heavy-traffic approximation (W_q \u221d C_a\u00b2)."
+    },
     {
         "acronym": "HAC",
         "full_term": "Heteroskedasticity and Autocorrelation Consistent",
@@ -473,8 +521,6 @@ ACRONYM_DATA = [
         "cat_id": 6,
         "definition": "Probabilistic graphical modeling architecture combining Bayesian inference with queuing formulas to predict multi-stage airport delay propagation."
     },
-
-    # I
     {
         "acronym": "IAD",
         "full_term": "Washington Dulles International Airport",
@@ -518,11 +564,18 @@ ACRONYM_DATA = [
         "definition": "Mathematical optimization technique used in terminal resource allocation and lane scheduling literature to determine optimal lane opening schedules subject to discrete constraints."
     },
     {
+        "acronym": "IQR",
+        "full_term": "Interquartile Range",
+        "category": "Evaluation Metrics & Econometric Statistics",
+        "cat_id": 7,
+        "definition": "Non-parametric statistical dispersion metric measuring the spread of the middle 50% of observations (IQR = Q_3 - Q_1); used across Chapter IV descriptive statistics (Table 4.2) and Appendix tables to quantify flight departure delay skewness."
+    },
+    {
         "acronym": "IROPS",
         "full_term": "Irregular Operations",
         "category": "Operational Regimes & Demarcation",
         "cat_id": 7,
-        "definition": "Severe operational disruptions (convective storms, equipment failures, ground stops; departure delays ≥ 45 min or cancellations ≥ 5) driving checkpoint queue spikes. Constitutes the core test regime for Dimension 2 (Resilience)."
+        "definition": "Severe operational disruptions (convective storms, equipment failures, ground stops; departure delays \u2265 45 min or cancellations \u2265 5) driving checkpoint queue spikes. Constitutes the core test regime for Dimension 2 (Resilience)."
     },
     {
         "acronym": "ISO",
@@ -538,8 +591,6 @@ ACRONYM_DATA = [
         "cat_id": 3,
         "definition": "Enterprise computing, database architecture, and network infrastructure supporting airline reservation systems and airport operational command systems."
     },
-
-    # J
     {
         "acronym": "JFK",
         "full_term": "John F. Kennedy International Airport",
@@ -547,8 +598,13 @@ ACRONYM_DATA = [
         "cat_id": 4,
         "definition": "Major international gateway in New York (IATA code: JFK). Analyzed during Top 25 network clustering and contrasted with LGA in 4-tier filtering to examine decentralized multi-terminal structures."
     },
-
-    # K
+    {
+        "acronym": "JOC",
+        "full_term": "Joint Operations Center",
+        "category": "Airport Infrastructure & Operations",
+        "cat_id": 2,
+        "definition": "Multi-agency airport command center where airport authority management, commercial airline station managers, and TSA security leadership collaborate to coordinate terminal lane staffing, flight bank sequencing, and irregular operations recovery."
+    },
     {
         "acronym": "KS",
         "full_term": "Kolmogorov-Smirnov Test",
@@ -556,8 +612,6 @@ ACRONYM_DATA = [
         "cat_id": 7,
         "definition": "Non-parametric statistical goodness-of-fit test comparing empirical distributions; utilized in Chapter III to confirm distributional invariance across airport terminal layouts (D = 0.032, p = 0.28)."
     },
-
-    # L
     {
         "acronym": "LAWA",
         "full_term": "Los Angeles World Airports",
@@ -573,11 +627,18 @@ ACRONYM_DATA = [
         "definition": "Major West Coast commercial mega-airport (IATA code: LAX). Evaluated in the Top 25 network clustering and 4-tier filtering pipeline as a multi-carrier origin-and-destination complex."
     },
     {
+        "acronym": "LF",
+        "full_term": "Passenger Load Factor",
+        "category": "Federal Aviation Datasets & Schemas",
+        "cat_id": 3,
+        "definition": "The operational ratio of revenue passenger enplanements to available aircraft seat capacity (LF = Pax / Seats) reported monthly in BTS Form 41 Schedule T-100; applied in the Local Originating Demand Identity (EQ-06) to scale scheduled seat capacity into projected boarding passengers."
+    },
+    {
         "acronym": "LGA",
         "full_term": "LaGuardia Airport",
         "category": "Airport Cohort & Airfield Codes",
         "cat_id": 4,
-        "definition": "Commercial hub airport in New York (IATA code: LGA). Terminal B/C serves as the zero-shot spatial transfer evaluation airfield (EWR → LGA) for testing model generalizability without retraining in Dimension 3."
+        "definition": "Commercial hub airport in New York (IATA code: LGA). Terminal B/C serves as the zero-shot spatial transfer evaluation airfield (EWR \u2192 LGA) for testing model generalizability without retraining in Dimension 3."
     },
     {
         "acronym": "LOS",
@@ -600,42 +661,19 @@ ACRONYM_DATA = [
         "cat_id": 6,
         "definition": "Advanced recurrent neural network architecture with input, forget, and output gating mechanisms that capture long-term sequential dependencies in time-series data."
     },
-
-    # M
-    {
-        "acronym": "M/G/c",
-        "full_term": "Markovian Arrival / General Service / c-Server Queuing Model",
-        "category": "Queuing Theory & Passenger Dynamics",
-        "cat_id": 5,
-        "definition": "Kendall notation for a queuing system with Poisson arrivals, arbitrary service time distributions, and c parallel screening lanes."
-    },
-    {
-        "acronym": "M/M/1",
-        "full_term": "Markovian Arrival / Markovian Service / Single-Server Queuing Model",
-        "category": "Queuing Theory & Passenger Dynamics",
-        "cat_id": 5,
-        "definition": "Classical queuing model with Poisson arrivals and exponential service times operating with a single server; foundational baseline in queuing literature."
-    },
-    {
-        "acronym": "M/M/c",
-        "full_term": "Markovian Arrival / Markovian Service / c-Server Queuing Model",
-        "category": "Queuing Theory & Passenger Dynamics",
-        "cat_id": 5,
-        "definition": "Multi-server Erlang delay queuing model assuming Poisson arrivals and memoryless service rates across c parallel screening lanes."
-    },
     {
         "acronym": "MAE",
         "full_term": "Mean Absolute Error",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Standard linear loss metric calculating the average magnitude of absolute forecasting errors in original physical units (pax/hr or pax/day): MAE = (1/n) Σ |y_t - ŷ_t|."
+        "definition": "Standard linear loss metric calculating the average magnitude of absolute forecasting errors in original physical units (pax/hr or pax/day): MAE = (1/n) \u03a3 |y_t - \u0177_t|."
     },
     {
         "acronym": "MAPE",
         "full_term": "Mean Absolute Percentage Error",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Relative percentage error metric: MAPE = (100/n) Σ |(y_t - ŷ_t) / y_t|. In the thesis, proven to be mathematically invalid for hourly checkpoint modeling due to overnight structural zeros (y_t ≈ 0 pax/hr) causing division-by-zero explosions."
+        "definition": "Relative percentage error metric: MAPE = (100/n) \u03a3 |(y_t - \u0177_t) / y_t|. In the thesis, proven to be mathematically invalid for hourly checkpoint modeling due to overnight structural zeros (y_t \u2248 0 pax/hr) causing division-by-zero explosions."
     },
     {
         "acronym": "MASE",
@@ -666,11 +704,39 @@ ACRONYM_DATA = [
         "definition": "Gini or variance-based feature importance metric in tree ensembles measuring the total reduction in criterion impurity contributed by each operational predictor."
     },
     {
+        "acronym": "MEM",
+        "full_term": "Memphis International Airport",
+        "category": "Airport Cohort & Airfield Codes",
+        "cat_id": 4,
+        "definition": "Major commercial airfield (IATA code: MEM) serving as the global air cargo hub for FedEx Express; analyzed in Top 25 network clustering and formally excluded in Delimitations (Appendix A) due to freight-dominant flight bank structures."
+    },
+    {
+        "acronym": "M/G/c",
+        "full_term": "Markovian Arrival / General Service / c-Server Queuing Model",
+        "category": "Queuing Theory & Passenger Dynamics",
+        "cat_id": 5,
+        "definition": "Kendall notation for a queuing system with Poisson arrivals, arbitrary service time distributions, and c parallel screening lanes."
+    },
+    {
         "acronym": "ML",
         "full_term": "Machine Learning",
         "category": "Predictive Modeling & Computational Methods",
         "cat_id": 6,
         "definition": "Automated algorithmic discipline learning predictive patterns from data; instantiated in Model 2 (Supervised Machine Learning Model)."
+    },
+    {
+        "acronym": "M/M/1",
+        "full_term": "Markovian Arrival / Markovian Service / Single-Server Queuing Model",
+        "category": "Queuing Theory & Passenger Dynamics",
+        "cat_id": 5,
+        "definition": "Classical queuing model with Poisson arrivals and exponential service times operating with a single server; foundational baseline in queuing literature."
+    },
+    {
+        "acronym": "M/M/c",
+        "full_term": "Markovian Arrival / Markovian Service / c-Server Queuing Model",
+        "category": "Queuing Theory & Passenger Dynamics",
+        "cat_id": 5,
+        "definition": "Multi-server Erlang delay queuing model assuming Poisson arrivals and memoryless service rates across c parallel screening lanes."
     },
     {
         "acronym": "MPC",
@@ -691,10 +757,8 @@ ACRONYM_DATA = [
         "full_term": "Mean Squared Error",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Quadratic error loss metric calculating the mean of squared residuals: MSE = (1/n) Σ (y_t - ŷ_t)²."
+        "definition": "Quadratic error loss metric calculating the mean of squared residuals: MSE = (1/n) \u03a3 (y_t - \u0177_t)\u00b2."
     },
-
-    # N
     {
         "acronym": "NARX",
         "full_term": "Nonlinear Autoregressive with Exogenous Input",
@@ -721,16 +785,7 @@ ACRONYM_DATA = [
         "full_term": "Non-Homogeneous Poisson Process",
         "category": "Queuing Theory & Passenger Dynamics",
         "cat_id": 5,
-        "definition": "Stochastic arrival point process where the arrival intensity rate λ(t) varies continuously over time, capturing time-varying passenger arrival intensity across flight banks."
-    },
-
-    # O
-    {
-        "acronym": "O&D",
-        "full_term": "Origin and Destination",
-        "category": "Federal Aviation Datasets & Schemas",
-        "cat_id": 3,
-        "definition": "Classification of air passengers denoting true originating trip origin and final destination, distinguishing local originating travelers entering security checkpoints from connecting transfer passengers."
+        "definition": "Stochastic arrival point process where the arrival intensity rate \u03bb(t) varies continuously over time, capturing time-varying passenger arrival intensity across flight banks."
     },
     {
         "acronym": "OAG",
@@ -738,6 +793,13 @@ ACRONYM_DATA = [
         "category": "Federal Aviation Datasets & Schemas",
         "cat_id": 3,
         "definition": "Commercial global aviation data provider supplying scheduled airline timetables, flight numbers, and aircraft equipment assignments."
+    },
+    {
+        "acronym": "O&D",
+        "full_term": "Origin and Destination",
+        "category": "Federal Aviation Datasets & Schemas",
+        "cat_id": 3,
+        "definition": "Classification of air passengers denoting true originating trip origin and final destination, distinguishing local originating travelers entering security checkpoints from connecting transfer passengers."
     },
     {
         "acronym": "OLS",
@@ -760,8 +822,6 @@ ACRONYM_DATA = [
         "cat_id": 3,
         "definition": "Airline operational reliability database (BTS Form 234) tracking flight departure delays, arrival delays, taxi times, and cancellation dynamics across reporting U.S. carriers."
     },
-
-    # P
     {
         "acronym": "PAR",
         "full_term": "Passenger Arrival Rate",
@@ -797,10 +857,8 @@ ACRONYM_DATA = [
         "cat_id": 6,
         "definition": "Hybrid machine learning optimization algorithm combining particle swarm optimization with backpropagation neural networks to optimize network weights."
     },
-
-    # R
     {
-        "acronym": "R²",
+        "acronym": "R\u00b2",
         "full_term": "Coefficient of Determination (R-Squared)",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
@@ -825,7 +883,7 @@ ACRONYM_DATA = [
         "full_term": "Root Mean Squared Error",
         "category": "Evaluation Metrics & Econometric Statistics",
         "cat_id": 7,
-        "definition": "Standard quadratic performance metric calculating the square root of mean squared forecasting errors in original physical units (pax/hr or pax/day): RMSE = √[(1/n) Σ (y_t - ŷ_t)²]."
+        "definition": "Standard quadratic performance metric calculating the square root of mean squared forecasting errors in original physical units (pax/hr or pax/day): RMSE = \u221a[(1/n) \u03a3 (y_t - \u0177_t)\u00b2]."
     },
     {
         "acronym": "RTR",
@@ -834,8 +892,6 @@ ACRONYM_DATA = [
         "cat_id": 7,
         "definition": "Core evaluation metric for Dimension 3 (Generalizability) quantifying zero-shot spatial transfer degradation: RTR = RMSE_transfer / RMSE_in-sample. Ratios near 1.00 denote portable model logic."
     },
-
-    # S
     {
         "acronym": "SARIMA",
         "full_term": "Seasonal Autoregressive Integrated Moving Average",
@@ -851,6 +907,13 @@ ACRONYM_DATA = [
         "definition": "SARIMA model augmented with time-varying external covariates (scheduled departures, flight delays, weather indicators)."
     },
     {
+        "acronym": "SDF",
+        "full_term": "Louisville Muhammad Ali International Airport",
+        "category": "Airport Cohort & Airfield Codes",
+        "cat_id": 4,
+        "definition": "Commercial airfield (IATA code: SDF) housing the worldwide UPS Worldport air freight complex; evaluated in Top 25 clustering and formally excluded in Delimitations (Appendix A) to focus strictly on commercial passenger checkpoint dynamics."
+    },
+    {
         "acronym": "SEA",
         "full_term": "Seattle-Tacoma International Airport",
         "category": "Airport Cohort & Airfield Codes",
@@ -863,6 +926,13 @@ ACRONYM_DATA = [
         "category": "Regulatory & Air Traffic Management",
         "cat_id": 1,
         "definition": "European operational and technological modernization initiative harmonizing air traffic management systems across European airspace."
+    },
+    {
+        "acronym": "SIMMOD",
+        "full_term": "Airport and Airspace Simulation Model",
+        "category": "Predictive Modeling & Computational Methods",
+        "cat_id": 6,
+        "definition": "Fast-time discrete-event computer simulation tool developed by the FAA to model aircraft taxi movements, runway operations, and terminal gate delays; reviewed in Chapter II simulation literature."
     },
     {
         "acronym": "SLAM",
@@ -883,7 +953,7 @@ ACRONYM_DATA = [
         "full_term": "Single Source of Truth",
         "category": "Academic & Publishing Standards",
         "cat_id": 7,
-        "definition": "Architectural repository governance principle maintaining authoritative, conformed specification files (e.g., Chapter 1–5 SSOTs) to eliminate version conflict."
+        "definition": "Architectural repository governance principle maintaining authoritative, conformed specification files (e.g., Chapter 1\u20135 SSOTs) to eliminate version conflict."
     },
     {
         "acronym": "SVM",
@@ -892,14 +962,19 @@ ACRONYM_DATA = [
         "cat_id": 6,
         "definition": "Supervised learning model using hyperplanes in high-dimensional space for classification or regression, evaluated in airport literature."
     },
-
-    # T
     {
         "acronym": "T-100",
         "full_term": "BTS Form 41 Schedule T-100 Domestic Segment Data",
         "category": "Federal Aviation Datasets & Schemas",
         "cat_id": 3,
         "definition": "Monthly regulatory airline reporting dataset providing non-stop domestic flight segment seat capacities, transported passengers, and aircraft load factors."
+    },
+    {
+        "acronym": "TaxiOut",
+        "full_term": "Runway Taxi-Out Queue Duration",
+        "category": "Federal Aviation Datasets & Schemas",
+        "cat_id": 3,
+        "definition": "The elapsed duration in minutes from aircraft gate pushback to wheels-off departure on the runway reported in BTS Form 234; serves as a key airside surface congestion covariate interacting with Ground Delay Programs (GDPs) in Model 2."
     },
     {
         "acronym": "TRACON",
@@ -936,8 +1011,6 @@ ACRONYM_DATA = [
         "cat_id": 7,
         "definition": "Resilience evaluation metric quantifying the operational elapsed time (in hours) required for forecast residuals to return to nominal baseline accuracy bounds following an IROPS disruption shock."
     },
-
-    # U
     {
         "acronym": "UA",
         "full_term": "United Airlines",
@@ -953,14 +1026,19 @@ ACRONYM_DATA = [
         "definition": "Airline operating point-to-point routes with unbundled fares and aggressive ancillaries (e.g., Spirit, Frontier, Allegiant); characterized by unique passenger check-in arrival curves and bag divestiture patterns."
     },
     {
+        "acronym": "UPS",
+        "full_term": "United Parcel Service",
+        "category": "Commercial Air Carriers",
+        "cat_id": 4,
+        "definition": "Major global air cargo carrier (IATA code: 5X) operating the primary air freight complex (Worldport) at Louisville (SDF); documented in the thesis delimitations to contrast dedicated all-cargo operations from passenger airline flight banks."
+    },
+    {
         "acronym": "USDOT",
         "full_term": "United States Department of Transportation",
         "category": "Regulatory & Air Traffic Management",
         "cat_id": 1,
         "definition": "Cabinet-level federal department responsible for national transportation policy, funding, and administrative oversight of the FAA and BTS."
     },
-
-    # V
     {
         "acronym": "VIF",
         "full_term": "Variance Inflation Factor",
@@ -975,8 +1053,6 @@ ACRONYM_DATA = [
         "cat_id": 3,
         "definition": "Virtualized computing environment used in research data pipeline execution and reproducible analytics."
     },
-
-    # W
     {
         "acronym": "WN",
         "full_term": "Southwest Airlines",
@@ -991,8 +1067,6 @@ ACRONYM_DATA = [
         "cat_id": 7,
         "definition": "Premier international conference on discrete-event and continuous computer simulation, cited in airport queuing simulation literature."
     },
-
-    # X
     {
         "acronym": "XAI",
         "full_term": "Explainable Artificial Intelligence",
@@ -1001,7 +1075,6 @@ ACRONYM_DATA = [
         "definition": "Methodological frameworks (e.g., SHAP, permutation feature importance) that render complex machine learning decisions interpretable to airport operations directors."
     }
 ]
-
 # Operational Categories Definition
 CATEGORIES = [
     {

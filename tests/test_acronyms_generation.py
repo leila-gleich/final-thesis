@@ -57,7 +57,10 @@ class TestAcronymsGeneration(unittest.TestCase):
             "**HAC**", "**DES**", "**NHPP**", "**IROPS**", "**GDP**",
             "**CAT**", "**FOIA**", "**FSD**", "**TSO**", "**LOS**",
             "**EWR**", "**LGA**", "**DTW**", "**DFW**", "**AA**",
-            "**DL**", "**UA**", "**WN**", "**SARIMA**", "**HistGBM**"
+            "**DL**", "**UA**", "**WN**", "**SARIMA**", "**HistGBM**",
+            "**AIT**", "**ARENA**", "**CARES**", "**CAST**", "**FIR**",
+            "**H1**", "**H2**", "**IQR**", "**JOC**", "**LF**",
+            "**MEM**", "**SDF**", "**SIMMOD**", "**UPS**", "**DepDelay**", "**TaxiOut**"
         ]
         for term in critical_terms:
             self.assertIn(term, content, f"Critical acronym {term} missing from {self.md_path}")

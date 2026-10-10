@@ -29,20 +29,25 @@ Table 1
 | **AA** | American Airlines | Commercial Air Carriers | Major U.S. network legacy carrier (IATA code: AA). In the thesis, carrier-exclusive terminal complexes operated by American Airlines are analyzed at Dallas/Fort Worth (DFW), Charlotte Douglas (CLT), Philadelphia (PHL), and New York LaGuardia (LGA) during the purposive 4-tier filtering process to isolate unconfounded flight bank arrivals. |
 | **ACRP** | Airport Cooperative Research Program | Aviation Research & Literature | An applied research program sponsored by the FAA and administered by the Transportation Research Board (TRB). ACRP Report 40 ('Airport Passenger Convergent and Terminal Processing') provides the empirical passenger show-up curves convolved across scheduled airline flight banks in Model 1 (Deterministic Flight Schedule Model). |
 | **AI** | Artificial Intelligence | Predictive Modeling & Computational Methods | The overarching computer science discipline encompassing machine learning, statistical pattern recognition, and autonomous operational decision systems; evaluated in the literature review to contrast empirical data-driven forecasting with deterministic operational models. |
+| **AIT** | Advanced Imaging Technology | Airport Infrastructure & Operations | Full-body millimeter-wave automated scanning technology deployed at commercial airport TSA screening checkpoints; operates alongside Credential Authentication Technology (CAT) and Computed Tomography (CT) lanes to detect non-metallic and metallic threats while governing individual lane service times. |
 | **ANN** | Artificial Neural Network | Predictive Modeling & Computational Methods | A class of machine learning models structured as interconnected artificial neuron layers; reviewed in terminal passenger flow and delay modeling literature and contrasted with tree-based regressors and two-stage hybrid models. |
 | **ANOVA** | Analysis of Variance | Evaluation Metrics & Econometric Statistics | Statistical hypothesis testing framework used in empirical exploratory data analysis to evaluate variance components and statistical significance across airport clusters, days of the week, and operational disturbance regimes. |
 | **AOC** | Airport Operations Center | Airport Infrastructure & Operations | The central operational command facility at a commercial airport where airport authority staff, airline operations dispatchers, TSA security leadership, and law enforcement monitor real-time passenger terminal flow, gate assignments, runway conditions, and emergency responses. |
 | **APA** | American Psychological Association | Academic & Publishing Standards | The authoritative academic publishing standard (APA 7th edition, 2020) governing manuscript layout, heading hierarchy, in-text citations, statistical reporting format, and table structure (three horizontal rules, zero vertical rules) across the thesis. |
 | **APE** | Absolute Percentage Error | Evaluation Metrics & Econometric Statistics | The observation-level forecasting error ratio defined as \|y_t - ŷ_t\| / y_t. In the thesis, shown to produce catastrophic division-by-zero explosions during overnight checkpoint curfew hours when actual screening volumes approach zero (y_t ≈ 0), methodologically invalidating Mean Absolute Percentage Error (MAPE). |
+| **ARENA** | Arena Discrete-Event Simulation Software | Predictive Modeling & Computational Methods | Discrete-event simulation software platform (Rockwell Automation) widely evaluated in airport terminal and passenger processing literature; reviewed in Chapter II as high-fidelity for structural planning but computationally unsuitable for real-time tactical floor control. |
 | **ARIMA** | Autoregressive Integrated Moving Average | Predictive Modeling & Computational Methods | Classical linear time-series forecasting model combining autoregressive lags (p), integrated differencing (d), and moving average error innovations (q); serves as a benchmark in time-series passenger demand and terminal queue literature. |
 | **ATC** | Air Traffic Control | Regulatory & Air Traffic Management | The Federal Aviation Administration operational service responsible for directing aircraft safely on runways, taxiways, and throughout the National Airspace System, managing ground traffic sequencing and en-route flight separations. |
 | **ATCSCC** | Air Traffic Control System Command Center | Regulatory & Air Traffic Management | Centralized FAA air traffic management facility in Warrenton, Virginia, that monitors nationwide airspace demand and coordinates traffic management initiatives, including Ground Delay Programs (GDPs), ground stops, and airspace routing reconfigurations. |
 | **ATL** | Hartsfield-Jackson Atlanta International Airport | Airport Cohort & Airfield Codes | Major commercial connecting hub (IATA code: ATL; Delta Air Lines primary mega-complex). Evaluated in the Top 25 network clustering census; excluded from the primary 9-airport experimental cohort during 4-tier filtering due to extreme connecting transfer ratios (>65%) that confound TSA checkpoint throughput. |
+| **B/C** | Terminal B/C Dedicated Carrier Screening Complex | Airport Cohort & Airfield Codes | Physical passenger screening checkpoint complexes serving interconnected concourses (e.g., LGA Terminal B and C, PHL Terminal B/C); analyzed during the 4-tier filtering process to isolate dedicated carrier terminal banks from multi-carrier shared checkpoints. |
 | **BI** | Business Intelligence | Data Systems & Information Architecture | Data systems, dashboards, and reporting architectures deployed by airport authorities and federal directors to track terminal checkpoint throughput, queue waiting times, and resource allocation. |
 | **BOS** | Boston Logan International Airport | Airport Cohort & Airfield Codes | Commercial airport (IATA code: BOS). Evaluated in Top 25 network clustering and 4-tier filtering as a prominent Northeast commercial origin-and-destination complex. |
 | **BTS** | Bureau of Transportation Statistics | Federal Aviation Datasets & Schemas | Statistical operating administration within the U.S. Department of Transportation (USDOT) that collects, compiles, and publishes official national transportation datasets, including BTS Form 234 (On-Time Performance), Form 41 (Schedule T-100), and the DB1B Origin and Destination Survey. |
 | **BTS Form 234** | BTS Form 234 Airline On-Time Performance Survey | Federal Aviation Datasets & Schemas | Mandatory monthly flight-by-flight operational database providing departure delays, arrival delays, taxi-out queue durations, airborne times, and cause-of-delay categories (Carrier, Weather, NAS, Security, Late Aircraft) across reporting air carriers. |
 | **BTS Form 41** | BTS Form 41 Financial and Operating Statistics (Schedule T-100) | Federal Aviation Datasets & Schemas | Federal regulatory reporting schedule filed by commercial airlines containing monthly non-stop domestic flight segment records, available aircraft seat capacity, flown revenue passenger counts, and passenger load factors. |
+| **CARES** | Coronavirus Aid, Relief, and Economic Security Act | Regulatory & Air Traffic Management | Federal emergency relief statute (Public Law 116-136, enacted March 2020) that established the airline Payroll Support Program and mandated minimum commercial service obligations; analyzed in Chapter III and Appendix G regarding pandemic capacity distortions. |
+| **CAST** | Comprehensive Airport Simulation Technology (ARC Simulation Platform) | Predictive Modeling & Computational Methods | Integrated fast-time airport terminal, apron, and airspace simulation platform developed by Airport Research Center (ARC); reviewed in Chapter II terminal passenger modeling literature. |
 | **CAT** | Credential Authentication Technology | Airport Infrastructure & Operations | Digital identity verification scanners deployed at TSA checkpoint lanes that scan traveler photo identification (driver's licenses, passports) to confirm flight reservations directly against airline manifest databases in real time without requiring a boarding pass. |
 | **CKPT** | Checkpoint | Airport Infrastructure & Operations | Standard operational abbreviation used in TSA screening logs, database schemas, and terminal facility blueprints denoting a physical passenger screening checkpoint complex. |
 | **CLT** | Charlotte Douglas International Airport | Airport Cohort & Airfield Codes | Major connecting hub (IATA code: CLT) dominated by American Airlines. Evaluated during 4-tier filtering and Top 25 network clustering to examine connecting transfer passenger deconvolution. |
@@ -60,6 +65,7 @@ Table 1
 | **DCA** | Ronald Reagan Washington National Airport | Airport Cohort & Airfield Codes | Perimeter-restricted, slot-controlled commercial airport in Arlington, Virginia (IATA code: DCA), evaluated in Top 25 network clustering. |
 | **DDL** | Data Definition Language | Data Systems & Information Architecture | SQL schema specification syntax defining table structures, column data types, primary keys, and relational constraints in the conformed research warehouse. |
 | **DEN** | Denver International Airport | Airport Cohort & Airfield Codes | Major connecting hub and commercial mega-airport (IATA code: DEN). Analyzed during Top 25 network clustering as a dual-carrier hub complex (United / Southwest). |
+| **DepDelay** | Flight Departure Delay Duration | Federal Aviation Datasets & Schemas | The difference in elapsed minutes between actual pushback departure time and scheduled departure time reported in BTS Form 234; departure delay dispersion (σ_Delay) couples with passenger throughput volatility (CV_TSA) to govern checkpoint congestion. |
 | **DES** | Discrete Event Simulation | Predictive Modeling & Computational Methods | Computational simulation modeling technique that represents an airport terminal as a discrete sequence of events in time (passenger arrivals, ID checks, bag divestiture, X-ray scanning). Evaluated in Chapter II as high-fidelity but computationally prohibitive for real-time dispatch. |
 | **DFW** | Dallas Fort Worth International Airport | Airport Cohort & Airfield Codes | American Airlines primary mega-connecting hub (IATA code: DFW). Evaluated in Top 25 clustering and 4-tier filtering to benchmark terminal passenger transfer dynamics. |
 | **DL** | Delta Air Lines | Commercial Air Carriers | Major U.S. network legacy carrier (IATA code: DL). Operates dedicated terminal complexes analyzed at Detroit (DTW McNamara Terminal), Salt Lake City (SLC), and New York LaGuardia (LGA Terminal C). |
@@ -72,6 +78,7 @@ Table 1
 | **FAA** | Federal Aviation Administration | Regulatory & Air Traffic Management | Operating administration of the U.S. Department of Transportation responsible for the safety, air traffic management, regulatory oversight, and infrastructure standards of civil aviation. |
 | **FIFO** | First-In, First-Out | Queuing Theory & Passenger Dynamics | Classical queuing discipline where passengers are screened in the exact sequential order of their arrival at the checkpoint queue entrance. |
 | **FINM** | Fusion Intelligence Network Model | Predictive Modeling & Computational Methods | Predictive multi-source intelligence architecture cited in literature integrating heterogeneous data feeds across airside and landside operations. |
+| **FIR** | Finite Impulse Response | Queuing Theory & Passenger Dynamics | Discrete digital signal processing filter architecture operationalizing the ACRP Report 40 empirical passenger show-up curves (t+1, t+2, t+3 hours prior to departure) to convolve scheduled airline seat banks into expected checkpoint arrival waves (EQ-07 in Appendix D). |
 | **FOIA** | Freedom of Information Act | Federal Aviation Datasets & Schemas | Federal public records disclosure statute (5 U.S.C. § 552) through which the multi-year, hourly checkpoint-lane passenger screening dataset was acquired from the TSA for this research. |
 | **FSD** | Federal Security Director | Airport Infrastructure & Operations | Senior executive official appointed by the TSA stationed at commercial airports, exercising operational authority over checkpoint staffing, screening procedures, and terminal security compliance. |
 | **GBDT** | Gradient-Boosted Decision Trees | Predictive Modeling & Computational Methods | Alternative designation for Gradient Boosting Machines emphasizing tree-based weak learners. |
@@ -81,6 +88,8 @@ Table 1
 | **GI/G/1** | General Independent Arrival / General Service / Single Server Queuing Model | Queuing Theory & Passenger Dynamics | Kendall queuing notation representing single-server queues with general independent arrivals and service distributions, underlying Kingman's heavy-traffic approximation. |
 | **GRU** | Gated Recurrent Unit | Predictive Modeling & Computational Methods | Gated recurrent neural network architecture that models sequential temporal dependencies with reset and update gates; evaluated in Chapter II deep learning literature. |
 | **GSPN** | Generalized Stochastic Petri Nets | Predictive Modeling & Computational Methods | Mathematical and graphical modeling formalism utilized in terminal simulation literature to analyze concurrent, stochastic passenger movements. |
+| **H1** | Hypothesis 1 (Overarching Empirical Asymmetric Trade-Offs Hypothesis) | Academic & Publishing Standards | The primary empirical hypothesis of this thesis, establishing that no single predictive modeling paradigm universally dominates across all three operational dimensions: Model 3 wins Resilience (Dimension 2) and lowest routine RMSE; Model 2 wins Routine Pareto Efficiency (Dimension 1); and Model 1 wins Zero-Shot Spatial Generalizability (Dimension 3). |
+| **H2** | Hypothesis 2 (Theoretical Volatility Coupling Hypothesis) | Academic & Publishing Standards | The foundational theoretical queuing hypothesis of this thesis, positing that passenger checkpoint queue stability and terminal wait times are coupled with throughput volatility (CV_TSA and σ_TSA) rather than raw volume levels (y_t), consistent with Kingman's heavy-traffic approximation (W_q ∝ C_a²). |
 | **HAC** | Heteroskedasticity and Autocorrelation Consistent | Evaluation Metrics & Econometric Statistics | Econometric covariance matrix estimator (Newey-West) that yields robust, unconfounded standard errors and test statistics when time-series residuals exhibit autocorrelation and conditional heteroskedasticity. |
 | **HistGBM** | Histogram-Based Gradient Boosting Machine | Predictive Modeling & Computational Methods | Optimized decision-tree gradient boosting implementation (scikit-learn HistGradientBoostingRegressor) that discretizes continuous features into integer bins; utilized in Model 2 for fast, robust execution. |
 | **HOD** | Hour of Day | Operational Regimes & Demarcation | Categorical temporal unit representing each of the 24 discrete hours within an operational day, capturing diurnal passenger bank rhythms. |
@@ -92,13 +101,16 @@ Table 1
 | **ICAO** | International Civil Aviation Organization | Regulatory & Air Traffic Management | Specialized agency of the United Nations establishing global international civil aviation principles, airspace safety regulations, and airport design standards. |
 | **IEEE** | Institute of Electrical and Electronics Engineers | Academic & Publishing Standards | Professional technical organization publishing peer-reviewed research in transportation engineering, intelligent systems, and computational algorithms. |
 | **ILP** | Integer Linear Programming | Predictive Modeling & Computational Methods | Mathematical optimization technique used in terminal resource allocation and lane scheduling literature to determine optimal lane opening schedules subject to discrete constraints. |
+| **IQR** | Interquartile Range | Evaluation Metrics & Econometric Statistics | Non-parametric statistical dispersion metric measuring the spread of the middle 50% of observations (IQR = Q_3 - Q_1); used across Chapter IV descriptive statistics (Table 4.2) and Appendix tables to quantify flight departure delay skewness. |
 | **IROPS** | Irregular Operations | Operational Regimes & Demarcation | Severe operational disruptions (convective storms, equipment failures, ground stops; departure delays ≥ 45 min or cancellations ≥ 5) driving checkpoint queue spikes. Constitutes the core test regime for Dimension 2 (Resilience). |
 | **ISO** | International Organization for Standardization | Academic & Publishing Standards | Independent international non-governmental organization developing worldwide industrial, quality, and data security standards. |
 | **IT** | Information Technology | Data Systems & Information Architecture | Enterprise computing, database architecture, and network infrastructure supporting airline reservation systems and airport operational command systems. |
 | **JFK** | John F. Kennedy International Airport | Airport Cohort & Airfield Codes | Major international gateway in New York (IATA code: JFK). Analyzed during Top 25 network clustering and contrasted with LGA in 4-tier filtering to examine decentralized multi-terminal structures. |
+| **JOC** | Joint Operations Center | Airport Infrastructure & Operations | Multi-agency airport command center where airport authority management, commercial airline station managers, and TSA security leadership collaborate to coordinate terminal lane staffing, flight bank sequencing, and irregular operations recovery. |
 | **KS** | Kolmogorov-Smirnov Test | Evaluation Metrics & Econometric Statistics | Non-parametric statistical goodness-of-fit test comparing empirical distributions; utilized in Chapter III to confirm distributional invariance across airport terminal layouts (D = 0.032, p = 0.28). |
 | **LAWA** | Los Angeles World Airports | Airport Infrastructure & Operations | The proprietary municipal airport authority governing Los Angeles International Airport (LAX) and Van Nuys Airport, providing operational terminal passenger statistics. |
 | **LAX** | Los Angeles International Airport | Airport Cohort & Airfield Codes | Major West Coast commercial mega-airport (IATA code: LAX). Evaluated in the Top 25 network clustering and 4-tier filtering pipeline as a multi-carrier origin-and-destination complex. |
+| **LF** | Passenger Load Factor | Federal Aviation Datasets & Schemas | The operational ratio of revenue passenger enplanements to available aircraft seat capacity (LF = Pax / Seats) reported monthly in BTS Form 41 Schedule T-100; applied in the Local Originating Demand Identity (EQ-06) to scale scheduled seat capacity into projected boarding passengers. |
 | **LGA** | LaGuardia Airport | Airport Cohort & Airfield Codes | Commercial hub airport in New York (IATA code: LGA). Terminal B/C serves as the zero-shot spatial transfer evaluation airfield (EWR → LGA) for testing model generalizability without retraining in Dimension 3. |
 | **LOS** | Level of Service | Queuing Theory & Passenger Dynamics | Standardized qualitative metric framework (IATA Airport Development Reference Manual) rating passenger waiting times, terminal crowding, and space availability from LOS A (excellent) to LOS F (system breakdown). |
 | **LR** | Linear Regression | Predictive Modeling & Computational Methods | Fundamental statistical modeling approach estimating linear relationships between operational predictors and passenger flow. |
@@ -109,6 +121,7 @@ Table 1
 | **MATLAB** | Matrix Laboratory | Data Systems & Information Architecture | Proprietary numerical computing and simulation environment frequently cited in early airport terminal simulation and queue optimization literature. |
 | **MB** | Megabyte | Data Systems & Information Architecture | Standard digital storage unit (1,048,576 bytes) used in reporting raw data feed sizes and memory footprints. |
 | **MDI** | Mean Decrease in Impurity | Predictive Modeling & Computational Methods | Gini or variance-based feature importance metric in tree ensembles measuring the total reduction in criterion impurity contributed by each operational predictor. |
+| **MEM** | Memphis International Airport | Airport Cohort & Airfield Codes | Major commercial airfield (IATA code: MEM) serving as the global air cargo hub for FedEx Express; analyzed in Top 25 network clustering and formally excluded in Delimitations (Appendix A) due to freight-dominant flight bank structures. |
 | **M/G/c** | Markovian Arrival / General Service / c-Server Queuing Model | Queuing Theory & Passenger Dynamics | Kendall notation for a queuing system with Poisson arrivals, arbitrary service time distributions, and c parallel screening lanes. |
 | **ML** | Machine Learning | Predictive Modeling & Computational Methods | Automated algorithmic discipline learning predictive patterns from data; instantiated in Model 2 (Supervised Machine Learning Model). |
 | **M/M/1** | Markovian Arrival / Markovian Service / Single-Server Queuing Model | Queuing Theory & Passenger Dynamics | Classical queuing model with Poisson arrivals and exponential service times operating with a single server; foundational baseline in queuing literature. |
@@ -137,13 +150,16 @@ Table 1
 | **RTR** | Relative Transfer Ratio (Transfer Error Penalty) | Evaluation Metrics & Econometric Statistics | Core evaluation metric for Dimension 3 (Generalizability) quantifying zero-shot spatial transfer degradation: RTR = RMSE_transfer / RMSE_in-sample. Ratios near 1.00 denote portable model logic. |
 | **SARIMA** | Seasonal Autoregressive Integrated Moving Average | Predictive Modeling & Computational Methods | Linear time-series model extending ARIMA with seasonal lag polynomials (P, D, Q)_s to capture recurring 24-hour diurnal operational cycles. |
 | **SARIMAX** | Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors | Predictive Modeling & Computational Methods | SARIMA model augmented with time-varying external covariates (scheduled departures, flight delays, weather indicators). |
+| **SDF** | Louisville Muhammad Ali International Airport | Airport Cohort & Airfield Codes | Commercial airfield (IATA code: SDF) housing the worldwide UPS Worldport air freight complex; evaluated in Top 25 clustering and formally excluded in Delimitations (Appendix A) to focus strictly on commercial passenger checkpoint dynamics. |
 | **SEA** | Seattle-Tacoma International Airport | Airport Cohort & Airfield Codes | Pacific Northwest commercial hub (IATA code: SEA) dominated by Alaska Airlines; analyzed in Top 25 network clustering. |
 | **SESAR** | Single European Sky ATM Research | Regulatory & Air Traffic Management | European operational and technological modernization initiative harmonizing air traffic management systems across European airspace. |
+| **SIMMOD** | Airport and Airspace Simulation Model | Predictive Modeling & Computational Methods | Fast-time discrete-event computer simulation tool developed by the FAA to model aircraft taxi movements, runway operations, and terminal gate delays; reviewed in Chapter II simulation literature. |
 | **SLAM** | Simple Landside Aggregate Model | Predictive Modeling & Computational Methods | Operations research macroscopic passenger simulation model (Brunetta et al., 1999) translating airline schedules into aggregate terminal area occupancies. |
 | **SLC** | Salt Lake City International Airport | Airport Cohort & Airfield Codes | Commercial hub airport (IATA code: SLC). Delta Air Lines consolidated terminal evaluated in 4-tier filtering for single-terminal hub processing. |
 | **SSOT** | Single Source of Truth | Academic & Publishing Standards | Architectural repository governance principle maintaining authoritative, conformed specification files (e.g., Chapter 1–5 SSOTs) to eliminate version conflict. |
 | **SVM** | Support Vector Machine | Predictive Modeling & Computational Methods | Supervised learning model using hyperplanes in high-dimensional space for classification or regression, evaluated in airport literature. |
 | **T-100** | BTS Form 41 Schedule T-100 Domestic Segment Data | Federal Aviation Datasets & Schemas | Monthly regulatory airline reporting dataset providing non-stop domestic flight segment seat capacities, transported passengers, and aircraft load factors. |
+| **TaxiOut** | Runway Taxi-Out Queue Duration | Federal Aviation Datasets & Schemas | The elapsed duration in minutes from aircraft gate pushback to wheels-off departure on the runway reported in BTS Form 234; serves as a key airside surface congestion covariate interacting with Ground Delay Programs (GDPs) in Model 2. |
 | **TRACON** | Terminal Radar Approach Control | Regulatory & Air Traffic Management | FAA air traffic control radar facility managing aircraft arrivals, departures, and sequencing within a 30- to 50-mile radius of high-density metropolitan airports (e.g., New York TRACON for EWR, LGA, JFK). |
 | **TRB** | Transportation Research Board | Aviation Research & Literature | Division of the National Academies of Sciences, Engineering, and Medicine that manages national transportation research programs including the Airport Cooperative Research Program (ACRP). |
 | **TSA** | Transportation Security Administration | Regulatory & Air Traffic Management | Federal homeland security agency within the Department of Homeland Security responsible for civil aviation security, passenger screening, and checkpoint operations across U.S. commercial airports. |
@@ -151,6 +167,7 @@ Table 1
 | **TTR** | Time-to-Recovery | Evaluation Metrics & Econometric Statistics | Resilience evaluation metric quantifying the operational elapsed time (in hours) required for forecast residuals to return to nominal baseline accuracy bounds following an IROPS disruption shock. |
 | **UA** | United Airlines | Commercial Air Carriers | Major U.S. network legacy carrier (IATA code: UA). Operates dedicated hub terminal complexes analyzed at Newark (EWR Terminal C), Chicago (ORD Terminal 1), and Houston (IAH Terminal C). |
 | **ULCC** | Ultra-Low-Cost Carrier | Commercial Air Carriers | Airline operating point-to-point routes with unbundled fares and aggressive ancillaries (e.g., Spirit, Frontier, Allegiant); characterized by unique passenger check-in arrival curves and bag divestiture patterns. |
+| **UPS** | United Parcel Service | Commercial Air Carriers | Major global air cargo carrier (IATA code: 5X) operating the primary air freight complex (Worldport) at Louisville (SDF); documented in the thesis delimitations to contrast dedicated all-cargo operations from passenger airline flight banks. |
 | **USDOT** | United States Department of Transportation | Regulatory & Air Traffic Management | Cabinet-level federal department responsible for national transportation policy, funding, and administrative oversight of the FAA and BTS. |
 | **VIF** | Variance Inflation Factor | Evaluation Metrics & Econometric Statistics | Multicollinearity diagnostic measuring the inflation of regression coefficient variance due to collinearity among predictors; used in Chapter III to assess flight schedule collinearity. |
 | **VM** | Virtual Machine | Data Systems & Information Architecture | Virtualized computing environment used in research data pipeline execution and reproducible analytics. |
@@ -175,6 +192,9 @@ The federal regulatory reporting benchmark established by the Federal Aviation A
 
 #### ACRP – Airport Cooperative Research Program
 An applied research program sponsored by the FAA and administered by the Transportation Research Board (TRB). ACRP Report 40 ('Airport Passenger Convergent and Terminal Processing') provides the empirical passenger show-up curves convolved across scheduled airline flight banks in Model 1 (Deterministic Flight Schedule Model).
+
+#### CARES – Coronavirus Aid, Relief, and Economic Security Act
+Federal emergency relief statute (Public Law 116-136, enacted March 2020) that established the airline Payroll Support Program and mandated minimum commercial service obligations; analyzed in Chapter III and Appendix G regarding pandemic capacity distortions.
 
 #### DOT – Department of Transportation
 United States Department of Transportation (USDOT), the cabinet department overseeing federal transportation agencies including the FAA and BTS.
@@ -207,6 +227,9 @@ Cabinet-level federal department responsible for national transportation policy,
 
 *This category defines the physical airport terminal zones, centralized command centers, air traffic radar facilities, passenger identity hardware, and security screening personnel that manage terminal passenger flow and airspace sequencing.*
 
+#### AIT – Advanced Imaging Technology
+Full-body millimeter-wave automated scanning technology deployed at commercial airport TSA screening checkpoints; operates alongside Credential Authentication Technology (CAT) and Computed Tomography (CT) lanes to detect non-metallic and metallic threats while governing individual lane service times.
+
 #### AOC – Airport Operations Center
 The central operational command facility at a commercial airport where airport authority staff, airline operations dispatchers, TSA security leadership, and law enforcement monitor real-time passenger terminal flow, gate assignments, runway conditions, and emergency responses.
 
@@ -233,6 +256,9 @@ Senior executive official appointed by the TSA stationed at commercial airports,
 
 #### GDP – Ground Delay Program
 FAA air traffic management initiative implemented during severe weather or congestion that holds departing aircraft on the ground at origin airports, inducing lead-lag flight departure delays.
+
+#### JOC – Joint Operations Center
+Multi-agency airport command center where airport authority management, commercial airline station managers, and TSA security leadership collaborate to coordinate terminal lane staffing, flight bank sequencing, and irregular operations recovery.
 
 #### LAWA – Los Angeles World Airports
 The proprietary municipal airport authority governing Los Angeles International Airport (LAX) and Van Nuys Airport, providing operational terminal passenger statistics.
@@ -277,6 +303,9 @@ Flight-coupon segment table within the BTS DB1B database used in Chapter III to 
 #### DDL – Data Definition Language
 SQL schema specification syntax defining table structures, column data types, primary keys, and relational constraints in the conformed research warehouse.
 
+#### DepDelay – Flight Departure Delay Duration
+The difference in elapsed minutes between actual pushback departure time and scheduled departure time reported in BTS Form 234; departure delay dispersion (σ_Delay) couples with passenger throughput volatility (CV_TSA) to govern checkpoint congestion.
+
 #### ETL – Extract, Transform, and Load
 The three-stage data pipeline architecture utilized to ingest raw federal records (TSA FOIA, BTS OTP, BTS T-100, DB1B), execute data cleansing and schema conformance, and load star-schema analytical tables.
 
@@ -288,6 +317,9 @@ Distributed multi-core server infrastructure utilized for intensive ETL data pro
 
 #### IT – Information Technology
 Enterprise computing, database architecture, and network infrastructure supporting airline reservation systems and airport operational command systems.
+
+#### LF – Passenger Load Factor
+The operational ratio of revenue passenger enplanements to available aircraft seat capacity (LF = Pax / Seats) reported monthly in BTS Form 41 Schedule T-100; applied in the Local Originating Demand Identity (EQ-06) to scale scheduled seat capacity into projected boarding passengers.
 
 #### MATLAB – Matrix Laboratory
 Proprietary numerical computing and simulation environment frequently cited in early airport terminal simulation and queue optimization literature.
@@ -307,6 +339,9 @@ Airline operational reliability database (BTS Form 234) tracking flight departur
 #### T-100 – BTS Form 41 Schedule T-100 Domestic Segment Data
 Monthly regulatory airline reporting dataset providing non-stop domestic flight segment seat capacities, transported passengers, and aircraft load factors.
 
+#### TaxiOut – Runway Taxi-Out Queue Duration
+The elapsed duration in minutes from aircraft gate pushback to wheels-off departure on the runway reported in BTS Form 234; serves as a key airside surface congestion covariate interacting with Ground Delay Programs (GDPs) in Model 2.
+
 #### VM – Virtual Machine
 Virtualized computing environment used in research data pipeline execution and reproducible analytics.
 
@@ -319,6 +354,9 @@ Major U.S. network legacy carrier (IATA code: AA). In the thesis, carrier-exclus
 
 #### ATL – Hartsfield-Jackson Atlanta International Airport
 Major commercial connecting hub (IATA code: ATL; Delta Air Lines primary mega-complex). Evaluated in the Top 25 network clustering census; excluded from the primary 9-airport experimental cohort during 4-tier filtering due to extreme connecting transfer ratios (>65%) that confound TSA checkpoint throughput.
+
+#### B/C – Terminal B/C Dedicated Carrier Screening Complex
+Physical passenger screening checkpoint complexes serving interconnected concourses (e.g., LGA Terminal B and C, PHL Terminal B/C); analyzed during the 4-tier filtering process to isolate dedicated carrier terminal banks from multi-carrier shared checkpoints.
 
 #### BOS – Boston Logan International Airport
 Commercial airport (IATA code: BOS). Evaluated in Top 25 network clustering and 4-tier filtering as a prominent Northeast commercial origin-and-destination complex.
@@ -359,11 +397,17 @@ Major West Coast commercial mega-airport (IATA code: LAX). Evaluated in the Top 
 #### LGA – LaGuardia Airport
 Commercial hub airport in New York (IATA code: LGA). Terminal B/C serves as the zero-shot spatial transfer evaluation airfield (EWR → LGA) for testing model generalizability without retraining in Dimension 3.
 
+#### MEM – Memphis International Airport
+Major commercial airfield (IATA code: MEM) serving as the global air cargo hub for FedEx Express; analyzed in Top 25 network clustering and formally excluded in Delimitations (Appendix A) due to freight-dominant flight bank structures.
+
 #### ORD – Chicago O'Hare International Airport
 Major domestic connecting mega-hub (IATA code: ORD). Evaluated in Top 25 network clustering as a dual-carrier connecting hub (United Terminal 1 / American Terminal 3).
 
 #### PHL – Philadelphia International Airport
 Commercial airport (IATA code: PHL). Evaluated in the Top 25 clustering and 4-tier filtering pipeline as an American Airlines hub complex.
+
+#### SDF – Louisville Muhammad Ali International Airport
+Commercial airfield (IATA code: SDF) housing the worldwide UPS Worldport air freight complex; evaluated in Top 25 clustering and formally excluded in Delimitations (Appendix A) to focus strictly on commercial passenger checkpoint dynamics.
 
 #### SEA – Seattle-Tacoma International Airport
 Pacific Northwest commercial hub (IATA code: SEA) dominated by Alaska Airlines; analyzed in Top 25 network clustering.
@@ -377,6 +421,9 @@ Major U.S. network legacy carrier (IATA code: UA). Operates dedicated hub termin
 #### ULCC – Ultra-Low-Cost Carrier
 Airline operating point-to-point routes with unbundled fares and aggressive ancillaries (e.g., Spirit, Frontier, Allegiant); characterized by unique passenger check-in arrival curves and bag divestiture patterns.
 
+#### UPS – United Parcel Service
+Major global air cargo carrier (IATA code: 5X) operating the primary air freight complex (Worldport) at Louisville (SDF); documented in the thesis delimitations to contrast dedicated all-cargo operations from passenger airline flight banks.
+
 #### WN – Southwest Airlines
 Major domestic air carrier (IATA code: WN). In the thesis, Southwest is excluded from the primary experimental cohort during 4-tier filtering because its point-to-point network, multi-carrier terminal sharing, and lack of assigned seat banks confound carrier-exclusive checkpoint isolation.
 
@@ -389,6 +436,9 @@ Computational simulation modeling technique that represents an airport terminal 
 
 #### FIFO – First-In, First-Out
 Classical queuing discipline where passengers are screened in the exact sequential order of their arrival at the checkpoint queue entrance.
+
+#### FIR – Finite Impulse Response
+Discrete digital signal processing filter architecture operationalizing the ACRP Report 40 empirical passenger show-up curves (t+1, t+2, t+3 hours prior to departure) to convolve scheduled airline seat banks into expected checkpoint arrival waves (EQ-07 in Appendix D).
 
 #### G/G/c – General Arrival / General Service / c-Server Queuing Model
 Kendall notation for a multi-server queuing system with arbitrary inter-arrival distributions, arbitrary service times, and c parallel screening lanes operating in parallel.
@@ -424,8 +474,14 @@ The overarching computer science discipline encompassing machine learning, stati
 #### ANN – Artificial Neural Network
 A class of machine learning models structured as interconnected artificial neuron layers; reviewed in terminal passenger flow and delay modeling literature and contrasted with tree-based regressors and two-stage hybrid models.
 
+#### ARENA – Arena Discrete-Event Simulation Software
+Discrete-event simulation software platform (Rockwell Automation) widely evaluated in airport terminal and passenger processing literature; reviewed in Chapter II as high-fidelity for structural planning but computationally unsuitable for real-time tactical floor control.
+
 #### ARIMA – Autoregressive Integrated Moving Average
 Classical linear time-series forecasting model combining autoregressive lags (p), integrated differencing (d), and moving average error innovations (q); serves as a benchmark in time-series passenger demand and terminal queue literature.
+
+#### CAST – Comprehensive Airport Simulation Technology (ARC Simulation Platform)
+Integrated fast-time airport terminal, apron, and airspace simulation platform developed by Airport Research Center (ARC); reviewed in Chapter II terminal passenger modeling literature.
 
 #### CNN – Convolutional Neural Network
 Deep artificial neural network architecture employing convolutional filter banks over temporal sequences; reviewed in terminal passenger flow and delay modeling literature.
@@ -487,6 +543,9 @@ Linear time-series model extending ARIMA with seasonal lag polynomials (P, D, Q)
 #### SARIMAX – Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors
 SARIMA model augmented with time-varying external covariates (scheduled departures, flight delays, weather indicators).
 
+#### SIMMOD – Airport and Airspace Simulation Model
+Fast-time discrete-event computer simulation tool developed by the FAA to model aircraft taxi movements, runway operations, and terminal gate delays; reviewed in Chapter II simulation literature.
+
 #### SLAM – Simple Landside Aggregate Model
 Operations research macroscopic passenger simulation model (Brunetta et al., 1999) translating airline schedules into aggregate terminal area occupancies.
 
@@ -530,6 +589,12 @@ Non-parametric econometric test comparing the predictive accuracy of competing t
 #### DOW – Day of Week
 Categorical temporal feature capturing cyclical weekly demand fluctuations (e.g., Thursday/Friday business travel waves versus Sunday leisure return peaks).
 
+#### H1 – Hypothesis 1 (Overarching Empirical Asymmetric Trade-Offs Hypothesis)
+The primary empirical hypothesis of this thesis, establishing that no single predictive modeling paradigm universally dominates across all three operational dimensions: Model 3 wins Resilience (Dimension 2) and lowest routine RMSE; Model 2 wins Routine Pareto Efficiency (Dimension 1); and Model 1 wins Zero-Shot Spatial Generalizability (Dimension 3).
+
+#### H2 – Hypothesis 2 (Theoretical Volatility Coupling Hypothesis)
+The foundational theoretical queuing hypothesis of this thesis, positing that passenger checkpoint queue stability and terminal wait times are coupled with throughput volatility (CV_TSA and σ_TSA) rather than raw volume levels (y_t), consistent with Kingman's heavy-traffic approximation (W_q ∝ C_a²).
+
 #### HAC – Heteroskedasticity and Autocorrelation Consistent
 Econometric covariance matrix estimator (Newey-West) that yields robust, unconfounded standard errors and test statistics when time-series residuals exhibit autocorrelation and conditional heteroskedasticity.
 
@@ -538,6 +603,9 @@ Categorical temporal unit representing each of the 24 discrete hours within an o
 
 #### IEEE – Institute of Electrical and Electronics Engineers
 Professional technical organization publishing peer-reviewed research in transportation engineering, intelligent systems, and computational algorithms.
+
+#### IQR – Interquartile Range
+Non-parametric statistical dispersion metric measuring the spread of the middle 50% of observations (IQR = Q_3 - Q_1); used across Chapter IV descriptive statistics (Table 4.2) and Appendix tables to quantify flight departure delay skewness.
 
 #### IROPS – Irregular Operations
 Severe operational disruptions (convective storms, equipment failures, ground stops; departure delays ≥ 45 min or cancellations ≥ 5) driving checkpoint queue spikes. Constitutes the core test regime for Dimension 2 (Resilience).
