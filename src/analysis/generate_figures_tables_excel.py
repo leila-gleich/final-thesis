@@ -515,64 +515,7 @@ def clean_header_title(raw_header: str) -> str:
     return " ".join(cleaned)
 
 
-def parse_cell_value(val_str: str):
-    """
-    Parses raw CSV string into appropriate Python types with number formats and alignment.
-    Returns: (parsed_value, number_format, horizontal_alignment)
-    """
-    s = str(val_str).strip()
-    if not s:
-        return "", None, "left"
-
-    # Missing / Null representations or dashes
-    if s in ("—", "-", "--", "N/A", "NA", "None", "NULL"):
-        return s, None, "center"
-
-    # Boolean values
-    if s.upper() in ("TRUE", "FALSE", "YES", "NO"):
-        return s, None, "center"
-
-    # Formatted integer with commas e.g. '6,434,732' or '19,500,286'
-    clean_int_s = s.replace(",", "")
-    if clean_int_s.isdigit() and ("," in s or len(s) > 1):
-        try:
-            return int(clean_int_s), "#,##0", "right"
-        except ValueError:
-            pass
-
-    # Pure signed integer
-    if s.isdigit() or (s.startswith("-") and s[1:].isdigit()):
-        try:
-            return int(s), "#,##0", "right"
-        except ValueError:
-            pass
-
-    # Floating point numbers
-    try:
-        f = float(s)
-        if "." in s:
-            decimals = len(s.split(".")[1])
-            fmt = "0." + "0" * min(decimals, 4)
-        else:
-            fmt = "0.00"
-        return f, fmt, "right"
-    except ValueError:
-        pass
-
-    # Percentages e.g. '56.1%', '+108.4%', '0.0%', '-83.96%'
-    if s.endswith("%"):
-        clean_pct = s[:-1].replace("+", "").strip()
-        try:
-            float(clean_pct)
-            return s, None, "right"
-        except ValueError:
-            pass
-
-    # Checkpoint codes / Time stamps (e.g. 05:00) / Airport codes (BOS, DFW)
-    if len(s) <= 5 and (s.isupper() or ":" in s or s in ("BP01", "LAN", "SBP")):
-        return s, None, "center"
-
-    return s, None, "left"
+from src.utils.excel_styling import parse_cell_value
 
 
 def find_csv_file(csv_file: str, preferred_dir: Path, folder_name: str) -> Path:

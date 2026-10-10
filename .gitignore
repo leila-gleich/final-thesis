@@ -18,6 +18,7 @@ data/processed/*
 ~$*.docx
 ~$*.xlsx
 ~$*.pptx
+*.docx                # ignore all Word documents
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/

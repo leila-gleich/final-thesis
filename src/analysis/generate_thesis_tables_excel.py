@@ -224,53 +224,7 @@ TABLE_CATALOG = [
     }
 ]
 
-
-def parse_cell_value(val_str: str):
-    """Parses raw CSV string into appropriate Python types with number formats and alignment."""
-    s = str(val_str).strip()
-    if not s:
-        return "", None, "left"
-        
-    # Formatted integer with commas e.g. '24,678,912'
-    if s.replace(",", "").isdigit() and ("," in s or len(s) > 1):
-        try:
-            return int(s.replace(",", "")), "#,##0", "right"
-        except ValueError:
-            pass
-
-    # Pure signed integer
-    if s.isdigit() or (s.startswith("-") and s[1:].isdigit()):
-        try:
-            return int(s), "#,##0", "right"
-        except ValueError:
-            pass
-
-    # Floating point number
-    try:
-        f = float(s)
-        if "." in s:
-            decimals = len(s.split(".")[1])
-            fmt = "0." + "0" * min(decimals, 4)
-        else:
-            fmt = "0.00"
-        return f, fmt, "right"
-    except ValueError:
-        pass
-
-    # Percentages e.g. '+108.4%' or '0.0%'
-    if s.endswith("%"):
-        clean_num = s[:-1].replace("+", "").strip()
-        try:
-            float(clean_num)
-            return s, None, "right"
-        except ValueError:
-            pass
-
-    # Short codes / DOW / Airport Codes
-    if len(s) <= 4 and s.isupper():
-        return s, None, "center"
-
-    return s, None, "left"
+from src.utils.excel_styling import parse_cell_value
 
 
 def build_thesis_tables_workbook():

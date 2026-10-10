@@ -29,7 +29,6 @@ from etl.pipeline_audit import PipelineIntegrityAudit
 from etl.perform_top25_clustering import run_top25_clustering, get_pca_loadings_df
 from etl.apply_4tier_filtering import apply_four_tier_filtering
 from data.split_regimes import apply_candidate_b_partitions, get_partition_summary
-from features.feature_pipeline import build_conformed_feature_matrix
 from models.baselines import DiurnalSeasonalNaive, DeterministicFixedLeadBaseline
 from models.machine_learning import TweedieGradientBoostedRegressor
 from models.hybrid_sarima_tree import SequentialSARIMATreeHybrid
@@ -60,7 +59,7 @@ def main():
 
     # Step 3: Load Curated Data & Partition Volatility Regimes (REC-06, REC-14)
     print("\n[STEP 3] Ingesting Curated Hourly Data & Constructing Volatility Panel (REC-06)...")
-    from otp_volatility_analysis.run_otp_volatility_analysis import load_and_prepare_panel_data
+    from data.panel_loader import load_and_prepare_panel_data
     df_panel, df_census = load_and_prepare_panel_data()
     
     # Run data integrity audit on conformed volatility panel
@@ -68,15 +67,10 @@ def main():
     audit_results = auditor.run_full_audit()
     print(f"  -> Volatility Panel Integrity Audit passed: {audit_results['all_passed']} ({len(df_panel):,} airport-day records)")
 
-    # Partition into Train (2019-2023), Validation (2024), and Out-of-Time Holdout (2025)
-    train_mask = (df_panel["Year"] <= 2023)
-    val_mask = (df_panel["Year"] == 2024)
-    test_mask = (df_panel["Year"] == 2025)
-    
-    train_df = df_panel[train_mask].copy()
-    val_df = df_panel[val_mask].copy()
-    test_df = df_panel[test_mask].copy()
-    print(f"  -> Partitions: Train={len(train_df):,} days, Val={len(val_df):,} days, Test Holdout={len(test_df):,} days.")
+    # Partition into Train (Candidate B: 2022-05 to 2023-12), Validation (2024), and Out-of-Time Holdout (2025) with 7-day purge embargoes (REC-06)
+    train_df, val_df, test_df = apply_candidate_b_partitions(df_panel)
+    splits = get_partition_summary(train_df, val_df, test_df)
+    print(f"  -> Partitions (REC-06): Train={splits['train_rows']:,} days, Val={splits['val_rows']:,} days, Test Holdout={splits['test_rows']:,} days.")
 
     # Step 4: Multi-Scale Volatility Feature Engineering (Values vs Volatility vs Combined)
     print("\n[STEP 4] Executing Multi-Scale Volatility Feature Engineering Pipeline...")

@@ -30,6 +30,7 @@ EXHIBITS_DIR = THESIS_DOCS_DIR / "exhibits"
 # Canonical curated file targets
 HOURLY_CURATED_PATH = CURATED_DATA_DIR / "hourly_aggregated_data.csv"
 DAILY_CURATED_PATH = CURATED_DATA_DIR / "daily_aggregated_data.csv"
+TOP25_CLUSTERING_WB = RESULTS_DIR / "01_top25_clustering" / "01_top25_clustering.xlsx"
 
 def get_base_dir() -> Path:
     """Returns absolute Path to final-thesis root."""
