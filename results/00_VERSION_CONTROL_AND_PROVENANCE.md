@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.40 (Repository Codebase Modernization & Model Nomenclature Sanitization)
+RELEASE VERSION: v4.41 (CI Pipeline Dependency Harmonization & Defensive Test Hardening)
 DATE: October 9, 2026
 ====================================================================================================
 
@@ -657,6 +657,30 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   verified 100% test pass rate (44/44 tests) and end-to-end pipeline run.  |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); raw data and conformed tables synchronized.           |
+| v4.41   | 2026-10-09 | CI Pipeline Dependency Harmonization & Defensive Test Hardening:            |
+|         |            | - Resolved GitHub Actions CI collection failure on tests/                  |
+|         |            |   test_acronyms_generation.py by adding python-docx>=1.1.0 to              |
+|         |            |   requirements.txt and pyproject.toml dependencies.                       |
+|         |            | - Hardened tests/test_acronyms_generation.py with defensive import and     |
+|         |            |   skipUnless decorator to safeguard against absent optional dependencies.  |
+|         |            | - Verified 100% test pass rate (44/44 unit tests passing cleanly).          |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all conformed tables and exhibits synchronized.       |
+| v4.42   | 2026-10-09 | Master Synthesis & Author Directive Alignment on full-thesis.md:           |
+|         |            | - Created working branch thesis-manuscript-adds with safety checkpoint.     |
+|         |            | - Chapter I: Replaced with verbatim content of ChpI v3.docx, converting    |
+|         |            |   OMML math equations into KaTeX/LaTeX and maintaining APA 7th hierarchy.  |
+|         |            | - Chapter II: Maintained ERAU thesis format (format-thesis-example.pdf)    |
+|         |            |   with Level 2/3 headings, APA formatting, and formal ## Summary section.  |
+|         |            | - Chapter III: Restructured flow into chronological evolution of predictive |
+|         |            |   analytics/ML (Phases 1-4), plain-English conceptual explanations,        |
+|         |            |   equations indexed to appendix, and COVID demarcation drill-down at end.  |
+|         |            | - Chapter IV: Strictly single hypothesis (H1, H1a-H1c; zero H2), purged     |
+|         |            |   physics/lab jargon, enforced 'TSA throughput and OTP', moved data        |
+|         |            |   hygiene bullets to Appendix K, and removed Candidate A/Table 4.3a.       |
+|         |            | - Authored PROMPT_AND_DECISION_LOG_2026-10-09.md preserving all directives. |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); verified 100% test pass rate (44/44 unit tests).      |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
