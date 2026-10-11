@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.53 (APA 7 Markdown Deployment from Word Revisions & final-thesis-v1 Recommendation Suite)
+RELEASE VERSION: v4.54 (Manuscript Directory Streamlining & Template Consolidation)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -858,6 +858,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   and in thesis_docs/recommendations/) auditing all appendix cross-         |
 |         |            |   references against canonical 14-Appendix architecture (A through N) and   |
 |         |            |   providing a forensic aviation terminology filter to eliminate lab jargon. |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
+| v4.54   | 2026-10-10 | Manuscript Directory Streamlining & Template Consolidation:               |
+|         |            | - Created immutable backup archive of all Word and MD manuscripts in       |
+|         |            |   thesis_docs/manuscripts/archive/manuscripts_backup_pre_reorg_20261010.zip.|
+|         |            | - Consolidated external formatting templates and style definitions into     |
+|         |            |   thesis_docs/manuscripts/templates/ (format-apa7.md,                      |
+|         |            |   format-thesis-example.pdf, and format-apa-singlespace.csl).              |
+|         |            | - Purged local OS .DS_Store cache files from directory trees.              |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
 +---------+------------+----------------------------------------------------------------------------+
