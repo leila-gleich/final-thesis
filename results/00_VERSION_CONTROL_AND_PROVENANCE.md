@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.55 (Full Implementation of Appendix Cross-Referencing & Jargon Elimination Recommendations)
-DATE: October 10, 2026
+RELEASE VERSION: v4.56 (Archival and Renaming of Earlier Extended Precursor Drafts)
+DATE: October 11, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -879,6 +879,22 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Embedded conformed APA 7th Edition Tables 4.10, 4.11 in Chapter IV and   |
 |         |            |   Tables 5.1, 5.2, 5.3, 5.4 in Chapter V; fixed table prefix-matching.     |
 |         |            | - Integrated Figure 4.1 Mermaid analytical roadmap into Chapter IV.        |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
+| v4.56   | 2026-10-11 | Archival & Renaming of Earlier Extended Precursor Drafts:                   |
+|         |            | - Established dedicated archival directory:                                |
+|         |            |   thesis_docs/manuscripts/archive/earlier_extended_drafts/.                 |
+|         |            | - Archived and renamed all 6 earlier extended precursor drafts:             |
+|         |            |   * full-thesis_extended_draft.md (21,062 words)                           |
+|         |            |   * chp1-intro_extended_draft.md (1,514 words)                             |
+|         |            |   * chp2-litreview_extended_draft.md (4,521 words)                         |
+|         |            |   * chp3-methodology_extended_draft.md (2,369 words)                       |
+|         |            |   * chp4-results_extended_draft.md (9,067 words)                           |
+|         |            |   * chp5-discussion_extended_draft.md (3,931 words).                       |
+|         |            | - Authored comprehensive archive README.md cataloging word counts, source   |
+|         |            |   versions, and mapping to the active final-thesis-v1 suite.               |
+|         |            | - Verified that thesis_docs/manuscripts/final-thesis-v1/ exactly mirrors   |
+|         |            |   final-thesis-v1.md byte-for-byte across all chapters.                     |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
 +---------+------------+----------------------------------------------------------------------------+
