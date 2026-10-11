@@ -237,14 +237,16 @@ def get_manuscript_path(filename: str) -> Path:
     p = MANUSCRIPTS_DIR / filename
     if p.exists() and len(extract_tables_from_markdown(p)) > 0:
         return p
+    sub_p = MANUSCRIPTS_DIR / "manuscripts-only" / filename
+    if sub_p.exists() and len(extract_tables_from_markdown(sub_p)) > 0:
+        return sub_p
     arch_name = f"{Path(filename).stem}_v2_archive.md"
     arch_p = MANUSCRIPTS_DIR / "archive" / arch_name
     if arch_p.exists() and len(extract_tables_from_markdown(arch_p)) > 0:
         return arch_p
-    if not p.exists():
-        sub_p = MANUSCRIPTS_DIR / "manuscripts-only" / filename
-        if sub_p.exists():
-            return sub_p
+    final_p = MANUSCRIPTS_DIR / "final-thesis-v1" / filename
+    if final_p.exists() and len(extract_tables_from_markdown(final_p)) > 0:
+        return final_p
     return p
 
 

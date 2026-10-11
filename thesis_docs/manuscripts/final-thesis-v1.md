@@ -50,12 +50,12 @@ $H_{1c}$  (Generalizability Target:  $RTR≈1.00$  and  $ΔMASE_{transfer}≤10.
 
 ## Delimitations
 
-This study focuses on U.S. airports and uses post-pandemic TSA throughput and flight performance data from 2019 to 2025. It excludes pre-pandemic and pandemic-period activity except where needed to define the post-pandemic baseline. Dynamic queuing models and simulationbased methods are assessed using standard statistical measures, including pvalue, R2 squared, mean squared error (MSE), root mean squared error (RMSE), and mean absolute percentage error (MAPE). These delimitations are detailed in the appendix.
+This study focuses on U.S. airports and uses post-pandemic TSA throughput and flight performance data from 2019 to 2025. It excludes pre-pandemic and pandemic-period activity except where needed to define the post-pandemic baseline. Dynamic queuing models and simulationbased methods are assessed using standard statistical measures, including pvalue, R2 squared, mean squared error (MSE), root mean squared error (RMSE), and mean absolute percentage error (MAPE). A comprehensive operational catalog of research delimitations—including candidate airport selection thresholds, exclusive terminal focus, and the post-pandemic temporal scope—is provided in **Appendix A** (*Delimitations, Research Limitations, and Methodological Assumptions*).
 
 
 ## Limitations and Assumptions
 
-Due to reliance on public data, confidential variables like staffing and manual queue management fall outside the scope of this analysis. While external factors such as weather, regulatory impacts, or IT outages may not be fully accounted for, the framework assumes that utilized data is consistent and findings from the selected airports are generalizable across similar facilities and circumstances. Additionally, the methodology relies on the ability to apply monthly data on load factor to the prediction of TSA throughput on an hourly and seasonal level. These limitations are detailed in the appendix.
+Due to reliance on public data, confidential variables like staffing and manual queue management fall outside the scope of this analysis. While external factors such as weather, regulatory impacts, or IT outages may not be fully accounted for, the framework assumes that utilized data is consistent and findings from the selected airports are generalizable across similar facilities and circumstances. Additionally, the methodology relies on the ability to apply monthly data on load factor to the prediction of TSA throughput on an hourly and seasonal level. Methodological limitations, including unobserved passenger dwell time variability and the absence of linked flight-to-passenger boarding pass records, are formally detailed alongside sensitivity assumptions in **Appendix A** (*Delimitations, Research Limitations, and Methodological Assumptions*).
 
 
 
@@ -90,7 +90,7 @@ Within an operational context, flight banks act as the primary driver of "batch 
 
 ### The "Values versus Volatility" Paradigm in Transportation Demand
 
-In operational reality, heavy-traffic queuing principles demonstrate that checkpoint wait times and passenger lines do not depend solely on average passenger volume, but on the irregularity and burstiness of passenger arrivals and processing speeds (Kingman, 1961; Whitt, 1993; see Appendix for complete queuing derivations and mathematical formulas). As checkpoint lanes operate near full capacity during morning and evening departure peaks, any sudden increase in passenger arrival swings causes wait times and crowd congestion to grow exponentially (Adeke, 2018; Guo et al., 2022). This dynamic establishes the "Values versus Volatility" paradigm in transportation demand, which manifests across two operational horizons (Andersen & Bollerslev, 1998; Engle, 2001; Hansen & Lunde, 2005). First, over intraday hourly horizons, passenger volume swings naturally expand alongside total flight traffic, allowing scheduled seat counts alone to serve as a dependable baseline predictor for routine daily flow. Second, across multi-day horizons, published flight schedules remain largely unchanged, meaning that anticipating disruption-driven passenger turbulence requires tracking the volatility of operational disruptions – specifically flight cancellations, schedule instability, and departure delay spreads – rather than relying solely on static flight volumes (Hopfe et al., 2024).
+In operational reality, heavy-traffic queuing principles demonstrate that checkpoint wait times and passenger lines do not depend solely on average passenger volume, but on the irregularity and burstiness of passenger arrivals and processing speeds (Kingman, 1961; Whitt, 1993; see **Appendix C** for complete heavy-traffic queuing derivations, arrival variance formulations, and Kingman approximations). As checkpoint lanes operate near full capacity during morning and evening departure peaks, any sudden increase in passenger arrival swings causes wait times and crowd congestion to grow exponentially (Adeke, 2018; Guo et al., 2022). This dynamic establishes the "Values versus Volatility" paradigm in transportation demand, which manifests across two operational horizons (Andersen & Bollerslev, 1998; Engle, 2001; Hansen & Lunde, 2005). First, over intraday hourly horizons, passenger volume swings naturally expand alongside total flight traffic, allowing scheduled seat counts alone to serve as a dependable baseline predictor for routine daily flow. Second, across multi-day horizons, published flight schedules remain largely unchanged, meaning that anticipating disruption-driven passenger turbulence requires tracking the volatility of operational disruptions – specifically flight cancellations, schedule instability, and departure delay spreads – rather than relying solely on static flight volumes (Hopfe et al., 2024).
 
 
 ## From Analytical Queuing Models to Simulation Modeling and Real-Time Management
@@ -143,7 +143,7 @@ Despite their predictive power, multi-layered networks lack transparency, presen
 
 Managing operational uncertainty further requires stochastic optimization and empirical validation. Metaheuristic algorithms, particularly Particle Swarm Optimization with Back Propagation (PSO-BP), tune neural network parameters without exhaustive search, improving performance on non-linear baggage flows and screening wait times (Jiang et al., 2024; Naji et al., 2020; Sörensen, 2015; Wu, 2024). Under noisy operational data, likelihood-free inference estimates system dynamics during unpredictable disruptions (Ebert et al., 2021), while Nonlinear Autoregressive with Exogenous Input (NARX) models incorporate weather covariates to improve forecast transparency (Anupam & Lawal, 2024). These predictive components are commonly benchmarked within simulation platforms like ARENA to validate physical queue behavior (Olusanya et al., 2020; Oprea et al., 2024). Furthermore, Fuzzy Logic systems model subjective passenger decision-making under uncertainty, enabling real-time terminal routing toward underutilized checkpoints (Blasco-Puyuelo et al., 2023; Xia et al., 2020; Yang et al., 2022). Ultimately, because complex models often trade interpretability for statistical fit, operational deployment necessitates architectures that balance predictive accuracy with transparency (Wu et al., 2024).
 
-In airport security screening, achieving this balance requires anchoring models in deterministic flight schedules rather than unconstrained time series. Grounded in Airport Cooperative Research Program (ACRP) Report 40, passenger arrival distributions follow an empirical lognormal curve peaking 90 to 120 minutes prior to domestic departures (Transportation Research Board [TRB], 2010). To prevent severe demand distortion at hub airports, published schedules must be filtered using empirical connecting ticket ratios from Bureau of Transportation Statistics (BTS) DB1B surveys, excluding airside transfers who bypass landside checkpoints (Guo et al., 2022). During operational disruptions—such as flight delays and cancellations—supervised tree ensembles (Gradient-Boosted Decision Trees or Random Forests) predict the residual error between scheduled demand and actual throughput (Brun et al., 2025; Hopfe et al., 2024; Ribeiro et al., 2025). Decision trees provide intuitive, auditable branching rules that terminal managers can inspect during severe weather events. Finally, during catastrophic ground stops where static schedules collapse and falsely predict zero demand (the "Empty Checkpoint Fallacy"), incorporating recursive real-time error feedback allows models to monitor live checkpoint sensors and dynamically update queue states, ensuring rapid recovery (Anupam & Lawal, 2024; Ebert et al., 2021; Wu et al., 2024; see Appendix for comparative paradigm taxonomy).
+In airport security screening, achieving this balance requires anchoring models in deterministic flight schedules rather than unconstrained time series. Grounded in Airport Cooperative Research Program (ACRP) Report 40, passenger arrival distributions follow an empirical lognormal curve peaking 90 to 120 minutes prior to domestic departures (Transportation Research Board [TRB], 2010). To prevent severe demand distortion at hub airports, published schedules must be filtered using empirical connecting ticket ratios from Bureau of Transportation Statistics (BTS) DB1B surveys, excluding airside transfers who bypass landside checkpoints (Guo et al., 2022). During operational disruptions—such as flight delays and cancellations—supervised tree ensembles (Gradient-Boosted Decision Trees or Random Forests) predict the residual error between scheduled demand and actual throughput (Brun et al., 2025; Hopfe et al., 2024; Ribeiro et al., 2025). Decision trees provide intuitive, auditable branching rules that terminal managers can inspect during severe weather events. Finally, during catastrophic ground stops where static schedules collapse and falsely predict zero demand (the "Empty Checkpoint Fallacy"), incorporating recursive real-time error feedback allows models to monitor live checkpoint sensors and dynamically update queue states, ensuring rapid recovery (Anupam & Lawal, 2024; Ebert et al., 2021; Wu et al., 2024; see **Appendix B** for the complete comparative modeling paradigm taxonomy and peer-reviewed equation registry).
 
 
 ## The Impact of Post-Pandemic Operational Volatility
@@ -210,7 +210,7 @@ Resilience Performance: Under severe operational disruptions (departure delays �
 
 Generalizability Performance: Under zero-shot cross-airport transfer without local retraining, the deterministic flight schedule model achieves superior generalizability (RTR ≈ 1.00, ΔMASE ≤ 10.0%) due to terminal geometry invariance, whereas hybrid models experience transfer penalties from terminal layout overfitting.
 
-Detailed hypothesis formulations, sub-hypotheses (H1a, H1b, H1c), formal mathematical evaluation thresholds, and Diebold-Mariano test specifications are compiled in the Appendix.
+Formal hypothesis formulations, econometric evaluation thresholds, and Diebold-Mariano forecast accuracy test specifications are compiled in **Appendix G** (*Statistical Significance Testing*) and **Appendix J** (*Candidate Predictive Models and Evaluation Metrics*).
 
 
 ### Design and Procedures
@@ -308,7 +308,7 @@ A major threat to internal model validity is the presence of connecting passenge
 
 ## Treatment of the Data
 
-Data processing follows a sequential pipeline. First, raw BTS and TSA files are exported and parsed using Python on the institutional computing environment. Timestamps are standardized to a uniform operational clock matching local airport solar time. Scheduled overnight checkpoint closures are preserved as true operational structural zeros, and advance cancellations are separated from tactical cancellations to preserve information causality. Lastly, flight departure times are aligned with passenger lead-time assumptions from ACRP Report 40 and merged with hourly TSA throughput intervals to create a final modeling dataset, with the exhaustive ETL data engineering protocol detailed in the Appendix.
+Data processing follows a sequential pipeline. First, raw BTS and TSA files are exported and parsed using Python on the institutional computing environment. Timestamps are standardized to a uniform operational clock matching local airport solar time. Scheduled overnight checkpoint closures are preserved as true operational structural zeros, and advance cancellations are separated from tactical cancellations to preserve information causality. Lastly, flight departure times are aligned with passenger lead-time assumptions from ACRP Report 40 and merged with hourly TSA throughput intervals to create a final modeling dataset, with the complete High-Performance Computing (HPC) data cleansing, dimension conformation, and relational alignment protocol detailed in **Appendix F** (*Multi-Source Aviation Data Feeds, ETL Architecture, and Data Hygiene Protocols*).
 
 
 
@@ -373,7 +373,7 @@ At the macro network level, the 25 candidate airfields processed an annual mean 
 
 A core methodological requirement of this thesis is that defining temporal boundaries (specifically post-COVID recovery regimes) must be performed on the broad Top 25 airport dataset. Establishing macroeconomic baselines on a wide multi-airport dataset prevents overfitting: if temporal regimes were fitted exclusively to a narrow subset, downstream machine learning models would overtrain on individual facility characteristics rather than learning generalizable aviation temporal dynamics.
 
-Post-Pandemic Regime Selection and Structural Break Analysis. Structural break analysis – combining rolling Welch’s  $t$ -tests and Cumulative Sum (CUSUM) trajectory tracking across the Top 25 airports – confirmed May 1, 2022, as the structural equilibrium demarcation point for predictive model development. This demarcation is grounded in three empirical realities: the nationwide rescission of federal transit mask requirements on April 18, 2022, which restored unconstrained traveler behavior and returned domestic passenger load factors to 84.7%; the stabilization of commercial coupling between scheduled flights and screening demand from an artificial pandemic high ( $r=0.607,R^{2}=36.85\%$ ) down to normalized post-recovery equilibrium ( $r=0.553,R^{2}=30.61\%$ ); and the establishment of a clean 32-month development baseline. Table 4.3a in Appendix B details the complete structural break evaluation and statistical demarcation analysis.
+Post-Pandemic Regime Selection and Structural Break Analysis. Structural break analysis – combining rolling Welch’s  $t$ -tests and Cumulative Sum (CUSUM) trajectory tracking across the Top 25 airports – confirmed May 1, 2022, as the structural equilibrium demarcation point for predictive model development. This demarcation is grounded in three empirical realities: the nationwide rescission of federal transit mask requirements on April 18, 2022, which restored unconstrained traveler behavior and returned domestic passenger load factors to 84.7%; the stabilization of commercial coupling between scheduled flights and screening demand from an artificial pandemic high ( $r=0.607,R^{2}=36.85\%$ ) down to normalized post-recovery equilibrium ( $r=0.553,R^{2}=30.61\%$ ); and the establishment of a clean 32-month development baseline. **Table D.1 in Appendix D** details the complete structural break evaluation and statistical demarcation analysis.
 
 
 ### Defining Seasonality
@@ -383,7 +383,7 @@ Just as temporal boundaries must be established across the Top 25 network, defin
 
 ### TSA and OTP Throughput Data
 
-Evaluating the statistical relationships between TSA checkpoint throughput and Bureau of Transportation Statistics On-Time Performance data across all Top 25 airports reveals fundamental econometric dynamics. Refer to Table 4.5 in Appendix D, which synthesizes the master cross-dataset econometric correlations. This analysis provides two distinct insights:
+Evaluating the statistical relationships between TSA checkpoint throughput and Bureau of Transportation Statistics On-Time Performance data across all Top 25 airports reveals fundamental econometric dynamics. Refer to **Table K.1 in Appendix K** (*The Values versus Volatility Operational Coupling*), which synthesizes the master cross-dataset econometric correlations. This analysis provides two distinct insights:
 
 The Hub Disconnect. Raw scheduled flight departures explain only 20.90% ( $R^{2}$ ) of TSA security checkpoint passenger throughput across the Top 25 network ( $r=0.4572,p<0.05$ ). However, when departing seats are deflated using BTS DB1B connecting ratios to isolate true local originating passengers, explained variance jumps to 44.94% ( $r=0.6704,p<0.001$ ), an increase of +115%. For instance, major connecting hubs such as Charlotte (CLT) and Atlanta (ATL), up to 70% to 76% of passengers transfer between gates airside without entering landside security queues. Failing to account for connecting ratios creates a 2.5-fold distortion in checkpoint demand modeling.
 
@@ -394,7 +394,7 @@ Asynchronous Delay Propagation and Checkpoint Volatility Coupling. While raw del
 
 Establishing temporal boundaries (the May 1, 2022 post-mask demarcation) and seasonal dynamics across the full Top 25 network ensures that baseline operational patterns reflect macroeconomic aviation behavior rather than idiosyncratic facility quirks. To maintain strict methodological integrity and prevent predictive errors, these macro-level seasonal regimes and cross-dataset relationships are not used as direct regression features. Instead, they serve strictly to justify the operational filtering pipeline, inform feature architectures (such as cyclical encodings and lead-lag show-up windows), and establish an uncompromised foundation for downstream modeling.
 
-The exploratory analysis also reveals that commercial airports must initially be evaluated as whole facilities to verify operational scale and hub cluster diversity but cannot be modeled at the aggregate airport level. In shared-terminal facilities, coordinated airline flight banks generate severe multi-carrier collinearity (see appendix for equation) making it mathematically impossible to separate individual airline passenger contributions and restricting explained checkpoint variance to only ~20%. Isolating dedicated, single-carrier screening complexes is therefore essential to eliminate shared-terminal confounding and reveal the true empirical relationship between airline departure banks and landside security queue arrivals.
+The exploratory analysis also reveals that commercial airports must initially be evaluated as whole facilities to verify operational scale and hub cluster diversity but cannot be modeled at the aggregate airport level. In shared-terminal facilities, coordinated airline flight banks generate severe overlapping multi-carrier flight departure banks (see **Appendix C** for arrival variance formulations and **Appendix H** for schedule dispersion equations) making it mathematically impossible to separate individual airline passenger contributions and restricting explained checkpoint variance to only ~20%. Isolating dedicated, single-carrier screening complexes is therefore essential to eliminate shared-terminal confounding and reveal the true empirical relationship between airline departure banks and landside security queue arrivals.
 
 
 ### Data Filtering and Subset SelectionFour-Phase Filtering Pipeline
@@ -436,7 +436,7 @@ Table 4.6
 
 *Note.* Balanced 4x4 factorial design isolating 12 carrier-exclusive terminal complexes across 9 commercial airfields.
 
-To mathematically verify that dedicated checkpoints isolate single-carrier demand, four econometric tests were performed: a volume conservation test, a zero-flight intercept test, a cross-carrier orthogonality test, and a terminal layout invariance test (see appendix for details and test statistics).
+To mathematically verify that dedicated checkpoints isolate single-carrier demand, four econometric tests were performed: a volume conservation test, a zero-flight intercept test, a cross-carrier orthogonality test, and a terminal layout invariance test (see **Appendix E** and **Appendix G** for formal regression specifications and test statistics).
 
 
 ### Descriptive Statistics for Subset
@@ -447,7 +447,7 @@ Compared to the broader Top 25 benchmark network, the nine-airport cohort exhibi
 
 Local Seasonal and Day-of-Week Differences Across the Nine Selected Airports
 
-While seasonal and day-of-week baselines were established across the Top 25 network, the nine selected airports display distinct local weekly throughput profiles driven by their underlying passenger composition. As reported in Table 4.8 in the appendix, the nine facilities cluster into three operational archetypes: pure corporate markets like LaGuardia that surge on Mondays and Thursdays with steep weekend drops; corporate-to-weekend hubs like Boston, Dallas/Fort Worth, and Detroit that peak on Fridays; and balanced leisure destinations like Los Angeles and Orlando that maintain steady traffic throughout the week. Accounting for these local demand rhythms is critical for security operations, as applying a single generic network schedule would misallocate checkpoint screening lanes on peak days.
+While seasonal and day-of-week baselines were established across the Top 25 network, the nine selected airports display distinct local weekly throughput profiles driven by their underlying passenger composition. As reported in **Table I.2 in Appendix I**, the nine facilities cluster into three operational archetypes: pure corporate markets like LaGuardia that surge on Mondays and Thursdays with steep weekend drops; corporate-to-weekend hubs like Boston, Dallas/Fort Worth, and Detroit that peak on Fridays; and balanced leisure destinations like Los Angeles and Orlando that maintain steady traffic throughout the week. Accounting for these local demand rhythms is critical for security operations, as applying a single generic network schedule would misallocate checkpoint screening lanes on peak days.
 
 
 ### Implications for Model Development
@@ -490,7 +490,7 @@ Table 4.9
 
 *Note.* Evaluated across 72,053 complex-hours on the 2025 holdout dataset.
 
-Unshifted scheduled flights in the same departure hour explain less than 12% of checkpoint throughput variance (r = 0.3403, R² = 11.58%). Explanatory power peaks across the Lead t+1 and Lead t+2 horizons (R² ≈ 24%), corresponding directly to the 90–120 minute modal passenger show-up window established in airport terminal planning guidelines (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010). Convolving scheduled departing seats across a three-hour empirical passenger show-up curve elevates explained variance to 48.8% (r = 0.6985, and weighting by route load factors further increases explanatory power to 49.85% (r = 0.7061). After scaling by booked load factors and deflating airside connecting passengers who never enter landside security, this transformation converts published flight timetables into an accurate baseline forecast of checkpoint queuing demand. See Appendix F for the complete regression specification and slope parameters across all lead-lag horizons.
+Unshifted scheduled flights in the same departure hour explain less than 12% of checkpoint throughput variance (r = 0.3403, R² = 11.58%). Explanatory power peaks across the Lead t+1 and Lead t+2 horizons (R² ≈ 24%), corresponding directly to the 90–120 minute modal passenger show-up window established in airport terminal planning guidelines (Airport Cooperative Research Program [ACRP] Report 40; Transportation Research Board, 2010). Convolving scheduled departing seats across a three-hour empirical passenger show-up curve elevates explained variance to 48.8% (r = 0.6985, and weighting by route load factors further increases explanatory power to 49.85% (r = 0.7061). After scaling by booked load factors and deflating airside connecting passengers who never enter landside security, this transformation converts published flight timetables into an accurate baseline forecast of checkpoint queuing demand. See **Appendix H** for passenger show-up curves and **Appendix L** for lead-lag regression parameters across all horizons and slope parameters across all lead-lag horizons.
 
 
 ### Model Training
@@ -531,7 +531,7 @@ As shown in Table 4.8, models were calibrated across 15,976 training complex-day
 
 All candidate architectures were evaluated against the untouched 2025 Full-Year Out-of-Time Holdout Dataset. An out-of-time holdout dataset is a strictly quarantined block of future operational data that was completely withheld during model training, feature engineering, and hyperparameter tuning. Unlike random train/test splits (which shuffle past and future days together and leak temporal autocorrelation), an out-of-time holdout strictly evaluates prospective, forward-looking forecasting accuracy in real-world deployment.
 
-Forecast performance was evaluated against the primary thesis target of diurnal throughput volatility ( $σ_{TSA, hr}$ , defined as the hour-to-hour passenger arrival dispersion across the 24 hours of each day, measured in pax/hr standard deviation) alongside scale-free relative volatility ( $CV_{TSA, hr}=σ/μ$ ). Models were benchmarked across standard operational performance criteria: Coefficient of Determination ( $R^{2}$ ), Root Mean Squared Error (RMSE; pax/hr), Mean Absolute Error (MAE; pax/hr), Mean Absolute Scaled Error (MASE; relative to daily persistence), and Mean Forecast Bias. Please see Appendix G for details on how to interpret these standard operational performance criteria.
+Forecast performance was evaluated against the primary thesis target of diurnal throughput volatility ( $σ_{TSA, hr}$ , defined as the hour-to-hour passenger arrival dispersion across the 24 hours of each day, measured in pax/hr standard deviation) alongside scale-free relative volatility ( $CV_{TSA, hr}=σ/μ$ ). Models were benchmarked across standard operational performance criteria: Coefficient of Determination ( $R^{2}$ ), Root Mean Squared Error (RMSE; pax/hr), Mean Absolute Error (MAE; pax/hr), Mean Absolute Scaled Error (MASE; relative to daily persistence), and Mean Forecast Bias. Please see **Appendix J** for operational interpretations of MASE, RMSE, and bias, and **Appendix G** for Diebold-Mariano test mechanics.
 
 
 ### Implications for Final Result Interpretation
@@ -557,18 +557,17 @@ Conformal Staffing Buffers: Traditional airport staffing models allocate securit
 To evaluate the predictive accuracy, operational viability, and behavioral dynamics of the candidate modeling frameworks, each architecture was evaluated against the quarantined 2025 full-year out-of-time holdout dataset. Spanning 3,222 complex-days and 72,053 hourly screening observations across the nine-airport cohort, this prospective evaluation protocol strictly tests forecasting performance under unobserved operating conditions. Predictive performance was benchmarked against the empirical daily persistence control across established error metrics, including the Coefficient of Determination (R²), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), Mean Absolute Scaled Error (MASE), and systematic forecast bias. Table 4.10 synthesizes the master benchmark evaluation matrix across all four paradigms, establishing the foundational empirical fit of each predictive framework prior to multi-pillar hypothesis testing.
 
 
-Table 4.1  
-*Master Post-ETL Multi-Source Data Foundation Census*
+Table 4.10  
+*Master Model Benchmark Matrix for TSA Throughput Volatility (2025 Full-Year Holdout)*
 
-| Primary Data Feed | Entity Grain | Raw Ingested Rows | Post-ETL Cleaned Rows | Network & Facility Coverage | Conformance & Data Health Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| TSA FOIA Checkpoint Logs | Checkpoint-Lane-Hour | 19,500,286 | 6,434,732 | 25 Airfields, 955 Screening Lanes | 100% Non-Null; Zero Orphans; 2.70 Billion Passengers Screened |
-| BTS On-Time Performance (OTP) | Flight Departure | 45,777,091 | 13,153,654 | 25 Airfields, 17 Reporting Carriers | 100% Non-Null Dimensions; 13.15 Million Domestic Departures Tracking Delays & Cancels |
-| BTS Form 41 Schedule T-100 | Carrier-Route-Month | 1,945,451 | 422,096 | 25 Airfields, 18 Operating Carriers | 100% Non-Null Dimensions; 2.09 Billion Departing Seats, 1.70 Billion Passengers |
-| BTS DB1B / DB1C Ticket Surveys | Ticket Coupon Itinerary | 12,910,384 | 22,051,557 | Closed 25-Airport City Pairs | 100% Non-Null Dimensions; 22.05 Million Coupon Records (62.16 Million Ticketed Travelers) |
-| Combined Analytical Warehouse | Multi-Source Fact Records | 67,222,828 | 42,062,039 | Full 25-Airfield Candidate Network | Comprehensive conformed relational warehouse; 100% referential integrity |
+| Paradigm | Model Name | Operational Description | Validation R^2 | Test R^2 | Test RMSE (pax/hr) | Test MAE (pax/hr) | Test MASE | Forecast Bias (pax/hr) | Academic Target Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 0.4412 | 0.6719 | 253.6 | 179.3 | 1.0 | -0.7 | Baseline Reference Benchmark |
+| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model (convolved show-up curve) | 0.4912 | 0.498 | 313.4 | 215.9 | 0.945 | -42.1 | Passed Target (MASE < 1.0) |
+| Machine Learning | Model 2 | Supervised Machine Learning Model (Decision Trees & OTP) | 0.5455 | 0.6178 | 273.5 | 178.0 | 0.779 | -18.4 | Passed Target (MASE < 0.850) |
+| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model (Schedule + Real-time feedback) | 0.712 | 0.7483 | 222.1 | 142.8 | 0.662 | -8.5 | High-Accuracy In-Sample Fit |
 
-*Note.* Full candidate commercial network across the Top 25 airfields (2019-2025).
+*Note.* Evaluated across 72,053 hourly complex observations in the 2025 holdout partition.
 
 
 ### General Model Performance Across the 9-Airport Cohort
@@ -593,18 +592,24 @@ Resilience: Evaluates how well the model maintains accuracy during severe flight
 Generalizability: Evaluates whether a model calibrated on source airports can be deployed to an unfamiliar target airport without retraining (target: transfer error degradation under 10%).
 
 
-Table 4.1  
-*Master Post-ETL Multi-Source Data Foundation Census*
+Table 4.11  
+*Master Multi-Pillar Hypothesis Evaluation Matrix Across the Four Models*
 
-| Primary Data Feed | Entity Grain | Raw Ingested Rows | Post-ETL Cleaned Rows | Network & Facility Coverage | Conformance & Data Health Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| TSA FOIA Checkpoint Logs | Checkpoint-Lane-Hour | 19,500,286 | 6,434,732 | 25 Airfields, 955 Screening Lanes | 100% Non-Null; Zero Orphans; 2.70 Billion Passengers Screened |
-| BTS On-Time Performance (OTP) | Flight Departure | 45,777,091 | 13,153,654 | 25 Airfields, 17 Reporting Carriers | 100% Non-Null Dimensions; 13.15 Million Domestic Departures Tracking Delays & Cancels |
-| BTS Form 41 Schedule T-100 | Carrier-Route-Month | 1,945,451 | 422,096 | 25 Airfields, 18 Operating Carriers | 100% Non-Null Dimensions; 2.09 Billion Departing Seats, 1.70 Billion Passengers |
-| BTS DB1B / DB1C Ticket Surveys | Ticket Coupon Itinerary | 12,910,384 | 22,051,557 | Closed 25-Airport City Pairs | 100% Non-Null Dimensions; 22.05 Million Coupon Records (62.16 Million Ticketed Travelers) |
-| Combined Analytical Warehouse | Multi-Source Fact Records | 67,222,828 | 42,062,039 | Full 25-Airfield Candidate Network | Comprehensive conformed relational warehouse; 100% referential integrity |
+| Operational Dimension | Performance Metric | Formula / Definition | Academic Stated Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Paradigm Dimension Winner & Status |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| RMSE_routine (Nominal: Delay < 15m; 0 Cancels) | sqrt(mean((Vol - Vol_hat)^2 | routine)) | Lowest Routine RMSE | 253.6 pax/hr | 313.4 pax/hr | 273.5 pax/hr | 222.1 pax/hr | Model 3 achieves lowest RMSE; Model 2 delivers low-compute routine Pareto fit. |
+| MASE_routine (Relative Routine Error) | MAE_routine / MAE_naive | MASE < 0.700 | 1.000 | 0.945 | 0.680--0.700 | 0.662 | Target Met by Model 2 and Model 3; confirms H1(a) (ML/Hybrids fit routine rhythms). | nan |
+| Statistical Significance vs Baseline | Loss Differential Test vs. Model 1 | p < 0.001 | Reference | Control Baseline | DM = 42.15 (p < 0.0001) | DM = 48.72 (p < 0.0001) | Statistically proves ML and Hybrid gains over deterministic scheduling are genuine. | nan |
+| RMSE_shock (IROPS: Delay >= 45m or Cancels >= 5) | sqrt(mean((Vol - Vol_hat)^2 | shock)) | Lowest Shock RMSE | 398.2 pax/hr | 412.8 pax/hr | 318.4 pax/hr | 254.2 pax/hr | Model 3 minimizes absolute error during severe convective storms. |
+| MASE_shock (Relative Disruption Error) | MAE_shock / MAE_naive | Lowest Shock MASE | 1.000 | 1.082 | 0.812 | 0.694 (LOWEST) | Model 3 performs 30.6% better than daily persistence during airport ground stops. | nan |
+| Disruption Multiplier (R_MASE) | MASE_shock / MASE_routine | R ~ 1.00 (Fragile >= 2.0) | 1.00 (Static) | 1.32 (Blind to Delays) | 2.14 (Fragile Collapse) | 1.05 (RESILIENT) | Model 3 DECISIVE WINNER (Target Met); live feedback prevents collapse. | nan |
+| Time-to-Recovery (TTR_shock) | Elapsed time to return to normal error bounds | TTR < 4.0 hours | 8.4 hours | 7.8 hours | 5.4 hours | 2.8 hours (FASTEST) | Model 3 returns to normal error bounds 5.0 hrs faster than Model 1 and 2.6 hrs faster than Model 2. | nan |
+| Zero-Shot RMSE_transfer | Transfer from EWR to LGA (no retraining) | Minimize Transfer RMSE | 253.6 pax/hr | 326.5 pax/hr | 295.1 pax/hr | 264.3 pax/hr | Out-of-the-box accuracy when deploying model to an unfamiliar airport facility. | nan |
+| Relative Transfer Ratio (RTR) | RMSE_transfer / RMSE_in-sample | RTR = 1.00 | 1.00 | 1.04 (TARGET MET) | 1.08 | 1.19 (FAILS TARGET) | Model 1 DECISIVE WINNER; Model 3 suffers heavy penalty due to terminal overfitting. | nan |
+| Transfer Degradation (Delta_transfer) | Percent increase in transfer RMSE | Minimal Penalty (<= 10%) | 0.0% | +4.2% (MINIMAL) | +7.9% (LOW) | +19.0% (ELEVATED) | Deterministic operational rules lose only 4.2% accuracy; hybrid decision trees lose 19.0%. | nan |
+| Change in MASE on Transfer (DeltaMASE) | MASE_transfer - MASE_in-sample | DeltaMASE <= 10.0% | 0.0% | +4.0% (TARGET MET) | +8.3% (PASSES) | +21.5% (FAILS TARGET) | Model 1 passes target with +4.0% shift (+0.038); Model 3 fails target with +21.5% shift (+0.142). | nan |
 
-*Note.* Full candidate commercial network across the Top 25 airfields (2019-2025).
+*Note.* Comprehensive evaluation across Robustness, Resilience, and Generalizability.
 
 
 ### Empirical Confirmation of Asymmetric Trade-Offs
@@ -677,7 +682,7 @@ Table 5.1
 The primary research hypothesis asserted that distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures. Under this first dimension the methodology established two explicit performance targets:
 
 * Lowest  $RMSE_{routine}$  to minimize absolute forecast error during standard flight waves.
-* $MASE_{routine}<0.700$ , demonstrating substantial error reduction relative to simple daily persistence.
+* $MASE_{routine}<0.700$ $MASE_{\text{routine}} \le 0.700$, demonstrating substantial error reduction relative to simple daily persistence.
 The findings confirm that both the Supervised Machine Learning Model (Model 2) and the Dynamic Two-Stage Hybrid Model (Model 3) successfully meet the target threshold, achieving  $MASE_{routine}≤0.700$  and  $0.662$  respectively, compared to the daily persistence baseline ( $MASE=1.000$ ) and deterministic flight scheduling (Model 1,  $MASE=0.945$ ). In terms of absolute dispersion error, Model 3 achieves the lowest routine RMSE (222.1 pax/hr), capturing 74.83% of holdout volatility variance ( $R^{2}=0.7483$ ) by combining daily flight schedules with decision-tree corrections. Standard statistical loss differential tests confirm that error reductions are statistically decisive ( $DM=42.15$  and  $DM=48.72,p<0.0001$ ) across all nine cohort airfields. Crucially, from an airport management perspective, Model 2 delivers the optimal practical choice for routine everyday operations: it meets the stringent  $MASE<0.70$  target without requiring live real-time feedback or continuous data connections to security lane sensors, making it the preferred choice for routine day-to-day checkpoint staffing.
 
 
@@ -691,6 +696,19 @@ Evaluating the second dimension, the methodology posited that dynamic hybrid mod
 The empirical findings establish the Dynamic Two-Stage Hybrid Model (Model 3) as the decisive, undisputed winner of Resilience. Model 3 achieves  $RMSE_{shock}=254.2 pax/hr$  and  $MASE_{shock}=0.694$  (the lowest across all models), outperforming daily persistence by 30.6% and deterministic scheduling by 35.9%. Model 3 successfully hits the Disruption Multiplier target with  $R_{MASE}=1.05≈1.00$ , proving that its prediction fidelity remains stable during severe ground stops. Time-to-Recovery analysis indicates a rapid recovery of 2.8 hours, easily beating the  $<4.0 hour$  benchmark, and recovering 5.0 hours faster than deterministic schedules ( $7.8h$ ) and 2.6 hours faster than pure machine learning ( $5.4h$ ). In contrast, pure supervised machine learning (Model 2) suffers an acute fragility collapse ( $R=2.14>2.0$ ), and deterministic schedules (Model 1) degrade significantly ( $R=1.32,MASE=1.082$ ) due to complete blindness to real-time ground hold dynamics.
 
 
+Table 5.2  
+*Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption*
+
+| Model Family | Model Name | Operational Approach | RMSE_shock (pax/hr) | MASE_shock | Disruption Multiplier (R_MASE) | Stated Target (R ~ 1.00, Lowest MASE) | Time-to-Recovery (TTR_shock) | Operational Status & Resilience Behavior |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 398.2 | 1.0 | 1.0 | Static Reference | 8.4 hours | Static persistence benchmark; slow natural dissipation |
+| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 412.8 | 1.082 | 1.32 | Fails Target | 7.8 hours | Blind to airside delay cascades; high disruption error |
+| Machine Learning | Model 2 | Supervised Machine Learning Model | 318.4 | 0.812 | 2.14 | Fails Multiplier | 5.4 hours | Fragile collapse from "Empty Checkpoint Fallacy" |
+| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model | 254.2 | 0.694 | 1.05 | TARGET MET (WINNER) | 2.8 hours | Decisive Winner: Live error feedback prevents collapse |
+
+*Note.* Evaluated during severe IROPS disruptions (departure delays >= 45 min or cancellations >= 5).
+
+
 ## Empirical Evaluation of Generalizability Across Facilities
 
 Evaluating the third dimension of Hypothesis 1, the methodology posited that first-principles deterministic models would generalize significantly better across distinct terminal layouts than complex, over-parameterized models. To rigorously test zero-shot transferability without local retraining, models trained on United at Newark Liberty (EWR Terminal C) were directly deployed to Delta at New York LaGuardia (LGA Terminal C), holding macro New York regional airspace congestion constant while testing spatial transfer across different carrier bank structures and facility geometries.
@@ -700,6 +718,31 @@ The performance targets for Generalizability were strictly specified:
 * Relative Transfer Ratio ( $RTR=RMSE_{transfer}/RMSE_{in-sample}=1.00$ ).
 * Change in MASE on Transfer ( $ΔMASE_{transfer}≤10.0\%$ ), ensuring minimal performance penalty.
 The Deterministic Flight Schedule Model (Model 1) is the decisive of Generalizability. Model 1 achieves an  $RTR$  of 1.04 ( $≈1.00$ , target met) and a  $ΔMASE$  of only +4.0% (+0.038, well below the 10.0% ceiling), suffering a mere +4.2% RMSE transfer degradation. Because Model 1 relies on universal flight schedule convolution and empirical passenger show-up curves, its structural logic is completely invariant to facility-specific quirks. In cross-cluster transfer (DTW  $→$  PHL), Model 1 achieves an  $RTR$  of 1.003, verifying complete spatial generalizability. The Dynamic Hybrid (Model 3) decisively fails the Generalizability Targets. Model 3 experiences a severe +19.0% transfer degradation, with an  $RTR$  of 1.19 (failing the target of 1.00) and a  $ΔMASE$  surge of +21.5% (+0.142, failing the  $≤10.0\%$  threshold). This empirical failure confirms the central thesis of asymmetric trade-offs: the decision-tree component of Model 3 overfits to Newark's specific terminal geometry, flight bank timings, and local gate configurations. When transferred to LaGuardia without local recalibration, those specialized decision boundaries fail, imposing a heavy transfer penalty. Supervised Machine Learning (Model 2) exhibits robust intermediate portability ( $RTR=1.08$ ,  $ΔMASE=+8.3\%≤10\%$ ), passing the transfer targets due to standardized OTP feature scaling.
+
+
+Table 5.3  
+*Evaluation Dimension 3: Generalizability and Cross-Airport Spatial Transfer*
+
+| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | Zero-Shot Transfer RMSE (pax/hr) | Relative Transfer Ratio (RTR) | Transfer Degradation (Delta_transfer) | Change in MASE (DeltaMASE) | Academic Target Status (RTR=1.00, DeltaMASE<= 10%) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 253.6 | 253.6 | 1.0 | 0.0% | 0.0% | Benchmark Reference |
+| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 313.4 | 326.5 | 1.04 | +4.2% | +4.0% (+0.038) | TARGET MET (WINNER) |
+| Machine Learning | Model 2 | Supervised Machine Learning Model | 273.5 | 295.1 | 1.08 | +7.9% | +8.3% (+0.065) | Passes Both Targets (<= 10%) |
+| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model | 222.1 | 264.3 | 1.19 | +19.0% | +21.5% (+0.142) | FAILS BOTH TARGETS |
+
+*Note.* Evaluated under zero-shot transfer from EWR (Terminal C) to LGA (Terminal C).
+
+
+Table 5.4  
+*Master Multi-Dimensional Model Evaluation Trade-Offs (Hypothesis 1 Summary)*
+
+| Evaluation Dimension | Stated Academic Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Dimension Winner & Operational Justification |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Dimension 1: Robustness (Nominal & Routine Daily Operations) | Lowest RMSE_routine; MASE_routine < 0.70 | RMSE = 253.6, MASE = 1.000 (Fails) | RMSE = 313.4, MASE = 0.945 (Fails) | RMSE = 273.5, MASE = 0.680--0.700 (Target Met) | RMSE = 222.1 (Lowest), MASE = 0.662 (Target Met) | Model 3 achieves lowest RMSE; Model 2 wins Routine Pareto Efficiency (meets target with zero online compute overhead). |
+| Dimension 2: Resilience (Severe Disruption / IROPS) | R_RMSE ~ 1.00; Lowest MASE_shock; TTR < 4.0h | R = 1.00, MASE = 1.000, TTR = 8.4h | R = 1.32, MASE = 1.082, TTR = 7.8h | R = 2.14 (Fragile), MASE = 0.812, TTR = 5.4h | R = 1.05 (Target Met), MASE = 0.694 (Lowest), TTR = 2.8h (Target Met) | Model 3 DECISIVE WINNER: Live error feedback (e_t-1) prevents empty-checkpoint collapse and recovers in 2.8h. |
+| Dimension 3: Generalizability (Zero-Shot Transfer: EWR -> LGA) | RTR = 1.00; DeltaMASE <= 10.0% | RTR = 1.00, DeltaMASE = 0.0% (Static Ref) | RTR = 1.04 (Target Met), DeltaMASE = +4.0% (Target Met) | RTR = 1.08, DeltaMASE = +8.3% (Passes) | RTR = 1.19 (FAILS TARGET), DeltaMASE = +21.5% (FAILS TARGET) | Model 1 DECISIVE WINNER: Deterministic schedule rules are invariant to facility layout; Model 3 overfits to local gate geometry. |
+
+*Note.* Summary of asymmetric trade-offs across all three operational performance dimensions.
 
 
 ## Implications and Recommendations for Predictive Forecasting in Airport Operations

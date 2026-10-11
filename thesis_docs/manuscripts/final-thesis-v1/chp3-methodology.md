@@ -36,7 +36,7 @@ Resilience Performance: Under severe operational disruptions (departure delays �
 
 Generalizability Performance: Under zero-shot cross-airport transfer without local retraining, the deterministic flight schedule model achieves superior generalizability (RTR ≈ 1.00, ΔMASE ≤ 10.0%) due to terminal geometry invariance, whereas hybrid models experience transfer penalties from terminal layout overfitting.
 
-Detailed hypothesis formulations, sub-hypotheses (H1a, H1b, H1c), formal mathematical evaluation thresholds, and Diebold-Mariano test specifications are compiled in the Appendix.
+Formal hypothesis formulations, econometric evaluation thresholds, and Diebold-Mariano forecast accuracy test specifications are compiled in **Appendix G** (*Statistical Significance Testing*) and **Appendix J** (*Candidate Predictive Models and Evaluation Metrics*).
 
 
 ### Design and Procedures
@@ -134,4 +134,4 @@ A major threat to internal model validity is the presence of connecting passenge
 
 ## Treatment of the Data
 
-Data processing follows a sequential pipeline. First, raw BTS and TSA files are exported and parsed using Python on the institutional computing environment. Timestamps are standardized to a uniform operational clock matching local airport solar time. Scheduled overnight checkpoint closures are preserved as true operational structural zeros, and advance cancellations are separated from tactical cancellations to preserve information causality. Lastly, flight departure times are aligned with passenger lead-time assumptions from ACRP Report 40 and merged with hourly TSA throughput intervals to create a final modeling dataset, with the exhaustive ETL data engineering protocol detailed in the Appendix.
+Data processing follows a sequential pipeline. First, raw BTS and TSA files are exported and parsed using Python on the institutional computing environment. Timestamps are standardized to a uniform operational clock matching local airport solar time. Scheduled overnight checkpoint closures are preserved as true operational structural zeros, and advance cancellations are separated from tactical cancellations to preserve information causality. Lastly, flight departure times are aligned with passenger lead-time assumptions from ACRP Report 40 and merged with hourly TSA throughput intervals to create a final modeling dataset, with the complete High-Performance Computing (HPC) data cleansing, dimension conformation, and relational alignment protocol detailed in **Appendix F** (*Multi-Source Aviation Data Feeds, ETL Architecture, and Data Hygiene Protocols*).

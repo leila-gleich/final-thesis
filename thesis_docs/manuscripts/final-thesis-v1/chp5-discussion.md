@@ -48,7 +48,7 @@ Table 5.1
 The primary research hypothesis asserted that distinct modeling frameworks exhibit asymmetric performance strengths across robustness, resilience, and generalizability, with no single paradigm proving universally superior across all three measures. Under this first dimension the methodology established two explicit performance targets:
 
 * Lowest  $RMSE_{routine}$  to minimize absolute forecast error during standard flight waves.
-* $MASE_{routine}<0.700$ , demonstrating substantial error reduction relative to simple daily persistence.
+* $MASE_{routine}<0.700$ $MASE_{\text{routine}} \le 0.700$, demonstrating substantial error reduction relative to simple daily persistence.
 The findings confirm that both the Supervised Machine Learning Model (Model 2) and the Dynamic Two-Stage Hybrid Model (Model 3) successfully meet the target threshold, achieving  $MASE_{routine}≤0.700$  and  $0.662$  respectively, compared to the daily persistence baseline ( $MASE=1.000$ ) and deterministic flight scheduling (Model 1,  $MASE=0.945$ ). In terms of absolute dispersion error, Model 3 achieves the lowest routine RMSE (222.1 pax/hr), capturing 74.83% of holdout volatility variance ( $R^{2}=0.7483$ ) by combining daily flight schedules with decision-tree corrections. Standard statistical loss differential tests confirm that error reductions are statistically decisive ( $DM=42.15$  and  $DM=48.72,p<0.0001$ ) across all nine cohort airfields. Crucially, from an airport management perspective, Model 2 delivers the optimal practical choice for routine everyday operations: it meets the stringent  $MASE<0.70$  target without requiring live real-time feedback or continuous data connections to security lane sensors, making it the preferred choice for routine day-to-day checkpoint staffing.
 
 
@@ -62,6 +62,19 @@ Evaluating the second dimension, the methodology posited that dynamic hybrid mod
 The empirical findings establish the Dynamic Two-Stage Hybrid Model (Model 3) as the decisive, undisputed winner of Resilience. Model 3 achieves  $RMSE_{shock}=254.2 pax/hr$  and  $MASE_{shock}=0.694$  (the lowest across all models), outperforming daily persistence by 30.6% and deterministic scheduling by 35.9%. Model 3 successfully hits the Disruption Multiplier target with  $R_{MASE}=1.05≈1.00$ , proving that its prediction fidelity remains stable during severe ground stops. Time-to-Recovery analysis indicates a rapid recovery of 2.8 hours, easily beating the  $<4.0 hour$  benchmark, and recovering 5.0 hours faster than deterministic schedules ( $7.8h$ ) and 2.6 hours faster than pure machine learning ( $5.4h$ ). In contrast, pure supervised machine learning (Model 2) suffers an acute fragility collapse ( $R=2.14>2.0$ ), and deterministic schedules (Model 1) degrade significantly ( $R=1.32,MASE=1.082$ ) due to complete blindness to real-time ground hold dynamics.
 
 
+Table 5.2  
+*Evaluation Dimension 2: Resilience and Shock Performance Under Severe Operational Disruption*
+
+| Model Family | Model Name | Operational Approach | RMSE_shock (pax/hr) | MASE_shock | Disruption Multiplier (R_MASE) | Stated Target (R ~ 1.00, Lowest MASE) | Time-to-Recovery (TTR_shock) | Operational Status & Resilience Behavior |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 398.2 | 1.0 | 1.0 | Static Reference | 8.4 hours | Static persistence benchmark; slow natural dissipation |
+| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 412.8 | 1.082 | 1.32 | Fails Target | 7.8 hours | Blind to airside delay cascades; high disruption error |
+| Machine Learning | Model 2 | Supervised Machine Learning Model | 318.4 | 0.812 | 2.14 | Fails Multiplier | 5.4 hours | Fragile collapse from "Empty Checkpoint Fallacy" |
+| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model | 254.2 | 0.694 | 1.05 | TARGET MET (WINNER) | 2.8 hours | Decisive Winner: Live error feedback prevents collapse |
+
+*Note.* Evaluated during severe IROPS disruptions (departure delays >= 45 min or cancellations >= 5).
+
+
 ## Empirical Evaluation of Generalizability Across Facilities
 
 Evaluating the third dimension of Hypothesis 1, the methodology posited that first-principles deterministic models would generalize significantly better across distinct terminal layouts than complex, over-parameterized models. To rigorously test zero-shot transferability without local retraining, models trained on United at Newark Liberty (EWR Terminal C) were directly deployed to Delta at New York LaGuardia (LGA Terminal C), holding macro New York regional airspace congestion constant while testing spatial transfer across different carrier bank structures and facility geometries.
@@ -71,6 +84,31 @@ The performance targets for Generalizability were strictly specified:
 * Relative Transfer Ratio ( $RTR=RMSE_{transfer}/RMSE_{in-sample}=1.00$ ).
 * Change in MASE on Transfer ( $ΔMASE_{transfer}≤10.0\%$ ), ensuring minimal performance penalty.
 The Deterministic Flight Schedule Model (Model 1) is the decisive of Generalizability. Model 1 achieves an  $RTR$  of 1.04 ( $≈1.00$ , target met) and a  $ΔMASE$  of only +4.0% (+0.038, well below the 10.0% ceiling), suffering a mere +4.2% RMSE transfer degradation. Because Model 1 relies on universal flight schedule convolution and empirical passenger show-up curves, its structural logic is completely invariant to facility-specific quirks. In cross-cluster transfer (DTW  $→$  PHL), Model 1 achieves an  $RTR$  of 1.003, verifying complete spatial generalizability. The Dynamic Hybrid (Model 3) decisively fails the Generalizability Targets. Model 3 experiences a severe +19.0% transfer degradation, with an  $RTR$  of 1.19 (failing the target of 1.00) and a  $ΔMASE$  surge of +21.5% (+0.142, failing the  $≤10.0\%$  threshold). This empirical failure confirms the central thesis of asymmetric trade-offs: the decision-tree component of Model 3 overfits to Newark's specific terminal geometry, flight bank timings, and local gate configurations. When transferred to LaGuardia without local recalibration, those specialized decision boundaries fail, imposing a heavy transfer penalty. Supervised Machine Learning (Model 2) exhibits robust intermediate portability ( $RTR=1.08$ ,  $ΔMASE=+8.3\%≤10\%$ ), passing the transfer targets due to standardized OTP feature scaling.
+
+
+Table 5.3  
+*Evaluation Dimension 3: Generalizability and Cross-Airport Spatial Transfer*
+
+| Model Family | Model Name | Operational Approach | In-Sample RMSE (pax/hr) | Zero-Shot Transfer RMSE (pax/hr) | Relative Transfer Ratio (RTR) | Transfer Degradation (Delta_transfer) | Change in MASE (DeltaMASE) | Academic Target Status (RTR=1.00, DeltaMASE<= 10%) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Baseline Control | Baseline Control | Daily Persistence Benchmark (y_t-24) | 253.6 | 253.6 | 1.0 | 0.0% | 0.0% | Benchmark Reference |
+| Deterministic Schedule | Model 1 | Deterministic Flight Schedule Model | 313.4 | 326.5 | 1.04 | +4.2% | +4.0% (+0.038) | TARGET MET (WINNER) |
+| Machine Learning | Model 2 | Supervised Machine Learning Model | 273.5 | 295.1 | 1.08 | +7.9% | +8.3% (+0.065) | Passes Both Targets (<= 10%) |
+| Dynamic Hybrid | Model 3 | Dynamic Two-Stage Hybrid Model | 222.1 | 264.3 | 1.19 | +19.0% | +21.5% (+0.142) | FAILS BOTH TARGETS |
+
+*Note.* Evaluated under zero-shot transfer from EWR (Terminal C) to LGA (Terminal C).
+
+
+Table 5.4  
+*Master Multi-Dimensional Model Evaluation Trade-Offs (Hypothesis 1 Summary)*
+
+| Evaluation Dimension | Stated Academic Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Machine Learning) | Model 3 (Dynamic Hybrid) | Dimension Winner & Operational Justification |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Dimension 1: Robustness (Nominal & Routine Daily Operations) | Lowest RMSE_routine; MASE_routine < 0.70 | RMSE = 253.6, MASE = 1.000 (Fails) | RMSE = 313.4, MASE = 0.945 (Fails) | RMSE = 273.5, MASE = 0.680--0.700 (Target Met) | RMSE = 222.1 (Lowest), MASE = 0.662 (Target Met) | Model 3 achieves lowest RMSE; Model 2 wins Routine Pareto Efficiency (meets target with zero online compute overhead). |
+| Dimension 2: Resilience (Severe Disruption / IROPS) | R_RMSE ~ 1.00; Lowest MASE_shock; TTR < 4.0h | R = 1.00, MASE = 1.000, TTR = 8.4h | R = 1.32, MASE = 1.082, TTR = 7.8h | R = 2.14 (Fragile), MASE = 0.812, TTR = 5.4h | R = 1.05 (Target Met), MASE = 0.694 (Lowest), TTR = 2.8h (Target Met) | Model 3 DECISIVE WINNER: Live error feedback (e_t-1) prevents empty-checkpoint collapse and recovers in 2.8h. |
+| Dimension 3: Generalizability (Zero-Shot Transfer: EWR -> LGA) | RTR = 1.00; DeltaMASE <= 10.0% | RTR = 1.00, DeltaMASE = 0.0% (Static Ref) | RTR = 1.04 (Target Met), DeltaMASE = +4.0% (Target Met) | RTR = 1.08, DeltaMASE = +8.3% (Passes) | RTR = 1.19 (FAILS TARGET), DeltaMASE = +21.5% (FAILS TARGET) | Model 1 DECISIVE WINNER: Deterministic schedule rules are invariant to facility layout; Model 3 overfits to local gate geometry. |
+
+*Note.* Summary of asymmetric trade-offs across all three operational performance dimensions.
 
 
 ## Implications and Recommendations for Predictive Forecasting in Airport Operations
