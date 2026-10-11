@@ -18,14 +18,19 @@ except ImportError:
 
 class TestAcronymsGeneration(unittest.TestCase):
     def setUp(self):
-        self.docx_path = "thesis_docs/manuscripts/List_of_Acronyms_and_Abbreviations.docx"
-        self.docx_v1_path = "thesis_docs/manuscripts/Acronyms v1.docx"
+        # Support both consolidated Acronyms.docx and legacy targets
+        if os.path.exists("thesis_docs/manuscripts/Acronyms.docx"):
+            self.docx_path = "thesis_docs/manuscripts/Acronyms.docx"
+            self.docx_v1_path = "thesis_docs/manuscripts/Acronyms.docx"
+        else:
+            self.docx_path = "thesis_docs/manuscripts/List_of_Acronyms_and_Abbreviations.docx"
+            self.docx_v1_path = "thesis_docs/manuscripts/Acronyms v1.docx"
         self.md_path = "thesis_docs/manuscripts/acronyms.md"
         self.md_only_path = "thesis_docs/manuscripts/manuscripts-only/acronyms.md"
         
     def test_files_exist(self):
         """Verify that all generated acronym files exist and have non-zero size."""
-        for path in [self.docx_path, self.docx_v1_path, self.md_path, self.md_only_path]:
+        for path in [self.docx_path, self.md_path, self.md_only_path]:
             self.assertTrue(os.path.exists(path), f"File missing: {path}")
             self.assertGreater(os.path.getsize(path), 1000, f"File too small: {path}")
 

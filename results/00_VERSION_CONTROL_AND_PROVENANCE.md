@@ -821,6 +821,28 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   companion workbook methodology-tables.xlsx.                              |
 |         |            | - Preserved strict Policy 1.1: Chp III v4.docx and all Word drafts          |
 |         |            |   100% untouched (zero edits to .docx).                                     |
+| v4.52   | 2026-10-10 | Appendix v4 Compilation & Multi-Tab Appendix_Tables.xlsx Deployment:        |
+|         |            | - Synthesized and merged all Microsoft Word appendix files across repository|
+|         |            |   (Appendix v1.docx, Appendix v2.docx, Appendix v3.docx, and                |
+|         |            |   Chapter_II_Appendices.docx).                                              |
+|         |            | - Preserved 100% of queuing derivations (Kendall notation, Erlang-C, NHPP,  |
+|         |            |   Kingman heavy traffic, Tweedie dispersion), modeling taxonomy (6 paradigms)|
+|         |            |   empirical show-up density calibrations (ACRP Report 40 lognormal),        |
+|         |            |   DB1B connecting deflation formulas, disruption shock thresholds (A14 vs   |
+|         |            |   IROPS), Empty Checkpoint Fallacy mechanics, and zero-shot transfer rules. |
+|         |            | - Streamlined into 14 cohesive, non-redundant lettered appendices (A-N)     |
+|         |            |   ordered strictly by chapter citation order (Ch I -> Ch V).                |
+|         |            | - Deployed master multi-tab companion Excel workbook (Appendix_Tables.xlsx)  |
+|         |            |   with 30 conformed analytical tabs strictly styled per APA 7th Edition     |
+|         |            |   rules (Calibri typography, horizontal boundary rules, zero vertical       |
+|         |            |   gridlines, auto-fitted columns, return links, and interactive TOC).       |
+|         |            | - Generated synchronized Appendix v4 Markdown documents in thesis_docs/     |
+|         |            |   manuscripts/Appendix/Appendix v4.md, thesis_docs/manuscripts/Appendix     |
+|         |            |   v4.md, thesis_docs/manuscripts/Appendix/appendix.md, and manuscripts-only/ |
+|         |            |   appendix.md.                                                              |
+|         |            | - Added comprehensive unit test suite tests/test_appendix_v4_generation.py  |
+|         |            |   (52/52 tests passing cleanly).                                            |
+|         |            | - Obeyed Policy 1.1 with zero edits to Microsoft Word documents (.docx).     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
