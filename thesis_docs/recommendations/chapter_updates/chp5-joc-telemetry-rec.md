@@ -1,9 +1,9 @@
 # Chapter V Recommendation Draft: Airside-Landside Operational JOC Telemetry
 
-**Document**: `chp5-recs.md`  
-**Location**: `thesis_docs/recommendations/chapter_updates/chp5-recs.md`  
+**Document**: `chp5-joc-telemetry-rec.md`  
+**Location**: `thesis_docs/recommendations/chapter_updates/chp5-joc-telemetry-rec.md`  
 **Target Chapter**: Chapter V (Analysis, Discussion & Synthesis), Section 5.6 (*Strategic Implications for Airport and Security Authorities*)  
-**Source Implementation Plan**: [`OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/implementation_plans/OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md) (Recommendation 6)  
+**Source Implementation Plan**: [`OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md`](file:///Users/leilagleich/Library/CloudStorage/OneDrive-Embry-RiddleAeronauticalUniversity/final-thesis/thesis_docs/recommendations/archive/completed_implementation_plans/OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md) (Recommendation 6, Archived)  
 **Date**: October 6, 2026  
 
 ---

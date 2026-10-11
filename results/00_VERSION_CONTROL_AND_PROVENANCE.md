@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.56 (Archival and Renaming of Earlier Extended Precursor Drafts)
+RELEASE VERSION: v4.57 (Recommendations Directory Archival & Concise Renaming)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -895,6 +895,26 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   versions, and mapping to the active final-thesis-v1 suite.               |
 |         |            | - Verified that thesis_docs/manuscripts/final-thesis-v1/ exactly mirrors   |
 |         |            |   final-thesis-v1.md byte-for-byte across all chapters.                     |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
+| v4.57   | 2026-10-11 | Recommendations Directory Archival & Concise Renaming:                     |
+|         |            | - Archived completed/implemented recommendation files:                     |
+|         |            |   * thesis_docs/recommendations/finalthesisv1-rec.md ->                     |
+|         |            |     archive/completed_chapter_updates/finalthesisv1-rec.md (100% in v1).   |
+|         |            |   * thesis_docs/recommendations/chapter_updates/litreview-rec.md ->         |
+|         |            |     archive/completed_chapter_updates/litreview-rec.md (100% in Chp 2).    |
+|         |            |   * implementation_plans/OTP_FACTOR_WEIGHTING_... ->                       |
+|         |            |     archive/completed_implementation_plans/ (100% in models & holdouts).   |
+|         |            |   * thesis_docs/recommendations/draft-recs/ -> archive/draft-recs/.        |
+|         |            | - Renamed active recommendations with descriptive, concise names:          |
+|         |            |   * PROPOSED_EDITS_ELIMINATE_ORIGINAL_FORMULAS.md ->                        |
+|         |            |     standardize-formulas-rec.md                                            |
+|         |            |   * chapter_updates/chp5-recs.md -> chapter_updates/chp5-joc-telemetry-rec.md|
+|         |            |   * chapter_updates/04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md ->        |
+|         |            |     chapter_updates/defense-talking-points-qa.md                           |
+|         |            | - Synchronized directory indices in thesis_docs/recommendations/README.md, |
+|         |            |   recommendations/archive/README.md, recs-to-implement.md, and             |
+|         |            |   thesis_docs/README.md.                                                   |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
 +---------+------------+----------------------------------------------------------------------------+

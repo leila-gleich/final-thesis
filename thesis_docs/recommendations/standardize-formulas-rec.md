@@ -1,5 +1,7 @@
 # Proposed Edits: Eliminating Original Formulas in Favor of Standard Academic Formulations
 
+**Document**: `standardize-formulas-rec.md`  
+**Location**: `thesis_docs/recommendations/standardize-formulas-rec.md`  
 **Document Status**: Proposed Recommendation Guide (No Manuscript or Code Changes Applied)  
 **Author**: Academic Architecture & Methodology Review  
 **Target Repository**: `final-thesis`  

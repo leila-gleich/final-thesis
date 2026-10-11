@@ -1,5 +1,10 @@
 # Thesis Defense Talking Points & Committee Q&A Guide
 
+**Document**: `defense-talking-points-qa.md`  
+**Location**: `thesis_docs/recommendations/chapter_updates/defense-talking-points-qa.md`  
+**Target**: Committee Defense Presentation Deck & Oral Examination Q&A  
+**Author**: Leila Gleich  
+
 ## 1. Overview & Defense Strategy
 
 When defending the graduate thesis **"Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow"**, your committee will likely focus on methodological rigor, data integrity, and operational validity. 

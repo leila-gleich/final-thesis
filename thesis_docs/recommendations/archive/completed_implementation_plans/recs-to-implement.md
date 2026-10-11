@@ -44,20 +44,25 @@ All 14 technical recommendations have been **100% implemented, tested, and verif
 
 ```
 thesis_docs/recommendations/
-├── implementation_plans/                                     <-- Active / Pending Plans
-│   └── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
+├── README.md                                                 <-- Master Directory Index
+├── standardize-formulas-rec.md                               <-- Active Proposal: Eliminate original formulas (T(h), CVI)
 ├── chapter_updates/
-│   └── 04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md         <-- Defense Slide Deck & Committee Q&A
+│   ├── chp5-joc-telemetry-rec.md                             <-- Active Chapter 5 JOC Telemetry Recommendation
+│   └── defense-talking-points-qa.md                          <-- Active Defense Deck & Committee Q&A Guide
 └── archive/                                                  <-- Completed Guides & Historical Plans
     ├── README.md
     ├── EXECUTION_PLAN_NOTES_AND_RECOMMENDATIONS_UPDATES.md   <-- Completed Historical Plan
-    ├── completed_chapter_updates/                            <-- Completed Chapter 3-5 Update Guides
+    ├── draft-recs/                                           <-- Archived Preliminary Notes
+    ├── completed_chapter_updates/                            <-- Completed Chapter Update Guides
     │   ├── 00_README_AND_ROADMAP.md
     │   ├── 01_CHAPTER_3_METHODOLOGY_GUIDE.md
     │   ├── 02_CHAPTER_4_RESULTS_TEXT_AND_TABLES.md
-    │   └── 03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md
-    └── completed_implementation_plans/                       <-- Completed Technical Implementation Plans (REC-01 to REC-14)
+    │   ├── 03_CHAPTER_5_DISCUSSION_AND_ANALYSIS_GUIDE.md
+    │   ├── finalthesisv1-rec.md                              <-- 100% Implemented in final-thesis-v1
+    │   └── litreview-rec.md                                  <-- 100% Implemented in chp2-litreview.md
+    └── completed_implementation_plans/                       <-- 100% Implemented Technical Plans (REC-01 to REC-14, OTP Plan)
         ├── recs-to-implement.md                              <-- Master Index (This File)
+        ├── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
         ├── REC-01_Minute_of_Day_and_Diurnal_Cyclical_Terms.md
         ├── REC-02_Cluster_Adaptive_Lognormal_Arrival_Kernels.md
         ├── REC-03_Mandatory_DB1B_Connecting_Ratio_Deflation.md

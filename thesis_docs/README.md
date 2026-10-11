@@ -53,14 +53,14 @@ thesis_docs/
 │       └── 04_sample_sufficiency_distribution.png
 │
 ├── recommendations/                    <-- Actionable guides & technical implementation plans
-│   ├── PROPOSED_EDITS_ELIMINATE_ORIGINAL_FORMULAS.md   (Proposal to replace T(h) & CVI with standard literature methods)
-│   ├── implementation_plans/           <-- Active / Pending implementation plans
-│   │   └── OTP_FACTOR_WEIGHTING_AND_TSA_VOLATILITY_RECOMMENDATIONS_AND_IMPLEMENTATION_PLAN.md
+│   ├── README.md                       (Recommendations master directory index)
+│   ├── standardize-formulas-rec.md     (Proposal to replace T(h) & CVI with standard literature methods)
 │   ├── chapter_updates/                <-- Active presentation & defense guides
-│   │   └── 04_DEFENSE_TALKING_POINTS_AND_COMMITTEE_QA.md
+│   │   ├── chp5-joc-telemetry-rec.md   (Chapter 5 Section 5.6 airside-landside JOC telemetry proposal)
+│   │   └── defense-talking-points-qa.md (Master 22-slide defense deck structure & committee Q&A)
 │   └── archive/                        <-- Completed guides & implemented recommendation suites
-│       ├── completed_chapter_updates/  (Completed Chapter 3-5 update guides: 00 to 03)
-│       └── completed_implementation_plans/ (100% Implemented technical plans: recs-to-implement.md, REC-01 to REC-14, etc.)
+│       ├── completed_chapter_updates/  (Completed Chapter update guides: 00-03, litreview-rec, finalthesisv1-rec)
+│       └── completed_implementation_plans/ (100% Implemented technical plans: recs-to-implement, REC-01 to REC-14, OTP Plan)
 │
 └── notes/                              <-- Research notes, working memos & audit trail
     ├── methodology_memos/              <-- Methodological justifications & technical specs
