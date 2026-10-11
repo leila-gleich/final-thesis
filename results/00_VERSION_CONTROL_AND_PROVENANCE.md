@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.50 (Codebase Streamlining, Script Archiving & Analysis vs. Manuscript Modularization)
+RELEASE VERSION: v4.52 (Appendix v4 Master Compilation & Multi-Tab Appendix_Tables.xlsx Deployment)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -801,6 +801,26 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx).                                                        |
 |         |            | - Verified 100% test pass rate (48/48 unit tests passing cleanly).          |
+| v4.51   | 2026-10-10 | Chapter III Methodology Markdown Synchronization with Chp III v4:          |
+|         |            | - Synchronized thesis_docs/manuscripts/chp3-methodology.md and              |
+|         |            |   manuscripts-only/chp3-methodology.md with the structure and prose of      |
+|         |            |   author review draft Chp III v4.docx.                                     |
+|         |            | - Maintained canonical 5-part ERAU Chapter III methodology architecture:   |
+|         |            |   Research Approach, Sample, Sources of Data, Validity, Treatment of Data. |
+|         |            | - Embedded Figure 1 (Forecasting Model Family Comparison) with image link   |
+|         |            |   and accessible APA 7 Markdown table matrix.                              |
+|         |            | - Embedded Figure 3 (Design and Procedure Phases) linking to               |
+|         |            |   Combined_Data_Pipeline_and_Funnel_Lifecycle.png.                         |
+|         |            | - Formatted KaTeX mathematical/statistical notation (H1, MASE, R_MASE,    |
+|         |            |   TTR, RTR, Delta MASE, sigma_TSA, CV_TSA, and Welch's t-tests).           |
+|         |            | - Formulated 1-sentence operational rationales for the 4-Tier filtering     |
+|         |            |   funnel without numerical results (redirected to Chapter IV).             |
+|         |            | - Maintained concise, non-repetitive paragraphs for Sources of Data,        |
+|         |            |   Validity (Hub Disconnect & lane heterogeneity), and Treatment of Data     |
+|         |            |   (ETL pipeline), referencing Appendices A, B, D, E, G, H, I, J, K, and    |
+|         |            |   companion workbook methodology-tables.xlsx.                              |
+|         |            | - Preserved strict Policy 1.1: Chp III v4.docx and all Word drafts          |
+|         |            |   100% untouched (zero edits to .docx).                                     |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
