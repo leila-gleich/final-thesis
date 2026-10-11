@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.57 (Recommendations Directory Archival & Concise Renaming)
+RELEASE VERSION: v4.58 (Master Appendix Word Compilation & Full Markdown Appendix Synchronization)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -917,6 +917,20 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   thesis_docs/README.md.                                                   |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
+| v4.58   | 2026-10-11 | Master Appendix Word Compilation & Full Markdown Appendix Synchronization: |
+|         |            | - Compiled comprehensive Master Appendix.docx (368 paragraphs, 29 native   |
+|         |            |   Word tables) directly in thesis_docs/manuscripts/Appendix/ and mirror.   |
+|         |            | - Fully merged all materials from Chapter_II_Appendices.docx, Appendix     |
+|         |            |   v1.docx, Appendix v3-local.docx, Appendix v4.md, and Appendix_Tables.xlsx|
+|         |            |   across 14 lettered appendices (Appendices A through N).                  |
+|         |            | - Rendered all 29 empirical tables as native APA 7th Edition Word tables   |
+|         |            |   with formal boundary rules, bold headers, and italic table notes.        |
+|         |            | - Synchronized identical markdown appendices (939 lines) across all five   |
+|         |            |   target paths (Appendix/appendix.md, Appendix v4.md, manuscripts-only/,   |
+|         |            |   and manuscripts root).                                                   |
+|         |            | - Validated 100% test pass rate across test suite (52/52 tests pass).      |
+|         |            | - Preserved Policy 1.1 (0 edits to author review drafts) and Policy 1.6    |
+|         |            |   (explicit git staging; zero .docx files staged in git).                  |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

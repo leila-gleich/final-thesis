@@ -9,8 +9,15 @@ Full generator script for:
 
 import os
 import sys
+import re
 import pandas as pd
 import openpyxl
+import docx
+from docx.shared import Inches, Pt, RGBColor
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
 from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
 from openpyxl.utils import get_column_letter
 
@@ -1515,6 +1522,296 @@ def generate_appendix_v4_markdown():
 
 
 
+
+def style_apa_table(table):
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    for i, row in enumerate(table.rows):
+        trPr = row._tr.get_or_add_trPr()
+        trPr.append(OxmlElement("w:cantSplit"))
+        if i == 0:
+            trPr.append(OxmlElement("w:tblHeader"))
+            
+    num_rows = len(table.rows)
+    for r_idx, row in enumerate(table.rows):
+        for c_idx, cell in enumerate(row.cells):
+            tcPr = cell._tc.get_or_add_tcPr()
+            tcBorders = OxmlElement("w:tcBorders")
+            
+            top_el = OxmlElement("w:top")
+            if r_idx == 0:
+                top_el.set(qn("w:val"), "single")
+                top_el.set(qn("w:sz"), "6")
+                top_el.set(qn("w:space"), "0")
+                top_el.set(qn("w:color"), "000000")
+            else:
+                top_el.set(qn("w:val"), "nil")
+            tcBorders.append(top_el)
+            
+            bot_el = OxmlElement("w:bottom")
+            if r_idx == 0 or r_idx == num_rows - 1:
+                bot_el.set(qn("w:val"), "single")
+                bot_el.set(qn("w:sz"), "6")
+                bot_el.set(qn("w:space"), "0")
+                bot_el.set(qn("w:color"), "000000")
+            else:
+                bot_el.set(qn("w:val"), "nil")
+            tcBorders.append(bot_el)
+            
+            for s in ["left", "right"]:
+                el = OxmlElement(f"w:{s}")
+                el.set(qn("w:val"), "nil")
+                tcBorders.append(el)
+            tcPr.append(tcBorders)
+
+
+def create_master_appendix_word_document(output_paths, md_content, tables_by_id):
+    lines = md_content.splitlines()
+
+    doc = docx.Document()
+    for s in doc.sections:
+        s.top_margin = Inches(1.0)
+        s.bottom_margin = Inches(1.0)
+        s.left_margin = Inches(1.0)
+        s.right_margin = Inches(1.0)
+
+    # Set base Normal style font
+    style_normal = doc.styles["Normal"]
+    style_normal.font.name = "Calibri"
+    style_normal.font.size = Pt(11)
+    style_normal.font.color.rgb = RGBColor(0, 0, 0)
+    style_normal.paragraph_format.line_spacing = 1.15
+    style_normal.paragraph_format.space_after = Pt(6)
+
+    idx = 0
+    in_code_block = False
+    first_appendix = True
+
+    while idx < len(lines):
+        line = lines[idx].strip()
+        if not line:
+            idx += 1
+            continue
+        
+        # Code block toggle
+        if line.startswith("```"):
+            in_code_block = not in_code_block
+            idx += 1
+            continue
+        if in_code_block:
+            p = doc.add_paragraph(line)
+            p.runs[0].font.name = "Consolas"
+            p.runs[0].font.size = Pt(9.5)
+            p.paragraph_format.space_after = Pt(2)
+            idx += 1
+            continue
+            
+        if line == "---":
+            idx += 1
+            continue
+
+        # Title
+        if line == "# Appendix":
+            p = doc.add_paragraph()
+            p.paragraph_format.space_before = Pt(0)
+            p.paragraph_format.space_after = Pt(12)
+            run = p.add_run("MASTER DISSERTATION APPENDIX")
+            run.bold = True
+            run.font.size = Pt(24)
+            run.font.color.rgb = RGBColor(0, 32, 96)
+            idx += 1
+            continue
+
+        # Appendix Heading 1
+        if line.startswith("# Appendix "):
+            if not first_appendix:
+                doc.add_page_break()
+            else:
+                first_appendix = False
+            h = doc.add_heading(line[2:], level=1)
+            h.paragraph_format.space_before = Pt(18)
+            h.paragraph_format.space_after = Pt(8)
+            idx += 1
+            continue
+
+        # Heading 2
+        if line.startswith("## "):
+            h = doc.add_heading(line[3:], level=2)
+            h.paragraph_format.space_before = Pt(14)
+            h.paragraph_format.space_after = Pt(6)
+            idx += 1
+            continue
+
+        # Table block
+        if line.startswith("### Table "):
+            t_id = line[4:].strip()
+            p_tid = doc.add_paragraph()
+            p_tid.paragraph_format.space_before = Pt(14)
+            p_tid.paragraph_format.space_after = Pt(2)
+            r_tid = p_tid.add_run(t_id)
+            r_tid.bold = True
+            r_tid.font.size = Pt(11)
+            idx += 1
+            
+            # Next line is table title in italics
+            if idx < len(lines) and lines[idx].startswith("*"):
+                p_tit = doc.add_paragraph()
+                p_tit.paragraph_format.space_before = Pt(0)
+                p_tit.paragraph_format.space_after = Pt(4)
+                r_tit = p_tit.add_run(lines[idx].strip().strip("*"))
+                r_tit.italic = True
+                r_tit.font.size = Pt(11)
+                idx += 1
+                
+            # Asset / Excel references
+            while idx < len(lines) and not lines[idx].startswith("|"):
+                ref_line = lines[idx].strip()
+                if ref_line.startswith("["):
+                    clean_ref = re.sub(r"[\[\]\*`]", "", ref_line)
+                    p_ref = doc.add_paragraph()
+                    p_ref.paragraph_format.space_before = Pt(0)
+                    p_ref.paragraph_format.space_after = Pt(4)
+                    r_ref = p_ref.add_run(clean_ref)
+                    r_ref.font.size = Pt(9.5)
+                    r_ref.font.italic = True
+                    r_ref.font.color.rgb = RGBColor(80, 80, 80)
+                idx += 1
+                
+            # Skip markdown table lines
+            while idx < len(lines) and lines[idx].startswith("|"):
+                idx += 1
+                
+            # Add actual table from tables_by_id
+            if t_id in tables_by_id:
+                t_info = tables_by_id[t_id]
+                headers = t_info["headers"]
+                rows = t_info["rows"]
+                
+                table = doc.add_table(rows=len(rows) + 1, cols=len(headers))
+                # headers
+                for c_i, h in enumerate(headers):
+                    cell = table.cell(0, c_i)
+                    cell.text = str(h)
+                    p_c = cell.paragraphs[0]
+                    p_c.alignment = WD_ALIGN_PARAGRAPH.LEFT if c_i < 2 else WD_ALIGN_PARAGRAPH.CENTER
+                    if len(p_c.runs) > 0:
+                        p_c.runs[0].bold = True
+                        p_c.runs[0].font.size = Pt(9.5)
+                        p_c.runs[0].font.color.rgb = RGBColor(0, 0, 0)
+                # data rows
+                for r_i, r_data in enumerate(rows):
+                    for c_i, val in enumerate(r_data):
+                        cell = table.cell(r_i + 1, c_i)
+                        cell.text = str(val)
+                        p_c = cell.paragraphs[0]
+                        # alignment
+                        val_s = str(val).strip()
+                        if c_i >= 2 and (val_s.replace(",","").replace(".","").replace("-","").replace("%","").isdigit() or val_s.endswith("%")):
+                            p_c.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+                        elif len(val_s) <= 5 and val_s.isupper():
+                            p_c.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        else:
+                            p_c.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                        if len(p_c.runs) > 0:
+                            p_c.runs[0].font.size = Pt(9.0)
+                            p_c.runs[0].font.color.rgb = RGBColor(0, 0, 0)
+                style_apa_table(table)
+                
+            # Table Note
+            while idx < len(lines) and lines[idx].strip() == "":
+                idx += 1
+            if idx < len(lines) and lines[idx].startswith("*Note"):
+                note_txt = lines[idx].strip().strip("*")
+                p_n = doc.add_paragraph()
+                p_n.paragraph_format.space_before = Pt(4)
+                p_n.paragraph_format.space_after = Pt(12)
+                r_n = p_n.add_run(note_txt)
+                r_n.italic = True
+                r_n.font.size = Pt(9.5)
+                r_n.font.color.rgb = RGBColor(50, 50, 50)
+                idx += 1
+            continue
+
+        # Blockquote / Operational Cross Reference
+        if line.startswith("> "):
+            bq_txt = line[2:].strip()
+            p = doc.add_paragraph()
+            p.paragraph_format.left_indent = Inches(0.4)
+            p.paragraph_format.right_indent = Inches(0.4)
+            p.paragraph_format.space_before = Pt(4)
+            p.paragraph_format.space_after = Pt(8)
+            clean_bq = re.sub(r"\*\*(.*?)\*\*", r"", bq_txt)
+            clean_bq = re.sub(r"\*(.*?)\*", r"", clean_bq)
+            r = p.add_run(clean_bq)
+            r.italic = True
+            r.font.size = Pt(10)
+            r.font.color.rgb = RGBColor(40, 40, 40)
+            idx += 1
+            continue
+
+        # Bullet point
+        if line.startswith("* ") or line.startswith("- "):
+            bullet_txt = line[2:].strip()
+            p = doc.add_paragraph(style="List Bullet")
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(3)
+            m = re.match(r"^\*\*(.*?)\*\*:\s*(.*)$", bullet_txt)
+            if m:
+                r1 = p.add_run(m.group(1) + ": ")
+                r1.bold = True
+                r2 = p.add_run(m.group(2))
+            else:
+                clean_b = re.sub(r"\*\*(.*?)\*\*", r"", bullet_txt)
+                p.add_run(clean_b)
+            idx += 1
+            continue
+
+        # Numbered item
+        m_num = re.match(r"^(\d+)\.\s+(.*)$", line)
+        if m_num:
+            num_txt = m_num.group(2).strip()
+            p = doc.add_paragraph(style="List Number")
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(3)
+            m2 = re.match(r"^\*\*(.*?)\*\*:\s*(.*)$", num_txt)
+            if m2:
+                r1 = p.add_run(m2.group(1) + ": ")
+                r1.bold = True
+                r2 = p.add_run(m2.group(2))
+            else:
+                clean_n = re.sub(r"\*\*(.*?)\*\*", r"", num_txt)
+                p.add_run(clean_n)
+            idx += 1
+            continue
+
+        # Math equation centered
+        if line.startswith("$$") and line.endswith("$$") and len(line) > 4:
+            eq_txt = line.strip("$").strip()
+            p = doc.add_paragraph()
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.space_before = Pt(6)
+            p.paragraph_format.space_after = Pt(6)
+            r = p.add_run(eq_txt)
+            r.font.name = "Cambria Math"
+            r.font.size = Pt(11)
+            r.font.italic = True
+            idx += 1
+            continue
+
+        # Regular paragraph
+        p = doc.add_paragraph()
+        p.paragraph_format.space_before = Pt(2)
+        p.paragraph_format.space_after = Pt(6)
+        clean_p = re.sub(r"\*\*(.*?)\*\*", r"", line)
+        clean_p = re.sub(r"\*(.*?)\*", r"", clean_p)
+        p.add_run(clean_p)
+        idx += 1
+
+    for out_p in output_paths:
+        os.makedirs(os.path.dirname(out_p), exist_ok=True)
+        doc.save(out_p)
+        print(f"[WORD SUCCESS] Saved Master Appendix Word document: {out_p} ({len(doc.paragraphs)} paras, {len(doc.tables)} tables)")
+
+
 def main():
     excel_targets = [
         "thesis_docs/manuscripts/Appendix/Appendix_Tables.xlsx",
@@ -1528,14 +1825,34 @@ def main():
         "thesis_docs/manuscripts/Appendix/Appendix v4.md",
         "thesis_docs/manuscripts/Appendix v4.md",
         "thesis_docs/manuscripts/Appendix/appendix.md",
-        "thesis_docs/manuscripts/manuscripts-only/appendix.md"
+        "thesis_docs/manuscripts/manuscripts-only/appendix.md",
+        "thesis_docs/manuscripts/appendix.md"
     ]
     
     for p in md_targets:
         os.makedirs(os.path.dirname(p), exist_ok=True)
         with open(p, "w", encoding="utf-8") as f:
             f.write(md_content)
-        print(f"[MARKDOWN SUCCESS] Saved unified Appendix v4 Markdown document: {p} ({len(md_content.splitlines())} lines)")
+        print(f"[MARKDOWN SUCCESS] Saved unified Appendix Markdown document: {p} ({len(md_content.splitlines())} lines)")
+
+    # Load tables_by_id for Word creation
+    tables_by_id = {}
+    for cfg in TABLES_CONFIG:
+        headers, rows = get_table_data(cfg)
+        md_tbl = make_markdown_table(headers, rows)
+        tables_by_id[cfg["table_id"]] = {
+            "cfg": cfg,
+            "md_table": md_tbl,
+            "headers": headers,
+            "rows": rows
+        }
+
+    docx_targets = [
+        "thesis_docs/manuscripts/Appendix/Master Appendix.docx",
+        "thesis_docs/manuscripts/Master Appendix.docx",
+        "thesis_docs/manuscripts/Appendix/Appendix v4.docx"
+    ]
+    create_master_appendix_word_document(docx_targets, md_content, tables_by_id)
 
 
 if __name__ == "__main__":
