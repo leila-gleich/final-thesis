@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.52 (Appendix v4 Master Compilation & Multi-Tab Appendix_Tables.xlsx Deployment)
+RELEASE VERSION: v4.53 (APA 7 Markdown Deployment from Word Revisions & final-thesis-v1 Recommendation Suite)
 DATE: October 10, 2026
 ====================================================================================================
 
@@ -843,6 +843,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Added comprehensive unit test suite tests/test_appendix_v4_generation.py  |
 |         |            |   (52/52 tests passing cleanly).                                            |
 |         |            | - Obeyed Policy 1.1 with zero edits to Microsoft Word documents (.docx).     |
+| v4.53   | 2026-10-10 | APA 7 Markdown Deployment from Word Revisions & final-thesis-v1 Suite:       |
+|         |            | - Archived current chapter markdown files (chp1-5 and full-thesis) as v1     |
+|         |            |   into thesis_docs/manuscripts/archive/thesis_md_v1.zip.                    |
+|         |            | - Compressed loose archived markdown drafts into superseded_loose_md_      |
+|         |            |   archive.zip to eliminate uncompressed clutter in archive directory.       |
+|         |            | - Programmatically converted author Word revisions (ChpI v4, ChpII v5,      |
+|         |            |   ChpIII v4, ChpIV v5, ChpV v1) into APA 7th Edition Markdown files in      |
+|         |            |   thesis_docs/manuscripts/final-thesis-v1/ (chp1-intro through chp5-         |
+|         |            |   discussion, and compiled final-thesis-v1.md) with full OMML math recovery.|
+|         |            | - Restored conformed APA 7th tables and figure diagrams across Chapters IV  |
+|         |            |   and V synchronized directly with results/manuscript_tables/.              |
+|         |            | - Authored comprehensive finalthesisv1-rec.md recommendation report (at root |
+|         |            |   and in thesis_docs/recommendations/) auditing all appendix cross-         |
+|         |            |   references against canonical 14-Appendix architecture (A through N) and   |
+|         |            |   providing a forensic aviation terminology filter to eliminate lab jargon. |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); 52/52 unit tests pass cleanly.                         |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
