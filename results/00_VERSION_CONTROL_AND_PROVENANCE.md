@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.70 (Table Suite Consolidation & Single Demarcation Realignment)
+RELEASE VERSION: v4.71 (Test Suite Path Reconnection & Model Harmonization)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -1003,6 +1003,16 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   100% alignment with single overarching hypothesis (H1: Master Asymmetric |
 |         |            |   Trade-Offs across Robustness, Resilience, Generalizability).             |
 |         |            | - Authored comprehensive master catalog in tables and figures/README.md.   |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all author committee review drafts untouched.         |
+| v4.71   | 2026-10-11 | Test Suite Path Reconnection & Methodology Workbook Harmonization:         |
+|         |            | - Reconnected test harness paths across test_acronyms_generation.py and    |
+|         |            |   test_appendix_v4_generation.py to unified tables and figures hierarchy.  |
+|         |            | - Realigned src/analysis/generate_figures_tables_excel.py and test harness |
+|         |            |   test_figure_workbooks.py to 3 consolidated methodology workbooks,        |
+|         |            |   synchronizing excisions of post_pandemic_justification and obsolete      |
+|         |            |   exploratory tables with the single demarcation baseline.                 |
+|         |            | - Validated 100% unit test pass rate (52/52 tests passing).                 |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+

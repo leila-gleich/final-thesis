@@ -92,15 +92,6 @@ SUBFOLDER_WORKBOOKS = [
             },
             {
                 "table_id": "Table 1.6",
-                "short_name": "post_pandemic_justification",
-                "csv_file": "post_pandemic_justification.csv",
-                "title": "Post-Pandemic Temporal Demarcation Evaluation (Candidate A vs. Candidate B)",
-                "scope": "Comparative evaluation of Candidate A (Mature) vs Candidate B (May 1, 2022 Boundary)",
-                "dimension": "Temporal Demarcation",
-                "note": "Note. Comparative evaluation of post-pandemic temporal demarcation regimes. Candidate B (May 1, 2022 to December 31, 2025; 44 months) was formally selected for maximum statistical power while preserving structural regime stability."
-            },
-            {
-                "table_id": "Table 1.7",
                 "short_name": "power_of_9_airports",
                 "csv_file": "power_of_9_airports.csv",
                 "title": "The Nine-Airport Experimental Cohort: Generalizability and Twin Disruption Controls",
@@ -220,15 +211,6 @@ SUBFOLDER_WORKBOOKS = [
             },
             {
                 "table_id": "Table 3.3",
-                "short_name": "exploratory_metric_criteria",
-                "csv_file": "exploratory_metric_criteria_research.csv",
-                "title": "Exploratory Model Benchmarking Across Candidate Architectures and Regimes",
-                "scope": "Preliminary evaluation metrics across baseline and exploratory hybrid variants",
-                "dimension": "Preliminary Model Selection",
-                "note": "Note. Preliminary exploratory performance benchmarks across preliminary baseline and hybrid model formulations across Generalizability, Resilience, and Robustness dimensions."
-            },
-            {
-                "table_id": "Table 3.4",
                 "short_name": "model_walkthrough_arch",
                 "csv_file": "model_walkthrough_architecture.csv",
                 "title": "Candidate Predictive Modeling Architectures and Evaluation Pipeline Stages",
@@ -237,7 +219,7 @@ SUBFOLDER_WORKBOOKS = [
                 "note": "Note. Architectural pipeline specification detailing preprocessing, algorithmic subcomponents, operational paradigms, and out-of-sample holdout windows for the three candidate models."
             },
             {
-                "table_id": "Table 3.5",
+                "table_id": "Table 3.4",
                 "short_name": "models_and_tests",
                 "csv_file": "models_and_tests.csv",
                 "title": "Empirical Comparison: Deterministic Flight Schedule Model Versus Dynamic Hybrid Model",
@@ -246,7 +228,7 @@ SUBFOLDER_WORKBOOKS = [
                 "note": "Note. Empirical comparative findings across arrival timing convolution, delay feedback integration, routine operational accuracy (robustness), and spatial transferability (generalizability)."
             },
             {
-                "table_id": "Table 3.6",
+                "table_id": "Table 3.5",
                 "short_name": "pax_arrival_parameters",
                 "csv_file": "passenger_stochastic_arrival_parameters.csv",
                 "title": "Passenger Stochastic Arrival Kernel Parameters and Machine Learning Hyperparameters",
@@ -255,7 +237,7 @@ SUBFOLDER_WORKBOOKS = [
                 "note": "Note. Mathematical parameters for the continuous Lognormal passenger arrival density kernel (ACRP Report 40), quantile pinball loss intervals, and gradient boosting decision tree ensembles."
             },
             {
-                "table_id": "Table 3.7",
+                "table_id": "Table 3.6",
                 "short_name": "lead_lag_timeline",
                 "csv_file": "physical_transfer_lead_lag_timeline.csv",
                 "title": "Physical Passenger Progression Timeline and Lead-Lag Horizon Specification",
@@ -264,86 +246,13 @@ SUBFOLDER_WORKBOOKS = [
                 "note": "Note. Unidirectional progression of passengers from landside arrival through TSA security screening, airside concourse dwell, gate boarding door closure, and scheduled aircraft pushback."
             },
             {
-                "table_id": "Table 3.8",
+                "table_id": "Table 3.7",
                 "short_name": "probabilistic_metrics",
                 "csv_file": "probabilistic_and_selection_metrics.csv",
                 "title": "Probabilistic Forecast Verification Metrics and Model Selection Criteria",
                 "scope": "CRPS, PICP, AIC, and BIC definitions, mathematical formulations, and selection roles",
                 "dimension": "Statistical Verification Metrics",
                 "note": "Note. Mathematical definitions, operational objectives, and model selection utilities for probabilistic scoring rules (CRPS, PICP) and information-theoretic criteria (AIC, BIC)."
-            }
-        ]
-    },
-    {
-        "folder_name": "04_Appendix_and_Reference",
-        "wb_filename": "04_Appendix_and_Reference.xlsx",
-        "target_dir": FIGURES_DIR / "04_Appendix_and_Reference",
-        "csv_dir": FIGURES_DIR / "04_Appendix_and_Reference",
-        "title": "APPENDIX AND REFERENCE DATA TABLES",
-        "subtitle": "Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow | Gleich 700B",
-        "tables": [
-            {
-                "table_id": "Table 4.1",
-                "short_name": "backups_organization",
-                "csv_file": "backups_organization.csv",
-                "title": "Research Archive Directory Structure and Data Backup Organization",
-                "scope": "Directory hierarchy and manifest for raw datasets, processed SSOT, and codebase",
-                "dimension": "Data Repository Architecture",
-                "note": "Note. Master backup hierarchy and directory structure governing raw source feeds, processed feature stores, single sources of truth (SSOT), and version-controlled codebase scripts."
-            },
-            {
-                "table_id": "Table 4.2",
-                "short_name": "bts_db1b_hierarchy",
-                "csv_file": "bts_db1b_table_hierarchy.csv",
-                "title": "Bureau of Transportation Statistics DB1B Survey Relational Hierarchy",
-                "scope": "Relational levels of DB1BTicket, DB1BMarket, and DB1BCoupon passenger survey tables",
-                "dimension": "Passenger Survey Hierarchy",
-                "note": "Note. Hierarchical structural relationship between DB1BTicket (entire round-trip ticket), DB1BMarket (directional city-pair market), and DB1BCoupon (physical takeoff-to-landing flight segment)."
-            },
-            {
-                "table_id": "Table 4.3",
-                "short_name": "data_profile_top9",
-                "csv_file": "data_profile_top9.csv",
-                "title": "Nine-Airport Experimental Cohort Feature Store Partition Profile",
-                "scope": "Target cohort parquet file paths, record counts, and Zstandard compression metrics",
-                "dimension": "Feature Store Partitions",
-                "note": "Note. Filtered data partitions, record counts, file paths, and Zstandard compression specifications for the conformed nine-airport experimental cohort (top9v1)."
-            },
-            {
-                "table_id": "Table 4.4",
-                "short_name": "database_profiles",
-                "csv_file": "database_profiles.csv",
-                "title": "Raw Federal Aviation Feed Database Profiles and Physical Storage Sizing",
-                "scope": "File sizes, record counts, schema widths, and temporal coverage across raw federal feeds",
-                "dimension": "Input Feed Profiling",
-                "note": "Note. Comparative profiles of the raw input databases (TSA FOIA, BTS On-Time Performance, and BTS Form 41 Schedule T-100) including disk storage footprints, record counts, and temporal coverage."
-            },
-            {
-                "table_id": "Table 4.5",
-                "short_name": "dataset_breakdown",
-                "csv_file": "dataset_breakdown.csv",
-                "title": "Conformed Feature Store Storage Footprint and Entity Grain Breakdown",
-                "scope": "Storage size, rows, columns, and operational notes for parquet and DuckDB stores",
-                "dimension": "Data Warehouse Storage",
-                "note": "Note. Summary breakdown of deduplicated feature store Parquet artifacts (v1), DuckDB warehouse feature store views, and conformed star-schema dimensions."
-            },
-            {
-                "table_id": "Table 4.6",
-                "short_name": "diagrams_layout",
-                "csv_file": "diagrams_and_screenshot_layout.csv",
-                "title": "Master Visual Artifact, Figure, and Manuscript Screenshot Layout Catalog",
-                "scope": "Inventory mapping all 30 figure graphics to manuscript chapters and descriptions",
-                "dimension": "Visual Artifact Inventory",
-                "note": "Note. Complete inventory and chapter cross-reference catalog mapping figure graphics and visual artifacts to their manuscript sections and operational topics."
-            },
-            {
-                "table_id": "Table 4.7",
-                "short_name": "methodological_assumptions",
-                "csv_file": "methodological_assumptions.csv",
-                "title": "Master Methodological Assumptions, Operational Justifications, and Failure Mode Remediations",
-                "scope": "Fourteen core assumptions across terminal flow, temporal coupling, and sample filtering",
-                "dimension": "Operational Assumptions",
-                "note": "Note. Fourteen-point master inventory of methodological assumptions across terminal passenger flow, temporal lead-lag coupling, and purposive sample filtering."
             }
         ]
     }
@@ -820,13 +729,18 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     wb.save(dest_path)
     print(f"  -> Saved workbook: {dest_path}")
 
+    tf_dir = BASE_DIR / "tables and figures" / "methodology"
+    if tf_dir.exists():
+        tf_path = tf_dir / wb_filename
+        wb.save(tf_path)
+
     return [dest_path]
 
 
 def build_all_figure_workbooks():
-    """Generates APA-formatted Excel workbooks for all 4 subfolders in figures/."""
+    """Generates APA-formatted Excel workbooks for all 3 methodology subfolders."""
     print("=" * 80)
-    print(" GENERATING APA 7TH EDITION EXCEL WORKBOOKS FOR ALL 4 FIGURES SUBFOLDERS")
+    print(" GENERATING APA 7TH EDITION EXCEL WORKBOOKS FOR ALL 3 METHODOLOGY SUBFOLDERS")
     print("=" * 80)
     
     generated = []
@@ -835,7 +749,7 @@ def build_all_figure_workbooks():
         generated.extend(paths)
 
     print("\n" + "=" * 80)
-    print(f" [SUCCESS] Generated {len(generated)} Excel workbooks across all 4 figures subfolders.")
+    print(f" [SUCCESS] Generated {len(generated)} Excel workbooks across all 3 methodology subfolders.")
     print("=" * 80)
     return generated
 

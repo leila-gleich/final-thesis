@@ -18,9 +18,9 @@ from src.analysis.generate_figures_tables_excel import (
 
 class TestFigureWorkbooks(unittest.TestCase):
     def test_build_all_figure_workbooks(self):
-        """Verifies that all 4 figure workbooks build successfully with APA 7 rules."""
+        """Verifies that all 3 methodology figure workbooks build successfully with APA 7 rules."""
         generated = build_all_figure_workbooks()
-        self.assertEqual(len(generated), 4)
+        self.assertEqual(len(generated), 3)
 
         for sf_info in SUBFOLDER_WORKBOOKS:
             folder_name = sf_info["folder_name"]

@@ -19,13 +19,19 @@ except ImportError:
 class TestAcronymsGeneration(unittest.TestCase):
     def setUp(self):
         # Support both consolidated Acronyms.docx and legacy targets
-        if os.path.exists("thesis_docs/manuscripts/Acronyms.docx"):
+        if os.path.exists("thesis_docs/manuscripts/Appendix/Acronyms.docx"):
+            self.docx_path = "thesis_docs/manuscripts/Appendix/Acronyms.docx"
+            self.docx_v1_path = "thesis_docs/manuscripts/Appendix/Acronyms.docx"
+        elif os.path.exists("thesis_docs/manuscripts/Acronyms.docx"):
             self.docx_path = "thesis_docs/manuscripts/Acronyms.docx"
             self.docx_v1_path = "thesis_docs/manuscripts/Acronyms.docx"
         else:
             self.docx_path = "thesis_docs/manuscripts/List_of_Acronyms_and_Abbreviations.docx"
             self.docx_v1_path = "thesis_docs/manuscripts/Acronyms v1.docx"
-        self.md_path = "thesis_docs/manuscripts/acronyms.md"
+        if os.path.exists("thesis_docs/manuscripts/Appendix/acronyms.md"):
+            self.md_path = "thesis_docs/manuscripts/Appendix/acronyms.md"
+        else:
+            self.md_path = "thesis_docs/manuscripts/acronyms.md"
         self.md_only_path = "thesis_docs/manuscripts/manuscripts-only/acronyms.md"
         
     def test_files_exist(self):

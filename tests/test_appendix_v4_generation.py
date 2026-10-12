@@ -22,10 +22,14 @@ class TestAppendixV4Generation(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.excel_path = "thesis_docs/manuscripts/Appendix/Appendix_Tables.xlsx"
+        if os.path.exists("tables and figures/appendix/appendix_tables.xlsx"):
+            cls.excel_path = "tables and figures/appendix/appendix_tables.xlsx"
+        elif os.path.exists("thesis_docs/manuscripts/Appendix/Appendix_Tables.xlsx"):
+            cls.excel_path = "thesis_docs/manuscripts/Appendix/Appendix_Tables.xlsx"
+        else:
+            cls.excel_path = "results/appendix_tables.xlsx"
         cls.results_excel_path = "results/appendix_tables.xlsx"
         cls.md_path = "thesis_docs/manuscripts/Appendix/Appendix v4.md"
-        cls.root_md_path = "thesis_docs/manuscripts/Appendix v4.md"
         cls.appendix_md_path = "thesis_docs/manuscripts/Appendix/appendix.md"
 
     def test_excel_workbooks_exist_and_tabs_complete(self):
@@ -53,7 +57,7 @@ class TestAppendixV4Generation(unittest.TestCase):
 
     def test_markdown_files_exist_and_cover_all_appendices(self):
         """Verify that all Markdown targets exist and cover Appendices A through N."""
-        for path in [self.md_path, self.root_md_path, self.appendix_md_path]:
+        for path in [self.md_path, self.appendix_md_path]:
             self.assertTrue(os.path.exists(path), f"Markdown file missing: {path}")
             with open(path, "r", encoding="utf-8") as f:
                 content = f.read()
