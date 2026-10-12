@@ -604,6 +604,9 @@ def build_thesis_tables_workbook():
         MANUSCRIPT_TABLES_DIR / "thesis_tables.xlsx",
         TABLES_DIR / "thesis_tables.xlsx"
     ]
+    tf_results_path = BASE_DIR / "tables and figures" / "results" / "thesis_tables.xlsx"
+    if tf_results_path.parent.exists():
+        out_paths.append(tf_results_path)
 
     for p in out_paths:
         p.parent.mkdir(parents=True, exist_ok=True)

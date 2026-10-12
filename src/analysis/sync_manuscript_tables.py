@@ -271,6 +271,12 @@ def export_all_tables_to_csv():
         
         canonical_path = MANUSCRIPT_TABLES_DIR / canonical_csv_name
         short_path = MANUSCRIPT_TABLES_DIR / short_csv_name
+
+        # Table 4.5 Grain Harmonization: Ensure Row 6 Sample Grain reflects "Top 25 Airfields" (matching N=25, df=23, t=2.74)
+        if tnum == "Table 4.5":
+            for r in rows:
+                if len(r) >= 4 and "63,925" in str(r[3]):
+                    r[3] = "Top 25 Airfields"
         
         # Write canonical CSV
         with open(canonical_path, "w", newline="", encoding="utf-8") as f:

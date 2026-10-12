@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.71 (Test Suite Path Reconnection & Model Harmonization)
+RELEASE VERSION: v4.72 (Table 4.5 Sample Grain Harmonization & Four-Way Master Mirror Synchronization)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -1026,6 +1026,17 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Isolated panel boundaries in SequentialSARIMATreeHybrid (Model 3) by      |
 |         |            |   grouping dynamic residual error innovations by Airport facility,          |
 |         |            |   preventing cross-airport residual leakage at time-series boundaries.     |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all author committee review drafts untouched.         |
+| v4.72   | 2026-10-11 | Table 4.5 Sample Grain Harmonization & Four-Way Master Mirror Sync:        |
+|         |            | - Harmonized Table 4.5 Row 6 sample grain from "63,925 Airport-Days" to     |
+|         |            |   "Top 25 Airfields", mathematically aligning with degrees of freedom      |
+|         |            |   (N = 25, df = 23, t = 2.74, p < 0.01) across all conformed CSV tables.   |
+|         |            | - Extended src/analysis/generate_thesis_tables_excel.py to synchronize all |
+|         |            |   four canonical mirror targets for master thesis_tables.xlsx.             |
+|         |            | - Synchronized all 16 manuscript tables across conformed CSVs and multi-tab |
+|         |            |   Excel workbooks (02_top9, 03_lead_lag, 04_model_execution, 05_robustness)|
+|         |            |   via automated sync runner src/analysis/sync_manuscript_tables.py.        |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+
