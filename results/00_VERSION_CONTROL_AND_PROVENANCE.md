@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.59 (Pristine KaTeX LaTeX Math Manuscript Deployment)
+RELEASE VERSION: v4.60 (Recommendations Curation & Approved Manuscript Revisions Integration)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -950,6 +950,36 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Verified 0 KaTeX syntax issues, 0 delimiter whitespace defects, and 0     |
 |         |            |   unicode symbol anomalies across 444 inline math tokens and 3 display     |
 |         |            |   math equations.                                                          |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); original final-thesis-v1.md preserved intact.         |
+| v4.60   | 2026-10-11 | Recommendations Curation & Approved Manuscript Revisions Integration:       |
+|         |            | - Curated thesis_docs/recommendations/ directory per user prompt:          |
+|         |            |   * Archived completed jargon replacement table into archive/.             |
+|         |            |   * Renamed active recommendation files to concise, descriptive names:     |
+|         |            |     thesis-recs-master.md, chp2-4-text-revisions.md,                       |
+|         |            |     table-3-1-methodology-flow.md, table-3-2-cohort-filtering.md,         |
+|         |            |     table-4-8-partitions-buffer.md.                                       |
+|         |            |   * Updated recommendations/README.md cataloging all active and archived.  |
+|         |            | - Integrated approved text revisions from chp2-4-text-revisions.md into    |
+|         |            |   thesis_docs/manuscripts/final-thesis-v1-latex.md:                        |
+|         |            |   * Chapter II: Replaced heading with 'Three Operational Limitations of    |
+|         |            |     Micro-Simulation', added formal DES definition, consolidated deep      |
+|         |            |     learning limitations paragraph, reworded analytical queuing models     |
+|         |            |     and empirically fitted lognormal distribution, and inserted Table 2.1  |
+|         |            |     (Comparative Architectural Taxonomy of Candidate Models).              |
+|         |            |   * Chapter III: Inserted Table 3.1 (Four-Phase Methodology Flow) under    |
+|         |            |     Design and Procedures, inserted Table 3.2 (Four-Tier Filtering         |
+|         |            |     Hierarchy), standardized Phase 4 heading, and replaced 'airport        |
+|         |            |     universe' with 'national candidate pool'.                              |
+|         |            |   * Chapter IV: Formatted dual-turbulence seasonality text (Revision G),   |
+|         |            |     relocated Day-of-Week Table 4.7a under Local Differences, inserted     |
+|         |            |     Table 4.8 (Model Development Dataset Partitions & Purge Buffer) with   |
+|         |            |     168-hour autoregressive purge buffer justification, and streamlined    |
+|         |            |     conformal staffing buffer synthesis (Revision H).                      |
+|         |            | - Mirrored identical updated manuscript to Desktop workspace               |
+|         |            |   (/Users/leilagleich/Desktop/700B Wk9/final-thesis-v1-latex.md).          |
+|         |            | - Validated 100% KaTeX math parsing (0 syntax errors across 229 inline math |
+|         |            |   expressions and 3 display math blocks, 0 jargon, 0 bare variable tags).  |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); original final-thesis-v1.md preserved intact.         |
 +---------+------------+----------------------------------------------------------------------------+
