@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.72 (Table 4.5 Sample Grain Harmonization & Four-Way Master Mirror Synchronization)
+RELEASE VERSION: v4.73 (Codebase Streamlining, Script Archival & Excel Layout Engine Standardization)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -1039,6 +1039,17 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   via automated sync runner src/analysis/sync_manuscript_tables.py.        |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
+| v4.73   | 2026-10-11 | Codebase Streamlining, Script Archival & Styling Engine Standardization:   |
+|         |            | - Archived superseded Appendix v3 compiler (src/manuscripts/generate_       |
+|         |            |   appendix_v3.py -> archive/superseded_scripts/generate_appendix_v3_legacy).|
+|         |            | - Excised orphaned forwarder shim src/analysis/generate_acronyms_docx.py,   |
+|         |            |   restoring clean package boundaries (acronyms in src/manuscripts/).        |
+|         |            | - Standardized OpenPyXL column auto-fitting and styling across table       |
+|         |            |   generators by importing auto_fit_columns from src.utils.excel_styling.   |
+|         |            | - Updated root README.md directory tree and archive/README.md catalog.      |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all author review drafts 100% untouched.               |
+|         |            | - Validated 100% unit test pass rate (55/55 tests) and 0 pipeline errors.   |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

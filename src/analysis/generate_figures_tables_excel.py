@@ -424,7 +424,20 @@ def clean_header_title(raw_header: str) -> str:
     return " ".join(cleaned)
 
 
-from src.utils.excel_styling import parse_cell_value
+from src.utils.excel_styling import (
+    parse_cell_value,
+    auto_fit_columns,
+    SIDE_THIN,
+    BORDER_TOP_BOTTOM,
+    BORDER_BOTTOM_ONLY,
+    BORDER_NONE,
+    FONT_HEADER,
+    FONT_DATA,
+    FONT_TABLE_ID,
+    FONT_TABLE_TITLE,
+    FONT_NOTE,
+    FONT_LINK
+)
 
 
 def find_csv_file(csv_file: str, preferred_dir: Path, folder_name: str) -> Path:
@@ -461,21 +474,21 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     wb.remove(wb.active)  # Remove default blank sheet
 
     # APA 7th Border Rules (Thin black horizontal lines, no vertical rules)
-    thin_black = Side(style="thin", color="000000")
-    border_header = Border(top=thin_black, bottom=thin_black)
-    border_last_row = Border(bottom=thin_black)
-    border_none = Border()
+    thin_black = SIDE_THIN
+    border_header = BORDER_TOP_BOTTOM
+    border_last_row = BORDER_BOTTOM_ONLY
+    border_none = BORDER_NONE
 
     # APA Typography (Calibri, black, no fill)
     font_toc_title = Font(name="Calibri", size=13, bold=True, color="000000")
     font_toc_sub = Font(name="Calibri", size=10, italic=True, color="444444")
     font_toc_instr = Font(name="Calibri", size=10, bold=False, color="333333")
     
-    font_header = Font(name="Calibri", size=11, bold=True, color="000000")
-    font_data = Font(name="Calibri", size=11, bold=False, color="000000")
-    font_link = Font(name="Calibri", size=10, bold=True, color="000563C1", underline="single")
-    font_table_id = Font(name="Calibri", size=11, bold=True, color="000000")
-    font_table_title = Font(name="Calibri", size=11, italic=True, color="000000")
+    font_header = FONT_HEADER
+    font_data = FONT_DATA
+    font_link = FONT_LINK
+    font_table_id = FONT_TABLE_ID
+    font_table_title = FONT_TABLE_TITLE
     font_note = Font(name="Calibri", size=10, italic=True, color="333333")
 
     # =========================================================================
@@ -592,14 +605,7 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     c_toc_note.font = font_note
 
     # Auto-adjust TOC column widths
-    for col in ws_toc.iter_cols(min_row=5, max_row=last_toc_row):
-        col_letter = get_column_letter(col[0].column)
-        max_len = 0
-        for cell in col:
-            val_s = str(cell.value or "")
-            if len(val_s) > max_len:
-                max_len = len(val_s)
-        ws_toc.column_dimensions[col_letter].width = max(min(max_len + 4, 60), 12)
+    auto_fit_columns(ws_toc, min_col=1, max_col=6, min_row=5, max_row=last_toc_row, min_width=12, max_width=60, padding=4)
 
     # =========================================================================
     # 2. CREATE INDIVIDUAL TABLE WORKSHEETS (APA 7th Format)
@@ -709,15 +715,7 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
         c_note.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
 
         # Auto-adjust column widths with minimum and maximum bounds
-        for col_idx in range(1, num_cols + 1):
-            col_letter = get_column_letter(col_idx)
-            max_len = len(str(clean_headers[col_idx - 1]))
-            for r_offset in range(num_rows):
-                val_str = str(data_rows[r_offset][col_idx - 1] if col_idx - 1 < len(data_rows[r_offset]) else "")
-                if len(val_str) > max_len:
-                    max_len = len(val_str)
-            # Clamp width between 14 and 60
-            ws_t.column_dimensions[col_letter].width = max(min(max_len + 4, 60), 14)
+        auto_fit_columns(ws_t, min_col=1, max_col=num_cols, min_row=5, max_row=5 + num_rows, min_width=14, max_width=60, padding=4)
 
         print(f"  + Added sheet '{short_name}' ({table_id}: {num_rows} rows x {num_cols} cols)")
 

@@ -224,7 +224,7 @@ TABLE_CATALOG = [
     }
 ]
 
-from src.utils.excel_styling import parse_cell_value
+from src.utils.excel_styling import parse_cell_value, auto_fit_columns
 
 
 def build_thesis_tables_workbook():
@@ -423,14 +423,7 @@ def build_thesis_tables_workbook():
     c_toc_note.font = font_note
 
     # Auto-adjust TOC column widths
-    for col in ws_toc.iter_cols(min_row=5, max_row=last_toc_row):
-        col_letter = get_column_letter(col[0].column)
-        max_len = 0
-        for cell in col:
-            val_s = str(cell.value or "")
-            if len(val_s) > max_len:
-                max_len = len(val_s)
-        ws_toc.column_dimensions[col_letter].width = max(min(max_len + 4, 60), 12)
+    auto_fit_columns(ws_toc, min_col=1, max_col=7, min_row=5, max_row=last_toc_row, min_width=12, max_width=60, padding=4)
 
     # =========================================================================
     # 2. CREATE / PRESERVE 'table-format' REFERENCE SHEET
@@ -587,14 +580,7 @@ def build_thesis_tables_workbook():
         c_note.alignment = Alignment(horizontal="left", vertical="center")
 
         # Auto-adjust column widths
-        for col in ws_t.iter_cols(min_row=5, max_row=5 + num_rows):
-            col_letter = get_column_letter(col[0].column)
-            max_len = 0
-            for cell in col:
-                val_s = str(cell.value or "")
-                if len(val_s) > max_len:
-                    max_len = len(val_s)
-            ws_t.column_dimensions[col_letter].width = max(min(max_len + 4, 60), 14)
+        auto_fit_columns(ws_t, min_col=1, max_col=num_cols, min_row=5, max_row=5 + num_rows, min_width=14, max_width=60, padding=4)
 
     # =========================================================================
     # 4. SAVE WORKBOOK TO TARGET DIRECTORIES

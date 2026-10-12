@@ -86,8 +86,9 @@ final-thesis/
 │   │   └── split_regimes.py            # Candidate B & 7-day purge embargoes
 │   ├── manuscripts/                    <-- Manuscript Compilers & Markdown Generators
 │   │   ├── generate_acronyms_docx.py   # Acronyms & abbreviations list generator
-│   │   ├── generate_appendix_v3.py     # Appendix v3 compiler (14 consolidated appendices)
-│   │   └── generate_categorized_glossary.py # Categorized glossary compiler
+│   │   ├── generate_appendix_v4.py     # Appendix v4 compiler (30 tables, Appendices A–N)
+│   │   ├── generate_categorized_glossary.py # Categorized glossary compiler
+│   │   └── convert_word_to_apa7_markdown.py # Word-to-APA 7 markdown text compiler
 │   └── utils/                          <-- Path Resolution & Styling Utilities
 │       ├── paths.py                    # Self-contained repository path registry
 │       └── excel_styling.py            # Centralized APA 7th ed. openpyxl layout & styling engine

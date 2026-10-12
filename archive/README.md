@@ -58,6 +58,7 @@ archive/
     ├── perform_top9_analysis.py    # Standalone Top 9 vs Top 25 script (superseded by conformed tables)
     ├── test_features_legacy.py     # Legacy unit tests for archived lead_lag_convolution & airport_selector
     ├── generate_appendix_v1_legacy.py # Legacy Appendix v1 (24 appendices A-X) compiler (superseded by v3)
+    ├── generate_appendix_v3_legacy.py # Legacy Appendix v3 (14 appendices A-N) compiler (superseded by v4)
     ├── reorganize_figures_by_chapter.py # One-time migration script (Figure 5.1 radar chart extracted)
     └── logger.py                   # Unused logging utility (active runners use direct stdout formatting)
 ```
