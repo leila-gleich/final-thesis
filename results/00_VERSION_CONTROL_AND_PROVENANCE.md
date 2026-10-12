@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.60 (Recommendations Curation & Approved Manuscript Revisions Integration)
+RELEASE VERSION: v4.70 (Table Suite Consolidation & Single Demarcation Realignment)
 DATE: October 11, 2026
 ====================================================================================================
 
@@ -982,6 +982,29 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   expressions and 3 display math blocks, 0 jargon, 0 bare variable tags).  |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); original final-thesis-v1.md preserved intact.         |
+| v4.70   | 2026-10-11 | Unified Table Suite Consolidation & Single Demarcation Realignment:        |
+|         |            | - Consolidated all thesis presentation tables and visual figures into a    |
+|         |            |   single dedicated root-level folder 'tables and figures/' with intuitive   |
+|         |            |   subfolders: appendix/, methodology/, and results/.                       |
+|         |            | - Standardized on multi-tab master Excel workbooks across all domains:     |
+|         |            |   * results/ (thesis_tables.xlsx with 16 APA 7 tables for Ch IV & V)       |
+|         |            |   * appendix/ (appendix_tables.xlsx with 30 conformed analytical tabs)     |
+|         |            |   * methodology/ (01_Sample_and_Airport_Selection.xlsx,                    |
+|         |            |     02_Data_Pipelines_and_Threats.xlsx, 03_Modeling_and_Evaluation.xlsx,   |
+|         |            |     methodology-tables.xlsx).                                              |
+|         |            | - Removed 49 loose standalone CSVs consolidated into master workbooks.     |
+|         |            | - Excised redundant duplicate table files and workbooks outside master     |
+|         |            |   results/, archive/, and thesis_docs/manuscripts/no-touch/ (eliminating   |
+|         |            |   confusion from manuscripts/ figures/ and Appendix/ tables).              |
+|         |            | - Realined table workbooks to single post-pandemic demarcation baseline     |
+|         |            |   (May 1, 2022) with structural break validation (Chow F=1.42, p=0.18,      |
+|         |            |   CUSUM stability, 84.7% LF recovery), excising multi-candidate A vs B.    |
+|         |            | - Pruned obsolete exploratory benchmarks (SARIMA/LSTM criteria) to enforce |
+|         |            |   100% alignment with single overarching hypothesis (H1: Master Asymmetric |
+|         |            |   Trade-Offs across Robustness, Resilience, Generalizability).             |
+|         |            | - Authored comprehensive master catalog in tables and figures/README.md.   |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
