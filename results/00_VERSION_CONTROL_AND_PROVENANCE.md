@@ -1017,6 +1017,9 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   (Model 1): prioritized sched_hourly_std when predicting absolute          |
 |         |            |   dispersion (tsa_hourly_std) while preserving dimensionless               |
 |         |            |   sched_hourly_cv for relative volatility targets.                         |
+|         |            | - Unified conformed 24-feature space in TweedieGradientBoostedRegressor     |
+|         |            |   (Model 2): ingests 14 schedule scale/level features alongside 10 flight   |
+|         |            |   volatility metrics to anchor multi-airport throughput levels.            |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+

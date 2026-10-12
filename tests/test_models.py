@@ -78,6 +78,41 @@ class TestModelEstimators(unittest.TestCase):
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
+    def test_tweedie_gbr_estimator_conformed_features(self):
+        n = 50
+        df_conformed = pd.DataFrame({
+            "sched_daily_total": np.linspace(200, 500, n),
+            "actual_daily_total": np.linspace(190, 480, n),
+            "sched_hourly_mean": np.linspace(10, 25, n),
+            "sched_rolling_7d_mean": np.linspace(200, 500, n),
+            "daily_cancellations": np.random.randint(0, 10, n),
+            "daily_cancel_rate": np.random.uniform(0, 0.05, n),
+            "cancel_rolling_7d_mean": np.random.uniform(1, 5, n),
+            "cancel_rate_rolling_7d_mean": np.random.uniform(0.01, 0.03, n),
+            "avg_dep_delay_minutes": np.random.uniform(10, 45, n),
+            "flights_delayed_15min_pct": np.random.uniform(0.1, 0.3, n),
+            "avg_taxi_out_minutes": np.random.uniform(15, 25, n),
+            "aircraft_gauge_seats": np.random.uniform(130, 180, n),
+            "route_load_factor_pct": np.random.uniform(0.75, 0.90, n),
+            "connecting_passenger_share_pct": np.random.uniform(0.2, 0.6, n),
+            "sched_hourly_std": np.linspace(5, 15, n),
+            "sched_hourly_cv": np.linspace(0.3, 0.6, n),
+            "actual_hourly_std": np.linspace(5, 14, n),
+            "actual_hourly_cv": np.linspace(0.3, 0.6, n),
+            "sched_rolling_7d_std": np.linspace(10, 30, n),
+            "sched_rolling_7d_cv": np.linspace(0.1, 0.3, n),
+            "cancel_rolling_7d_std": np.random.uniform(1, 4, n),
+            "cancel_rate_rolling_7d_std": np.random.uniform(0.005, 0.02, n),
+            "otp_cancellation_volatility_cv": np.random.uniform(0.2, 0.8, n),
+            "otp_departure_delay_volatility_cv": np.random.uniform(0.3, 0.7, n)
+        })
+        y = pd.Series(np.linspace(100, 400, n), name="tsa_hourly_std")
+        model2 = TweedieGradientBoostedRegressor(max_iter=30)
+        model2.fit(df_conformed, y)
+        preds = model2.predict(df_conformed)
+        self.assertEqual(len(preds), n)
+        self.assertTrue((preds >= 0).all())
+
     def test_sequential_sarima_tree_hybrid(self):
         model3 = SequentialSARIMATreeHybrid()
         model3.fit(self.df, self.df["TSA_Throughput"])

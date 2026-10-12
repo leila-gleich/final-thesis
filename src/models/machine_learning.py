@@ -13,6 +13,20 @@ import pandas as pd
 from typing import List, Optional
 from sklearn.ensemble import HistGradientBoostingRegressor
 
+CONFORMED_PANEL_FEATURES = [
+    # Domain 1: Schedule Scale & Level Features (Values - 14 features)
+    "sched_daily_total", "actual_daily_total", "sched_hourly_mean", "sched_rolling_7d_mean",
+    "daily_cancellations", "daily_cancel_rate", "cancel_rolling_7d_mean", "cancel_rate_rolling_7d_mean",
+    "avg_dep_delay_minutes", "flights_delayed_15min_pct", "avg_taxi_out_minutes",
+    "aircraft_gauge_seats", "route_load_factor_pct", "connecting_passenger_share_pct",
+    # Domain 2: Volatility & Dispersion Features (Volatility - 10 features)
+    "sched_hourly_std", "sched_hourly_cv", "actual_hourly_std", "actual_hourly_cv",
+    "sched_rolling_7d_std", "sched_rolling_7d_cv", "cancel_rolling_7d_std", "cancel_rate_rolling_7d_std",
+    "otp_cancellation_volatility_cv", "otp_departure_delay_volatility_cv",
+    # Optional Cyclical / Diurnal terms
+    "sin_diurnal", "cos_diurnal", "sin_weekly", "cos_weekly"
+]
+
 MODEL_FEATURE_COLUMNS = [
     "convolved_lead1",
     "convolved_lead2",
@@ -54,23 +68,18 @@ class TweedieGradientBoostedRegressor:
         self.fitted = False
 
     def _prepare_X(self, X: pd.DataFrame) -> np.ndarray:
-        # Check if conformed volatility features are available
-        vol_cols = [c for c in [
-            'sched_hourly_std', 'sched_hourly_cv', 'sched_rolling_7d_std', 'sched_rolling_7d_cv',
-            'daily_cancel_rate', 'daily_cancellations', 'avg_dep_delay_minutes', 'otp_departure_delay_volatility_cv',
-            'avg_taxi_out_minutes', 'aircraft_gauge_seats', 'connecting_passenger_share_pct',
-            'sin_diurnal', 'cos_diurnal', 'sin_weekly', 'cos_weekly'
-        ] if c in X.columns]
-        
-        if vol_cols:
-            return X[vol_cols].fillna(0.0).values
+        # Check if conformed panel volatility and scale features are available
+        conformed_cols = [c for c in CONFORMED_PANEL_FEATURES if c in X.columns]
+        if len(conformed_cols) >= 5:
+            return X[conformed_cols].fillna(0.0).values
 
         features = [col for col in self.feature_names if col in X.columns]
-        if not features:
-            # Fallback to all numeric columns
-            numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
-            return X[numeric_cols].fillna(0.0).values
-        return X[features].fillna(0.0).values
+        if features:
+            return X[features].fillna(0.0).values
+
+        # Fallback to all numeric columns
+        numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+        return X[numeric_cols].fillna(0.0).values
 
     def fit(self, X: pd.DataFrame, y: pd.Series):
         X_mat = self._prepare_X(X)
