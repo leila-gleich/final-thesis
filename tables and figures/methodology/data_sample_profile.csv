@@ -1,0 +1,6 @@
+operational_feed_conformance,primary_grain,cleaned_records,scope_and_network
+TSA FOIA Throughput,Checkpoint-Lane-Hour,"6,434,732 rows",25 Airfields; 955 Lanes
+BTS On-Time Performance,Flight Departure,"13,153,654 rows",25 Airfields; 17 Carriers
+BTS Form 41 Sched. T-100,Carrier-Segment-Month,"422,096 rows",2.09 Billion Seats
+BTS DB1B/DB1C Survey,Ticket Coupon,"22,051,557 rows",62.16 Million Passengers
+Total Conformed Fact,Star Schema Linked,"42,062,039 rows",100% Referential Integrity

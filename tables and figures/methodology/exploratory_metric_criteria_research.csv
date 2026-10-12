@@ -1,0 +1,10 @@
+evaluation_dimension,quality_or_metric,base_sarima,base_lstm_squeezed,hybrid_1_seasonal_switch,hybrid_3_dynamic_ensemble
+1. GENERALIZABILITY,Mean MASE (efficiency),1.1843,3.2395,1.6888,1.3284
+1. GENERALIZABILITY,SD of MASE (consistency),0.2528,2.6054,0.7081,0.3084
+1. GENERALIZABILITY,Hub Performance Gap (MAPE),0.44%,5.32%,0.51%,0.25%
+2. RESILIENCE,Winter/Overall Error Ratio,1.5594,1.1223,1.9288,1.4688
+2. RESILIENCE,Max Daily % Error (worst case),1165.75%,1428.13%,1387.96%,1142.15%
+2. RESILIENCE,Winter Dominance Correlation,+0.3291,+0.1617,+0.1617,+0.3569
+3. ROBUSTNESS,Weekday-Weekend Gap (MAPE),6.05%,4.56%,6.00%,5.40%
+3. ROBUSTNESS,Daily Error Volatility (SD),38.5335,50.6940,42.6858,41.0254
+3. ROBUSTNESS,Data Reduction Degradation,-0.19%,-0.18%,-0.15%,-0.13%

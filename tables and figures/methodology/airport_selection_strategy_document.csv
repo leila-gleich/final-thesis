@@ -1,0 +1,5 @@
+component,focus_area,implementation_details,methodological_rationale
+Purposive Sampling Funnel,The 4-Tiered Purposive Filtering Pipeline,Macro volume (Top 25) -> Meso Big 3 co-location & Southwest exclusion -> Micro causal identification via checkpoint exclusivity -> 4x3 experimental transfer grid,Eliminates multi-carrier schedule crosstalk and isolates single-carrier passenger demand.
+Candidate Justification,LGA Selection Over JFK,LGA selected; JFK excluded,United vacated JFK in October 2022 while LGA opened Delta's $4B consolidated Terminal C in June 2022.
+Candidate Justification,PHL Selection Over SLC/MSP/SEA/PHX,PHL selected; SLC/MSP/SEA/PHX excluded,SLC channels 100% of passengers through one shared checkpoint; PHL Terminals B and C are 100% dedicated to American Airlines.
+Temporal Boundary,Network-Level Temporal Demarcation,"May 1, 2022 onwards across Top 25 hub network (~67% national volume)",Prevents localized recovery distortions across coupled nodes in the National Airspace System.

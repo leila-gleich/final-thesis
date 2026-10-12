@@ -1,0 +1,8 @@
+Day of Week,DOW Name,Operational Volatility Archetype,Study Days (N),Mean Daily TSA (Pax),Within-Day TSA CV,Delay Dispersion (sigma_Delay),Coupled Volatility Index,Mean Departure Delay,Flights Delayed >= 15m (%)
+1,Monday,Outbound Business Surge & High Screening Volatility,192,"1,246,150",0.604,56.56 min,34.00,15.78 min,23.54%
+2,Tuesday,Midweek Operational Reset (Low Turbulence),192,"1,076,625",0.601,50.09 min,29.99,11.69 min,19.44%
+3,Wednesday,Midweek Baseline Stability (Minimum Volatility),192,"1,123,368",0.594,49.27 min,29.13,12.22 min,20.05%
+4,Thursday,Corporate Outbound & Early Weekend Ramp,191,"1,254,744",0.589,54.65 min,31.96,15.39 min,23.35%
+5,Friday,Combined Business & Weekend Getaway Surge,191,"1,241,359",0.592,55.58 min,32.77,16.61 min,24.76%
+6,Saturday,Volume Trough & Fleet Repositioning,191,"1,089,699",0.602,54.16 min,32.45,14.64 min,22.47%
+7,Sunday,Leisure Return Peak & Evening Delay Propagation,192,"1,279,017",0.577,58.07 min,33.40,17.78 min,25.60%

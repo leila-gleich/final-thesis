@@ -1,0 +1,10 @@
+Airport Code,Airport Name,Dominant Legacy Carrier,Carrier Hub Role,Dedicated Terminal Screening Complex,Cluster Archetype,Strategic Justification & Selection Rationale
+BOS,Boston Logan,DL / AA,Dual Focus Station,Terminal A (DL) & Terminal B (AA),Cluster 1: High-Density O&D Focus,Unconfounded Northeast high-yield O&D demand; physically separate terminal finger piers.
+DFW,Dallas/Fort Worth,AA,Primary Fortress Hub,Terminal D Screening Complex,Cluster 0: Mega-Connecting Gateway,American Airlines primary mega-connecting fortress hub; high gauge international operations.
+DTW,Detroit Metro,DL,Primary Fortress Hub,McNamara Terminal Complex,Cluster 2: High-Reliability Fortress,Delta primary Midwest fortress hub; world-class operational fluidity and high connecting ratio.
+EWR,Newark Liberty,UA,Primary Fortress Hub,Terminal C Screening Complex,Cluster 3: Congested Coastal Originator,United primary East Coast fortress hub; severe New York airspace slot congestion.
+IAH,Houston Bush,UA,Primary Fortress Hub,Terminal C Screening Complex,Cluster 1: High-Density O&D Focus,United southern hub; balanced energy sector business O&D travel and Latin American connecting banks.
+LAX,Los Angeles World,DL / AA / UA,Tri-Carrier Parity Hub,"Terminals 2/3 (DL), 4 (AA), 7 (UA)",Cluster 0: Mega-Connecting Gateway,Massive transpacific and transcontinental origin-destination demand across all three legacy carriers.
+LGA,New York LaGuardia,DL,Primary Fortress Hub,Terminal C Screening Complex,Cluster 3: Congested Coastal Originator,Consolidated Delta Terminal C (opened June 2022); perimeter rule market and pure O&D flows.
+ORD,Chicago O'Hare,UA / AA,Dual Fortress Hub,Terminal 1 (UA) & Terminal 3 (AA),Cluster 0: Mega-Connecting Gateway,Intense head-to-head legacy carrier competition; dual hub bank synchronization.
+PHL,Philadelphia Intl,AA,Primary Fortress Hub,Terminals B & C Complexes,Cluster 2: High-Reliability Fortress,American Mid-Atlantic transatlantic hub; counterpart to Delta's Midwestern fortress at DTW.

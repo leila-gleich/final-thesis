@@ -1,0 +1,4 @@
+new_column_name,data_type,description_and_value_example,operational_purpose
+is_imputed,BOOLEAN,FALSE for original valid rows; TRUE for resolved missing rows.,Preserves data integrity: models can filter by is_imputed == FALSE or weight rows.
+imputation_method,VARCHAR,"original, pdf_cross_match, hourly_signature_match, temporal_matrix, or unmapped.",Full auditability: every imputed record retains exact lineage of how it was resolved.
+imputation_confidence,FLOAT,"Confidence score between 0.0 and 1.0 (e.g., 0.98).",Eliminates forecasting dips: allows probabilistic weighting of ~13.8M recovered passengers.
