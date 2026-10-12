@@ -1,7 +1,0 @@
-evaluation_criteria,candidate_a_mature_post_pandemic,candidate_b_early_post_mask_regime_recommended
-Start Date,"January 1, 2023","May 1, 2022"
-Statistical Rationale,Full seasonal convergence (p >= 0.05 on rolling Welch's t-test) and net cumulative passenger deficit reached minimum.,"CUSUM stabilization, Chow test parameter stability, and removal of federal transit mask mandates."
-Data Volume for Training,~24 months training (2023-01-01 to 2024-12-31) and 12 months test (2025).,36 months training/val (2022-05-01 to 2024-12-31) and 12 months test (2025).
-Impact on Robustness,Excellent; zero contamination from 2022 recovery fluctuations.,"Superior; provides 2 full annual seasonal cycles in training, enabling ML/Probabilistic models to learn holiday and summer peaks."
-Impact on Resilience,"Moderate; misses the December 2022 Winter Storm Elliott mega-disruption, which is the prime real-world shock event.","Superior; captures December 2022 and Summer 2023 convective storms, allowing direct computation of TTR and R_MASE."
-Impact on Generalizability,"Adequate, but smaller sample sizes for regional/spoke airport cohorts.","Superior; includes 404k+ hourly observations across all 25 airfields, maximizing spatial transferability tests."
