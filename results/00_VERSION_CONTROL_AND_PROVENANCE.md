@@ -1020,6 +1020,9 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Unified conformed 24-feature space in TweedieGradientBoostedRegressor     |
 |         |            |   (Model 2): ingests 14 schedule scale/level features alongside 10 flight   |
 |         |            |   volatility metrics to anchor multi-airport throughput levels.            |
+|         |            | - Parameterized seasonal lag in compute_mase and MultiPillarEvaluator       |
+|         |            |   (default seasonal_lag=1 for daily panel series, lag=24 for hourly),      |
+|         |            |   restoring Baseline Control MASE = 1.000 non-parametric reference.        |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+

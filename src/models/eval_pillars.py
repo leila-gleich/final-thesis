@@ -27,9 +27,11 @@ def compute_r2(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     ss_res = np.sum((y_true - y_pred)**2)
     return float(1.0 - (ss_res / ss_tot)) if ss_tot > 0 else 0.0
 
-def compute_mase(y_true: np.ndarray, y_pred: np.ndarray, seasonal_lag: int = 24) -> float:
+def compute_mase(y_true: np.ndarray, y_pred: np.ndarray, seasonal_lag: int = 1) -> float:
     """
-    Computes Mean Absolute Scaled Error (MASE) relative to 24-hour seasonal naive baseline.
+    Computes Mean Absolute Scaled Error (MASE) relative to seasonal naive persistence baseline.
+    Default seasonal_lag is 1 (for daily panel evaluations, comparing against 1-day persistence).
+    For hourly series, pass seasonal_lag=24 (24-hour diurnal cycle).
     """
     if len(y_true) <= seasonal_lag:
         return 1.0
@@ -42,11 +44,19 @@ class MultiPillarEvaluator:
     """
     Computes the 14 multi-pillar operational metrics for an estimator on test data.
     """
-    def __init__(self, y_true: np.ndarray, y_pred: np.ndarray, dates: np.ndarray = None, disruption_mask: np.ndarray = None):
+    def __init__(
+        self,
+        y_true: np.ndarray,
+        y_pred: np.ndarray,
+        dates: np.ndarray = None,
+        disruption_mask: np.ndarray = None,
+        seasonal_lag: int = 1
+    ):
         self.y_true = np.array(y_true, dtype=np.float64)
         self.y_pred = np.maximum(0.0, np.array(y_pred, dtype=np.float64))
         self.dates = dates
         self.disruption_mask = disruption_mask if disruption_mask is not None else np.zeros(len(self.y_true), dtype=bool)
+        self.seasonal_lag = seasonal_lag
 
     def evaluate_pillar1_robustness(self) -> Dict[str, float]:
         """Pillar 1: Routine Steady-State Accuracy."""
@@ -58,7 +68,7 @@ class MultiPillarEvaluator:
         rmse = compute_rmse(yt_r, yp_r)
         mae = compute_mae(yt_r, yp_r)
         r2 = compute_r2(yt_r, yp_r)
-        mase = compute_mase(yt_r, yp_r, seasonal_lag=24)
+        mase = compute_mase(yt_r, yp_r, seasonal_lag=self.seasonal_lag)
         
         # Off-peak relative stochasticity (lowest quartile throughput)
         q25 = np.percentile(yt_r, 25)
@@ -81,8 +91,8 @@ class MultiPillarEvaluator:
             yt_shock = self.y_true[self.disruption_mask]
             yp_shock = self.y_pred[self.disruption_mask]
             shock_rmse = compute_rmse(yt_shock, yp_shock)
-            shock_mase = compute_mase(yt_shock, yp_shock, seasonal_lag=24)
-            routine_mase = compute_mase(self.y_true[~self.disruption_mask], self.y_pred[~self.disruption_mask], seasonal_lag=24)
+            shock_mase = compute_mase(yt_shock, yp_shock, seasonal_lag=self.seasonal_lag)
+            routine_mase = compute_mase(self.y_true[~self.disruption_mask], self.y_pred[~self.disruption_mask], seasonal_lag=self.seasonal_lag)
             r_mase = float(shock_mase / routine_mase) if routine_mase > 0 else 1.0
             ttr_hrs = 3.2 if "hybrid" in str(type(self)).lower() else 6.7
         else:
