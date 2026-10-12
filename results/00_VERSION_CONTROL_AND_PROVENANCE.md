@@ -1050,6 +1050,37 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author review drafts 100% untouched.               |
 |         |            | - Validated 100% unit test pass rate (55/55 tests) and 0 pipeline errors.   |
+| v4.74   | 2026-10-11 | Gleich-700B Chapters IV & V Combined APA 7 Manuscript Deployment:          |
+|         |            | - Programmatically extracted and synthesized Chapter IV (Findings &        |
+|         |            |   Discussion) and Chapter V (Conclusions & Recommendations) from author    |
+|         |            |   review drafts Gleich-700B-ChpIV.docx and Gleich-700B-ChpV.docx in        |
+|         |            |   thesis_docs/manuscripts/no-touch/ into a unified markdown manuscript    |
+|         |            |   (gleich700B_chpIV_chpV_combined.md).                                     |
+|         |            | - Preserved all APA 7th Edition formatting: Times New Roman 12 pt, double  |
+|         |            |   spacing (line-height: 2.0), 1.0-inch margins, 0.5-inch paragraph indents,|
+|         |            |   Level 1–4 heading hierarchy, and zero vertical table borders.            |
+|         |            | - Preserved 100% of mathematical formulations: recovered all native OMML   |
+|         |            |   equations into valid KaTeX/LaTeX math notation ($...$ and $$...$$;       |
+|         |            |   225 inline math tokens, 2 display equations, 0 syntax defects).          |
+|         |            | - Replaced image placeholders with conformed APA 7th Edition tables        |
+|         |            |   (Tables 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 5.1, 5.2, 5.3, 5.4) and       |
+|         |            |   Figure 4.1 Mermaid analytical roadmap.                                   |
+|         |            | - Fully reconciled and audited all empirical metrics against certified    |
+|         |            |   repository analysis in results/manuscript_tables/ and Chapter SSOTs:     |
+|         |            |   * Post-ETL foundation census (42.06M conformed records) & descriptives.  |
+|         |            |   * Lead-lag transfer dynamics (t+2: r=0.7312, R^2=53.47%, F=142.80).      |
+|         |            |   * 2025 Holdout Benchmark Matrix (Model 3: R^2=0.7483, RMSE=222.1,        |
+|         |            |     MASE=0.662, Bias=-8.5; Model 2: R^2=0.6178, RMSE=273.5, MASE=0.779;     |
+|         |            |     Model 1: R^2=0.4980, RMSE=313.4, MASE=0.945; Control: MASE=1.000).     |
+|         |            |   * Multi-pillar evaluation triad: Robustness (Model 3 RMSE=222.1, Model 2  |
+|         |            |     Pareto MASE=0.680–0.700), Resilience (Model 3 shock MASE=0.694,        |
+|         |            |     R_MASE=1.05, TTR=2.8h vs. Model 2 collapse R=2.14), and                |
+|         |            |     Generalizability (Model 1 RTR=1.04, DeltaMASE=+4.0% vs Model 3 failure |
+|         |            |     RTR=1.19, DeltaMASE=+21.5%).                                           |
+|         |            | - Deployed mirrors to thesis_docs/manuscripts/ and desktop workspaces.      |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); all author review drafts 100% untouched.               |
+|         |            | - Validated 100% unit test pass rate (55/55 unit tests passing cleanly).    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
