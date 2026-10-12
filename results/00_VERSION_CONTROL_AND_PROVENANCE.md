@@ -1013,6 +1013,10 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   synchronizing excisions of post_pandemic_justification and obsolete      |
 |         |            |   exploratory tables with the single demarcation baseline.                 |
 |         |            | - Validated 100% unit test pass rate (52/52 tests passing).                 |
+|         |            | - Resolved schedule feature scale mismatch in DeterministicFixedLeadBaseline|
+|         |            |   (Model 1): prioritized sched_hourly_std when predicting absolute          |
+|         |            |   dispersion (tsa_hourly_std) while preserving dimensionless               |
+|         |            |   sched_hourly_cv for relative volatility targets.                         |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+

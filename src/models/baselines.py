@@ -51,12 +51,28 @@ class DeterministicFixedLeadBaseline:
     Equation:
         Vol_hat_t = beta_0 + beta_1 * Vol_sched_t
     """
-    def __init__(self, beta_0: float = 0.15, beta_1: float = 0.85):
+    def __init__(self, beta_0: float = 0.15, beta_1: float = 0.85, target_col: Optional[str] = None):
         self.beta_0 = beta_0
         self.beta_1 = beta_1
+        self.target_col = target_col
+        self.target_is_std: Optional[bool] = None
 
-    def fit(self, X: pd.DataFrame, y: pd.Series):
+    def fit(self, X: pd.DataFrame, y: pd.Series, target_col: Optional[str] = None):
         """Fits OLS linear scaling factor between schedule dispersion and throughput volatility."""
+        if target_col is not None:
+            self.target_col = target_col
+
+        t_name = self.target_col or getattr(y, "name", "") or ""
+        y_vals = np.asarray(y)
+        if "std" in str(t_name).lower():
+            self.target_is_std = True
+        elif "cv" in str(t_name).lower():
+            self.target_is_std = False
+        elif len(y_vals) > 0 and np.nanmean(y_vals) > 5.0:
+            self.target_is_std = True
+        else:
+            self.target_is_std = False
+
         sched_vol = self._extract_sched_volatility(X)
         if len(y) > 10 and np.var(sched_vol) > 1e-6:
             cov = np.cov(sched_vol, y)[0, 1]
@@ -66,20 +82,38 @@ class DeterministicFixedLeadBaseline:
         return self
 
     def _extract_sched_volatility(self, X: pd.DataFrame) -> np.ndarray:
-        if "sched_hourly_cv" in X.columns:
-            return X["sched_hourly_cv"].fillna(X["sched_hourly_cv"].mean()).values
-        elif "sched_hourly_std" in X.columns:
-            return X["sched_hourly_std"].fillna(X["sched_hourly_std"].mean()).values
-        elif "convolved_lead2" in X.columns:
-            return X["convolved_lead2"].values
-        elif "net_originating_demand" in X.columns:
-            return X["net_originating_demand"].values
-        elif "Scheduled_Departures" in X.columns:
-            return X["Scheduled_Departures"].values * 140.0
+        if self.target_is_std:
+            # When predicting standard deviation (absolute dispersion), prioritize standard deviation
+            if "sched_hourly_std" in X.columns:
+                return X["sched_hourly_std"].fillna(X["sched_hourly_std"].mean()).values
+            elif "sched_hourly_cv" in X.columns:
+                return X["sched_hourly_cv"].fillna(X["sched_hourly_cv"].mean()).values
+            elif "convolved_lead2" in X.columns:
+                return X["convolved_lead2"].values
+            elif "net_originating_demand" in X.columns:
+                return X["net_originating_demand"].values
+            elif "Scheduled_Departures" in X.columns:
+                return X["Scheduled_Departures"].values * 140.0
+            else:
+                return np.full(len(X), 500.0)
         else:
-            return np.full(len(X), 0.50)
+            # Default or CV target: prioritize scale-free relative dispersion (CV)
+            if "sched_hourly_cv" in X.columns:
+                return X["sched_hourly_cv"].fillna(X["sched_hourly_cv"].mean()).values
+            elif "sched_hourly_std" in X.columns:
+                return X["sched_hourly_std"].fillna(X["sched_hourly_std"].mean()).values
+            elif "convolved_lead2" in X.columns:
+                return X["convolved_lead2"].values
+            elif "net_originating_demand" in X.columns:
+                return X["net_originating_demand"].values
+            elif "Scheduled_Departures" in X.columns:
+                return X["Scheduled_Departures"].values * 140.0
+            else:
+                return np.full(len(X), 0.50)
 
-    def predict(self, X: pd.DataFrame) -> np.ndarray:
+    def predict(self, X: pd.DataFrame, target_col: Optional[str] = None) -> np.ndarray:
+        if target_col is not None:
+            self.target_is_std = "std" in target_col.lower()
         sched_vol = self._extract_sched_volatility(X)
         preds = self.beta_0 + self.beta_1 * sched_vol
         return np.maximum(0.0, preds)

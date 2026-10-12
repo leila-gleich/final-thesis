@@ -50,6 +50,27 @@ class TestModelEstimators(unittest.TestCase):
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
+    def test_deterministic_fixed_lead_baseline_scale_selection(self):
+        n = 20
+        df_vol = pd.DataFrame({
+            "sched_hourly_std": np.linspace(20.0, 50.0, n),
+            "sched_hourly_cv": np.linspace(0.35, 0.50, n)
+        })
+        y_std = pd.Series(np.linspace(200.0, 500.0, n), name="tsa_hourly_std")
+        y_cv = pd.Series(np.linspace(0.30, 0.60, n), name="tsa_hourly_cv")
+
+        m_std = DeterministicFixedLeadBaseline()
+        m_std.fit(df_vol, y_std)
+        self.assertTrue(m_std.target_is_std)
+        preds_std = m_std.predict(df_vol)
+        self.assertTrue((preds_std > 50.0).all())
+
+        m_cv = DeterministicFixedLeadBaseline()
+        m_cv.fit(df_vol, y_cv)
+        self.assertFalse(m_cv.target_is_std)
+        preds_cv = m_cv.predict(df_vol)
+        self.assertTrue((preds_cv < 2.0).all())
+
     def test_tweedie_gbr_estimator(self):
         model2 = TweedieGradientBoostedRegressor(max_iter=30)
         model2.fit(self.df, self.df["TSA_Throughput"])
