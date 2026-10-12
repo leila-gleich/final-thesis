@@ -120,6 +120,33 @@ class TestModelEstimators(unittest.TestCase):
         self.assertEqual(len(preds), len(self.df))
         self.assertTrue((preds >= 0).all())
 
+    def test_sequential_sarima_tree_hybrid_grouped_lag(self):
+        df_multi = pd.DataFrame({
+            "Airport": ["DFW"] * 5 + ["ORD"] * 5,
+            "convolved_lead1": [500.0] * 10,
+            "convolved_lead2": [600.0] * 10,
+            "convolved_lead3": [400.0] * 10,
+            "minute_of_day": [600] * 10,
+            "sin_diurnal": [0.5] * 10,
+            "cos_diurnal": [0.5] * 10,
+            "sin_weekly": [0.5] * 10,
+            "cos_weekly": [0.5] * 10,
+            "is_regional": [0] * 10,
+            "is_narrowbody": [1] * 10,
+            "is_widebody": [0] * 10,
+            "originating_multiplier": [0.65] * 10,
+            "taxi_out_duration": [18.0] * 10,
+            "taxi_congestion_interaction": [0.0] * 10
+        })
+        fake_residuals = np.array([10.0, 20.0, 30.0, 40.0, 50.0, 100.0, 200.0, 300.0, 400.0, 500.0])
+        model3 = SequentialSARIMATreeHybrid()
+        lagged = model3._compute_lagged_residuals(fake_residuals, df_multi)
+        # First row of DFW must be 0.0
+        self.assertEqual(lagged[0], 0.0)
+        # Last row of DFW was 50.0; first row of ORD must be 0.0 (NOT 50.0 from DFW!)
+        self.assertEqual(lagged[5], 0.0)
+        self.assertEqual(lagged[6], 100.0)
+
     def test_probabilistic_quantiles(self):
         model3 = SequentialSARIMATreeHybrid()
         model3.fit(self.df, self.df["TSA_Throughput"])

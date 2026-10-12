@@ -43,13 +43,35 @@ class SequentialSARIMATreeHybrid:
             return X[numeric_cols].fillna(0.0).values if numeric_cols else np.ones((len(X), 1))
         return X[avail].fillna(0.0).values
 
+    def _compute_lagged_residuals(self, residuals: np.ndarray, X: pd.DataFrame) -> np.ndarray:
+        """
+        Computes 1-step lagged residual error innovation (e_{t-1}).
+        Groups by airport facility if present to prevent cross-airport boundary leakage.
+        """
+        airport_col = None
+        for col in ["Airport", "airport", "facility", "Facility"]:
+            if col in X.columns:
+                airport_col = col
+                break
+        
+        if airport_col is not None:
+            res_series = pd.Series(residuals, index=X.index)
+            lagged = res_series.groupby(X[airport_col]).shift(1).fillna(0.0).values
+            return lagged
+        else:
+            lag_res = np.roll(residuals, 1)
+            if len(lag_res) > 0:
+                lag_res[0] = 0.0
+            return lag_res
+
     def _get_stage2_features(self, X: pd.DataFrame, lag_residuals: np.ndarray) -> np.ndarray:
         cols = [
             "sched_hourly_std", "sched_hourly_cv", "sched_rolling_7d_std", "sched_rolling_7d_cv",
             "daily_cancel_rate", "daily_cancellations", "avg_dep_delay_minutes", "otp_departure_delay_volatility_cv",
             "avg_taxi_out_minutes", "aircraft_gauge_seats", "connecting_passenger_share_pct",
+            "sched_daily_total", "actual_daily_total", "sched_hourly_mean", "sched_rolling_7d_mean",
             "convolved_lead1", "convolved_lead2", "convolved_lead3",
-            "minute_of_day", "sin_diurnal", "cos_diurnal",
+            "minute_of_day", "sin_diurnal", "cos_diurnal", "sin_weekly", "cos_weekly",
             "is_regional", "is_narrowbody", "is_widebody",
             "originating_multiplier", "taxi_out_duration", "taxi_congestion_interaction"
         ]
@@ -70,9 +92,8 @@ class SequentialSARIMATreeHybrid:
         # 2. Compute residual error: e_t = y_t - y_hat_1
         residuals = y_vec - y_hat_stage1
         
-        # 3. Create 1-step lagged residual: e_{t-1}
-        lag_residuals = np.roll(residuals, 1)
-        lag_residuals[0] = 0.0  # Zero initialization
+        # 3. Create 1-step lagged residual: e_{t-1} (grouped by airport)
+        lag_residuals = self._compute_lagged_residuals(residuals, X)
         
         # 4. Fit Stage 2: Tree Booster on residuals with error feedback
         X2 = self._get_stage2_features(X, lag_residuals)
@@ -99,8 +120,7 @@ class SequentialSARIMATreeHybrid:
             # Exploit observed error from prior step
             y_arr = np.array(y_true_for_feedback, dtype=np.float64)
             res = y_arr - y_hat_stage1
-            lag_residuals = np.roll(res, 1)
-            lag_residuals[0] = 0.0
+            lag_residuals = self._compute_lagged_residuals(res, X)
         else:
             # Self-propagated residual feedback
             lag_residuals = np.zeros(len(X))

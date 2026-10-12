@@ -1023,6 +1023,9 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Parameterized seasonal lag in compute_mase and MultiPillarEvaluator       |
 |         |            |   (default seasonal_lag=1 for daily panel series, lag=24 for hourly),      |
 |         |            |   restoring Baseline Control MASE = 1.000 non-parametric reference.        |
+|         |            | - Isolated panel boundaries in SequentialSARIMATreeHybrid (Model 3) by      |
+|         |            |   grouping dynamic residual error innovations by Airport facility,          |
+|         |            |   preventing cross-airport residual leakage at time-series boundaries.     |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author committee review drafts untouched.         |
 +---------+------------+----------------------------------------------------------------------------+
