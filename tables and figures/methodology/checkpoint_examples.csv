@@ -1,8 +1,0 @@
-date,hour,airport_code,airport_name,checkpoint_name_variant_1,checkpoint_name_variant_2,identical_throughput_tp
-2019-01-01,05:00,SBP,San Luis Obispo,BP01,SBP01 (Code Prepended),45
-2019-01-01,04:00,LAN,Lansing,Term 1 - AB,Terminal 5A - Passenger,317
-2019-01-02,05:00,SFO,San Francisco,Security Checkpoint G,Security Checkpoint F-3,174
-2019-01-02,02:00,JNU,Juneau,Terminal 6 - Passenger,Terminal 7 - Passenger,120
-2019-01-02,07:00,AZA,Phoenix-Mesa,JAN-East,JAN-West,29
-2019-01-01,00:00,PHL,Philadelphia,Checkpoint B,T-4 C,7
-2019-01-01,06:00,MIA,Miami,C,South-J1,428
