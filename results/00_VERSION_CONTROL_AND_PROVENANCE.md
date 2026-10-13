@@ -1157,6 +1157,17 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Preserved chapter-specific README documentation as README_<chapter>.md in|
 |         |            |   figures/ alongside root README.md.                                        |
 |         |            | - Verified 0 edits to Microsoft Word (.docx) documents (Policy 1.1).        |
+| v4.81   | 2026-10-13 | Visual & Diagrammatic Redesign of Recommended Defense Presentation Deck:     |
+|         |            | - Excised heavy rounded text boxes across all slides to eliminate clutter.  |
+|         |            | - Directly embedded 17 high-resolution publication figures and empirical    |
+|         |            |   graphs from figures/ (Radar Chart 5.1, Model Families 3.1, Funnel 3.2,   |
+|         |            |   Annual Clusters 4.2, DOW 4.3, Diurnal 4.4, Lead-Lag 4.5, Benchmark 4.6,  |
+|         |            |   Dashboard 5.4, Resilience 5.2, and Generalizability 5.3).                 |
+|         |            | - Formatted clean SmartArt-style horizontal process flows and centered      |
+|         |            |   mathematical formulas (Kingman's law, CV_TSA, hybrid error innovation).   |
+|         |            | - Recompiled Recommended-Thesis-Defense-Deck.pptx (6.9 MB high-res deck).   |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); Thesis-Defense.pptx draft preserved untouched.         |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
