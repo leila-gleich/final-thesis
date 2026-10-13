@@ -1096,6 +1096,22 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   * Tier 4 Low: code-line font styles, uncited reference, acknowledgements.  |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
 |         |            |   documents (.docx); all author review drafts 100% untouched.               |
+| v4.76   | 2026-10-12 | Top 25 Clustering & 4-Tier Filtering Guide Numerical & Terminology Sync:   |
+|         |            | - Synchronized Top25_Clustering_and_4Tier_Filtering_Guide.md with the      |
+|         |            |   authoritative conformed warehouse (01_top25_clustering.xlsx and          |
+|         |            |   02_4tier_filtering.xlsx).                                                |
+|         |            | - Realigned Section 2.1 PCA explained variance from preliminary 77.0% to    |
+|         |            |   certified 80.5% (PC1: 35.0%, PC2: 28.3%, PC3: 17.3%) and updated factor  |
+|         |            |   loadings from perform_top25_clustering.py.                               |
+|         |            | - Harmonized Section 3.4 9-airport cohort flight counts to demarcated 20-mo |
+|         |            |   volumes (2,021,185 total flights; ORD 360,571, DFW 325,555, LAX 277,433) |
+|         |            |   resolving multi-year census discrepancies.                               |
+|         |            | - Grounded architectural topologies and deconvolution mechanics in authentic|
+|         |            |   aviation terminology per Policy 5.3 (Physically Separate vs Walkway-     |
+|         |            |   Connected Terminals; Carrier Checkpoint Isolation).                      |
+|         |            | - Obeyed Policy 1.5 4-Gate Interlock with explicit author authorization.   |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
+|         |            |   documents (.docx).                                                       |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
