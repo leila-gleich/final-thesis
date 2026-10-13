@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.79 (Final Model Performance Visualizations & Dimensional Metric Synthesis)
+RELEASE VERSION: v4.80 (Figures Directory Flattening & Root Consolidation)
 DATE: October 13, 2026
 ====================================================================================================
 
@@ -1148,11 +1148,15 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |     +4.0% penalty) vs. Model 3 terminal overfitting (RTR=1.19, +21.5%).     |
 |         |            |   * Figure 5.4 (Master Multi-Dimensional H1 Operational Trade-Off Dashboard):|
 |         |            |     Integrated multi-dimensional synthesis across Robustness, Resilience,   |
-|         |            |     Generalizability, and the Dual-Track Operational Deployment Playbook.   |
-|         |            | - Updated figures/ch04_results/README.md and figures/ch05_discussion/README.md|
-|         |            |   cataloging the visual graphics, companion tables, and operational functions|
-|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
-|         |            |   documents (.docx); all author review drafts 100% untouched.               |
+| v4.80   | 2026-10-13 | Figures Directory Flattening & Root Consolidation:                           |
+|         |            | - Consolidated all figures, image files (.png), companion data tables       |
+|         |            |   (.csv), and companion workbooks (.xlsx) from chapter subfolders into a    |
+|         |            |   flat, single-level figures/ root directory per author directive.          |
+|         |            | - Removed empty chapter subdirectories (appendix/, ch01_intro/,             |
+|         |            |   ch02_lit_review/, ch03_methodology/, ch04_results/, ch05_discussion/).   |
+|         |            | - Preserved chapter-specific README documentation as README_<chapter>.md in|
+|         |            |   figures/ alongside root README.md.                                        |
+|         |            | - Verified 0 edits to Microsoft Word (.docx) documents (Policy 1.1).        |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
