@@ -1111,7 +1111,21 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   Connected Terminals; Carrier Checkpoint Isolation).                      |
 |         |            | - Obeyed Policy 1.5 4-Gate Interlock with explicit author authorization.   |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word     |
-|         |            |   documents (.docx).                                                       |
+| v4.77   | 2026-10-13 | Oral Defense Presentation Master Script Deployment (25-Minute Examination):|
+|         |            | - Authored DEFENSE_PRESENTATION_SCRIPT_25MIN.md at repository root providing |
+|         |            |   a comprehensive, continuous oral script paced for a 25-minute defense.   |
+|         |            | - Structured into 6 paced operational segments across all 32 slides of the  |
+|         |            |   companion presentation deck (Thesis-Defense.pptx):                       |
+|         |            |   * Segment I (Slides 1–7; 0:00–4:30): Problem, Purpose, Questions, H1.    |
+|         |            |   * Segment II (Slides 8–15; 4:30–8:30): Literature Evolution & Volatility.|
+|         |            |   * Segment III (Slides 16–20; 8:30–13:00): Data Pipeline & 4-Tier Funnel. |
+|         |            |   * Segment IV (Slides 21–24; 13:00–16:30): Findings & Volatility Coupling.|
+|         |            |   * Segment V (Slides 25–28; 16:30–21:00): 4 Models & Evaluative Triad.    |
+|         |            |   * Segment VI (Slides 29–32; 21:00–25:00): Synthesis, Ops Playbook, Conc. |
+|         |            | - Fully grounded in certified empirical metrics (Table 4.7, 4.10, 4.11) and |
+|         |            |   authentic commercial aviation terminology per Policy 5.1–5.3.            |
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); all author review drafts 100% untouched.               |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
