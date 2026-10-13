@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.75 (Gleich-FinalThesis First Draft Quality Assurance Audit & Recommendations Report)
-DATE: October 11, 2026
+RELEASE VERSION: v4.79 (Final Model Performance Visualizations & Dimensional Metric Synthesis)
+DATE: October 13, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -1129,6 +1129,30 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   3-tier process flows, and horizontal metric benchmark progression cards.  |
 |         |            | - Strictly preserved author review draft Thesis-Defense.pptx and all .docx  |
 |         |            |   files (Policy 1.1).                                                       |
+| v4.79   | 2026-10-13 | Final Model Performance Visualizations & Dimensional Metric Synthesis:      |
+|         |            | - Authored src/analysis/generate_final_model_performance_figures.py        |
+|         |            |   generating publication-ready figures (300 DPI) for final model evaluation|
+|         |            |   grounded in Table 4.10, Table 4.11, and Table 5.4:                        |
+|         |            |   * Figure 4.6 (Master Model Benchmark Matrix): 4-panel out-of-time         |
+|         |            |     holdout evaluation (Test R^2, Test RMSE, Test MASE, Forecast Bias)      |
+|         |            |     comparing Baseline Control, Model 1, Model 2, and Model 3 across        |
+|         |            |     72,053 complex hours.                                                   |
+|         |            |   * Figure 5.2 (Disruption Resilience & Shock Recovery Dynamics):           |
+|         |            |     Evaluation of Dimension 2 (Resilience) contrasting Nominal vs. IROPS    |
+|         |            |     shock RMSE, fragility multipliers (R_MASE), and Time-to-Recovery (TTR), |
+|         |            |     with real-time time-series simulation of the Empty Checkpoint Fallacy    |
+|         |            |     vs. Model 3 recursive error innovation recovery (2.8h).                 |
+|         |            |   * Figure 5.3 (Zero-Shot Cross-Airport Generalizability Evaluation):       |
+|         |            |     Evaluation of Dimension 3 (Generalizability) on zero-shot spatial       |
+|         |            |     transfer (EWR -> LGA), proving Model 1 schedule invariance (RTR=1.04,   |
+|         |            |     +4.0% penalty) vs. Model 3 terminal overfitting (RTR=1.19, +21.5%).     |
+|         |            |   * Figure 5.4 (Master Multi-Dimensional H1 Operational Trade-Off Dashboard):|
+|         |            |     Integrated multi-dimensional synthesis across Robustness, Resilience,   |
+|         |            |     Generalizability, and the Dual-Track Operational Deployment Playbook.   |
+|         |            | - Updated figures/ch04_results/README.md and figures/ch05_discussion/README.md|
+|         |            |   cataloging the visual graphics, companion tables, and operational functions|
+|         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
+|         |            |   documents (.docx); all author review drafts 100% untouched.               |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
