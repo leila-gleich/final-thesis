@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.14 (Full Tabular Harmonization of Manuscript Tables Workbook)
+RELEASE VERSION: v5.15 (Comprehensive 25-Minute Defense Oral Examination Script & Literature Synthesis)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1245,6 +1245,16 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   * [(C_a^2 + C_s^2)/2] * (1/mu) where rho = lambda / (c * mu).             |
 |         |            | - Synchronized all 5 updates across Gleich-FinalThesis.md, Chapter_IV,      |
 |         |            |   Chapter_4_SSOT.md, thesis_final_package/, and Gleich-Thesis-final/.       |
+| v5.15   | 2026-10-14 | Comprehensive 25-Minute Oral Script & Advanced/Hybrid Literature Synthesis: |
+|         |            | - Authored DEFENSE_PRESENTATION_SCRIPT_OUTLINE_25MIN.md (root and mirrored  |
+|         |            |   to thesis_final_package/defense/) providing slide-by-slide verbatim oral |
+|         |            |   presentation script for Thesis-Defense-outline.pptx (42 slides, ~25 min).|
+|         |            | - Synthesized literature grounding for Advanced Predictive Models           |
+|         |            |   (Hopfe et al., Ribeiro et al., 24 BTS OTP attributes, Empty Checkpoint   |
+|         |            |   Fallacy, concourse over-specialization, black-box opacity).              |
+|         |            | - Formulated rigorous mechanics for Hybrid Architectures (Brun et al.,     |
+|         |            |   Had et al., ACRP 40 schedule base + real-time 1-step error innovation).  |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx).                 |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -1498,5 +1508,26 @@ Conducted an exhaustive numerical audit across `thesis_manuscript_tables.xlsx` a
 - `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (mirrored Desktop root)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
 ====================================================================================================
+
+## v5.15 — Comprehensive 25-Minute Defense Oral Examination Script & Literature Synthesis (October 14, 2026)
+
+### Rationale & Design Transformation
+In response to the author's request for an updated, complete presentation script designed specifically for the 42-slide deck `Thesis-Defense-outline.pptx` (located in `thesis_final_package/defense/`), and addressing specific scholarly guidance on discussing existing research on advanced predictive models (Section 2.3) and hybrid architectures (Section 2.4):
+1. **Slide-by-Slide Verbatim Oral Examination Script**: Authored `DEFENSE_PRESENTATION_SCRIPT_OUTLINE_25MIN.md` (and mirrored to `thesis_final_package/defense/DEFENSE_PRESENTATION_SCRIPT_OUTLINE_25MIN.md`) covering all 42 slides across all 6 phases with precise time allocations totaling exactly 25:00 minutes (~3,500 words, ~135–140 words per minute pacing).
+2. **Scholarly Literature Grounding for Advanced Machine Learning (Slide 11 / Section 2.3)**:
+   - Formulated the exact comparative strengths: Millisecond operational inference latency (bypassing the 20–45 minute computational bottleneck of micro-simulation like Simio/CAST), automated ingestion of 24 BTS OTP attributes (delays, taxi-out queues, aircraft gauge, cancellations) without hand-crafted interaction terms, and routine Pareto efficiency under calm baseline conditions ($\text{MASE} = 0.680\text{--}0.700$).
+   - Formulated the critical operational shortcomings grounded in formal literature: The Empty Checkpoint Fallacy where automated cancellation telemetry induces false zero-demand forecasts during severe ground stops while lobbies are overflowing with stranded travelers ($R_{\text{MASE}} = 2.14$, acute collapse); the black-box opacity barrier (Adadi & Berrada, 2018; Viaña et al., 2024); and concourse over-specialization where decision trees overfit local airport taxiway and concourse geometry (Wang et al., 2025), causing zero-shot transfer error to inflate by $>30\%$.
+3. **Rigorous Operational Mechanics for Hybrid Predictive Architectures (Slide 12 / Section 2.4)**:
+   - Formulated the sequential two-stage hybrid formulation ($\widehat{Y}_t = M_{\text{base}}(\text{Schedule}_t, \mathbf{X}_t) + \alpha \cdot (Y_{t-1} - \widehat{Y}_{t-1})$) synthesizing Brun et al. (2025), Had et al. (2025), and Ebert et al. (2021).
+   - Delineated Stage 1 (physical schedule convolution across ACRP Report 40 lognormal show-up curves and BTS DB1B connecting passenger deflation $1 - S_{\text{connect}}$) and Stage 2 (live prior-hour checkpoint floor error innovation feedback $e_{t-1} = Y_{t-1} - \widehat{Y}_{t-1}$ under Kalman/state-space principles).
+   - Articulated the operational resolution: When storms cancel flights, live checkpoint counts detect stranded passengers on the floor, immediately overriding stale schedules and restoring forecast accuracy within 2.8 hours ($R_{\text{MASE}} = 1.05$).
+4. **Zero Document Modifications Constraint**: Obeyed Policy 1.1 with zero modifications to any Microsoft Word (`.docx`) documents.
+
+### Modified Files Inventory
+- `DEFENSE_PRESENTATION_SCRIPT_OUTLINE_25MIN.md` (root oral defense script)
+- `thesis_final_package/defense/DEFENSE_PRESENTATION_SCRIPT_OUTLINE_25MIN.md` (mirrored final defense package script)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
 
 
