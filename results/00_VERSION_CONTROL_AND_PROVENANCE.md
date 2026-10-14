@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.12 (Manuscript-Aligned Unified Tables Workbook Deployment)
+RELEASE VERSION: v5.13 (Figure-Rich Presentation Deck with Rendered Mathematical Formulations)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1435,4 +1435,48 @@ Built and deployed the dedicated, APA 7th Edition compliant Excel workbook `thes
 - `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (mirrored Desktop root)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
 ====================================================================================================
+
+## v5.13 — Figure-Rich Presentation Deck with Rendered Mathematical Formulations (October 14, 2026)
+
+### Rationale & Design Transformation
+Redesigned and re-architected `Recommended-Thesis-Defense-Deck.pptx` in direct response to author review:
+1. **Pristine Mathematical Typography Engine**: Built an automated Matplotlib LaTeX mathtext rendering pipeline (`render_all_formulas`) that outputs crisp, 300 DPI transparent RGBA PNG equation figures for all 8 core thesis equations. Resolves unrendered LaTeX syntax and eliminates raw text strings (such as `_t`, `{t-1}`, etc.), delivering publication-grade math rendering for:
+   - Kingman's Heavy-Traffic Queuing Formula ($\bar{W}_q \approx \frac{\rho}{1-\rho} \frac{C_a^2 + C_s^2}{2} \frac{1}{\mu}$)
+   - Scale-Free Arrival Burstiness ($CV_{\text{TSA}} = \sigma_{\text{TSA}} / \mu_{\text{TSA}}$)
+   - Passenger Show-Up Curve Convolution ($\widehat{Y}_t = \sum_i [\text{Seats}_i \cdot (1 - S_{\text{connect}}) \cdot P(t - \text{DEP}_i)]$)
+   - Two-Stage Dynamic Hybrid Architecture ($\widehat{Y}_t = M_{\text{base}}(\text{Schedule}_t, \mathbf{X}_t) + \alpha \cdot (Y_{t-1} - \widehat{Y}_{t-1})$)
+   - Diurnal Persistence Control Benchmark ($\widehat{Y}_t = Y_{t-24}$)
+   - Empirical Lead-Lag Deconvolution ($R^2(t+2) = 0.5347$ vs. $R^2(t) = 0.1982$)
+   - Disruption Shock Recovery Multiplier ($R_{\text{MASE}} = \text{MASE}_{\text{shock}} / \text{MASE}_{\text{routine}}$)
+   - Relative Spatial Transfer Ratio ($\text{RTR} = \text{RMSE}_{\text{transfer}} / \text{RMSE}_{\text{in-sample}}$)
+2. **Integration of Research Figures**: Re-embedded authentic, high-resolution research figures and empirical plots across all relevant slides:
+   - Figure 5.1 (Asymmetric Trade-Off Triangle) on Slide 7
+   - Literature models and tests diagram on Slide 8
+   - OTP volatility dispersion plot on Slide 9
+   - Stochastic passenger arrival curves on Slide 10
+   - Model walkthrough architecture diagram on Slide 13
+   - Post-pandemic justification plot on Slide 14
+   - Combined data pipeline and funnel lifecycle on Slide 16
+   - Forecasting model families (Figure 3.1) on Slide 17
+   - Power of 9 airports plot on Slide 21
+   - Airport clusters map on Slide 23
+   - Annual volatility clusters (Figure 4.2) on Slide 24
+   - Day-of-week & diurnal hourly volatility clusters (Figures 4.3 & 4.4) on Slide 25
+   - Lead-lag convolution curves (Figure 4.5) on Slide 26
+   - Master model benchmark matrix (Figure 4.6) on Slide 27
+   - Master hypothesis trade-off dashboard (Figure 5.4) on Slide 28
+   - Disruption resilience & shock recovery (Figure 5.2) on Slide 29
+   - Generalizability & spatial transfer (Figure 5.3) on Slide 30
+3. **De-Cluttered Layout & Spacious Typography**: Eliminated excessive rounded boxes and walls of text, aligning with the clean, spacious aesthetic of `thesis-defense-outline` (left column with 3–4 concise bullet points; right column with prominent figure; ample whitespace).
+
+### Modified Files Inventory
+- `src/analysis/generate_recommended_defense_deck.py` (updated with LaTeX rendering and figure integration)
+- `figures/rendered_formulas/` (directory of 8 rendered 300 DPI formula PNGs)
+- `figures/terminal_queuing_friction.jpg` (terminal queuing congestion figure)
+- `Recommended-Thesis-Defense-Deck.pptx` (root deck)
+- `master-docs/Recommended-Thesis-Defense-Deck.pptx` (mirrored master deck)
+- `thesis_final_package/defense/Recommended-Thesis-Defense-Deck.pptx` (mirrored final package deck)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
 
