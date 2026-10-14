@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.84 (Thesisv3 Compilation with LaTeX Parsing & Zero Underscores)
+RELEASE VERSION: v4.86 (Manuscript Mathematical, Partitioning, and Queuing Harmonization)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1228,6 +1228,23 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   to master-docs/Master-defense-deck.pptx and slide visualization guide.    |
 |         |            | - Preserved strict Policy 1.1 constraint: zero edits to Microsoft Word      |
 |         |            |   documents (.docx); Master-defense-deck.pptx preserved untouched.          |
+| v4.86   | 2026-10-14 | Manuscript Mathematical, Partitioning, and Queuing Harmonization:           |
+|         |            | - Harmonized Table 4.5 Row 6 sample grain from "63,925 Airport-Days" to     |
+|         |            |   "Top 25 Airfields" (conforming with N = 25, df = 23, t = 2.74).           |
+|         |            | - Disambiguated Training Window (15,976 candidate facility-days evaluated    |
+|         |            |   during preliminary filtering; 5,490 airport-days / 7,320 complex-days     |
+|         |            |   across finalized 9-airport cohort) and Validation Window (3,293 candidate |
+|         |            |   facility-days / 3,288 cohort days).                                       |
+|         |            | - Appended explicit holdout and statistical test notes across Table 4.10,   |
+|         |            |   Table 4.11, Table 5.1, Table 5.2, and Table 5.4 citing N = 72,053 complex-|
+|         |            |   hourly observations, pairwise Diebold-Mariano tests (DM = 42.15/48.72,    |
+|         |            |   p < 0.0001), Model 1 R_RMSE = 1.32, and Model 2 peak shock fragility      |
+|         |            |   R_peak = 2.14.                                                            |
+|         |            | - Harmonized Kingman heavy-traffic queuing formula to multi-server          |
+|         |            |   formulation with c open screening lanes: W_q approx [rho / (c(1-rho))]    |
+|         |            |   * [(C_a^2 + C_s^2)/2] * (1/mu) where rho = lambda / (c * mu).             |
+|         |            | - Synchronized all 5 updates across Gleich-FinalThesis.md, Chapter_IV,      |
+|         |            |   Chapter_4_SSOT.md, thesis_final_package/, and Gleich-Thesis-final/.       |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------

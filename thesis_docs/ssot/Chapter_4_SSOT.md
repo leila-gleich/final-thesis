@@ -147,7 +147,7 @@ $$\text{Coupled Volatility Index (CVI)} = CV_{\text{TSA}} \times \sigma_{\text{D
 | **Connecting Deflation** | Raw Scheduled Flights | Local Originating TSA Demand | Top 25 Airfields | **0.6704** | **44.94%** | 4.33 | $< 0.001$ | DB1B connecting deflation increases explained variance by +115%. |
 | **Hub Scale vs. Connecting**| Connecting Ratio (%) | Scheduled Flight Volume | Top 25 Airfields | 0.4503 | 20.28% | 2.42 | $< 0.05$ | Mega-hubs exhibit high connecting shares (CLT 76.0%, ATL 70.1%). |
 | **Surface Queue Feedback** | Taxi-Out Queue Time | Total TSA Throughput | Top 25 Airfields | 0.2867 | 8.22% | 1.44 | $0.163$ | Higher volume correlates directionally with longer tarmac queues. |
-| **Surface-to-Air Feedback** | Mean Departure Delay | Taxi-Out Queue Time | 63,925 Days | **0.4971** | **24.71%** | 2.74 | $< 0.001$ | Gate pushback delays feed congested runway sequencing queues. |
+| **Surface-to-Air Feedback** | Mean Departure Delay | Taxi-Out Queue Time | Top 25 Airfields | **0.4971** | **24.71%** | 2.74 | $< 0.001$ | Gate pushback delays feed congested runway sequencing queues. |
 | **Schedule Delay Coupling** | Significant Delays (%) | Total TSA Throughput | Top 25 Airfields | 0.2019 | 4.08% | 0.99 | $0.332$ | Raw flight delays are decoupled contemporaneously from landside volume. |
 | **Hourly Volatility Trans** | Hourly Throughput $CV$ | Flight Departure Delay $CV$ | Top 25 Airfields | **0.4375** | **19.14%** | 2.33 | $< 0.05$ | Checkpoint surge volatility injects variance into boarding gate closures. |
 | **Daily Volatility Coupling**| Daily Throughput $CV$ | Daily Delay $CV$ | Top 25 Airfields | 0.3714 | 13.79% | 1.92 | $0.067$ | Day-to-day throughput volatility tracks network flight delays. |
