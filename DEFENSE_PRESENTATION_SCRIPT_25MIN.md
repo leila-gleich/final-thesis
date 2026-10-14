@@ -4,7 +4,8 @@
 **Institution**: Embry-Riddle Aeronautical University  
 **Thesis Title**: *Evaluating Predictive Techniques to Model Stochastic Airport Passenger Flow*  
 **Duration**: Exactly 25 Minutes (Paced at ~130–140 words per minute; ~3,400 words total)  
-**Companion Slide Deck**: `Thesis-Defense.pptx` (32 Slides)
+**Companion Slide Deck**: `master-docs/Master-defense-deck.pptx` (32 Slides, 16:9 Widescreen)  
+**Slide Visuals Guide**: `RECOMMENDED_SLIDE_VISUALIZATIONS.md`
 
 ---
 
