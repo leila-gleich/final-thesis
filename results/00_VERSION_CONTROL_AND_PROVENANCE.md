@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.11 (Executive Recommended Defense Presentation Deck Generation)
+RELEASE VERSION: v5.12 (Manuscript-Aligned Unified Tables Workbook Deployment)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1403,6 +1403,36 @@ Built the certified, executive-tier PowerPoint defense deck (`Recommended-Thesis
 - `Recommended-Thesis-Defense-Deck.pptx` (root deck, 32 slides, 16:9 widescreen)
 - `master-docs/Recommended-Thesis-Defense-Deck.pptx` (mirrored master deck)
 - `thesis_final_package/defense/Recommended-Thesis-Defense-Deck.pptx` (mirrored final package deck)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
+## v5.12 — Manuscript-Aligned Unified Tables Workbook Deployment (October 14, 2026)
+
+### Rationale & Design Transformation
+Built and deployed the dedicated, APA 7th Edition compliant Excel workbook `thesis_manuscript_tables.xlsx` (`master-docs/thesis_manuscript_tables.xlsx` and mirrored to Desktop), containing an exact 1-to-1 mapping of every table appearing in the actual thesis manuscript (`Thesisv3.docx` / `Thesisv2.docx`). This addresses the discrepancy between the full expanded 49-tab data engineering suite and the specific 14 tables (plus master acronym list) embedded in the actual manuscript:
+1. **Interactive Contents Sheet**: Master Table of Contents with bidirectional clickable hyperlinks to all 15 worksheets and return links (`← Return to Table of Contents`) on every tab.
+2. **Exact Manuscript Inventory**:
+   - `Acronyms`: Master List of 93 authentic commercial aviation, TSA, and analytics acronyms from preliminary pages (Word Table 0).
+   - `Table_2_1`: Operational Limitations of Discrete Event Micro-Simulation in Terminal Security Screening (Chapter II, P095 / image2.png).
+   - `Table_2_2`: Operational Limitations of Deep Neural Architectures in Terminal Demand Forecasting (Chapter II, P103 / image4.png).
+   - `Table_3_1`: Design and Procedure Phases (Chapter III, P159–161 / image7.png).
+   - `Table_3_2`: Four-Tiered Purposive Filtering Pipeline and Data Attrition Audit (Chapter III, P171–172 / image8.png).
+   - `Table_4_1`: Master Post-ETL Multi-Source Data Foundation Census (Chapter IV, P198 / image10.png).
+   - `Table_4_2`: Post-ETL Master Summary Descriptive Statistics (Top 25 Cleaned Data Warehouse) (Chapter IV, P200 / image11.emf).
+   - `Table_4_3`: The Nine-Airport Experimental Cohort Specification (Chapter IV, P222 / image12.png).
+   - `Table_4_4`: Empirical Lead-Lag Transfer Dynamics (Scheduled Flights Versus Checkpoint Demand) (Chapter IV, P241 / image13.png).
+   - `Table_4_5`: Model Development Dataset Partitions and Calibration Scale (Chapter IV, P250 / image14.png).
+   - `Table_4_6`: Master Model Benchmark Matrix for TSA Throughput Volatility (2025 Full-Year Holdout) (Chapter IV, P267 / image15.png).
+   - `Table_4_7`: Master Multi-Pillar Hypothesis Evaluation Matrix (Chapter IV, P279 / image16.png).
+   - `Table_5_1`: Evaluation Dimension 1: Routine Operational Accuracy Across the Candidate Models (Chapter V, P303 / image17.emf).
+   - `Table_5_2`: Evaluation Dimension 2: Resilience and Shock Performance Under Operational Disruption (Chapter V, P309 / image18.png).
+   - `Table_5_3`: Evaluation Dimension 3: Generalizability and Cross-Airport Transfer Performance (Chapter V, P318 / image19.png).
+3. **APA 7th Edition Compliance**: Uniform Calibri font, bold table numbers, italicized titles, thin horizontal rule borders (header top/bottom and table bottom), zero vertical lines, zero zebra shading, proper alignment, and standard note formatting.
+
+### Modified Files Inventory
+- `master-docs/thesis_manuscript_tables.xlsx` (new conformed manuscript-aligned workbook)
+- `/Users/leilagleich/Desktop/700B Wk9/master-docs/thesis_manuscript_tables.xlsx` (mirrored master-docs)
+- `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (mirrored Desktop root)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
 ====================================================================================================
 
