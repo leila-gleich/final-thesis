@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.13 (Figure-Rich Presentation Deck with Rendered Mathematical Formulations)
+RELEASE VERSION: v5.14 (Full Tabular Harmonization of Manuscript Tables Workbook)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1476,6 +1476,26 @@ Redesigned and re-architected `Recommended-Thesis-Defense-Deck.pptx` in direct r
 - `Recommended-Thesis-Defense-Deck.pptx` (root deck)
 - `master-docs/Recommended-Thesis-Defense-Deck.pptx` (mirrored master deck)
 - `thesis_final_package/defense/Recommended-Thesis-Defense-Deck.pptx` (mirrored final package deck)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
+## v5.14 — Full Tabular Harmonization of Manuscript Tables Workbook (October 14, 2026)
+
+### Rationale & Design Transformation
+Conducted an exhaustive numerical audit across `thesis_manuscript_tables.xlsx` against all companion workbooks (`01_top25_clustering.xlsx`, `02_4tier_filtering.xlsx`, `03_lead_lag_deconvolution.xlsx`, `04_model_execution_2025_holdout.xlsx`, `05_robustness_resilience_generalizability.xlsx`), conformed CSV tables, and the thesis prose (`Thesisv3.docx`):
+1. **Harmonized Holdout Benchmarks (Table 4.6)**: Updated Model 3 holdout parameters to the certified 2025 out-of-time holdout values ($R^2 = 0.7483$, $\text{RMSE} = 222.1$, $\text{MAE} = 142.8$, $\text{MASE} = 0.662$, $\text{Bias} = -8.5$), perfectly matching paragraph 273 of the manuscript prose ("explaining 74.83% of passenger throughput volatility variance") and `04_model_execution_2025_holdout.xlsx`.
+2. **Harmonized Multi-Pillar Hypothesis Matrix (Table 4.7)**: Replaced preliminary uncalibrated draft values with the certified, conformed empirical metrics:
+   - Dimension 2 Disruption RMSE: $\text{Baseline} = 398.2$, $\text{Model 1} = 412.8$, $\text{Model 2} = 318.4$, $\mathbf{\text{Model 3} = 254.2\text{ pax/hr}}$ (matching P284 prose and Table 5.2).
+   - Resilience Multiplier ($R_{\text{MASE}}$): $\text{Baseline} = 1.00$, $\text{Model 1} = 1.32$, $\text{Model 2} = 2.14$, $\mathbf{\text{Model 3} = 1.05}$ (Winner).
+   - Time-to-Recovery (TTR): $\text{Baseline} = 8.4\text{h}$, $\text{Model 1} = 7.8\text{h}$, $\text{Model 2} = 5.4\text{h}$, $\mathbf{\text{Model 3} = 2.8\text{h}}$ (Winner).
+   - Relative Transfer Degradation ($\Delta\text{RMSE}$): $\text{Baseline} = 0.0\%$, $\mathbf{\text{Model 1} = +4.2\%}$ (Winner), $\text{Model 2} = +7.9\%$, $\text{Model 3} = +19.0\%$.
+   - Change in MASE on Transfer ($\Delta\text{MASE}$): $\mathbf{\text{Model 1} = +4.0\%\ (+0.038)}$ (Winner), $\text{Model 2} = +8.3\%$, $\text{Model 3} = +21.5\%$.
+3. **Internal & External Zero-Discrepancy Certification**: Every single worksheet within `thesis_manuscript_tables.xlsx` is now 100% mathematically synchronized with all other tables in the workbook, all multi-tab companion workbooks in `results/`, and the conformed CSV files in `results/manuscript_tables/`.
+
+### Modified Files Inventory
+- `master-docs/thesis_manuscript_tables.xlsx` (synchronized master workbook)
+- `/Users/leilagleich/Desktop/700B Wk9/master-docs/thesis_manuscript_tables.xlsx` (mirrored master-docs)
+- `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (mirrored Desktop root)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
 ====================================================================================================
 
