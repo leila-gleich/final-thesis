@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.15 (Comprehensive 25-Minute Defense Oral Examination Script & Literature Synthesis)
+RELEASE VERSION: v5.16 (Synchronized 25-Minute Presentation Script for Current 31-Slide Layout)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1255,6 +1255,13 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Formulated rigorous mechanics for Hybrid Architectures (Brun et al.,     |
 |         |            |   Had et al., ACRP 40 schedule base + real-time 1-step error innovation).  |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx).                 |
+| v5.16   | 2026-10-14 | Synchronized 25-Minute Presentation Script for Current 31-Slide Layout:     |
+|         |            | - Authored DEFENSE_PRESENTATION_SCRIPT_CURRENT_31SLIDES.md (root and mirrored|
+|         |            |   to thesis_final_package/defense/) matching current 31-slide layout of     |
+|         |            |   Thesis-Defense-outline.pptx (~3,480 words, ~138–140 wpm pacing).         |
+|         |            | - Fully synchronized slide titles, numbers, tables, images, and speaking   |
+|         |            |   prompts across all 6 defense phases with exact time allocations.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx).                 |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -1528,6 +1535,24 @@ In response to the author's request for an updated, complete presentation script
 - `thesis_final_package/defense/DEFENSE_PRESENTATION_SCRIPT_OUTLINE_25MIN.md` (mirrored final defense package script)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
 ====================================================================================================
+
+## v5.16 — Synchronized 25-Minute Presentation Script for Current 31-Slide Layout (October 14, 2026)
+
+### Rationale & Design Transformation
+In response to the author's directive to generate a complete oral presentation script matching the current consolidated 31-slide layout of `Thesis-Defense-outline.pptx` (saved at 21:25:02 in `thesis_final_package/defense/`):
+1. **1-to-1 Slide-Synchronized Verbatim Oral Script**: Authored `DEFENSE_PRESENTATION_SCRIPT_CURRENT_31SLIDES.md` (and mirrored to `thesis_final_package/defense/DEFENSE_PRESENTATION_SCRIPT_CURRENT_31SLIDES.md`) mapping precisely to the current 31 slides across all six presentation phases.
+2. **Pacing and Timing Precision**: Configured for an exact 25:00 minute presentation (~3,480 words, ~138–140 words per minute pacing) with per-slide time markers, cumulative elapsed time counters, and structured slide visual descriptions matching all embedded tables, formulas, and graphic figures.
+3. **Core Academic Content Fully Integrated**:
+   - Explicitly covers the Values versus Volatility paradigm ($CV_{\text{TSA}}$ vs. static headcounts), Kingman heavy-traffic queuing formula ($W_q \propto C_a^2$), 4-tier filtering pipeline, Top 9 descriptive summary statistics table, lead-lag transfer dynamics ($t-2$ peak), certified 2025 out-of-time holdout benchmarks (Table 4.10), multi-pillar hypothesis evaluation matrix (Table 4.11 / Table 4.7), Figure 5.1 radar chart trade-off triangle ($H_1$), and the Disruption-Adaptive Checkpoint Forecasting Playbook (Dual-Track Policy).
+   - Equips the candidate with defense pro-tips and verbatim scripts for the 4 most critical anticipated committee oral examination questions.
+4. **Zero Document Modifications Constraint**: Obeyed Policy 1.1 with zero modifications to any Microsoft Word (`.docx`) documents.
+
+### Modified Files Inventory
+- `DEFENSE_PRESENTATION_SCRIPT_CURRENT_31SLIDES.md` (root oral defense script)
+- `thesis_final_package/defense/DEFENSE_PRESENTATION_SCRIPT_CURRENT_31SLIDES.md` (mirrored final defense package script)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
 
 
 
