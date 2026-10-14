@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.83 (Thesisv2 Numerical Consistency Audit & master_thesis_audited.md)
+RELEASE VERSION: v4.84 (Thesisv3 Compilation with LaTeX Parsing & Zero Underscores)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1203,6 +1203,21 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   and mirrored to Desktop/700B Wk9/master-docs/master_thesis_audited.md.    |
 |         |            | - Preserved strict Policy 1.1 & 1.5 constraint: zero edits to Thesisv2.docx;|
 |         |            |   initiated 4-Gate safety interlock for author authorization.               |
+| v4.84   | 2026-10-14 | Thesisv3 Compilation with LaTeX / Math Parsing & Zero Underscores:         |
+|         |            | - Compiled Thesisv3.docx based on explicit written author authorization     |
+|         |            |   (Gate 4 confirmed), strictly preserving Thesisv2.docx untouched.          |
+|         |            | - Synchronized all audited figures with master_thesis_tables.xlsx:          |
+|         |            |   * Model 3 holdout variance harmonized to 74.83% (R2 = 0.7483) in text     |
+|         |            |     and native Office Math XML (P273).                                      |
+|         |            |   * Disruption shock error harmonized to RMSE_shock = 254.2 pax/hr and      |
+|         |            |     35.9% reduction over Model 1 (MASE_shock = 0.694 in P284).              |
+|         |            |   * Zero-shot spatial transfer metrics harmonized to Model 1 RTR = 1.04     |
+|         |            |     (Delta MASE = +4.0%) and Model 3 RTR = 1.19 (Delta MASE = +21.5% in P285).|
+|         |            |   * Restored full hypothesis sentences (P66, P67) and benchmarks (P148-149, |
+|         |            |     P316-317 TTR < 4.0h benchmark).                                         |
+|         |            | - Cleanly parsed all math into native Office Math and formatted runs with   |
+|         |            |   subscripts and superscripts; audited 0 unexpected underscores in docx.    |
+|         |            | - Deployed Thesisv3.docx to Desktop/700B Wk9/, master-docs/, and mirrored. |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
