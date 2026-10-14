@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v4.86 (Manuscript Mathematical, Partitioning, and Queuing Harmonization)
+RELEASE VERSION: v5.11 (Executive Recommended Defense Presentation Deck Generation)
 DATE: October 14, 2026
 ====================================================================================================
 
@@ -1387,3 +1387,22 @@ containing the most up-to-date, internally consistent thesis materials.
 - `workbooks/` — 6 pipeline companion Excel workbooks
 - `README.md` — Package manifest and version info
 ====================================================================================================
+
+## v5.11 — Executive Recommended Defense Presentation Deck (October 14, 2026)
+
+### Rationale & Design Transformation
+Built the certified, executive-tier PowerPoint defense deck (`Recommended-Thesis-Defense-Deck.pptx`) strictly adhering to the visual specifications defined in `RECOMMENDED_SLIDE_VISUALIZATIONS.md`, the oral timing blueprint in `DEFENSE_PRESENTATION_SCRIPT_25MIN.md`, and academic presentation best practices:
+1. **Zero Raster Screenshots**: Eliminated all 17 embedded raster image/screenshot dumps, replacing them with crisp native PowerPoint vector shapes, KPI metric callouts, and native tables (reduced file size from 7.9 MB to 91 KB).
+2. **Native Display Mathematical Typography**: Formatted all equations (Kingman's heavy-traffic approximation, scale-free volatility $CV_{\text{TSA}}$, passenger show-up convolution $\widehat{Y}_t$, two-stage hybrid formulation, lead-lag $R^2(t+2)$, shock multiplier $R_{\text{MASE}}$, and spatial transfer ratio $\text{RTR}$) using centered mathematical display formatting in Georgia serif font with formal mathematical notation, eliminating broken/unparsed LaTeX syntax.
+3. **APA 7 Native Table Implementation**: Slide 27 implements Table 4.10 (Certified 2025 Holdout Benchmarks) as a clean native PowerPoint table with deep navy headers, alternating soft fills, and clear alignment across all 8 statistical columns.
+4. **SmartArt & Process Flows**: Process and lifecycle slides (Roadmap Slide 2, Literature Slide 8, Methodology Slide 16, Lifecycle Slide 18, Filtering Slide 22, Cohort Specification Slide 23) employ horizontal connected process flows and a 3×3 airport badge matrix.
+5. **Executive Color Scheme & Whitespace**: Professional ERAU Navy (`#0A2240`), Aviation Blue (`#2563EB`), Slate Grey (`#475569`), and Hairline Card Fills (`#F8FAFC`, `#FFFFFF`), providing generous whitespace, high contrast, and uncluttered readability from 20 feet away.
+
+### Modified Files Inventory
+- `src/analysis/generate_recommended_defense_deck.py` (complete refactoring to executive visual deck generator)
+- `Recommended-Thesis-Defense-Deck.pptx` (root deck, 32 slides, 16:9 widescreen)
+- `master-docs/Recommended-Thesis-Defense-Deck.pptx` (mirrored master deck)
+- `thesis_final_package/defense/Recommended-Thesis-Defense-Deck.pptx` (mirrored final package deck)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
