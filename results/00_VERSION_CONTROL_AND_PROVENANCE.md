@@ -1273,3 +1273,40 @@ The foundational analysis suite (housed in `results/foundational_analysis/`) is 
    - Data_Quality_and_Referential_Integrity_Walkthrough.md: Data engineering audit and validation report.
    - Project_Findings_Master_Walkthrough.md: Master research project findings and technical walkthrough.
 ====================================================================================================
+
+## v5.10 — Repository Consolidation & Thesis Final Package (October 14, 2026)
+
+### Rationale
+Merged unique high-value assets from the `Gleich-Thesis-final` repository fork into `final-thesis`
+(the primary, more up-to-date repository) and created a curated `thesis_final_package/` directory
+containing the most up-to-date, internally consistent thesis materials.
+
+### Phase 1: Assets Merged from Gleich-Thesis-final
+1. **Unified 5-Chapter Thesis Manuscript** (`thesis_docs/manuscripts/Gleich-FinalThesis.md`, 989 lines)
+2. **Standalone Chapter Markdowns**: `Chapter_I_Introduction.md`, `Chapter_II_Literature_Review.md`,
+   `Chapter_III_Methodology.md`, `Chapter_IV_Findings_Discussion_Conclusions.md`
+3. **Technical Glossary** (`thesis_docs/manuscripts/glossary.md`, 542 lines, 99 terms)
+4. **Acronyms Reference** (`thesis_docs/manuscripts/acronyms.md`, 659 lines)
+5. **Manuscript Build Pipeline** (`src/manuscripts/build_unified_manuscripts.py`)
+6. **Path Hardening** (11 Python files updated with dynamic PROJECT_ROOT resolution):
+   - `src/data/panel_loader.py`
+   - `src/etl/perform_top25_clustering.py`
+   - `src/features/feature_pipeline.py`
+   - `src/models/machine_learning.py`
+   - `src/analysis/generate_figures_tables_excel.py`
+   - `src/analysis/generate_thesis_tables_excel.py`
+   - `src/analysis/season_analysis_volatility_runner.py`
+   - `src/analysis/sync_manuscript_tables.py`
+   - `src/manuscripts/generate_acronyms_docx.py`
+   - `src/manuscripts/generate_appendix_v4.py`
+   - `src/manuscripts/generate_categorized_glossary.py`
+
+### Phase 2: thesis_final_package/ Created (87 files)
+- `manuscript/` — 6 files (unified thesis + individual chapters)
+- `appendix/` — 4 files (Master Appendix, 30-tab workbook, glossary, acronyms)
+- `tables/` — 20 files (19 canonical CSVs + master Excel workbook)
+- `figures/` — 46 files organized by chapter (ch01–ch05 + appendix + OTP analysis)
+- `defense/` — 3 files (recommended deck, working deck, 25-min oral script)
+- `workbooks/` — 6 pipeline companion Excel workbooks
+- `README.md` — Package manifest and version info
+====================================================================================================

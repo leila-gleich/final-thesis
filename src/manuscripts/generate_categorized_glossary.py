@@ -1,7 +1,11 @@
+from pathlib import Path
 import re
 
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+GLOSSARY_PATH = BASE_DIR / "thesis_docs" / "manuscripts" / "glossary.md"
+
 def main():
-    with open("thesis_docs/manuscripts/glossary.md", "r") as f:
+    with open(GLOSSARY_PATH, "r", encoding="utf-8") as f:
         text = f.read()
 
     parts = re.split(r"\n(?=### )", text)
@@ -119,14 +123,14 @@ def main():
                 "Discrete Event Simulation (DES)",
                 "Gated Recurrent Unit (GRU)",
                 "Gradient-Boosted Decision Trees (GBM / HistGBM)",
-                "Kalman Filtering / State-Space Innovation Feedback",
+                "Kalman Filtering / Live Error Innovation Feedback",
                 "Long Short-Term Memory (LSTM)",
                 "Baseline Control Benchmark (Daily Persistence)",
-                "Model 1: Deterministic Flight Schedule Model (Physical Baseline)",
+                "Model 1: Deterministic Flight Schedule Model (Operational Baseline)",
                 "Model 2: Supervised Machine Learning Model (Flight Operations & Delays)",
                 "Model 3: Dynamic Two-Stage Hybrid Model (Schedule + Real-Time Feedback)",
                 "Non-Homogeneous Poisson Process (NHPP)",
-                "Regime-Switched Gated Inference Engine",
+                "Regime-Switched Gated Inference Engine (The Airport Operator's Playbook)",
                 "Tweedie Compound Poisson Distribution"
             ]
         },
@@ -217,7 +221,7 @@ def main():
 
     full_content = "\n".join(out_lines)
 
-    with open("thesis_docs/manuscripts/glossary.md", "w") as f:
+    with open(GLOSSARY_PATH, "w", encoding="utf-8") as f:
         f.write(full_content)
 
     print("Categorized glossary generated successfully. Total length:", len(full_content))

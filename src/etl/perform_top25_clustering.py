@@ -9,12 +9,20 @@ Standardizes 9 conformed operational metrics:
   route_load_factor, avg_dep_delay, depDel15_rate, cancel_rate, avg_taxi_out.
 """
 
+import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
+
+# Ensure root directory is on sys.path for standalone execution
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+if str(PROJECT_ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from src.utils.paths import BASE_DIR, RESULTS_DIR, TOP25_CLUSTERING_WB
 

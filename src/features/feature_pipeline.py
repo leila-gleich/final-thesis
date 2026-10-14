@@ -6,8 +6,16 @@ Integrates REC-01, REC-02, REC-03, REC-04, REC-07, and REC-13 into a single
 unified, reproducible transformer pipeline for the 9-airport experimental cohort.
 """
 
+import sys
+from pathlib import Path
 import pandas as pd
 import numpy as np
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+if str(PROJECT_ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from src.features.time_features import generate_temporal_features
 from src.features.fleet_tiers import apply_fleet_tiering

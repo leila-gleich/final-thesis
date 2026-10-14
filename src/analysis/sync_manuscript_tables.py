@@ -237,6 +237,12 @@ def get_manuscript_path(filename: str) -> Path:
     p = MANUSCRIPTS_DIR / filename
     if p.exists() and len(extract_tables_from_markdown(p)) > 0:
         return p
+    combined_p = MANUSCRIPTS_DIR / "Chapter_IV_Findings_Discussion_Conclusions.md"
+    if combined_p.exists() and len(extract_tables_from_markdown(combined_p)) > 0:
+        return combined_p
+    master_p = MANUSCRIPTS_DIR / "Gleich-FinalThesis.md"
+    if master_p.exists() and len(extract_tables_from_markdown(master_p)) > 0:
+        return master_p
     sub_p = MANUSCRIPTS_DIR / "manuscripts-only" / filename
     if sub_p.exists() and len(extract_tables_from_markdown(sub_p)) > 0:
         return sub_p
@@ -247,7 +253,7 @@ def get_manuscript_path(filename: str) -> Path:
     final_p = MANUSCRIPTS_DIR / "final-thesis-v1" / filename
     if final_p.exists() and len(extract_tables_from_markdown(final_p)) > 0:
         return final_p
-    return p
+    return combined_p if combined_p.exists() else p
 
 
 def export_all_tables_to_csv():
@@ -621,10 +627,10 @@ def generate_manuscript_tables_readme(table_records):
         "## Master Multi-Tab Excel Workbook (`thesis_tables.xlsx`)",
         "",
         "All 16 empirical manuscript tables and companion operational policies are consolidated into an executive multi-tab Excel workbook formatted strictly according to APA Style (7th ed.):",
-        "- **Master Location**: [`thesis_tables.xlsx`](thesis_tables.xlsx) (also mirrored to `results/thesis_tables.xlsx`)",
+        "- **Master Location**: [`results/thesis_tables.xlsx`](../thesis_tables.xlsx) (Single Source of Truth)",
         "- **Architecture**:",
         "  1. `Contents`: Interactive Table of Contents with active two-way clickable hyperlinks.",
-        "  2. `table-format`: APA Style reference template tab matching `sample-tables.docx`.",
+        "  2. `table-format`: APA Style reference template tab matching `thesis_docs/templates/sample-tables.docx`.",
         "  3. `table_4_1` through `table_5_4`: Dedicated worksheets using short table identifiers, formatted strictly according to APA Style (7th ed.) with thin horizontal boundary rules, zero filter dropdowns, zero background fills, and return links (`⬅ Return to Table of Contents`).",
         "  4. `dual_track_policy`: Operational decision matrix tab defining dual-track deployment rules.",
         "",

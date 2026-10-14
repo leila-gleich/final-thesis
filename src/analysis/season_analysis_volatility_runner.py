@@ -51,7 +51,8 @@ RESULTS_REGIMES_DIR = os.path.join(PROJECT_ROOT, "results", "01_top25_clustering
 OUTPUT_DIRS = [
     RESULTS_REGIMES_DIR
 ]
-FIGURES_DIR = os.path.join(PROJECT_ROOT, "thesis_docs", "manuscripts", "figures")
+DEFAULT_FIGURES_DIR = os.path.join(PROJECT_ROOT, "figures", "ch04_results")
+FIGURES_DIR = os.getenv("FIGURES_DIR", DEFAULT_FIGURES_DIR)
 
 DIM_DATE_PATH = os.path.join(PROJECT_ROOT, "data", "dimensions", "dim_date.csv")
 DIM_AIRPORT_PATH = os.path.join(PROJECT_ROOT, "data", "dimensions", "dim_airport.csv")
@@ -160,351 +161,362 @@ def run_volatility_analysis():
     print(f"Holiday corridor days: {date_df['holiday_corridor'].sum()} ({date_df['holiday_corridor'].mean():.1%})")
     con.register("dim_date_enhanced", date_df)
     
-    # -------------------------------------------------------------------------
-    # STEP 2: DAILY COUPLED VOLATILITY AGGREGATION & ANNUAL REGIME CLUSTERING
-    # -------------------------------------------------------------------------
-    print("\n[STEP 2] Aggregating daily coupled TSA and OTP volatility metrics...")
-    daily_query = f"""
-        WITH tsa_hourly AS (
-            SELECT 
-                dateId,
-                hour,
-                SUM(throughput) as hr_tsa
-            FROM read_parquet('{TSA_PARQUET}')
-            WHERE airportId IN ({TOP25_ID_STR})
-            GROUP BY 1, 2
-        ),
-        tsa_daily_stats AS (
-            SELECT 
-                dateId,
-                SUM(hr_tsa) as daily_tsa,
-                AVG(hr_tsa) as mean_hourly_tsa,
-                STDDEV(hr_tsa) as std_hourly_tsa,
-                MAX(hr_tsa) as max_hourly_tsa,
-                STDDEV(hr_tsa) / NULLIF(AVG(hr_tsa), 0) as cv_hourly_tsa,
-                MAX(hr_tsa) / NULLIF(AVG(hr_tsa), 0) as peak_to_mean_tsa
-            FROM tsa_hourly
-            GROUP BY 1
-        ),
-        otp_daily_stats AS (
-            SELECT 
-                dateId,
-                COUNT(*) as daily_flights,
-                AVG(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as avg_dep_delay,
-                STDDEV(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as std_dep_delay,
-                SUM(CASE WHEN cancelled = false AND depDel15 = true THEN 1 ELSE 0 END) * 100.0 / 
-                    NULLIF(COUNT(CASE WHEN cancelled = false THEN 1 END), 0) as depdel15_pct,
-                SUM(CASE WHEN cancelled = true THEN 1 ELSE 0 END) * 100.0 / COUNT(*) as cancel_pct,
-                AVG(CASE WHEN cancelled = false THEN taxiOut ELSE NULL END) as avg_taxi_out
-            FROM read_parquet('{OTP_PARQUET}')
-            WHERE originAirportId IN ({TOP25_ID_STR})
-            GROUP BY 1
-        )
-        SELECT 
-            d.dateId,
-            d.date,
-            d.year,
-            d.month,
-            d.dayOfMonth,
-            d.dayOfWeek,
-            d.isWeekend,
-            d.isHoliday,
-            d.holidayName,
-            d.holiday_corridor,
-            d.holiday_corridor_name,
-            t.daily_tsa,
-            t.mean_hourly_tsa,
-            t.std_hourly_tsa,
-            t.cv_hourly_tsa,
-            t.peak_to_mean_tsa,
-            o.daily_flights,
-            t.daily_tsa * 1.0 / NULLIF(o.daily_flights, 0) as pax_per_flight,
-            o.avg_dep_delay,
-            o.std_dep_delay,
-            (t.cv_hourly_tsa * o.std_dep_delay) as coupled_volatility_index,
-            o.depdel15_pct,
-            o.cancel_pct,
-            o.avg_taxi_out
-        FROM dim_date_enhanced d
-        JOIN tsa_daily_stats t ON d.dateId = t.dateId
-        JOIN otp_daily_stats o ON d.dateId = o.dateId
-        WHERE d.date >= '2022-05-01' AND d.date <= '2025-12-31'
-        ORDER BY d.dateId
-    """
-    daily_df = con.execute(daily_query).df()
-    print(f"Aggregated {len(daily_df)} daily coupled records for Top 25 hubs (2022-05-01 to 2025-12-31).")
-    
-    daily_df['date_dt'] = pd.to_datetime(daily_df['date'])
-    daily_df['iso_week'] = daily_df['date_dt'].dt.isocalendar().week
-    
-    # Cluster annual seasonal cycles by weekly coupled volatility profiles (weeks 1-52/53)
-    # This separates macro seasonal turbulence regimes while preserving balanced weekly representation
-    non_hol_days = daily_df[daily_df['holiday_corridor'] == 0].copy()
-    
-    week_vol = non_hol_days.groupby('iso_week').agg(
-        mean_coupled_vol=('coupled_volatility_index', 'mean'),
-        mean_std_delay=('std_dep_delay', 'mean'),
-        mean_cv_tsa=('cv_hourly_tsa', 'mean'),
-        mean_dep_delay=('avg_dep_delay', 'mean'),
-        mean_depdel15=('depdel15_pct', 'mean')
-    ).reset_index()
-    
-    wk_features = ['mean_coupled_vol', 'mean_std_delay', 'mean_cv_tsa', 'mean_depdel15']
-    scaler_wk = StandardScaler()
-    X_wk = scaler_wk.fit_transform(week_vol[wk_features])
-    
-    km_wk = KMeans(n_clusters=3, random_state=42, n_init=25)
-    week_vol['cluster_id'] = km_wk.fit_predict(X_wk)
-    
-    # Order clusters monotonically by coupled volatility
-    cl_order = week_vol.groupby('cluster_id')['mean_coupled_vol'].mean().sort_values().index
-    wk_mapping = {
-        cl_order[0]: '1_OFF_PEAK',
-        cl_order[1]: '2_MID_PEAK',
-        cl_order[2]: '3_PEAK'
-    }
-    week_vol['season_regime'] = week_vol['cluster_id'].map(wk_mapping)
-    
-    # Map back to daily dataframe
-    daily_df = daily_df.merge(week_vol[['iso_week', 'season_regime']], on='iso_week', how='left')
-    daily_df['season_regime'] = np.where(daily_df['holiday_corridor'] == 1, '4_HOLIDAY', daily_df['season_regime'])
-    
-    season_labels = {
-        '1_OFF_PEAK': 'Off-Peak (Winter Lull & Mid-Autumn Shoulder)',
-        '2_MID_PEAK': 'Mid-Peak (Spring Ramps & Late-Summer Shoulder)',
-        '3_PEAK': 'Peak (Summer Severe Weather & High Volume Surge)',
-        '4_HOLIDAY': 'Holiday (National Holiday Travel Corridors)'
-    }
-    daily_df['season_name'] = daily_df['season_regime'].map(season_labels)
-    
-    # ISO 8601 Day of Week mapping (1=Monday, ..., 7=Sunday)
-    dow_names = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday', 7: 'Sunday'}
-    daily_df['dow_name'] = daily_df['dayOfWeek'].map(dow_names)
-    
-    # Export Seasonal Regimes Summary Table
-    season_summary = daily_df.groupby(['season_regime', 'season_name']).agg(
-        days_count=('dateId', 'count'),
-        mean_daily_tsa=('daily_tsa', 'mean'),
-        std_daily_tsa=('daily_tsa', 'std'),
-        mean_cv_hourly_tsa=('cv_hourly_tsa', 'mean'),
-        mean_peak_to_mean_tsa=('peak_to_mean_tsa', 'mean'),
-        mean_daily_flights=('daily_flights', 'mean'),
-        mean_pax_per_flight=('pax_per_flight', 'mean'),
-        mean_dep_delay=('avg_dep_delay', 'mean'),
-        mean_std_dep_delay=('std_dep_delay', 'mean'),
-        mean_coupled_volatility_index=('coupled_volatility_index', 'mean'),
-        mean_depdel15_pct=('depdel15_pct', 'mean'),
-        mean_cancel_pct=('cancel_pct', 'mean'),
-        mean_taxi_out=('avg_taxi_out', 'mean')
-    ).reset_index()
-    season_summary['share_of_days_pct'] = (season_summary['days_count'] / len(daily_df)) * 100.0
-    
-    print("\n--- ANNUAL SEASONAL VOLATILITY REGIMES ---")
-    print(season_summary[['season_regime', 'days_count', 'share_of_days_pct', 'mean_cv_hourly_tsa', 'mean_std_dep_delay', 'mean_coupled_volatility_index', 'mean_dep_delay']].to_string(index=False))
+    if not (os.path.exists(TSA_PARQUET) and os.path.exists(OTP_PARQUET)):
+        print("\n[NOTE] Raw federal census parquet files (tsav1.parquet, otpv1.parquet) not present in data/processed/.")
+        print("Ingesting precomputed empirical volatility clustering deliverables from results/01_top25_clustering/seasonality_and_regimes/...")
+        season_summary = pd.read_csv(os.path.join(RESULTS_REGIMES_DIR, "seasonal_regimes_summary.csv"))
+        dow_summary = pd.read_csv(os.path.join(RESULTS_REGIMES_DIR, "day_of_week_regimes_summary.csv"))
+        diurnal_df = pd.read_csv(os.path.join(RESULTS_REGIMES_DIR, "diurnal_hourly_by_dow.csv"))
+        grid_agg = pd.read_csv(os.path.join(RESULTS_REGIMES_DIR, "temporal_cross_classification_grid.csv"))
+        sample_audit = pd.read_csv(os.path.join(RESULTS_REGIMES_DIR, "sample_size_training_sufficiency.csv"))
+        daily_df = None
+    else:
+        # -------------------------------------------------------------------------
+        # STEP 2: DAILY COUPLED VOLATILITY AGGREGATION & ANNUAL REGIME CLUSTERING
 
-    # -------------------------------------------------------------------------
-    # STEP 3: DAY OF WEEK OPERATIONAL VOLATILITY PROFILES
-    # -------------------------------------------------------------------------
-    print("\n[STEP 3] Computing Day-of-Week Volatility & Operational Cycles...")
-    dow_summary = daily_df.groupby(['dayOfWeek', 'dow_name']).agg(
-        days_count=('dateId', 'count'),
-        mean_daily_tsa=('daily_tsa', 'mean'),
-        std_daily_tsa=('daily_tsa', 'std'),
-        mean_cv_hourly_tsa=('cv_hourly_tsa', 'mean'),
-        mean_peak_to_mean_tsa=('peak_to_mean_tsa', 'mean'),
-        mean_daily_flights=('daily_flights', 'mean'),
-        mean_pax_per_flight=('pax_per_flight', 'mean'),
-        mean_dep_delay=('avg_dep_delay', 'mean'),
-        mean_std_dep_delay=('std_dep_delay', 'mean'),
-        mean_coupled_volatility=('coupled_volatility_index', 'mean'),
-        mean_depdel15_pct=('depdel15_pct', 'mean'),
-        mean_cancel_pct=('cancel_pct', 'mean'),
-        mean_taxi_out=('avg_taxi_out', 'mean')
-    ).reset_index()
-    
-    weekly_archetypes = {
-        'Monday': 'Outbound Business Surge & High Screening Volatility',
-        'Tuesday': 'Midweek Operational Reset',
-        'Wednesday': 'Midweek Baseline Stability',
-        'Thursday': 'Corporate Outbound & Early Weekend Ramp',
-        'Friday': 'Combined Business & Weekend Getaway Surge',
-        'Saturday': 'Volume Trough & Fleet Repositioning',
-        'Sunday': 'Leisure Return Peak & Evening Delay Propagation'
-    }
-    dow_summary['weekly_operational_archetype'] = dow_summary['dow_name'].map(weekly_archetypes)
-    
-    print("\n--- DAY OF WEEK VOLATILITY SUMMARY ---")
-    print(dow_summary[['dayOfWeek', 'dow_name', 'weekly_operational_archetype', 'mean_cv_hourly_tsa', 'mean_std_dep_delay', 'mean_coupled_volatility', 'mean_dep_delay']].to_string(index=False))
-
-    # -------------------------------------------------------------------------
-    # STEP 4: HOURLY DIURNAL VOLATILITY CLUSTERING (CONDITIONED ON DOW)
-    # -------------------------------------------------------------------------
-    print("\n[STEP 4] Executing Diurnal Hourly Volatility Clustering (Dual Peak Turbulence)...")
-    con.register("daily_study_classified", daily_df)
-    
-    hourly_query = f"""
-        WITH tsa_hr AS (
+        # -------------------------------------------------------------------------
+        print("\n[STEP 2] Aggregating daily coupled TSA and OTP volatility metrics...")
+        daily_query = f"""
+            WITH tsa_hourly AS (
+                SELECT 
+                    dateId,
+                    hour,
+                    SUM(throughput) as hr_tsa
+                FROM read_parquet('{TSA_PARQUET}')
+                WHERE airportId IN ({TOP25_ID_STR})
+                GROUP BY 1, 2
+            ),
+            tsa_daily_stats AS (
+                SELECT 
+                    dateId,
+                    SUM(hr_tsa) as daily_tsa,
+                    AVG(hr_tsa) as mean_hourly_tsa,
+                    STDDEV(hr_tsa) as std_hourly_tsa,
+                    MAX(hr_tsa) as max_hourly_tsa,
+                    STDDEV(hr_tsa) / NULLIF(AVG(hr_tsa), 0) as cv_hourly_tsa,
+                    MAX(hr_tsa) / NULLIF(AVG(hr_tsa), 0) as peak_to_mean_tsa
+                FROM tsa_hourly
+                GROUP BY 1
+            ),
+            otp_daily_stats AS (
+                SELECT 
+                    dateId,
+                    COUNT(*) as daily_flights,
+                    AVG(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as avg_dep_delay,
+                    STDDEV(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as std_dep_delay,
+                    SUM(CASE WHEN cancelled = false AND depDel15 = true THEN 1 ELSE 0 END) * 100.0 / 
+                        NULLIF(COUNT(CASE WHEN cancelled = false THEN 1 END), 0) as depdel15_pct,
+                    SUM(CASE WHEN cancelled = true THEN 1 ELSE 0 END) * 100.0 / COUNT(*) as cancel_pct,
+                    AVG(CASE WHEN cancelled = false THEN taxiOut ELSE NULL END) as avg_taxi_out
+                FROM read_parquet('{OTP_PARQUET}')
+                WHERE originAirportId IN ({TOP25_ID_STR})
+                GROUP BY 1
+            )
             SELECT 
-                dateId,
-                hour,
-                SUM(throughput) as hourly_tsa
-            FROM read_parquet('{TSA_PARQUET}')
-            WHERE airportId IN ({TOP25_ID_STR})
-            GROUP BY 1, 2
-        ),
-        otp_hr AS (
-            SELECT 
-                dateId,
-                CAST(crsDepMinOfDay / 60 AS INT) as hour,
-                COUNT(*) as hourly_sched_flights,
-                AVG(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as hourly_dep_delay,
-                STDDEV(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as hourly_std_delay,
-                SUM(CASE WHEN cancelled = false AND depDel15 = true THEN 1 ELSE 0 END) * 100.0 / 
-                    NULLIF(COUNT(CASE WHEN cancelled = false THEN 1 END), 0) as hourly_depdel15_pct,
-                SUM(CASE WHEN cancelled = true THEN 1 ELSE 0 END) * 100.0 / COUNT(*) as hourly_cancel_pct
-            FROM read_parquet('{OTP_PARQUET}')
-            WHERE originAirportId IN ({TOP25_ID_STR})
-            GROUP BY 1, 2
-        )
-        SELECT 
-            t.dateId,
-            d.date,
-            d.year,
-            d.month,
-            d.dayOfWeek,
-            d.dow_name,
-            d.season_regime,
-            d.season_name,
-            t.hour,
-            t.hourly_tsa,
-            COALESCE(o.hourly_sched_flights, 0) as hourly_sched_flights,
-            COALESCE(o.hourly_dep_delay, 0) as hourly_dep_delay,
-            COALESCE(o.hourly_std_delay, 0) as hourly_std_delay,
-            COALESCE(o.hourly_depdel15_pct, 0) as hourly_depdel15_pct,
-            COALESCE(o.hourly_cancel_pct, 0) as hourly_cancel_pct
-        FROM tsa_hr t
-        JOIN daily_study_classified d ON t.dateId = d.dateId
-        LEFT JOIN otp_hr o ON t.dateId = o.dateId AND t.hour = o.hour
-        WHERE t.hour >= 0 AND t.hour <= 23
-        ORDER BY t.dateId, t.hour
-    """
-    hourly_df = con.execute(hourly_query).df()
-    print(f"Loaded {len(hourly_df)} hourly joint observation records.")
+                d.dateId,
+                d.date,
+                d.year,
+                d.month,
+                d.dayOfMonth,
+                d.dayOfWeek,
+                d.isWeekend,
+                d.isHoliday,
+                d.holidayName,
+                d.holiday_corridor,
+                d.holiday_corridor_name,
+                t.daily_tsa,
+                t.mean_hourly_tsa,
+                t.std_hourly_tsa,
+                t.cv_hourly_tsa,
+                t.peak_to_mean_tsa,
+                o.daily_flights,
+                t.daily_tsa * 1.0 / NULLIF(o.daily_flights, 0) as pax_per_flight,
+                o.avg_dep_delay,
+                o.std_dep_delay,
+                (t.cv_hourly_tsa * o.std_dep_delay) as coupled_volatility_index,
+                o.depdel15_pct,
+                o.cancel_pct,
+                o.avg_taxi_out
+            FROM dim_date_enhanced d
+            JOIN tsa_daily_stats t ON d.dateId = t.dateId
+            JOIN otp_daily_stats o ON d.dateId = o.dateId
+            WHERE d.date >= '2022-05-01' AND d.date <= '2025-12-31'
+            ORDER BY d.dateId
+        """
+        daily_df = con.execute(daily_query).df()
+        print(f"Aggregated {len(daily_df)} daily coupled records for Top 25 hubs (2022-05-01 to 2025-12-31).")
     
-    # Compute diurnal profile by Day of Week and Hour (168 cells = 7 x 24)
-    dow_hr_profile = hourly_df.groupby(['dayOfWeek', 'dow_name', 'hour']).agg(
-        obs_count=('dateId', 'count'),
-        mean_hourly_tsa=('hourly_tsa', 'mean'),
-        std_hourly_tsa=('hourly_tsa', 'std'),
-        mean_sched_flights=('hourly_sched_flights', 'mean'),
-        mean_dep_delay=('hourly_dep_delay', 'mean'),
-        mean_intra_hour_delay_std=('hourly_std_delay', 'mean'),
-        std_delay_between_days=('hourly_dep_delay', 'std'),
-        mean_depdel15_pct=('hourly_depdel15_pct', 'mean')
-    ).reset_index()
+        daily_df['date_dt'] = pd.to_datetime(daily_df['date'])
+        daily_df['iso_week'] = daily_df['date_dt'].dt.isocalendar().week
     
-    dow_hr_profile['cv_hourly_tsa'] = dow_hr_profile['std_hourly_tsa'] / dow_hr_profile['mean_hourly_tsa'].replace(0, np.nan)
+        # Cluster annual seasonal cycles by weekly coupled volatility profiles (weeks 1-52/53)
+        # This separates macro seasonal turbulence regimes while preserving balanced weekly representation
+        non_hol_days = daily_df[daily_df['holiday_corridor'] == 0].copy()
     
-    # Cluster the 24 hours of each day of week based on the Operational Turbulence Shock Index
-    diurnal_records = []
+        week_vol = non_hol_days.groupby('iso_week').agg(
+            mean_coupled_vol=('coupled_volatility_index', 'mean'),
+            mean_std_delay=('std_dep_delay', 'mean'),
+            mean_cv_tsa=('cv_hourly_tsa', 'mean'),
+            mean_dep_delay=('avg_dep_delay', 'mean'),
+            mean_depdel15=('depdel15_pct', 'mean')
+        ).reset_index()
     
-    for dow in range(1, 8):
-        sub = dow_hr_profile[dow_hr_profile['dayOfWeek'] == dow].copy()
-        
-        # Flight activity mask (curfew/low-volume hours have near-zero flights)
-        flight_mask = np.clip(sub['mean_sched_flights'] / 20.0, 0.0, 1.0)
-        
-        # 1. Normalized TSA demand surge volatility (morning arrival shock)
-        v_tsa = sub['std_hourly_tsa'] / sub['std_hourly_tsa'].max()
-        
-        # 2. Normalized flight departure delay dispersion volatility (evening cascade shock)
-        delay_vol = (sub['mean_intra_hour_delay_std'] + sub['std_delay_between_days']) * flight_mask
-        v_delay = delay_vol / delay_vol.max()
-        
-        # Operational Turbulence Shock Index
-        sub['operational_turbulence_index'] = np.maximum(v_tsa, v_delay)
-        
-        # 1D KMeans clustering into exactly 3 categories: Off-Peak, Mid-Peak, Peak
-        km_tod = KMeans(n_clusters=3, random_state=42, n_init=25)
-        sub['cl'] = km_tod.fit_predict(sub[['operational_turbulence_index']])
-        
-        # Order clusters monotonically by turbulence index
-        cl_order_tod = sub.groupby('cl')['operational_turbulence_index'].mean().sort_values().index
-        tod_map = {
-            cl_order_tod[0]: '1_OFF_PEAK',
-            cl_order_tod[1]: '2_MID_PEAK',
-            cl_order_tod[2]: '3_PEAK'
+        wk_features = ['mean_coupled_vol', 'mean_std_delay', 'mean_cv_tsa', 'mean_depdel15']
+        scaler_wk = StandardScaler()
+        X_wk = scaler_wk.fit_transform(week_vol[wk_features])
+    
+        km_wk = KMeans(n_clusters=3, random_state=42, n_init=25)
+        week_vol['cluster_id'] = km_wk.fit_predict(X_wk)
+    
+        # Order clusters monotonically by coupled volatility
+        cl_order = week_vol.groupby('cluster_id')['mean_coupled_vol'].mean().sort_values().index
+        wk_mapping = {
+            cl_order[0]: '1_OFF_PEAK',
+            cl_order[1]: '2_MID_PEAK',
+            cl_order[2]: '3_PEAK'
         }
-        sub['time_of_day_regime'] = sub['cl'].map(tod_map)
-        
-        tod_labels = {
-            '1_OFF_PEAK': 'Off-Peak (Overnight & Curfew Valley)',
-            '2_MID_PEAK': 'Mid-Peak (Operational Plateau & Transition)',
-            '3_PEAK': 'Peak (Bank Surges & Delay Dispersion)'
+        week_vol['season_regime'] = week_vol['cluster_id'].map(wk_mapping)
+    
+        # Map back to daily dataframe
+        daily_df = daily_df.merge(week_vol[['iso_week', 'season_regime']], on='iso_week', how='left')
+        daily_df['season_regime'] = np.where(daily_df['holiday_corridor'] == 1, '4_HOLIDAY', daily_df['season_regime'])
+    
+        season_labels = {
+            '1_OFF_PEAK': 'Off-Peak (Winter Lull & Mid-Autumn Shoulder)',
+            '2_MID_PEAK': 'Mid-Peak (Spring Ramps & Late-Summer Shoulder)',
+            '3_PEAK': 'Peak (Summer Severe Weather & High Volume Surge)',
+            '4_HOLIDAY': 'Holiday (National Holiday Travel Corridors)'
         }
-        sub['time_of_day_name'] = sub['time_of_day_regime'].map(tod_labels)
-        diurnal_records.append(sub)
+        daily_df['season_name'] = daily_df['season_regime'].map(season_labels)
+    
+        # ISO 8601 Day of Week mapping (1=Monday, ..., 7=Sunday)
+        dow_names = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday', 7: 'Sunday'}
+        daily_df['dow_name'] = daily_df['dayOfWeek'].map(dow_names)
+    
+        # Export Seasonal Regimes Summary Table
+        season_summary = daily_df.groupby(['season_regime', 'season_name']).agg(
+            days_count=('dateId', 'count'),
+            mean_daily_tsa=('daily_tsa', 'mean'),
+            std_daily_tsa=('daily_tsa', 'std'),
+            mean_cv_hourly_tsa=('cv_hourly_tsa', 'mean'),
+            mean_peak_to_mean_tsa=('peak_to_mean_tsa', 'mean'),
+            mean_daily_flights=('daily_flights', 'mean'),
+            mean_pax_per_flight=('pax_per_flight', 'mean'),
+            mean_dep_delay=('avg_dep_delay', 'mean'),
+            mean_std_dep_delay=('std_dep_delay', 'mean'),
+            mean_coupled_volatility_index=('coupled_volatility_index', 'mean'),
+            mean_depdel15_pct=('depdel15_pct', 'mean'),
+            mean_cancel_pct=('cancel_pct', 'mean'),
+            mean_taxi_out=('avg_taxi_out', 'mean')
+        ).reset_index()
+        season_summary['share_of_days_pct'] = (season_summary['days_count'] / len(daily_df)) * 100.0
+    
+        print("\n--- ANNUAL SEASONAL VOLATILITY REGIMES ---")
+        print(season_summary[['season_regime', 'days_count', 'share_of_days_pct', 'mean_cv_hourly_tsa', 'mean_std_dep_delay', 'mean_coupled_volatility_index', 'mean_dep_delay']].to_string(index=False))
+
+        # -------------------------------------------------------------------------
+        # STEP 3: DAY OF WEEK OPERATIONAL VOLATILITY PROFILES
+        # -------------------------------------------------------------------------
+        print("\n[STEP 3] Computing Day-of-Week Volatility & Operational Cycles...")
+        dow_summary = daily_df.groupby(['dayOfWeek', 'dow_name']).agg(
+            days_count=('dateId', 'count'),
+            mean_daily_tsa=('daily_tsa', 'mean'),
+            std_daily_tsa=('daily_tsa', 'std'),
+            mean_cv_hourly_tsa=('cv_hourly_tsa', 'mean'),
+            mean_peak_to_mean_tsa=('peak_to_mean_tsa', 'mean'),
+            mean_daily_flights=('daily_flights', 'mean'),
+            mean_pax_per_flight=('pax_per_flight', 'mean'),
+            mean_dep_delay=('avg_dep_delay', 'mean'),
+            mean_std_dep_delay=('std_dep_delay', 'mean'),
+            mean_coupled_volatility=('coupled_volatility_index', 'mean'),
+            mean_depdel15_pct=('depdel15_pct', 'mean'),
+            mean_cancel_pct=('cancel_pct', 'mean'),
+            mean_taxi_out=('avg_taxi_out', 'mean')
+        ).reset_index()
+    
+        weekly_archetypes = {
+            'Monday': 'Outbound Business Surge & High Screening Volatility',
+            'Tuesday': 'Midweek Operational Reset',
+            'Wednesday': 'Midweek Baseline Stability',
+            'Thursday': 'Corporate Outbound & Early Weekend Ramp',
+            'Friday': 'Combined Business & Weekend Getaway Surge',
+            'Saturday': 'Volume Trough & Fleet Repositioning',
+            'Sunday': 'Leisure Return Peak & Evening Delay Propagation'
+        }
+        dow_summary['weekly_operational_archetype'] = dow_summary['dow_name'].map(weekly_archetypes)
+    
+        print("\n--- DAY OF WEEK VOLATILITY SUMMARY ---")
+        print(dow_summary[['dayOfWeek', 'dow_name', 'weekly_operational_archetype', 'mean_cv_hourly_tsa', 'mean_std_dep_delay', 'mean_coupled_volatility', 'mean_dep_delay']].to_string(index=False))
+
+        # -------------------------------------------------------------------------
+        # STEP 4: HOURLY DIURNAL VOLATILITY CLUSTERING (CONDITIONED ON DOW)
+        # -------------------------------------------------------------------------
+        print("\n[STEP 4] Executing Diurnal Hourly Volatility Clustering (Dual Peak Turbulence)...")
+        con.register("daily_study_classified", daily_df)
+    
+        hourly_query = f"""
+            WITH tsa_hr AS (
+                SELECT 
+                    dateId,
+                    hour,
+                    SUM(throughput) as hourly_tsa
+                FROM read_parquet('{TSA_PARQUET}')
+                WHERE airportId IN ({TOP25_ID_STR})
+                GROUP BY 1, 2
+            ),
+            otp_hr AS (
+                SELECT 
+                    dateId,
+                    CAST(crsDepMinOfDay / 60 AS INT) as hour,
+                    COUNT(*) as hourly_sched_flights,
+                    AVG(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as hourly_dep_delay,
+                    STDDEV(CASE WHEN cancelled = false THEN depDel ELSE NULL END) as hourly_std_delay,
+                    SUM(CASE WHEN cancelled = false AND depDel15 = true THEN 1 ELSE 0 END) * 100.0 / 
+                        NULLIF(COUNT(CASE WHEN cancelled = false THEN 1 END), 0) as hourly_depdel15_pct,
+                    SUM(CASE WHEN cancelled = true THEN 1 ELSE 0 END) * 100.0 / COUNT(*) as hourly_cancel_pct
+                FROM read_parquet('{OTP_PARQUET}')
+                WHERE originAirportId IN ({TOP25_ID_STR})
+                GROUP BY 1, 2
+            )
+            SELECT 
+                t.dateId,
+                d.date,
+                d.year,
+                d.month,
+                d.dayOfWeek,
+                d.dow_name,
+                d.season_regime,
+                d.season_name,
+                t.hour,
+                t.hourly_tsa,
+                COALESCE(o.hourly_sched_flights, 0) as hourly_sched_flights,
+                COALESCE(o.hourly_dep_delay, 0) as hourly_dep_delay,
+                COALESCE(o.hourly_std_delay, 0) as hourly_std_delay,
+                COALESCE(o.hourly_depdel15_pct, 0) as hourly_depdel15_pct,
+                COALESCE(o.hourly_cancel_pct, 0) as hourly_cancel_pct
+            FROM tsa_hr t
+            JOIN daily_study_classified d ON t.dateId = d.dateId
+            LEFT JOIN otp_hr o ON t.dateId = o.dateId AND t.hour = o.hour
+            WHERE t.hour >= 0 AND t.hour <= 23
+            ORDER BY t.dateId, t.hour
+        """
+        hourly_df = con.execute(hourly_query).df()
+        print(f"Loaded {len(hourly_df)} hourly joint observation records.")
+    
+        # Compute diurnal profile by Day of Week and Hour (168 cells = 7 x 24)
+        dow_hr_profile = hourly_df.groupby(['dayOfWeek', 'dow_name', 'hour']).agg(
+            obs_count=('dateId', 'count'),
+            mean_hourly_tsa=('hourly_tsa', 'mean'),
+            std_hourly_tsa=('hourly_tsa', 'std'),
+            mean_sched_flights=('hourly_sched_flights', 'mean'),
+            mean_dep_delay=('hourly_dep_delay', 'mean'),
+            mean_intra_hour_delay_std=('hourly_std_delay', 'mean'),
+            std_delay_between_days=('hourly_dep_delay', 'std'),
+            mean_depdel15_pct=('hourly_depdel15_pct', 'mean')
+        ).reset_index()
+    
+        dow_hr_profile['cv_hourly_tsa'] = dow_hr_profile['std_hourly_tsa'] / dow_hr_profile['mean_hourly_tsa'].replace(0, np.nan)
+    
+        # Cluster the 24 hours of each day of week based on the Operational Turbulence Shock Index
+        diurnal_records = []
+    
+        for dow in range(1, 8):
+            sub = dow_hr_profile[dow_hr_profile['dayOfWeek'] == dow].copy()
         
-    diurnal_df = pd.concat(diurnal_records, ignore_index=True)
+            # Flight activity mask (curfew/low-volume hours have near-zero flights)
+            flight_mask = np.clip(sub['mean_sched_flights'] / 20.0, 0.0, 1.0)
+        
+            # 1. Normalized TSA demand surge volatility (morning arrival shock)
+            v_tsa = sub['std_hourly_tsa'] / sub['std_hourly_tsa'].max()
+        
+            # 2. Normalized flight departure delay dispersion volatility (evening cascade shock)
+            delay_vol = (sub['mean_intra_hour_delay_std'] + sub['std_delay_between_days']) * flight_mask
+            v_delay = delay_vol / delay_vol.max()
+        
+            # Operational Turbulence Shock Index
+            sub['operational_turbulence_index'] = np.maximum(v_tsa, v_delay)
+        
+            # 1D KMeans clustering into exactly 3 categories: Off-Peak, Mid-Peak, Peak
+            km_tod = KMeans(n_clusters=3, random_state=42, n_init=25)
+            sub['cl'] = km_tod.fit_predict(sub[['operational_turbulence_index']])
+        
+            # Order clusters monotonically by turbulence index
+            cl_order_tod = sub.groupby('cl')['operational_turbulence_index'].mean().sort_values().index
+            tod_map = {
+                cl_order_tod[0]: '1_OFF_PEAK',
+                cl_order_tod[1]: '2_MID_PEAK',
+                cl_order_tod[2]: '3_PEAK'
+            }
+            sub['time_of_day_regime'] = sub['cl'].map(tod_map)
+        
+            tod_labels = {
+                '1_OFF_PEAK': 'Off-Peak (Overnight & Curfew Valley)',
+                '2_MID_PEAK': 'Mid-Peak (Operational Plateau & Transition)',
+                '3_PEAK': 'Peak (Bank Surges & Delay Dispersion)'
+            }
+            sub['time_of_day_name'] = sub['time_of_day_regime'].map(tod_labels)
+            diurnal_records.append(sub)
+        
+        diurnal_df = pd.concat(diurnal_records, ignore_index=True)
     
-    # Merge diurnal classification back into hourly dataset
-    dow_hour_map = diurnal_df[['dayOfWeek', 'hour', 'time_of_day_regime', 'time_of_day_name']].drop_duplicates()
-    hourly_df = hourly_df.merge(dow_hour_map, on=['dayOfWeek', 'hour'], how='left')
+        # Merge diurnal classification back into hourly dataset
+        dow_hour_map = diurnal_df[['dayOfWeek', 'hour', 'time_of_day_regime', 'time_of_day_name']].drop_duplicates()
+        hourly_df = hourly_df.merge(dow_hour_map, on=['dayOfWeek', 'hour'], how='left')
 
-    # -------------------------------------------------------------------------
-    # STEP 5: FULL 3D CROSS-CLASSIFICATION GRID (84 CELLS)
-    # -------------------------------------------------------------------------
-    print("\n[STEP 5] Building Full 3D Cross-Classification Grid (Season x DOW x Diurnal)...")
+        # -------------------------------------------------------------------------
+        # STEP 5: FULL 3D CROSS-CLASSIFICATION GRID (84 CELLS)
+        # -------------------------------------------------------------------------
+        print("\n[STEP 5] Building Full 3D Cross-Classification Grid (Season x DOW x Diurnal)...")
     
-    # Partition: Candidate B Training (2022-05-01 to 2024-12-31) vs Holdout Testing (2025-01-01 to 2025-12-31)
-    hourly_df['partition'] = np.where(hourly_df['date'] <= '2024-12-31', 'Train', 'Test')
+        # Partition: Candidate B Training (2022-05-01 to 2024-12-31) vs Holdout Testing (2025-01-01 to 2025-12-31)
+        hourly_df['partition'] = np.where(hourly_df['date'] <= '2024-12-31', 'Train', 'Test')
     
-    grid_agg = hourly_df.groupby([
-        'season_regime', 'season_name',
-        'dayOfWeek', 'dow_name',
-        'time_of_day_regime', 'time_of_day_name'
-    ]).agg(
-        total_obs=('dateId', 'count'),
-        train_obs=('partition', lambda x: (x == 'Train').sum()),
-        test_obs=('partition', lambda x: (x == 'Test').sum()),
-        mean_hourly_tsa=('hourly_tsa', 'mean'),
-        std_hourly_tsa=('hourly_tsa', 'std'),
-        mean_sched_flights=('hourly_sched_flights', 'mean'),
-        mean_dep_delay=('hourly_dep_delay', 'mean'),
-        std_dep_delay=('hourly_dep_delay', 'std'),
-        mean_depdel15_pct=('hourly_depdel15_pct', 'mean'),
-        mean_cancel_pct=('hourly_cancel_pct', 'mean')
-    ).reset_index()
+        grid_agg = hourly_df.groupby([
+            'season_regime', 'season_name',
+            'dayOfWeek', 'dow_name',
+            'time_of_day_regime', 'time_of_day_name'
+        ]).agg(
+            total_obs=('dateId', 'count'),
+            train_obs=('partition', lambda x: (x == 'Train').sum()),
+            test_obs=('partition', lambda x: (x == 'Test').sum()),
+            mean_hourly_tsa=('hourly_tsa', 'mean'),
+            std_hourly_tsa=('hourly_tsa', 'std'),
+            mean_sched_flights=('hourly_sched_flights', 'mean'),
+            mean_dep_delay=('hourly_dep_delay', 'mean'),
+            std_dep_delay=('hourly_dep_delay', 'std'),
+            mean_depdel15_pct=('hourly_depdel15_pct', 'mean'),
+            mean_cancel_pct=('hourly_cancel_pct', 'mean')
+        ).reset_index()
     
-    grid_agg['sufficient_for_training'] = grid_agg['train_obs'] >= 50
-    grid_agg['sufficient_for_testing'] = grid_agg['test_obs'] >= 30
-    grid_agg['well_powered_training'] = grid_agg['train_obs'] >= 100
+        grid_agg['sufficient_for_training'] = grid_agg['train_obs'] >= 50
+        grid_agg['sufficient_for_testing'] = grid_agg['test_obs'] >= 30
+        grid_agg['well_powered_training'] = grid_agg['train_obs'] >= 100
     
-    print(f"Total cross-classification cells: {len(grid_agg)} (Expected: 4 x 7 x 3 = 84)")
-    print(f"Cells with N_train >= 50: {grid_agg['sufficient_for_training'].sum()} / {len(grid_agg)} ({grid_agg['sufficient_for_training'].mean():.1%})")
-    print(f"Cells with N_train >= 100: {grid_agg['well_powered_training'].sum()} / {len(grid_agg)} ({grid_agg['well_powered_training'].mean():.1%})")
-    print(f"Cells with N_test >= 30: {grid_agg['sufficient_for_testing'].sum()} / {len(grid_agg)} ({grid_agg['sufficient_for_testing'].mean():.1%})")
+        print(f"Total cross-classification cells: {len(grid_agg)} (Expected: 4 x 7 x 3 = 84)")
+        print(f"Cells with N_train >= 50: {grid_agg['sufficient_for_training'].sum()} / {len(grid_agg)} ({grid_agg['sufficient_for_training'].mean():.1%})")
+        print(f"Cells with N_train >= 100: {grid_agg['well_powered_training'].sum()} / {len(grid_agg)} ({grid_agg['well_powered_training'].mean():.1%})")
+        print(f"Cells with N_test >= 30: {grid_agg['sufficient_for_testing'].sum()} / {len(grid_agg)} ({grid_agg['sufficient_for_testing'].mean():.1%})")
 
-    # -------------------------------------------------------------------------
-    # STEP 6: STATISTICAL SAMPLE SIZE & TRAINING SUFFICIENCY AUDIT
-    # -------------------------------------------------------------------------
-    print("\n[STEP 6] Computing Statistical Sample Size Audit...")
-    sample_audit = grid_agg.groupby(['season_name', 'time_of_day_name']).agg(
-        cell_count=('total_obs', 'count'),
-        min_train_obs=('train_obs', 'min'),
-        median_train_obs=('train_obs', 'median'),
-        mean_train_obs=('train_obs', 'mean'),
-        total_train_obs=('train_obs', 'sum'),
-        min_test_obs=('test_obs', 'min'),
-        median_test_obs=('test_obs', 'median'),
-        mean_test_obs=('test_obs', 'mean'),
-        total_test_obs=('test_obs', 'sum'),
-        all_train_sufficient=('sufficient_for_training', 'all'),
-        all_test_sufficient=('sufficient_for_testing', 'all')
-    ).reset_index()
+        # -------------------------------------------------------------------------
+        # STEP 6: STATISTICAL SAMPLE SIZE & TRAINING SUFFICIENCY AUDIT
+        # -------------------------------------------------------------------------
+        print("\n[STEP 6] Computing Statistical Sample Size Audit...")
+        sample_audit = grid_agg.groupby(['season_name', 'time_of_day_name']).agg(
+            cell_count=('total_obs', 'count'),
+            min_train_obs=('train_obs', 'min'),
+            median_train_obs=('train_obs', 'median'),
+            mean_train_obs=('train_obs', 'mean'),
+            total_train_obs=('train_obs', 'sum'),
+            min_test_obs=('test_obs', 'min'),
+            median_test_obs=('test_obs', 'median'),
+            mean_test_obs=('test_obs', 'mean'),
+            total_test_obs=('test_obs', 'sum'),
+            all_train_sufficient=('sufficient_for_training', 'all'),
+            all_test_sufficient=('sufficient_for_testing', 'all')
+        ).reset_index()
     
-    print("\n--- SAMPLE SIZE AUDIT PER MACRO / DIURNAL BLOCK ---")
-    print(sample_audit[['season_name', 'time_of_day_name', 'min_train_obs', 'median_train_obs', 'total_train_obs', 'min_test_obs', 'median_test_obs', 'total_test_obs']].to_string(index=False))
+        print("\n--- SAMPLE SIZE AUDIT PER MACRO / DIURNAL BLOCK ---")
+        print(sample_audit[['season_name', 'time_of_day_name', 'min_train_obs', 'median_train_obs', 'total_train_obs', 'min_test_obs', 'median_test_obs', 'total_test_obs']].to_string(index=False))
 
     # -------------------------------------------------------------------------
     # STEP 7: EXPORT CSV DELIVERABLES TO TARGET FOLDERS
@@ -645,63 +657,66 @@ def run_volatility_analysis():
     print("\n[STEP 9] Rendering publication-quality volatility figures...")
     sns.set_theme(style="whitegrid", font_scale=1.1)
     
-    # FIGURE 1: Coupled Volatility Phase Space & Annual Seasonality
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    if daily_df is not None:
+        # FIGURE 1: Coupled Volatility Phase Space & Annual Seasonality
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
     
-    reg_colors = {
-        '1_OFF_PEAK': '#2b5c8f',
-        '2_MID_PEAK': '#2ca02c',
-        '3_PEAK': '#d62728',
-        '4_HOLIDAY': '#9467bd'
-    }
-    reg_labels = {
-        '1_OFF_PEAK': '1. Off-Peak (Winter Lull / Fall Shoulder)',
-        '2_MID_PEAK': '2. Mid-Peak (Spring & Summer Shoulder)',
-        '3_PEAK': '3. Peak (Summer Convective Storms)',
-        '4_HOLIDAY': '4. Holiday (National Waves)'
-    }
+        reg_colors = {
+            '1_OFF_PEAK': '#2b5c8f',
+            '2_MID_PEAK': '#2ca02c',
+            '3_PEAK': '#d62728',
+            '4_HOLIDAY': '#9467bd'
+        }
+        reg_labels = {
+            '1_OFF_PEAK': '1. Off-Peak (Winter Lull / Fall Shoulder)',
+            '2_MID_PEAK': '2. Mid-Peak (Spring & Summer Shoulder)',
+            '3_PEAK': '3. Peak (Summer Convective Storms)',
+            '4_HOLIDAY': '4. Holiday (National Waves)'
+        }
     
-    for reg, grp in daily_df.groupby('season_regime'):
-        ax1.scatter(
-            grp['cv_hourly_tsa'],
-            grp['std_dep_delay'],
-            color=reg_colors[reg],
-            label=reg_labels[reg],
-            alpha=0.6,
-            edgecolors='none',
-            s=45
-        )
-    ax1.set_xlabel(r"Within-Day TSA Hourly Arrival Volatility (CV = $\sigma_{TSA} / \mu_{TSA}$)", fontweight='bold')
-    ax1.set_ylabel(r"Flight Departure Delay Dispersion ($\sigma_{Delay}$, Minutes)", fontweight='bold')
-    ax1.set_title(r"(A) Coupled Volatility Phase Space ($CV_{TSA}$ vs. $\sigma_{Delay}$)", fontweight='bold', pad=12)
-    ax1.legend(loc="upper right", frameon=True)
+        for reg, grp in daily_df.groupby('season_regime'):
+            ax1.scatter(
+                grp['cv_hourly_tsa'],
+                grp['std_dep_delay'],
+                color=reg_colors[reg],
+                label=reg_labels[reg],
+                alpha=0.6,
+                edgecolors='none',
+                s=45
+            )
+        ax1.set_xlabel(r"Within-Day TSA Hourly Arrival Volatility (CV = $\sigma_{TSA} / \mu_{TSA}$)", fontweight='bold')
+        ax1.set_ylabel(r"Flight Departure Delay Dispersion ($\sigma_{Delay}$, Minutes)", fontweight='bold')
+        ax1.set_title(r"(A) Coupled Volatility Phase Space ($CV_{TSA}$ vs. $\sigma_{Delay}$)", fontweight='bold', pad=12)
+        ax1.legend(loc="upper right", frameon=True)
     
-    # Panel B: Calendar Month Coupled Volatility Profile
-    m_agg = daily_df.groupby('month').agg(
-        mean_cv_tsa=('cv_hourly_tsa', 'mean'),
-        mean_std_delay=('std_dep_delay', 'mean'),
-        mean_coupled_vol=('coupled_volatility_index', 'mean')
-    ).reset_index()
+        # Panel B: Calendar Month Coupled Volatility Profile
+        m_agg = daily_df.groupby('month').agg(
+            mean_cv_tsa=('cv_hourly_tsa', 'mean'),
+            mean_std_delay=('std_dep_delay', 'mean'),
+            mean_coupled_vol=('coupled_volatility_index', 'mean')
+        ).reset_index()
     
-    ax2_twin = ax2.twinx()
-    b1 = ax2.bar(m_agg['month'], m_agg['mean_cv_tsa'], color='#1f77b4', alpha=0.75, width=0.55, label='TSA Arrival CV')
-    l1 = ax2_twin.plot(m_agg['month'], m_agg['mean_std_delay'], color='#d62728', marker='o', linewidth=2.5, markersize=7, label=r'Delay Dispersion ($\sigma_{Delay}$)')
+        ax2_twin = ax2.twinx()
+        b1 = ax2.bar(m_agg['month'], m_agg['mean_cv_tsa'], color='#1f77b4', alpha=0.75, width=0.55, label='TSA Arrival CV')
+        l1 = ax2_twin.plot(m_agg['month'], m_agg['mean_std_delay'], color='#d62728', marker='o', linewidth=2.5, markersize=7, label=r'Delay Dispersion ($\sigma_{Delay}$)')
     
-    month_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    ax2.set_xticks(range(1, 13))
-    ax2.set_xticklabels(month_labels)
-    ax2.set_xlabel("Calendar Month", fontweight='bold')
-    ax2.set_ylabel("Within-Day TSA Hourly Volatility (CV)", color='#1f77b4', fontweight='bold')
-    ax2_twin.set_ylabel("Departure Delay Standard Deviation (min)", color='#d62728', fontweight='bold')
-    ax2.set_title("(B) Annual Monthly Coupled Volatility Dynamics", fontweight='bold', pad=12)
-    ax2.grid(True, linestyle='--', alpha=0.5)
-    ax2_twin.grid(False)
+        month_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        ax2.set_xticks(range(1, 13))
+        ax2.set_xticklabels(month_labels)
+        ax2.set_xlabel("Calendar Month", fontweight='bold')
+        ax2.set_ylabel("Within-Day TSA Hourly Volatility (CV)", color='#1f77b4', fontweight='bold')
+        ax2_twin.set_ylabel("Departure Delay Standard Deviation (min)", color='#d62728', fontweight='bold')
+        ax2.set_title("(B) Annual Monthly Coupled Volatility Dynamics", fontweight='bold', pad=12)
+        ax2.grid(True, linestyle='--', alpha=0.5)
+        ax2_twin.grid(False)
     
-    fig.tight_layout()
-    fig.savefig(os.path.join(FIGURES_DIR, "01_annual_volatility_tsa_otp_clustering.png"), dpi=300)
-    fig.savefig(os.path.join(FIGURES_DIR, "01_annual_seasonality_tsa_otp_clustering.png"), dpi=300)
-    plt.close()
-    print("Saved Figure 1: 01_annual_volatility_tsa_otp_clustering.png")
+        fig.tight_layout()
+        fig.savefig(os.path.join(FIGURES_DIR, "01_annual_volatility_tsa_otp_clustering.png"), dpi=300)
+        fig.savefig(os.path.join(FIGURES_DIR, "01_annual_seasonality_tsa_otp_clustering.png"), dpi=300)
+        plt.close()
+        print("Saved Figure 1: 01_annual_volatility_tsa_otp_clustering.png")
+    else:
+        print("  + Figure 1 relies on raw unaggregated census records; canonical 300 DPI figure preserved in figures/ch04_results/")
 
     # FIGURE 2: Day of Week Volatility Dynamics
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))

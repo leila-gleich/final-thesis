@@ -177,7 +177,7 @@ TABLES_CONFIG = [
         "sheet_name": "Table_A1_Assumptions",
         "title": "14-Point Methodological Assumption and Failure Mode Prevention Matrix",
         "source_type": "csv",
-        "source_path": "figures/04_Appendix_and_Reference/methodological_assumptions.csv",
+        "source_path": "figures/appendix/methodological_assumptions.csv",
         "note": "Note. Formulated across terminal flow, temporal coupling, sample filtering, and econometric evaluation to protect internal and construct validity."
     },
     {
@@ -437,7 +437,7 @@ TABLES_CONFIG = [
         "sheet_name": "Table_N1_Archival_Hierarchy",
         "title": "Master Archival Data Storage Hierarchy, Database Profiles, and Exhibits Catalog",
         "source_type": "csv",
-        "source_path": "figures/04_Appendix_and_Reference/database_profiles.csv",
+        "source_path": "figures/appendix/database_profiles.csv",
         "note": "Note. Formal database profiles and repository architecture specifications for reproducible analytical pipelines."
     }
 ]

@@ -22,6 +22,7 @@ Outputs to:
 """
 
 import csv
+import sys
 from pathlib import Path
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -29,6 +30,11 @@ from openpyxl.utils import get_column_letter
 
 # Directory resolution
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+if str(BASE_DIR / "src") not in sys.path:
+    sys.path.insert(0, str(BASE_DIR / "src"))
+
 RESULTS_DIR = BASE_DIR / "results"
 MANUSCRIPT_TABLES_DIR = RESULTS_DIR / "manuscript_tables"
 TABLES_DIR = RESULTS_DIR / "tables"
@@ -583,21 +589,14 @@ def build_thesis_tables_workbook():
         auto_fit_columns(ws_t, min_col=1, max_col=num_cols, min_row=5, max_row=5 + num_rows, min_width=14, max_width=60, padding=4)
 
     # =========================================================================
-    # 4. SAVE WORKBOOK TO TARGET DIRECTORIES
+    # 4. SAVE WORKBOOK TO TARGET DIRECTORY (SSOT)
     # =========================================================================
-    out_paths = [
-        RESULTS_DIR / "thesis_tables.xlsx",
-        MANUSCRIPT_TABLES_DIR / "thesis_tables.xlsx",
-        TABLES_DIR / "thesis_tables.xlsx"
-    ]
-    tf_results_path = BASE_DIR / "tables and figures" / "results" / "thesis_tables.xlsx"
-    if tf_results_path.parent.exists():
-        out_paths.append(tf_results_path)
+    master_path = RESULTS_DIR / "thesis_tables.xlsx"
+    master_path.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(master_path)
+    print(f"  -> Successfully saved APA formatted workbook (SSOT): {master_path}")
 
-    for p in out_paths:
-        p.parent.mkdir(parents=True, exist_ok=True)
-        wb.save(p)
-        print(f"  -> Successfully saved APA formatted workbook: {p}")
+    out_paths = [master_path]
 
     print(f"[COMPLETE] Master thesis_tables.xlsx formatted with {len(TABLE_CATALOG)} tables + template (no filters, APA boundary rules).")
     return out_paths

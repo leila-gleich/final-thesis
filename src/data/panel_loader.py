@@ -12,10 +12,16 @@ Constructs conformed daily airport panel data:
 5. Merges Top 25 airport census operational attributes from 01_top25_clustering.xlsx.
 """
 
-import os
+import sys
 from pathlib import Path
 import numpy as np
 import pandas as pd
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+if str(PROJECT_ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 try:
     from src.utils.paths import (

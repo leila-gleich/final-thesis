@@ -1607,16 +1607,16 @@ def build_markdown_document(output_path):
         f.write("\n".join(lines))
     print(f"Successfully generated Markdown document: {output_path}")
 
+from pathlib import Path
+
 def main():
-    docx_path = "thesis_docs/manuscripts/List_of_Acronyms_and_Abbreviations.docx"
-    docx_v1_path = "thesis_docs/manuscripts/Acronyms v1.docx"
-    md_path = "thesis_docs/manuscripts/acronyms.md"
-    md_only_path = "thesis_docs/manuscripts/manuscripts-only/acronyms.md"
+    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+    MANUSCRIPTS_DIR = BASE_DIR / "thesis_docs" / "manuscripts"
+    docx_path = MANUSCRIPTS_DIR / "List_of_Acronyms_and_Abbreviations.docx"
+    md_path = MANUSCRIPTS_DIR / "acronyms.md"
     
     build_word_document(docx_path)
-    build_word_document(docx_v1_path)
     build_markdown_document(md_path)
-    build_markdown_document(md_only_path)
-    
+
 if __name__ == "__main__":
     main()

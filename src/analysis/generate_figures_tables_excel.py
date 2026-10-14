@@ -26,12 +26,18 @@ APA 7th Edition Formatting Rules:
 """
 
 import csv
+import sys
 from pathlib import Path
 import openpyxl
 from openpyxl.styles import Font, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+if str(BASE_DIR / "src") not in sys.path:
+    sys.path.insert(0, str(BASE_DIR / "src"))
+
 FIGURES_DIR = BASE_DIR / "figures"
 EXHIBITS_DIR = BASE_DIR / "thesis_docs" / "exhibits"
 
@@ -726,11 +732,6 @@ def generate_workbook_for_subfolder(subfolder_info: dict):
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     wb.save(dest_path)
     print(f"  -> Saved workbook: {dest_path}")
-
-    tf_dir = BASE_DIR / "tables and figures" / "methodology"
-    if tf_dir.exists():
-        tf_path = tf_dir / wb_filename
-        wb.save(tf_path)
 
     return [dest_path]
 
