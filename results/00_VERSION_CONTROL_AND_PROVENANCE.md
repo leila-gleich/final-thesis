@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.20 (Standard Literature Equations Registry KaTeX Parsing & Core Vert Hardening)
+RELEASE VERSION: v5.21 (Appendix C In-Text Reference Guide — 9-Anchor Callout Mapping for Chapters II–V)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1306,6 +1306,18 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   sizing and sigma bound rendering across Table B.2.                         |
 |         |            | - Automated verification: 0 \lvert, 0 \rvert, 20 single-line $$ blocks,     |
 |         |            |   20/20 balanced-dollar table rows across all 4 repository paths.           |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.21   | 2026-10-15 | Appendix C In-Text Reference Guide -- 9-Anchor Callout Mapping (Ch. II-V):  |
+|         |            | - Authored thesis_docs/manuscripts/appendix-c-reference-guide.md providing  |
+|         |            |   a complete chapter-by-chapter location guide for all 9 Appendix C in-text |
+|         |            |   callout insertions across Chapters II, III, IV, and V.                    |
+|         |            | - Each anchor provides the full original sentence as it appears in the       |
+|         |            |   manuscript, exact parenthetical callout to insert, and insertion point.   |
+|         |            | - 9 anchors: C.1-C.2 (Poisson/NHPP), C.3 (Kingman/Allen-Cunneen heavy-     |
+|         |            |   traffic), C.4 (Tweedie-Poisson Dispersion), C.5 + Table C.1 (Volatility  |
+|         |            |   Target Formulations), and general queuing bounds (Ch. II, III, IV, V).   |
+|         |            | - Summary lookup table maps all 9 anchors by chapter, section header, and   |
+|         |            |   Appendix C subsection for rapid author reference during Word editing.     |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
