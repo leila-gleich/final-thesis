@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.21 (Appendix C In-Text Reference Guide — 9-Anchor Callout Mapping for Chapters II–V)
+RELEASE VERSION: v5.22 (Slide 22 Presentation Summary Table Integration — for-deck Tab)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1319,6 +1319,16 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Summary lookup table maps all 9 anchors by chapter, section header, and   |
 |         |            |   Appendix C subsection for rapid author reference during Word editing.     |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.22   | 2026-10-15 | Slide 22 Presentation Summary Table Integration (for-deck Tab):             |
+|         |            | - Created dedicated APA 7th Edition tab 'for-deck' in master multi-tab      |
+|         |            |   workbook master-docs/thesis_manuscript_tables.xlsx (and mirrored copies). |
+|         |            | - Fully harmonized all 8 metric rows across Robustness, Resilience, and     |
+|         |            |   Generalizability with certified thesis values, fixing slide 22 draft     |
+|         |            |   discrepancies (Model 2 routine MASE 0.680-0.700, Model 1 shock R_MASE    |
+|         |            |   1.32, Model 2 transfer degradation DeltaRMSE +7.9% / DeltaMASE +8.3%,     |
+|         |            |   Baseline Control TTR 8.4h / RTR 1.00 / 0.0%).                            |
+|         |            | - Updated Contents sheet with bidirectional interactive hyperlinks.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -1684,4 +1694,39 @@ In response to the author's directive to inspect and correct the heading structu
 - `src/manuscripts/generate_categorized_glossary.py` (hardened against boundary capture and header descriptions)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (logged release v5.19)
 ====================================================================================================
+
+## v5.22 — Slide 22 Presentation Summary Table Integration (for-deck Tab) (October 15, 2026)
+
+### Rationale & Design Transformation
+In response to the author's directive to recreate the performance evaluation summary table from Slide 22 of the master defense presentation deck (`Master-Thesis-Defense-final.pptx` / `Recommended-Thesis-Defense-Deck.pptx`) with the correct, certified thesis metrics, and add it as a dedicated worksheet tab titled `for-deck` in `thesis_manuscript_tables.xlsx`:
+1. **Defect Audit of Slide 22 Draft Metrics**:
+   - Identified 4 numerical discrepancies on presentation Slide 22 relative to the conformed thesis benchmarks (Table 4.7, Table 5.1–5.3, and `05_robustness_resilience_generalizability.xlsx`):
+     * *Model 2 Routine MASE*: Erroneously displayed `0.582` (an early unscaled prototype metric) instead of certified $\text{MASE}_{\text{routine}} = \mathbf{0.680\text{--}0.700}$ (or single-point $0.696$).
+     * *Model 1 Shock Disruption Multiplier*: Erroneously displayed $R_{\text{MASE}} = 1.08$ instead of the conformed $R_{\text{MASE}} = \mathbf{1.32}$ ($1.082 / 0.819$ reflecting blindness to upstream airside flight delay cascades).
+     * *Model 2 Transfer Degradation*: Erroneously displayed $+12.8\%$ instead of certified $\Delta\text{RMSE} = \mathbf{+7.9\%}$ and $\Delta\text{MASE} = \mathbf{+8.3\%}$ ($+0.065$).
+     * *Baseline Control Values*: Displayed uncalibrated $\text{TTR} = \text{N/A (Static)}$ instead of the empirical persistence dissipation benchmark $\mathbf{8.4\text{h}}$, and lacked explicit zero-shot transfer reference anchors ($1.00$ and $0.0\%$).
+2. **Reconstruction of the `for-deck` Presentation Tab**:
+   - Re-engineered `scratch/build_manuscript_tables_excel.py` to compile an APA Style (7th ed.) 7-column table featuring all 8 core performance rows across the three evaluation dimensions:
+     * *Dimension 1: Robustness*: Routine On-Time Ops ($\text{MASE}_{\text{routine}}$) and Routine Absolute Error ($\text{RMSE}_{\text{routine}}$).
+     * *Dimension 2: Resilience*: Severe IROPS Error Multiplier ($R_{\text{MASE}}$), Severe Disruption Error ($\text{MASE}_{\text{shock}}$), and Time-to-Recovery ($\text{TTR}$, hours).
+     * *Dimension 3: Generalizability*: Zero-Shot Transfer Ratio (EWR $\to$ LGA $\text{RTR}$), Transfer Error Degradation ($\Delta\text{RMSE}$), and Transfer Relative Error Degradation ($\Delta\text{MASE}$).
+   - Retained explicit presentation callout annotations in data cells (`0.662 (Target Met / Lowest)`, `1.05 (Target Met / Winner)`, `2.14 (Fragile Collapse)`, `1.04 (Target Met / Winner)`, `1.19 (Failed Target)`) to match the visual presentation context of the defense deck.
+   - Formatted strictly to APA 7th Edition: Calibri font, bold Table ID (Row 2), italicized Title (Row 3), thin black boundary rules on headers and terminal data rows, clean white cells, zero auto-filters, and auto-adjusted column widths.
+3. **Master Navigation & Multi-Location Deployment**:
+   - Updated the `Contents` worksheet with an interactive bidirectional hyperlink to `'for-deck'!A1` and added cell A1 Return to TOC navigation.
+   - Deployed synchronized workbooks to:
+     * `master-docs/thesis_manuscript_tables.xlsx` (canonical repository location)
+     * `/Users/leilagleich/Desktop/700B Wk9/master-docs/thesis_manuscript_tables.xlsx` (Desktop mirrored folder)
+     * `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (Desktop root)
+4. **Preservation of Policies**:
+   - Zero edits to Microsoft Word documents (`.docx`) strictly observed (Policy 1.1).
+   - Explicit Git staging enforced (Policy 1.6).
+
+### Modified Files Inventory
+- `master-docs/thesis_manuscript_tables.xlsx` (updated with `for-deck` tab, 17 tabs total)
+- `/Users/leilagleich/Desktop/700B Wk9/master-docs/thesis_manuscript_tables.xlsx` (mirrored master workbook)
+- `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (mirrored root workbook)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (logged release v5.22)
+====================================================================================================
+
 
