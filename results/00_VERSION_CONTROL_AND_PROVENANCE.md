@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.22 (Slide 22 Presentation Summary Table Integration — for-deck Tab)
+RELEASE VERSION: v5.23 (Appendix C Reference Guide Rebuilt from Thesisv3.docx -- 6 Verified Anchors)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1328,6 +1328,19 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   1.32, Model 2 transfer degradation DeltaRMSE +7.9% / DeltaMASE +8.3%,     |
 |         |            |   Baseline Control TTR 8.4h / RTR 1.00 / 0.0%).                            |
 |         |            | - Updated Contents sheet with bidirectional interactive hyperlinks.         |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.23   | 2026-10-15 | Appendix C Reference Guide Rebuilt from Thesisv3.docx (6 Verified Anchors): |
+|         |            | - Rebuilt thesis_docs/manuscripts/appendix-c-reference-guide.md from        |
+|         |            |   verbatim paragraphs in master-docs/Thesisv3.docx (authoritative current   |
+|         |            |   draft), replacing incorrect sentences sourced from an older manuscript.   |
+|         |            | - Reduced from 9 anchors to 6 verified anchors matching actual Thesisv3     |
+|         |            |   structure: 2 in Ch. II (Poisson/NHPP and Kingman heavy-traffic), 2 in    |
+|         |            |   Ch. III (Core Variables and Validity), 1 in Ch. IV (Tweedie Dispersion), |
+|         |            |   and 1 in Ch. V (Implications & Recommendations).                         |
+|         |            | - Removed 3 obsolete anchors whose sections no longer exist in Thesisv3:   |
+|         |            |   Defining Seasonality/CV_TSA (Ch. IV), Heavy-Traffic Queuing Item (Ch. IV),|
+|         |            |   and Connecting Queuing/Lane Dimensioning section (Ch. V).                |
+|         |            | - Added structural change warning block noting Thesisv3 reorganization.    |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
