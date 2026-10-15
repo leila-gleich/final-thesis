@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.19 (Master Glossary Heading Architecture & Quick-Finder Index Harmonization)
+RELEASE VERSION: v5.20 (Standard Literature Equations Registry KaTeX Parsing & Core Vert Hardening)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1291,6 +1291,22 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Synchronized thesis_docs/manuscripts/glossary.md and hardened generator   |
 |         |            |   src/manuscripts/generate_categorized_glossary.py against recurrence.      |
 |         |            | - Preserved strict Policy 1.1: zero edits to Microsoft Word documents.      |
+| v5.20   | 2026-10-15 | Standard Literature Equations Registry KaTeX Parsing & Core Vert Delimiters: |
+|         |            | - Diagnosed KaTeX parse error in Table B.2 markdown files caused by AMS-LaTeX|
+|         |            |   macros (\lvert and \rvert) unsupported in default KaTeX preview engines.  |
+|         |            | - Re-engineered src/manuscripts/generate_appendix_equations_markdown.py to  |
+|         |            |   substitute core TeX \vert and \left\vert ... \right\vert primitives,      |
+|         |            |   retaining full vertical bar sizing while eliminating Markdown pipe parsing |
+|         |            |   collisions.                                                                |
+|         |            | - Enforced single-line display math blocks ($$...$$) across all 20 detailed  |
+|         |            |   equation derivations, eliminating multiline display parsing defects.      |
+|         |            | - Typeset all parameter symbols in pure LaTeX ($...$), preventing markdown   |
+|         |            |   parsers from evaluating subscript underscores as italic HTML tags.         |
+|         |            | - Wrapped inline table equations in $\displaystyle ...$ for full fraction    |
+|         |            |   sizing and sigma bound rendering across Table B.2.                         |
+|         |            | - Automated verification: 0 \lvert, 0 \rvert, 20 single-line $$ blocks,     |
+|         |            |   20/20 balanced-dollar table rows across all 4 repository paths.           |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
