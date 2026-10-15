@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.18 (Standard Literature Equations Markdown Registry Deployment)
+RELEASE VERSION: v5.19 (Master Glossary Heading Architecture & Quick-Finder Index Harmonization)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1281,6 +1281,16 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   thesis_docs/manuscripts/, master-docs/, results/manuscript_tables/, and   |
 |         |            |   thesis_final_package/tables/.                                            |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.19   | 2026-10-15 | Master Glossary Heading Architecture & Quick-Finder Index Harmonization:    |
+|         |            | - Diagnosed heading duplication and boundary pollution defect caused by     |
+|         |            |   greedy entry splitting in generate_categorized_glossary.py.               |
+|         |            | - Reconstructed master-docs/master_glossary.md with single non-duplicated   |
+|         |            |   Category headers (Categories 1-6) and zero header description blocks.     |
+|         |            | - Preserved comprehensive 96-term Alphabetical Quick-Finder Index table with |
+|         |            |   functional cross-references, updating term census to 96 entries.         |
+|         |            | - Synchronized thesis_docs/manuscripts/glossary.md and hardened generator   |
+|         |            |   src/manuscripts/generate_categorized_glossary.py against recurrence.      |
+|         |            | - Preserved strict Policy 1.1: zero edits to Microsoft Word documents.      |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -1621,5 +1631,29 @@ In response to the author's directive to generate a publication-grade Markdown t
 - `master-docs/appendix-standard-literature-equations.md` (created)
 - `thesis_final_package/tables/appendix-standard-literature-equations.md` (created)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+
+## v5.19 — Master Glossary Heading Architecture & Quick-Finder Index Harmonization (October 15, 2026)
+
+### Rationale & Design Transformation
+In response to the author's directive to inspect and correct the heading structure across the technical glossary Markdown documents and update `master-docs/master_glossary.md`:
+1. **Defect Diagnosis (Heading Duplication & Boundary Accumulation)**:
+   - Identified that `generate_categorized_glossary.py` utilized `re.split(r"\n(?=### )", text)` to parse individual definitions. This greedy delimiter captured trailing horizontal dividers, subsequent category headings (`## Category X`), and italicized category descriptions (`*This category defines/covers...*`) into the body text of the final term of each category (e.g., `Ultra-Low-Cost Carrier (ULCC)`, `Tactical Flight Cancellation`, `Traffic Intensity`, `Purposive Four-Tiered Filtering Funnel`, `Tweedie Compound Poisson Distribution`, `Zero-Shot Transfer Deployment`).
+   - Each successive invocation of the script or manual re-categorization re-injected duplicate category headings and divider rules, resulting in Category 2, 3, 4, and 6 headings repeating 4 times each, and Category 5 repeating 3 times.
+2. **Reconstruction of Master Glossary (`master-docs/master_glossary.md`)**:
+   - Reconstructed `master-docs/master_glossary.md` with strictly singular, non-duplicated Level 2 Category headings (Categories 1 through 6).
+   - Removed all category header descriptions (`*This category defines...*`, `*This category covers...*`, etc.) so that each category heading immediately transitions into its first operational term entry (`### Term`), maintaining an uncluttered, publication-grade hierarchy.
+   - Cleaned all boundary terms to ensure zero trailing dividers or duplicated heading fragments remain within definitions.
+   - Preserved 100% of the comprehensive 96-term Alphabetical Quick-Finder Index table with functional cross-reference anchor links.
+   - Updated the introductory census text from "all 99 entries" to the exact count of "all 96 entries".
+3. **Repository Harmonization & Generator Hardening**:
+   - Synchronized `thesis_docs/manuscripts/glossary.md` with identical structural rules (Alphabetical Quick-Finder Index, clean Category headings, zero header descriptions).
+   - Hardened `src/manuscripts/generate_categorized_glossary.py` by implementing boundary sanitization regexes (`re.sub(r"\n---\n+## Category.*$", "", ...)` and stripping trailing dividers) and removing the automated injection of header description lines.
+   - Preserved strict Policy 1.1: zero modifications to any Microsoft Word documents (`.docx`).
+
+### Modified Files Inventory
+- `master-docs/master_glossary.md` (updated heading structure and eliminated description lines)
+- `thesis_docs/manuscripts/glossary.md` (synchronized with master glossary architecture)
+- `src/manuscripts/generate_categorized_glossary.py` (hardened against boundary capture and header descriptions)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (logged release v5.19)
 ====================================================================================================
 

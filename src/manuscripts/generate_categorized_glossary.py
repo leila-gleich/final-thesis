@@ -15,9 +15,12 @@ def main():
 
     entry_dict = {}
     for e in raw_entries:
-        m = re.match(r"### (.*?)\n", e)
+        clean_e = re.sub(r"(\n\s*---\s*)+$", "", e).strip()
+        clean_e = re.sub(r"\n---\n+## Category.*$", "", clean_e, flags=re.S).strip()
+        clean_e = re.sub(r"(\n\s*---\s*)+$", "", clean_e).strip()
+        m = re.match(r"### (.*?)\n", clean_e)
         if m:
-            entry_dict[m.group(1).strip()] = e.strip()
+            entry_dict[m.group(1).strip()] = clean_e
 
     cat_definitions = [
         {
@@ -203,20 +206,17 @@ def main():
     out_lines = []
     out_lines.append("# Glossary of Technical Terms by Operational Category\n")
     out_lines.append("This glossary defines the operational concepts, aviation data systems, statistical metrics, and predictive modeling methods used across Chapters I through V of this manuscript. In accordance with the *Publication Manual of the American Psychological Association* (7th ed.; APA, 2020) guidelines for academic dissertations and technical manuscripts, terms are organized hierarchically into six operational categories that mirror the functional workflow of commercial airport operations and predictive analytics.\n")
-    out_lines.append("To support airport Federal Security Directors (FSDs), operational planners, and transportation researchers without an advanced background in machine learning, each definition is written in plain, intuitive language and grounded in airport operations. Terms within each category are arranged in strict alphabetical order. For readers seeking a specific term across the entire manuscript, the Alphabetical Quick-Finder Index below provides immediate navigation to all 99 entries.\n")
+    out_lines.append("To support airport Federal Security Directors (FSDs), operational planners, and transportation researchers without an advanced background in machine learning, each definition is written in plain, intuitive language and grounded in airport operations. Terms within each category are arranged in strict alphabetical order. For readers seeking a specific term across the entire manuscript, the Alphabetical Quick-Finder Index below provides immediate navigation to all 96 entries.\n")
     out_lines.append("## Alphabetical Quick-Finder Index\n")
     out_lines.append(quick_finder_table + "\n")
     out_lines.append("---\n")
 
     for cat in cat_definitions:
         out_lines.append(f"## {cat['title']}\n")
-        out_lines.append(f"*{cat['desc']}*\n")
         sorted_terms = sorted(cat["terms"], key=lambda t: clean_sort_key(t))
         for t in sorted_terms:
             entry_text = entry_dict[t]
-            anchor = make_anchor(t)
-            entry_text_mod = re.sub(r"^### (.*?)$", f'<a id="{anchor}"></a>\n### \\1', entry_text)
-            out_lines.append(entry_text_mod + "\n")
+            out_lines.append(entry_text + "\n")
         out_lines.append("---\n")
 
     full_content = "\n".join(out_lines)

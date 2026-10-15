@@ -2,7 +2,7 @@
 
 This glossary defines the operational concepts, aviation data systems, statistical metrics, and predictive modeling methods used across Chapters I through V of this manuscript. In accordance with the *Publication Manual of the American Psychological Association* (7th ed.; APA, 2020) guidelines for academic dissertations and technical manuscripts, terms are organized hierarchically into six operational categories that mirror the functional workflow of commercial airport operations and predictive analytics.
 
-To support airport Federal Security Directors (FSDs), operational planners, and transportation researchers without an advanced background in machine learning, each definition is written in plain, intuitive language and grounded in airport operations. Terms within each category are arranged in strict alphabetical order. For readers seeking a specific term across the entire manuscript, the Alphabetical Quick-Finder Index below provides immediate navigation to all 99 entries.
+To support airport Federal Security Directors (FSDs), operational planners, and transportation researchers without an advanced background in machine learning, each definition is written in plain, intuitive language and grounded in airport operations. Terms within each category are arranged in strict alphabetical order. For readers seeking a specific term across the entire manuscript, the Alphabetical Quick-Finder Index below provides immediate navigation to all 96 entries.
 
 ## Alphabetical Quick-Finder Index
 
@@ -109,8 +109,6 @@ To support airport Federal Security Directors (FSDs), operational planners, and 
 
 ## Category 1: Aviation Infrastructure, Federal Agencies, and Programs
 
-*This category defines the physical airport terminal zones, federal regulatory bodies, operational coordination command centers, and traveler security programs that govern commercial aviation across the National Airspace System.*
-
 ### Air Traffic Control (ATC)
 The Federal Aviation Administration (FAA) service responsible for directing aircraft safely on runways, taxiways, and throughout the national airspace system, managing ground traffic flow and en-route flight separations.
 
@@ -160,26 +158,6 @@ A category of budget airlines (such as Spirit or Frontier) that unbundle airfare
 
 ## Category 2: Federal Aviation Datasets, Data Hygiene, and Conformance
 
-*This category covers the official federal aviation data sources, data hygiene protocols, timeline integrity standards, and relational warehouse conformance rules used across the multi-source 2019–2025 study baseline.*
-
----
-
-## Category 2: Federal Aviation Datasets, Data Hygiene, and Conformance
-
-*This category covers the official federal aviation data sources, data hygiene protocols, timeline integrity standards, and relational warehouse conformance rules used across the multi-source 2019–2025 study baseline.*
-
----
-
-## Category 2: Federal Aviation Datasets, Data Hygiene, and Conformance
-
-*This category covers the official federal aviation data sources, data hygiene protocols, timeline integrity standards, and relational warehouse conformance rules used across the multi-source 2019–2025 study baseline.*
-
----
-
-## Category 2: Federal Aviation Datasets, Data Hygiene, and Conformance
-
-*This category covers the official federal aviation data sources, data hygiene protocols, timeline integrity standards, and relational warehouse conformance rules used across the multi-source 2019–2025 study baseline.*
-
 ### Advance Flight Cancellation
 A flight cancellation announced by an airline more than 24 hours before scheduled departure. Because passengers receive early notification and do not travel to the airport, advance cancellations are removed from scheduled seat counts so models do not falsely predict passenger demand that will never arrive.
 
@@ -228,26 +206,6 @@ A flight cancellation enacted within two hours of scheduled departure. These fli
 ---
 
 ## Category 3: Terminal Queuing Dynamics and Passenger Arrival Behavior
-
-*This category details the operational, temporal, and behavioral dynamics of passenger movement through airport terminals, including passenger arrival show-up curves, airline flight bank waves, connecting passenger transfers, and queuing bottlenecks.*
-
----
-
-## Category 3: Terminal Queuing Dynamics and Passenger Arrival Behavior
-
-*This category details the physical, temporal, and behavioral dynamics of passenger movement through airport terminals, including passenger arrival show-up curves, airline flight bank waves, connecting passenger transfers, and queuing bottlenecks.*
-
----
-
-## Category 3: Terminal Queuing Dynamics and Passenger Arrival Behavior
-
-*This category details the physical, temporal, and behavioral dynamics of passenger movement through airport terminals, including passenger arrival show-up curves, airline flight bank waves, connecting passenger transfers, and queuing bottlenecks.*
-
----
-
-## Category 3: Terminal Queuing Dynamics and Passenger Arrival Behavior
-
-*This category details the physical, temporal, and behavioral dynamics of passenger movement through airport terminals, including passenger arrival show-up curves, airline flight bank waves, connecting passenger transfers, and queuing bottlenecks.*
 
 ### Airport Cooperative Research Program (ACRP) Report 40
 A foundational airport planning guidebook titled *Airport Passenger Terminal Planning and Design*, published by the Transportation Research Board (2010). It provides empirical guidelines for passenger terminal planning, including the standard observation that domestic airline passengers typically arrive at security checkpoints 90 to 120 minutes before their scheduled flight departure time.
@@ -318,26 +276,6 @@ When traffic intensity approaches 1.0 (or 100%), screening lanes are saturated, 
 
 ## Category 4: Operational Volatility, Seasonality, and Experimental Filtering
 
-*This category encompasses the mathematical indices, cyclical volatility metrics, and purposive sampling funnels used to quantify airport operational turbulence, evaluate feature values versus feature volatility, and isolate unconfounded research cohorts.*
-
----
-
-## Category 4: Operational Volatility, Seasonality, and Experimental Filtering
-
-*This category encompasses the mathematical indices, cyclical volatility metrics, and purposive sampling funnels used to quantify airport operational turbulence and isolate unconfounded research cohorts.*
-
----
-
-## Category 4: Operational Volatility, Seasonality, and Experimental Filtering
-
-*This category encompasses the mathematical indices, cyclical volatility metrics, and purposive sampling funnels used to quantify airport operational turbulence and isolate unconfounded research cohorts.*
-
----
-
-## Category 4: Operational Volatility, Seasonality, and Experimental Filtering
-
-*This category encompasses the mathematical indices, cyclical volatility metrics, and purposive sampling funnels used to quantify airport operational turbulence and isolate unconfounded research cohorts.*
-
 ### 84-Cell Operational Condition Matrix ($\mathcal{G} = \mathcal{S} \times \mathcal{D} \times \mathcal{H}$)
 A structured grid used to organize airport data into 84 distinct operational scenarios before training and testing forecasting models. Rather than treating all days the same, the data is grouped by four seasonal periods ($\mathcal{S}$: winter lull, spring ramp, summer storms, and holidays), seven days of the week ($\mathcal{D}$: Monday through Sunday), and three times of day ($\mathcal{H}$: overnight lull, midday steady flow, and peak rush hours), giving $4 \times 7 \times 3 = 84$ unique operating conditions. This ensures models are tested fairly across all real-world airport conditions without small-sample distortion (83 of 84 conditions have at least 50 historical observations).
 
@@ -379,20 +317,6 @@ The sequential screening process used in Chapter III to isolate clean, unconfoun
 ---
 
 ## Category 5: Predictive Modeling Paradigms and Architectures
-
-*This category covers the benchmark forecasting models, decision-tree machine learning algorithms, time-series baselines, and real-time state-space tracking methods evaluated across Chapters III, IV, and V.*
-
----
-
-## Category 5: Predictive Modeling Paradigms and Architectures
-
-*This category covers the benchmark forecasting models, decision-tree machine learning algorithms, time-series baselines, and real-time state-space tracking methods evaluated across Chapters III, IV, and V.*
-
----
-
-## Category 5: Predictive Modeling Paradigms and Architectures
-
-*This category covers the benchmark forecasting models, decision-tree machine learning algorithms, time-series baselines, and real-time state-space tracking methods evaluated across Chapters III, IV, and V.*
 
 ### Autoregressive Integrated Moving Average (ARIMA / SARIMA / SARIMAX)
 A standard statistical time-series forecasting method. In plain terms, it predicts future values using a combination of recent past values (autoregression) and recent forecast errors (moving average). In volatility forecasting, seasonal SARIMA models capture recurring daily (24-hour) and weekly (168-hour) baseline volatility cycles.
@@ -436,26 +360,6 @@ A statistical distribution used in generalized linear modeling that handles posi
 ---
 
 ## Category 6: Operational Evaluation Dimensions, Forecast Metrics, and Statistical Tests
-
-*This category defines the multi-dimensional evaluation criteria (robustness, resilience, and generalizability), quantitative accuracy metrics, and formal hypothesis tests used to assess model performance in predicting throughput volatility.*
-
----
-
-## Category 6: Operational Evaluation Dimensions, Forecast Metrics, and Statistical Tests
-
-*This category defines the multi-dimensional evaluation criteria (robustness, resilience, and generalizability), quantitative accuracy metrics, and formal hypothesis tests used to assess model performance.*
-
----
-
-## Category 6: Operational Evaluation Dimensions, Forecast Metrics, and Statistical Tests
-
-*This category defines the multi-dimensional evaluation criteria (robustness, resilience, and generalizability), quantitative accuracy metrics, and formal hypothesis tests used to assess model performance.*
-
----
-
-## Category 6: Operational Evaluation Dimensions, Forecast Metrics, and Statistical Tests
-
-*This category defines the multi-dimensional evaluation criteria (robustness, resilience, and generalizability), quantitative accuracy metrics, and formal hypothesis tests used to assess model performance.*
 
 ### Coefficient of Determination ($R^2$)
 A standard statistical metric ranging from 0.0 to 1.0 (or 0% to 100%) that measures the proportion of variance in throughput volatility successfully explained by the forecast model.
@@ -534,9 +438,3 @@ A validation test confirming that dedicated single-airline checkpoints truly iso
 
 ### Zero-Shot Transfer Deployment
 An operational test in which a forecasting model trained and calibrated on one airport is deployed directly to an unfamiliar airport without any local retraining, evaluating its out-of-the-box portability.
-
----
-
----
-
----
