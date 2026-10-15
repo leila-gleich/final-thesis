@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.25 (Master Appendix Reference Guide -- Streamlined Appendices A-G for Thesisv3.docx)
+RELEASE VERSION: v5.26 (Defense Slides Outline Harmonization & Slide 22 Table Synchronization)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1368,6 +1368,19 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Synchronized appendix-b-reference-guide.md and appendix-c-reference-     |
 |         |            |   guide.md to strictly use overarching callouts.                            |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.26   | 2026-10-15 | Defense Slides Outline Harmonization & Slide 22 Table Synchronization:      |
+|         |            | - Swapped Slide 21 and Slide 22 in master-docs/Master Thesis Defense        |
+|         |            |   Outline.md (and thesis_final_package/) establishing 1-to-1 fidelity with  |
+|         |            |   Master-Thesis-Defense-final.pptx (Slide 21: Evaluation Triad radar chart; |
+|         |            |   Slide 22: Model Performance multi-pillar table).                         |
+|         |            | - Synchronized Slide 20 holdout metrics with Table 4.6 (Model 1 R2 0.529,   |
+|         |            |   MAE 196.2, Bias -48.6; Model 2 R2 0.696, MAE 148.6, Bias -14.2; Model 3  |
+|         |            |   R2 0.748, MAE 142.8, Bias -8.5).                                         |
+|         |            | - Synchronized Slide 22 performance table with Table 4.7 / tab for-deck    |
+|         |            |   (Baseline TTR 8.4h, RTR 1.00; Model 1 R_MASE 1.32; Model 2 routine MASE   |
+|         |            |   0.680-0.700, DeltaRMSE +7.9%, DeltaMASE +8.3%; Model 3 R_MASE 1.05,       |
+|         |            |   TTR 2.8h). Executed under Gate 4 author authorization (Policy 1.5).       |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -1767,5 +1780,35 @@ In response to the author's directive to recreate the performance evaluation sum
 - `/Users/leilagleich/Desktop/700B Wk9/thesis_manuscript_tables.xlsx` (mirrored root workbook)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (logged release v5.22)
 ====================================================================================================
+
+## v5.26 — Defense Slides Outline Harmonization & Slide 22 Table Synchronization (October 15, 2026)
+
+### Rationale & Design Transformation
+In response to the author's directive to harmonize the Master Thesis Defense Outline Markdown document with the master presentation slide deck (`Master-Thesis-Defense-final.pptx` / `Recommended-Thesis-Defense-Deck.pptx`) and certified thesis benchmarks:
+1. **Slide Sequence Harmonization (Slides 21 & 22)**:
+   - Diagnosed an inversion in slide sequence between `Master-Thesis-Defense-final.pptx` and `Master Thesis Defense Outline.md`.
+   - Re-aligned the sequence so that **Slide 21** corresponds to *Importance of Dynamic Performance Measures: The Evaluation Triad* (Figure 5.1 radar chart) and **Slide 22** corresponds to *Model Performance: Multi-Pillar Testing & Asymmetric Trade-Offs* (summary table), establishing 1-to-1 fidelity with the actual 28-slide presentation deck.
+2. **Slide 20 Holdout Benchmarks Synchronization**:
+   - Replaced uncalibrated holdout metrics with certified Table 4.6 benchmarks evaluated across 72,053 hourly observations:
+     * *Model 1*: Out-of-Time $R^2 = 0.529$ ($0.5293$), $\text{RMSE} = 313.4$, $\text{MAE} = 196.2$, $\text{MASE} = 0.945$, $\text{Bias} = -48.6\text{ pax/hr}$.
+     * *Model 2*: Out-of-Time $R^2 = 0.696$ ($0.6958$), $\text{RMSE} = 273.5$, $\text{MAE} = 148.6$, $\text{MASE} = 0.696$ (routine range $0.680\text{--}0.700$), $\text{Bias} = -14.2\text{ pax/hr}$.
+     * *Model 3*: Out-of-Time $R^2 = 0.748$ ($0.7483$), $\text{RMSE} = 222.1$, $\text{MAE} = 142.8$, $\text{MASE} = 0.662$, $\text{Bias} = -8.5\text{ pax/hr}$.
+3. **Slide 22 Performance Table Harmonization**:
+   - Reconstructed the performance evaluation table under Slide 22 to match the newly certified `for-deck` tab and Table 4.7:
+     * *Baseline Control*: Populated empirical persistence benchmarks ($\text{TTR} = 8.4\text{h}$, $\text{RTR} = 1.00$, $\Delta\text{RMSE} = 0.0\%$, $\Delta\text{MASE} = 0.0\%$).
+     * *Model 1*: Corrected shock multiplier to $R_{\text{MASE}} = 1.32$ (reflecting delay blindness).
+     * *Model 2*: Specified routine MASE target met range ($0.680\text{--}0.700$) and transfer degradation ($\Delta\text{RMSE} = +7.9\%, \Delta\text{MASE} = +8.3\%$).
+     * *Model 3*: Validated lowest routine RMSE ($222.1\text{ pax/hr}$), decisive shock resilience ($R_{\text{MASE}} = 1.05, \text{TTR} = 2.8\text{h}$), and transfer failure ($\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$).
+4. **Author-Editor Interlock Protocol Compliance (Policy 1.5)**:
+   - Full 4-Gate Safety Sequence executed. Direct merge authorized by author Leila Gleich under Gate 4 in the session.
+   - Synchronized `master-docs/Master Thesis Defense Outline.md` and `thesis_final_package/defense/THESIS_DEFENSE_SLIDES_OUTLINE_V3.md`.
+   - Zero edits to Microsoft Word documents (`.docx`) strictly observed (Policy 1.1).
+
+### Modified Files Inventory
+- `master-docs/Master Thesis Defense Outline.md` (synchronized slide order and certified metrics)
+- `thesis_final_package/defense/THESIS_DEFENSE_SLIDES_OUTLINE_V3.md` (mirrored synchronized outline)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (logged release v5.26)
+====================================================================================================
+
 
 

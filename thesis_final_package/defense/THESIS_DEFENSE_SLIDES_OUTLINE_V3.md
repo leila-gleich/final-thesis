@@ -362,51 +362,27 @@ This document provides a comprehensive academic description and operational disc
     | Predictive Architecture | Out-of-Time $R^2$ | RMSE (pax/hr) | MAE (pax/hr) | Holdout MASE | Systematic Bias (pax/hr) |
     | :--- | :---: | :---: | :---: | :---: | :---: |
     | **Baseline Control (Persistence)** | 0.000 | 253.6 | 198.4 | 1.000 | 0.0 |
-    | **Model 1 (Deterministic Schedule)** | 0.498 | 313.4 | 187.6 | 0.945 | -42.1 |
-    | **Model 2 (Supervised Machine Learning)** | 0.697 | 273.5 | 138.2 | 0.696 | -18.4 |
-    | **Model 3 (Dynamic Two-Stage Hybrid)** | **0.748** | **222.1** | **131.4** | **0.662** | **-6.2** |
+    | **Model 1 (Deterministic Schedule)** | 0.529 | 313.4 | 196.2 | 0.945 | -48.6 |
+    | **Model 2 (Supervised Machine Learning)** | 0.696 | 273.5 | 148.6 | 0.696 | -14.2 |
+    | **Model 3 (Dynamic Two-Stage Hybrid)** | **0.748** | **222.1** | **142.8** | **0.662** | **-8.5** |
   - Statistical significance callout: Diebold-Mariano loss differential test confirms error reductions are statistically decisive across all 9 airports ($DM = 42.15, p < 0.0001$ for Model 2; $DM = 48.72, p < 0.0001$ for Model 3).
 
 #### Thesis Summary & In-Depth Discussion
-* **Prospective Holdout Validation**: The out-of-time 2025 holdout evaluation spans 3,222 complex-days and 72,053 hourly screening observations. Because this data was strictly withheld during all training and tuning phases, the results reflect genuine real-world operational forecasting performance.
+* **Prospective Holdout Validation**: The out-of-time 2025 holdout evaluation spans 3,222 complex-days and 72,053 hourly screening observations across 12 carrier-exclusive screening environments. Because this data was strictly withheld during all training and tuning phases, the results reflect genuine real-world operational forecasting performance.
 * **Analysis of Empirical Performance Hierarchy**:
-  - *Baseline Control*: Serves as the non-parametric anchor ($\text{MASE} \equiv 1.000, \text{RMSE} = 253.6\text{ pax/hr}$).
-  - *Model 1 (Deterministic)*: Explains 49.8% of holdout arrival volatility variance ($R^2 = 0.498, \text{MASE} = 0.945$). Published flight schedules provide an effective baseline, outperforming daily persistence by 5.5%. However, because Model 1 is completely blind to live airside flight delays, it exhibits a persistent negative forecast bias of -42.1 pax/hr (systematically underestimating crowds when delays push passengers into later hours).
-  - *Model 2 (Supervised ML)*: Incorporating 24 BTS OTP delay and cancellation features increases explained variance to 69.7% ($R^2 = 0.697$) and reduces error to $\text{MASE} = 0.696$ and $\text{RMSE} = 273.5\text{ pax/hr}$, successfully hitting the $\text{MASE} < 0.700$ target.
-  - *Model 3 (Dynamic Hybrid)*: Injects real-time checkpoint floor feedback ($e_{t-1}$), achieving the highest overall statistical fit: $R^2 = 0.748$, $\text{RMSE} = 222.1\text{ pax/hr}$, $\text{MASE} = 0.662$, and capping systematic forecast bias at just -6.2 pax/hr.
+  - *Baseline Control*: Serves as the non-parametric anchor ($\text{MASE} \equiv 1.000, \text{RMSE} = 253.6\text{ pax/hr}, \text{MAE} = 198.4\text{ pax/hr}$).
+  - *Model 1 (Deterministic)*: Explains 52.9% of holdout arrival volatility variance ($R^2 = 0.5293, \text{MASE} = 0.945, \text{RMSE} = 313.4\text{ pax/hr}$). Published flight schedules provide an effective baseline, outperforming daily persistence by 5.5%. However, because Model 1 is completely blind to live airside flight delays, it exhibits a persistent negative forecast bias of -48.6 pax/hr (systematically underestimating crowds when delays push passengers into later hours).
+  - *Model 2 (Supervised ML)*: Incorporating 24 BTS OTP delay and cancellation features increases explained variance to 69.6% ($R^2 = 0.6958$) and reduces error to $\text{MASE} = 0.696$ (routine range $0.680\text{--}0.700$), $\text{RMSE} = 273.5\text{ pax/hr}$, and $\text{MAE} = 148.6\text{ pax/hr}$ (bias = -14.2 pax/hr), successfully hitting the $\text{MASE} < 0.700$ target.
+  - *Model 3 (Dynamic Hybrid)*: Injects real-time checkpoint floor feedback ($e_{t-1}$), achieving the highest overall statistical fit: $R^2 = 0.7483$, $\text{RMSE} = 222.1\text{ pax/hr}$, $\text{MAE} = 142.8\text{ pax/hr}$, $\text{MASE} = 0.662$, and capping systematic forecast bias at just -8.5 pax/hr.
 
 ---
 
-### Slide 21: Model Performance (Multi-Pillar Hypothesis Matrix)
-
-#### Slide Description
-* **Header & Title**: *Model Performance: Multi-Pillar Testing & Asymmetric Trade-Offs*
-* **Visual Elements & Layout**:
-  - Comprehensive 3-pillar evaluation matrix matching Table 4.7 in Thesis v3 / Table 4.11 in the pipeline:
-    | Evaluation Dimension | Operational Regime & Metric | Academic Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Supervised ML) | Model 3 (Dynamic Hybrid) | Winning Paradigm |
-    | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-    | **Dimension 1: Robustness** | Routine On-Time Ops ($\text{MASE}_{\text{routine}}$) | $< 0.700$ | 1.000 | 0.945 | **0.696** *(Target Met)* | **0.662** *(Target Met)* | **Model 3 (Accuracy)** / **Model 2 (Pareto)** |
-    | | Routine Absolute Error ($\text{RMSE}_{\text{routine}}$) | Lowest | 253.6 | 313.4 | 273.5 | **222.1** | **Model 3** |
-    | **Dimension 2: Resilience** | Severe IROPS Error Multiplier ($R_{\text{MASE}}$) | $\approx 1.00$ | 1.000 | 1.14 | 2.14 *(Fragile Collapse)* | **1.05** *(Target Met)* | **Model 3 DECISIVE WINNER** |
-    | | Severe Disruption Error ($\text{MASE}_{\text{shock}}$) | Lowest | 1.000 | 1.082 | 0.812 | **0.694** *(Target Met)* | **Model 3 DECISIVE WINNER** |
-    | | Time-to-Recovery ($\text{TTR}$, hours) | $< 4.0\text{h}$ | N/A | 7.8h | 5.4h | **2.8h** *(Target Met)* | **Model 3 DECISIVE WINNER** |
-    | **Dimension 3: Generalizability** | Zero-Shot Transfer Ratio (EWR $\to$ LGA $\text{RTR}$) | $\approx 1.00$ | N/A | **1.04** *(Target Met)* | 1.08 | 1.19 *(Failed Target)* | **Model 1 DECISIVE WINNER** |
-    | | Transfer Error Degradation ($\Delta\text{MASE}$) | $\le 10.0\%$ | N/A | **+4.0\%** *(Target Met)* | +7.9\% | +21.5\% *(Failed Target)* | **Model 1 DECISIVE WINNER** |
-
-#### Thesis Summary & In-Depth Discussion
-* **Empirical Validation of Hypothesis $H_1$**: The multi-pillar evaluation matrix provides definitive, empirical proof of Master Hypothesis $H_1$: *no individual predictive modeling paradigm is universally superior across all three operational performance measures*. Each framework possesses distinct operational strengths and stark asymmetric trade-offs:
-  - **Robustness ($H_{1a}$ Confirmed)**: Both Model 2 ($\text{MASE} = 0.696$) and Model 3 ($\text{MASE} = 0.662$) satisfy the routine target ($\text{MASE} < 0.700$). While Model 3 minimizes absolute error, Model 2 achieves Practical Pareto Efficiency—meeting the target with zero real-time floor telemetry and zero compute latency.
-  - **Resilience ($H_{1b}$ Confirmed)**: During severe irregular operations (delays $\ge 45$ min or cancellations $\ge 5$), Model 3 is the undisputed champion: $R_{\text{MASE}} = 1.05$, $\text{MASE}_{\text{shock}} = 0.694$, and $\text{TTR} = 2.8\text{h}$. Pure machine learning (Model 2) suffers a catastrophic fragility collapse ($R_{\text{MASE}} = 2.14, \text{TTR} = 5.4\text{h}$) due to the Empty Checkpoint Fallacy.
-  - **Generalizability ($H_{1c}$ Confirmed)**: Under zero-shot spatial transfer (EWR $\to$ LGA) without local retraining, Model 1 is the decisive champion: $\text{RTR} = 1.04$ and $\Delta\text{MASE} = +4.0\%$. Conversely, Model 3 decisively fails the generalizability target ($\text{RTR} = 1.19, \Delta\text{MASE} = +21.5\%$) because its decision trees overfit to Newark's specific terminal geometry and flight-bank timing structures.
-
----
-
-### Slide 22: Importance of Dynamic Performance Measures
+### Slide 21: Importance of Dynamic Performance Measures
 
 #### Slide Description
 * **Header & Title**: *Importance of Dynamic Performance Measures: The Evaluation Triad*
 * **Visual Elements & Layout**:
-  - Three-axis Radar Chart / Triad Architecture Diagram illustrating the operational coverage of each modeling framework across:
+  - Three-axis Radar Chart / Triad Architecture Diagram (Figure 5.1 in Thesis v3) illustrating the operational coverage of each modeling framework across:
     - **Axis 1: Robustness** (Nominal on-time accuracy; routine staffing optimization).
     - **Axis 2: Resilience** (Shock resistance during convective IROPS ground stops; rapid recovery).
     - **Axis 3: Generalizability** (Spatial portability across terminal geometries without retraining).
@@ -418,6 +394,31 @@ This document provides a comprehensive academic description and operational disc
   - *Robustness*: Measures routine consistency and advance planning efficiency. Essential for long-term shift scheduling 48 to 72 hours prior.
   - *Resilience*: Measures tactical survivability under severe operational turbulence. Essential for emergency operations centers during convective line halts.
   - *Generalizability*: Measures architectural portability. Essential for airport authorities managing multi-airport systems (e.g., PANYNJ: EWR, LGA, JFK) seeking a universal baseline model without facility-specific engineering.
+
+---
+
+### Slide 22: Model Performance (Multi-Pillar Hypothesis Matrix)
+
+#### Slide Description
+* **Header & Title**: *Model Performance: Multi-Pillar Testing & Asymmetric Trade-Offs*
+* **Visual Elements & Layout**:
+  - Comprehensive 3-pillar evaluation matrix matching Slide 22 in `Master-Thesis-Defense-final.pptx`, Tab `for-deck` in `thesis_manuscript_tables.xlsx`, and Table 4.7 in Thesis v3:
+    | Evaluation Dimension | Operational Regime & Metric | Academic Target | Baseline Control | Model 1 (Deterministic) | Model 2 (Supervised ML) | Model 3 (Dynamic Hybrid) | Winning Paradigm |
+    | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+    | **Dimension 1: Robustness** | Routine On-Time Ops ($\text{MASE}_{\text{routine}}$) | $< 0.700$ | 1.000 (Baseline) | 0.945 (Fails Target) | **0.680–0.700 (Target Met)** | **0.662 (Target Met / Lowest)** | **Model 3 (Accuracy)** / **Model 2 (Pareto)** |
+    | | Routine Absolute Error ($\text{RMSE}_{\text{routine}}$) | Lowest | 253.6 pax/hr | 313.4 pax/hr | 273.5 pax/hr | **222.1 pax/hr (Lowest)** | **Model 3** |
+    | **Dimension 2: Resilience** | Severe IROPS Error Multiplier ($R_{\text{MASE}}$) | $\approx 1.00$ | 1.000 (Reference) | **1.32 (Blind to Delays)** | **2.14 (Fragile Collapse)** | **1.05 (Target Met / Winner)** | **Model 3 DECISIVE WINNER** |
+    | | Severe Disruption Error ($\text{MASE}_{\text{shock}}$) | Lowest | 1.000 | 1.082 | 0.812 | **0.694 (Target Met / Winner)** | **Model 3 DECISIVE WINNER** |
+    | | Time-to-Recovery ($\text{TTR}$, hours) | $< 4.0\text{h}$ | **8.4h (Static Reference)** | 7.8h | 5.4h | **2.8h (Target Met / Fastest)** | **Model 3 DECISIVE WINNER** |
+    | **Dimension 3: Generalizability** | Zero-Shot Transfer Ratio (EWR $\to$ LGA $\text{RTR}$) | $\approx 1.00$ | **1.00 (Reference)** | **1.04 (Target Met / Winner)** | 1.08 (Passes Target) | **1.19 (Failed Target)** | **Model 1 DECISIVE WINNER** |
+    | | Transfer Error Degradation ($\Delta\text{RMSE}$) | $\le 10.0\%$ | **0.0% (Reference)** | **+4.2% (Target Met / Winner)** | **+7.9% (Passes Target)** | **+19.0% (Failed Target)** | **Model 1 DECISIVE WINNER** |
+    | | Transfer Relative Error Degradation ($\Delta\text{MASE}$) | $\le 10.0\%$ | **0.0% (Reference)** | **+4.0% (Target Met / Winner)** | **+8.3% (Passes Target)** | **+21.5% (Failed Target)** | **Model 1 DECISIVE WINNER** |
+
+#### Thesis Summary & In-Depth Discussion
+* **Empirical Validation of Hypothesis $H_1$**: The multi-pillar evaluation matrix provides definitive, empirical proof of Master Hypothesis $H_1$: *no individual predictive modeling paradigm is universally superior across all three operational performance measures*. Each framework possesses distinct operational strengths and stark asymmetric trade-offs:
+  - **Robustness ($H_{1a}$ Confirmed)**: Both Model 2 ($\text{MASE} = 0.680\text{--}0.700$, single-point $0.696$) and Model 3 ($\text{MASE} = 0.662$) satisfy the routine target ($\text{MASE} < 0.700$). While Model 3 minimizes absolute error ($\text{RMSE} = 222.1\text{ pax/hr}$), Model 2 achieves Practical Pareto Efficiency—meeting the accuracy target with zero real-time floor telemetry and zero compute latency.
+  - **Resilience ($H_{1b}$ Confirmed)**: During severe irregular operations (delays $\ge 45$ min or cancellations $\ge 5$), Model 3 is the undisputed champion: $R_{\text{MASE}} = 1.05$, $\text{MASE}_{\text{shock}} = 0.694$, and $\text{TTR} = 2.8\text{h}$. Model 1 is blind to airside delay cascades ($R_{\text{MASE}} = 1.32, \text{TTR} = 7.8\text{h}$), while pure machine learning (Model 2) suffers a catastrophic fragility collapse ($R_{\text{MASE}} = 2.14, \text{TTR} = 5.4\text{h}$) due to the Empty Checkpoint Fallacy.
+  - **Generalizability ($H_{1c}$ Confirmed)**: Under zero-shot spatial transfer (EWR $\to$ LGA) without local retraining, Model 1 is the decisive champion: $\text{RTR} = 1.04$, $\Delta\text{RMSE} = +4.2\%$, and $\Delta\text{MASE} = +4.0\%$. Model 2 passes the $\le 10.0\%$ portability boundary ($\text{RTR} = 1.08, \Delta\text{RMSE} = +7.9\%, \Delta\text{MASE} = +8.3\%$). Conversely, Model 3 decisively fails the generalizability target ($\text{RTR} = 1.19, \Delta\text{RMSE} = +19.0\%, \Delta\text{MASE} = +21.5\%$) because its decision trees overfit to Newark's specific terminal geometry and flight-bank timing structures.
 
 ---
 
