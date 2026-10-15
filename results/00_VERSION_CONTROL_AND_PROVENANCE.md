@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.23 (Appendix C Reference Guide Rebuilt from Thesisv3.docx -- 6 Verified Anchors)
+RELEASE VERSION: v5.24 (Appendix B In-Text Reference Guide -- 11 Verified Anchors for Thesisv3.docx)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1341,6 +1341,18 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   Defining Seasonality/CV_TSA (Ch. IV), Heavy-Traffic Queuing Item (Ch. IV),|
 |         |            |   and Connecting Queuing/Lane Dimensioning section (Ch. V).                |
 |         |            | - Added structural change warning block noting Thesisv3 reorganization.    |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.24   | 2026-10-15 | Appendix B In-Text Reference Guide (11 Verified Anchors in Thesisv3.docx):  |
+|         |            | - Authored thesis_docs/manuscripts/appendix-b-reference-guide.md documenting|
+|         |            |   all 11 exact narrative locations to reference Appendix B (Comparative     |
+|         |            |   Modeling Paradigms and Literature Equation Registry Table B.2).           |
+|         |            | - Every anchor quotes verbatim paragraphs directly from master-docs/        |
+|         |            |   Thesisv3.docx with paragraph index, exact parenthetical callout to insert, |
+|         |            |   and full post-insertion sentence.                                         |
+|         |            | - Covers Section B.1 / Table B.1 (6-paradigm taxonomy: DES, ARIMA, ML,      |
+|         |            |   hybrid) across Ch. II & III, and Table B.2 equations (EQ-04/07 lead-lag    |
+|         |            |   convolution, EQ-06 DB1B deflation, EQ-09/10/13-15 error metrics, EQ-11    |
+|         |            |   Diebold-Mariano test, EQ-20 conformal dynamic lane staffing) in Ch. III/IV|
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
