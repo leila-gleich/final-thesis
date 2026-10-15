@@ -4,7 +4,7 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.24 (Appendix B In-Text Reference Guide -- 11 Verified Anchors for Thesisv3.docx)
+RELEASE VERSION: v5.25 (Master Appendix Reference Guide -- Streamlined Appendices A-G for Thesisv3.docx)
 DATE: October 15, 2026
 ====================================================================================================
 
@@ -1353,6 +1353,20 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            |   hybrid) across Ch. II & III, and Table B.2 equations (EQ-04/07 lead-lag    |
 |         |            |   convolution, EQ-06 DB1B deflation, EQ-09/10/13-15 error metrics, EQ-11    |
 |         |            |   Diebold-Mariano test, EQ-20 conformal dynamic lane staffing) in Ch. III/IV|
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.25   | 2026-10-15 | Master Appendix Reference Guide (Streamlined Appendices A-G for Thesis v3):|
+|         |            | - Re-architected in-text appendix reference mapping following the           |
+|         |            |   authoritative 7-appendix consolidation in Master_Appendix_final.docx      |
+|         |            |   (Appendix A: Delimitations/Assumptions; Appendix B: Paradigms/Equations;  |
+|         |            |   Appendix C: Queuing Derivations; Appendix D: Diebold-Mariano Test;        |
+|         |            |   Appendix E: Candidate Models & Benchmarks; Appendix F: Values vs          |
+|         |            |   Volatility Coupling; Appendix G: Disruption Dynamics & Empty Checkpoint). |
+|         |            | - Authored thesis_docs/manuscripts/appendix-reference-guide.md documenting  |
+|         |            |   where each overarching appendix should be referenced in Thesisv3.docx     |
+|         |            |   strictly using general callout format (see Appendix X), omitting          |
+|         |            |   internal subsections per author directive.                                |
+|         |            | - Synchronized appendix-b-reference-guide.md and appendix-c-reference-     |
+|         |            |   guide.md to strictly use overarching callouts.                            |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
