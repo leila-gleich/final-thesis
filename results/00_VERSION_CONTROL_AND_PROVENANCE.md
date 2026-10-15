@@ -4,8 +4,8 @@ PROJECT: Empirical Modeling of Airport Security Screening Demand and Flight Perf
 AUTHOR: Leila Gleich | INSTITUTION: Embry-Riddle Aeronautical University
 DEGREE: Master of Science in Aeronautics / Aviation Data Analytics
 LOCATION: results/00_VERSION_CONTROL_AND_PROVENANCE.md
-RELEASE VERSION: v5.16 (Synchronized 25-Minute Presentation Script for Current 31-Slide Layout)
-DATE: October 14, 2026
+RELEASE VERSION: v5.18 (Standard Literature Equations Markdown Registry Deployment)
+DATE: October 15, 2026
 ====================================================================================================
 
 ----------------------------------------------------------------------------------------------------
@@ -1262,6 +1262,25 @@ auditability, reproducibility, and referential integrity across all empirical fi
 |         |            | - Fully synchronized slide titles, numbers, tables, images, and speaking   |
 |         |            |   prompts across all 6 defense phases with exact time allocations.         |
 |         |            | - Preserved zero edits to Microsoft Word documents (.docx).                 |
+| v5.17   | 2026-10-15 | Master Thesis Defense Slides 3–26 Outline Grounded in Thesis v3:           |
+|         |            | - Authored master-docs/THESIS_DEFENSE_SLIDES_OUTLINE_V3.md (mirrored to     |
+|         |            |   thesis_final_package/defense/) providing slide-by-slide visual layout    |
+|         |            |   breakdown and in-depth thesis discussions for Slides 3 through 26.       |
+|         |            | - Grounded empirical discussions in Thesisv3, Table 4.6 benchmarks, Table  |
+|         |            |   4.7 multi-pillar matrix, and Disruption-Adaptive Checkpoint Playbook.     |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
+| v5.18   | 2026-10-15 | Standard Literature Equations Markdown Registry & LaTeX Parsing Deployment: |
+|         |            | - Authored src/manuscripts/generate_appendix_equations_markdown.py         |
+|         |            |   generating comprehensive publication-grade Markdown table and derivations |
+|         |            |   for all 20 peer-reviewed operational equations (Table B.2).              |
+|         |            | - Resolved LaTeX pipe collision defect (|e_t| -> \left\lvert ... \right\rvert|
+|         |            |   and \lvert ... \rvert) preventing Markdown table delimiter corruption.   |
+|         |            | - Formatted all mathematical expressions in standard KaTeX math ($...$ and  |
+|         |            |   $$...$$) with full parameter definitions, domains, and references.        |
+|         |            | - Deployed synchronized appendix-standard-literature-equations.md across    |
+|         |            |   thesis_docs/manuscripts/, master-docs/, results/manuscript_tables/, and   |
+|         |            |   thesis_final_package/tables/.                                            |
+|         |            | - Preserved zero edits to Microsoft Word documents (.docx) (Policy 1.1).    |
 +---------+------------+----------------------------------------------------------------------------+
 
 ----------------------------------------------------------------------------------------------------
@@ -1576,3 +1595,31 @@ In response to the author directive to create a comprehensive Markdown outline w
 - `thesis_final_package/defense/THESIS_DEFENSE_SLIDES_OUTLINE_V3.md` (created)
 - `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated)
 ====================================================================================================
+
+## v5.18 — Standard Literature Equations Markdown Registry Deployment (Table B.2) (October 15, 2026)
+
+### Rationale & Design Transformation
+In response to the author's directive to generate a publication-grade Markdown table based on `appendix-standard-literature-equations.csv` with cleanly parsed LaTeX equations:
+1. **Resolution of Markdown Table Delimiter Collision**:
+   - Identified and resolved the Markdown table layout failure caused by literal ASCII pipe symbols (`|`) in LaTeX absolute value formulations (specifically EQ-13 MAE: `|y_t - \hat{y}_t|` and EQ-15 MASE: `|y_t - y_{t-24}|`).
+   - Replaced bare pipe symbols with valid LaTeX commands (`\left\lvert ... \right\rvert` and `\lvert ... \rvert`), preventing collision with Markdown column delimiters while ensuring 100% correct visual rendering across KaTeX, MathJax, GitHub Markdown, and Pandoc.
+2. **Standard Literature Equation Registry (Table B.2)**:
+   - Generated `appendix-standard-literature-equations.md` containing a full APA Style (7th ed.) 6-column tabular catalog of all 20 peer-reviewed operational, queuing, econometrics, and lane allocation equations.
+   - Formatted all inline math ($...$) with proper parameter notation, parameter inventories, published literature citations, and explicit thesis operational roles.
+3. **Comprehensive Domain Derivations & Display Math**:
+   - Organized equations across 7 distinct operational research domains: Stochastic Queuing & Congestion Theory, Passenger Lead-Time & Arrival Curves, Operational Accounting & Filtering, Statistical Moments & Volatility Targets, Time-Series Forecasting & Error Metrics, Hypothesis & Significance Testing, and Operational Dimensioning & Staffing.
+   - Provided standalone centered display math blocks (`$$ ... $$`), full parameter bullet lists, and deep analytical explanations tying each formulation to the thesis core targets ($\sigma_{\text{TSA}}$ and $CV_{\text{TSA}}$).
+4. **Multi-Directory Deployment & Verification**:
+   - Deployed synchronized copies of `appendix-standard-literature-equations.md` to `thesis_docs/manuscripts/`, `results/manuscript_tables/`, `master-docs/`, and `thesis_final_package/tables/`.
+   - Authored reproducible compiler `src/manuscripts/generate_appendix_equations_markdown.py`.
+   - Obeyed Policy 1.1 with zero modifications to any Microsoft Word (`.docx`) documents.
+
+### Modified Files Inventory
+- `src/manuscripts/generate_appendix_equations_markdown.py` (created)
+- `thesis_docs/manuscripts/appendix-standard-literature-equations.md` (created)
+- `results/manuscript_tables/appendix-standard-literature-equations.md` (created)
+- `master-docs/appendix-standard-literature-equations.md` (created)
+- `thesis_final_package/tables/appendix-standard-literature-equations.md` (created)
+- `results/00_VERSION_CONTROL_AND_PROVENANCE.md` (updated provenance record)
+====================================================================================================
+
